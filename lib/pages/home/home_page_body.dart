@@ -5,12 +5,14 @@ import 'package:get/get.dart';
 import 'package:rumah_kreatif_toba/controllers/popular_produk_controller.dart';
 import 'package:rumah_kreatif_toba/models/produk_models.dart';
 import 'package:rumah_kreatif_toba/pages/produk/produk_populer_detail.dart';
-import 'package:rumah_kreatif_toba/pages/produk/recommended_produk_detail.dart';
+import 'package:rumah_kreatif_toba/pages/produk/produk_detail.dart';
+import 'package:rumah_kreatif_toba/routes/route_helper.dart';
 import 'package:rumah_kreatif_toba/utils/colors.dart';
 import 'package:rumah_kreatif_toba/widgets/big_text.dart';
 import 'package:rumah_kreatif_toba/widgets/small_text.dart';
 
 import '../../utils/dimensions.dart';
+import '../../widgets/currency_format.dart';
 
 class HomePageBody extends StatefulWidget {
   const HomePageBody({Key? key}) : super(key: key);
@@ -21,7 +23,10 @@ class HomePageBody extends StatefulWidget {
 
 class _HomePageBodyState extends State<HomePageBody> {
   PageController pageController = PageController(viewportFraction: 0.90);
+  PageController pageControllerPopulerProduct = PageController(viewportFraction: 0.90);
+
   var _currPageValue = 0.0;
+  var _currPageValuePopulerProduct = 0.0;
   double _scaleFactor = 0.8;
   double _height = 200;
   @override
@@ -32,11 +37,17 @@ class _HomePageBodyState extends State<HomePageBody> {
         _currPageValue = pageController.page!;
       });
     });
+    pageControllerPopulerProduct.addListener(() {
+      setState(() {
+        _currPageValuePopulerProduct = pageControllerPopulerProduct.page!;
+      });
+    });
   }
 
   @override
   void dispose() {
     pageController.dispose();
+    pageControllerPopulerProduct.dispose();
   }
 
   @override
@@ -65,6 +76,76 @@ class _HomePageBodyState extends State<HomePageBody> {
           ),
         ),
         SizedBox(
+          height: Dimensions.height45,
+        ),
+
+        //Populer produk
+        Container(
+          margin: EdgeInsets.only(left: Dimensions.width20),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              BigText(text: "Produk Terlaris",),
+            ],
+          ),
+        ),
+        Container(
+          height: 250,
+          margin: EdgeInsets.only(top: 10, bottom: 20),
+          child: PageView.builder(
+              controller: pageControllerPopulerProduct,
+              itemCount: 10,
+              itemBuilder: (context, position) {
+                return _buildPageItemPopulerProduct(position);
+              }),
+        ),
+        // new DotsIndicator(
+        //   dotsCount: 10,
+        //   position: _currPageValuePopulerProduct,
+        //   decorator: DotsDecorator(
+        //     activeColor: AppColors.redColor,
+        //     size: const Size.square(9.0),
+        //     activeSize: const Size(18.0, 9.0),
+        //     activeShape: RoundedRectangleBorder(
+        //         borderRadius: BorderRadius.circular(5.0)),
+        //   ),
+        // ),
+        SizedBox(
+          height: Dimensions.height30,
+        ),
+
+        //Produk Terbaru
+        Container(
+          margin: EdgeInsets.only(left: Dimensions.width20),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              BigText(text: "Produk Terbaru",),
+            ],
+          ),
+        ),
+        Container(
+          height: 250,
+          margin: EdgeInsets.only(top: 10, bottom: 20),
+          child: PageView.builder(
+              controller: pageControllerPopulerProduct,
+              itemCount: 10,
+              itemBuilder: (context, position) {
+                return _buildPageItemPopulerProduct(position);
+              }),
+        ),
+        // new DotsIndicator(
+        //   dotsCount: 10,
+        //   position: _currPageValuePopulerProduct,
+        //   decorator: DotsDecorator(
+        //     activeColor: AppColors.redColor,
+        //     size: const Size.square(9.0),
+        //     activeSize: const Size(18.0, 9.0),
+        //     activeShape: RoundedRectangleBorder(
+        //         borderRadius: BorderRadius.circular(5.0)),
+        //   ),
+        // ),
+        SizedBox(
           height: Dimensions.height30,
         ),
         Container(
@@ -73,91 +154,95 @@ class _HomePageBodyState extends State<HomePageBody> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               BigText(text: "Produk Terlaris"),
-              SizedBox(
-                width: Dimensions.width10,
-              ),
-              Container(
-                child: BigText(
-                  text: ".",
-                  color: AppColors.blackColor,
-                ),
-              ),
-              SizedBox(width: Dimensions.width10),
-              Container(
-                child: SmallText(
-                  text: "Food pairing",
-                ),
-              ),
             ],
           ),
         ),
-        GetBuilder<PopularProdukController>(builder: (popularProduk){
-          return popularProduk.isLoaded?GridView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, mainAxisExtent: 256),
-              // shrinkWrap: true,
-              itemCount: popularProduk.popularProdukList.length,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 3,
-                          blurRadius: 10,
-                          offset: Offset(0, 3),
-                        )
-                      ]),
-                  margin: EdgeInsets.only(
-                      left: Dimensions.width20,
-                      right: Dimensions.width20,
-                      bottom: Dimensions.height10),
-                  child: GestureDetector(
-                    onTap: (){
-                      Get.to(() => RecommendedProdukDetail());
-                    },
-                    child: Column(
-                      children: [
-                        //image section
-                        Container(
-                          width: 120,
-                          height: 120,
-                          decoration: BoxDecoration(
-                              borderRadius:
-                              BorderRadius.circular(Dimensions.radius20),
-                              color: Colors.white38,
-                              image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image:
-                                  AssetImage("assets/images/makanan_1.png"))),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(
-                              left: Dimensions.width10, right: Dimensions.width10),
+        GetBuilder<PopularProdukController>(builder: (popularProduk) {
+          return popularProduk.isLoaded
+              ? GridView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2, mainAxisExtent: 256),
+                  // shrinkWrap: true,
+                  itemCount: popularProduk.popularProdukList.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        Get.toNamed(RouteHelper.getProdukDetail(
+                            popularProduk.popularProdukList[index].productId));
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(15),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 3,
+                                blurRadius: 10,
+                                offset: Offset(0, 3),
+                              )
+                            ]),
+                        margin: EdgeInsets.only(
+                            left: Dimensions.width20,
+                            right: Dimensions.width20,
+                            bottom: Dimensions.height10),
+                        child: GestureDetector(
+                          onTap: () {
+                            Get.toNamed(RouteHelper.getProdukDetail(
+                                popularProduk
+                                    .popularProdukList[index].productId));
+//                        Get.toNamed(RouteHelper.getProdukDetail(index));
+                          },
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              BigText(text: popularProduk.popularProdukList[index].productName, size: Dimensions.font20,),
-                              SizedBox(height: Dimensions.height10,),
-                              BigText(
-                                text: popularProduk.popularProdukList[index].price.toString(),
-                                color: AppColors.redColor,
-                                size: Dimensions.font16,
+                              //image section
+                              Container(
+                                width: 180,
+                                height: 120,
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: AssetImage(
+                                            "assets/images/coffee.jpg"))),
                               ),
+                              Container(
+                                margin: EdgeInsets.only(
+                                    left: Dimensions.width10,
+                                    right: Dimensions.width10),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    BigText(
+                                      text: popularProduk
+                                          .popularProdukList[index].productName.toString(),
+                                      size: Dimensions.font20,
+                                    ),
+                                    SizedBox(
+                                      height: Dimensions.height10,
+                                    ),
+                                    BigText(
+                                      text: CurrencyFormat.convertToIdr(
+                                          popularProduk
+                                              .popularProdukList[index].price,
+                                          2),
+                                      color: AppColors.redColor,
+                                      size: Dimensions.font16,
+                                    ),
+                                  ],
+                                ),
+                              )
+                              //text container
                             ],
                           ),
-                        )
-                        //text container
-                      ],
-                    ),
-                  ),
-
+                        ),
+                      ),
+                    );
+                  })
+              : CircularProgressIndicator(
+                  color: AppColors.redColor,
                 );
-              }):CircularProgressIndicator(color: AppColors.redColor,);
         })
       ],
     );
@@ -202,8 +287,110 @@ class _HomePageBodyState extends State<HomePageBody> {
                 color: index.isEven ? Color(0xFF69c5df) : Color(0xFF9294cc),
                 image: DecorationImage(
                     fit: BoxFit.cover,
-                    image: AssetImage("assets/images/logo_rkt.png"))),
+                    image: AssetImage("assets/images/coffee.jpg"))),
           )
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPageItemPopulerProduct(int index) {
+    Matrix4 matrix = new Matrix4.identity();
+
+    return Transform(
+      transform: matrix,
+      child: Stack(
+        children: [
+          GetBuilder<PopularProdukController>(builder: (popularProduk) {
+            return popularProduk.isLoaded
+                ? ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 10,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          Get.toNamed(RouteHelper.getProdukDetail(popularProduk
+                              .popularProdukList[index].productId));
+                        },
+                        child: Container(
+                          width: 180,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(15),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 3,
+                                  blurRadius: 10,
+                                  offset: Offset(0, 3),
+                                )
+                              ]),
+                          margin: EdgeInsets.only(
+                              left: Dimensions.width20,
+                              right: Dimensions.width20,
+                              bottom: Dimensions.height10),
+                          child: GestureDetector(
+                            onTap: () {
+                              Get.toNamed(RouteHelper.getProdukDetail(
+                                  popularProduk
+                                      .popularProdukList[index].productId));
+//                        Get.toNamed(RouteHelper.getProdukDetail(index));
+                            },
+                            child: Column(
+                              children: [
+                                //image section
+                                Container(
+                                  height: 120,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(
+                                              Dimensions.radius15),
+                                          topRight: Radius.circular(
+                                              Dimensions.radius15)),
+                                      image: DecorationImage(
+                                          fit: BoxFit.fill,
+                                          image: AssetImage(
+                                              "assets/images/coffee.jpg"))),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(
+                                      left: Dimensions.width10,
+                                      right: Dimensions.width10),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      BigText(
+                                        text: popularProduk
+                                            .popularProdukList[index]
+                                            .productName.toString(),
+                                        size: Dimensions.font20,
+                                      ),
+                                      SizedBox(
+                                        height: Dimensions.height10,
+                                      ),
+                                      BigText(
+                                        text: CurrencyFormat.convertToIdr(
+                                            popularProduk
+                                                .popularProdukList[index].price,
+                                            2),
+                                        color: AppColors.redColor,
+                                        size: Dimensions.font16,
+                                      ),
+                                    ],
+                                  ),
+                                )
+                                //text container
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    })
+                : CircularProgressIndicator(
+                    color: AppColors.redColor,
+                  );
+          })
         ],
       ),
     );

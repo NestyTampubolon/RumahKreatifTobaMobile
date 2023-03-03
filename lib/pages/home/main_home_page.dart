@@ -27,10 +27,28 @@ class _MainHomePageState extends State<MainHomePage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
+                  Row(
                     children: [
-                      BigText(text: "Test1", color: AppColors.redColor,size: Dimensions.height30),
-                      Text("Test")
+                      Container(
+                        width: 50,
+                        height: 50,
+                        margin: EdgeInsets.only(
+                            left: Dimensions.width10, right: Dimensions.width10),
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: AssetImage("assets/images/logo_rkt.png"))),
+                      ),
+                      Container(
+                        width: 50,
+                        height: 50,
+                        margin: EdgeInsets.only(
+                            left: Dimensions.width10, right: Dimensions.width10),
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: AssetImage("assets/images/Bangga_Buatan_Indonesia_Logo.png"))),
+                      ),
                     ],
                   ),
                   Center(

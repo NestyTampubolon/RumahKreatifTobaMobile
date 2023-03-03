@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:rumah_kreatif_toba/controllers/popular_produk_controller.dart';
 import 'package:rumah_kreatif_toba/pages/home/home_page_body.dart';
 import 'package:rumah_kreatif_toba/pages/home/main_home_page.dart';
-import 'package:rumah_kreatif_toba/pages/produk/recommended_produk_detail.dart';
+import 'package:rumah_kreatif_toba/pages/produk/produk_detail.dart';
 import 'package:rumah_kreatif_toba/routes/route_helper.dart';
 import 'helper/dependencies.dart' as dep;
 Future<void> main() async {
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       home: MainHomePage(),
       initialRoute: RouteHelper.initial,
-
+      getPages: RouteHelper.routes,
     );
   }
 }
