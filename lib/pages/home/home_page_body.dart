@@ -48,6 +48,7 @@ class _HomePageBodyState extends State<HomePageBody> {
   void dispose() {
     pageController.dispose();
     pageControllerPopulerProduct.dispose();
+    super.dispose();
   }
 
   @override
@@ -99,17 +100,6 @@ class _HomePageBodyState extends State<HomePageBody> {
                 return _buildPageItemPopulerProduct(position);
               }),
         ),
-        // new DotsIndicator(
-        //   dotsCount: 10,
-        //   position: _currPageValuePopulerProduct,
-        //   decorator: DotsDecorator(
-        //     activeColor: AppColors.redColor,
-        //     size: const Size.square(9.0),
-        //     activeSize: const Size(18.0, 9.0),
-        //     activeShape: RoundedRectangleBorder(
-        //         borderRadius: BorderRadius.circular(5.0)),
-        //   ),
-        // ),
         SizedBox(
           height: Dimensions.height30,
         ),
@@ -134,17 +124,6 @@ class _HomePageBodyState extends State<HomePageBody> {
                 return _buildPageItemPopulerProduct(position);
               }),
         ),
-        // new DotsIndicator(
-        //   dotsCount: 10,
-        //   position: _currPageValuePopulerProduct,
-        //   decorator: DotsDecorator(
-        //     activeColor: AppColors.redColor,
-        //     size: const Size.square(9.0),
-        //     activeSize: const Size(18.0, 9.0),
-        //     activeShape: RoundedRectangleBorder(
-        //         borderRadius: BorderRadius.circular(5.0)),
-        //   ),
-        // ),
         SizedBox(
           height: Dimensions.height30,
         ),
@@ -163,7 +142,7 @@ class _HomePageBodyState extends State<HomePageBody> {
                   physics: const NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2, mainAxisExtent: 256),
-                  // shrinkWrap: true,
+
                   itemCount: popularProduk.popularProdukList.length,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
@@ -226,7 +205,7 @@ class _HomePageBodyState extends State<HomePageBody> {
                                       text: CurrencyFormat.convertToIdr(
                                           popularProduk
                                               .popularProdukList[index].price,
-                                          2),
+                                          0),
                                       color: AppColors.redColor,
                                       size: Dimensions.font16,
                                     ),
@@ -373,7 +352,7 @@ class _HomePageBodyState extends State<HomePageBody> {
                                         text: CurrencyFormat.convertToIdr(
                                             popularProduk
                                                 .popularProdukList[index].price,
-                                            2),
+                                            0),
                                         color: AppColors.redColor,
                                         size: Dimensions.font16,
                                       ),

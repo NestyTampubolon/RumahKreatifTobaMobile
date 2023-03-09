@@ -6,6 +6,7 @@ import 'package:rumah_kreatif_toba/utils/colors.dart';
 import 'dart:convert';
 
 import '../data/repository/popular_produk_repo.dart';
+import '../models/cart_models.dart';
 
 
 class PopularProdukController extends GetxController{
@@ -93,6 +94,9 @@ class PopularProdukController extends GetxController{
 
   int get totalItems{
     return _cart.totalItems;
+  }
+  List<CartModel> get getItems{
+    return _cart.getItems;
   }
   // int get totalItems{
   //   return _cart.totalItems;

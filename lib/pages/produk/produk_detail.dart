@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:rumah_kreatif_toba/controllers/cart_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/popular_produk_controller.dart';
+import 'package:rumah_kreatif_toba/pages/keranjang/keranjang_page.dart';
 import 'package:rumah_kreatif_toba/routes/route_helper.dart';
 import 'package:rumah_kreatif_toba/utils/colors.dart';
 import 'package:rumah_kreatif_toba/utils/dimensions.dart';
@@ -21,8 +22,8 @@ class ProdukDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var produkList = Get.find<PopularProdukController>().popularProdukList;
-    var daftarproduk = produkList.firstWhere(
-        (produk) => produk.productId == productId.toInt());
+    var daftarproduk = produkList
+        .firstWhere((produk) => produk.productId == productId.toInt());
 
     Get.find<PopularProdukController>()
         .initProduk(daftarproduk, Get.find<CartController>());
@@ -43,27 +44,43 @@ class ProdukDetail extends StatelessWidget {
                     },
                     child: AppIcon(icon: Icons.arrow_back),
                   ),
-                  GetBuilder<PopularProdukController>(builder: (controller){
-                    return Stack(
-                      children: [
-                        AppIcon(icon: Icons.shopping_cart_outlined),
-                       Get.find<PopularProdukController>().totalItems>=1?
-                       Positioned(
-                           right:0, top:0,
-                           child: AppIcon(icon: Icons.circle, size:20, iconColor: Colors.transparent, backgroundColor: AppColors.notification,))
-                       :Container(),
-                        Get.find<PopularProdukController>().totalItems>=1?
-                        Positioned(
-                            right:3, top:3,
-                            child: BigText(text: Get.find<PopularProdukController>().totalItems.toString(),
-                            size:12, color: Colors.white,
-                            ),
-                        )
-                            :Container(),
-                      ],
+                  GetBuilder<PopularProdukController>(builder: (controller) {
+                    return GestureDetector(
+                      onTap: () {
+                        if (controller.totalItems >= 1)
+                          Get.toNamed(RouteHelper.getKeranjangPage());
+                      },
+                      child: Stack(
+                        children: [
+                          AppIcon(icon: Icons.shopping_cart_outlined),
+                          Get.find<PopularProdukController>().totalItems >= 1
+                              ? Positioned(
+                                  right: 0,
+                                  top: 0,
+                                  child: AppIcon(
+                                    icon: Icons.circle,
+                                    size: 20,
+                                    iconColor: Colors.transparent,
+                                    backgroundColor: AppColors.notification,
+                                  ))
+                              : Container(),
+                          Get.find<PopularProdukController>().totalItems >= 1
+                              ? Positioned(
+                                  right: 3,
+                                  top: 3,
+                                  child: BigText(
+                                    text: Get.find<PopularProdukController>()
+                                        .totalItems
+                                        .toString(),
+                                    size: 12,
+                                    color: Colors.white,
+                                  ),
+                                )
+                              : Container(),
+                        ],
+                      ),
                     );
                   })
-
                 ],
               ),
               pinned: true,
@@ -131,7 +148,7 @@ class ProdukDetail extends StatelessWidget {
                       BigText(text: "SubTotal : "),
                       BigText(
                         text:
-                            CurrencyFormat.convertToIdr(daftarproduk.price, 2),
+                            CurrencyFormat.convertToIdr(daftarproduk.price, 0),
                         color: AppColors.blackColor,
                         size: Dimensions.font20,
                       ),

@@ -1,3 +1,5 @@
+import 'package:rumah_kreatif_toba/models/produk_models.dart';
+
 class CartModel {
   int? cartId;
   int? userId;
@@ -12,6 +14,7 @@ class CartModel {
   int? price;
   int? heavy;
   int? isDeleted;
+  Produk? produk;
 
   CartModel(
       {this.cartId,
@@ -26,7 +29,9 @@ class CartModel {
         this.productDescription,
         this.price,
         this.heavy,
-        this.isDeleted});
+        this.isDeleted,
+        this.produk
+      });
 
   CartModel.fromJson(Map<String, dynamic> json) {
     cartId = json['cart_id'];
@@ -42,5 +47,6 @@ class CartModel {
     price = json['price'];
     heavy = json['heavy'];
     isDeleted = json['is_deleted'];
+    produk = Produk.fromJson(json['produk']);
   }
 }
