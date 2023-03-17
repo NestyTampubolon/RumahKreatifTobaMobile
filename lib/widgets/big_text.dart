@@ -1,3 +1,4 @@
+import 'package:flutter/painting.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:rumah_kreatif_toba/utils/dimensions.dart';
 
@@ -6,11 +7,15 @@ class BigText extends StatelessWidget {
   final String text;
   double size;
   TextOverflow overFlow;
+  TextAlign textAlign;
+  FontWeight fontWeight;
   BigText(
       {Key? key,
       this.color = const Color(0xFF332d2b),
       required this.text,
       this.size = 20,
+      this.textAlign = TextAlign.start,
+        this.fontWeight = FontWeight.normal,
       this.overFlow = TextOverflow.ellipsis})
       : super(key: key);
 
@@ -20,11 +25,12 @@ class BigText extends StatelessWidget {
       text,
       maxLines: 2,
       overflow: overFlow,
+      textAlign: textAlign,
       style: TextStyle(
-          fontFamily: 'Roboto',
+          fontFamily: 'Montserrat',
           color: color,
-          fontWeight: FontWeight.w400,
-          fontSize: size==0?Dimensions.font20:size),
+          fontWeight: fontWeight,
+          fontSize: size == 0 ? Dimensions.font16 : size),
     );
   }
 }

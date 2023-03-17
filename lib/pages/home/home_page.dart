@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:rumah_kreatif_toba/pages/account/account_page.dart';
 import 'package:rumah_kreatif_toba/pages/home/main_home_page.dart';
 import 'package:rumah_kreatif_toba/pages/kategori/kategori_produk.dart';
 
@@ -28,7 +29,7 @@ class _HomePageState extends State<HomePage> {
     return [
       MainHomePage(),
       KategoriProduk(),
-      Container(child: Center(child: Text("2 Page"),),),
+      AccountPage()
     ];
   }
 
@@ -83,7 +84,7 @@ class _HomePageState extends State<HomePage> {
   curve: Curves.ease,
   duration: Duration(milliseconds: 200),
   ),
-  navBarStyle: NavBarStyle.style12, // Choose the nav bar style with this property.
+  navBarStyle: NavBarStyle.style13, // Choose the nav bar style with this property.
   );
   }
 }

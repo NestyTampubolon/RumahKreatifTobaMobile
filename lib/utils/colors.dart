@@ -7,4 +7,5 @@ class AppColors{
   static final Color signColor = const Color(0xFFBBCBD);
   static final Color orangeColor = const Color(0xFFFF8300);
   static final Color notification = const Color(0xFF40C4F5);
+  static final Color border = const Color(0xFFF15743);
 }

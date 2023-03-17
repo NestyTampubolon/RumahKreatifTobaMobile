@@ -9,7 +9,9 @@ import 'package:rumah_kreatif_toba/pages/produk/produk_detail.dart';
 import 'package:rumah_kreatif_toba/routes/route_helper.dart';
 import 'package:rumah_kreatif_toba/utils/colors.dart';
 import 'package:rumah_kreatif_toba/widgets/big_text.dart';
+import 'package:rumah_kreatif_toba/widgets/price_text.dart';
 import 'package:rumah_kreatif_toba/widgets/small_text.dart';
+import 'package:rumah_kreatif_toba/widgets/tittle_text.dart';
 
 import '../../utils/dimensions.dart';
 import '../../widgets/currency_format.dart';
@@ -55,29 +57,372 @@ class _HomePageBodyState extends State<HomePageBody> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        // Container(
+        //   height: Dimensions.pageView,
+        //   margin: EdgeInsets.only(top: 10, bottom: 20),
+        //   child: PageView.builder(
+        //       controller: pageController,
+        //       itemCount: 5,
+        //       itemBuilder: (context, position) {
+        //         return _buildPageItem(position);
+        //       }),
+        // ),
+        // new DotsIndicator(
+        //   dotsCount: 5,
+        //   position: _currPageValue,
+        //   decorator: DotsDecorator(
+        //     activeColor: AppColors.redColor,
+        //     size: const Size.square(9.0),
+        //     activeSize: const Size(18.0, 9.0),
+        //     activeShape: RoundedRectangleBorder(
+        //         borderRadius: BorderRadius.circular(5.0)),
+        //   ),
+        // ),
+
         Container(
-          height: Dimensions.pageView,
-          margin: EdgeInsets.only(top: 10, bottom: 20),
-          child: PageView.builder(
-              controller: pageController,
-              itemCount: 5,
-              itemBuilder: (context, position) {
-                return _buildPageItem(position);
-              }),
-        ),
-        new DotsIndicator(
-          dotsCount: 5,
-          position: _currPageValue,
-          decorator: DotsDecorator(
-            activeColor: AppColors.redColor,
-            size: const Size.square(9.0),
-            activeSize: const Size(18.0, 9.0),
-            activeShape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5.0)),
+          height: 230,
+          margin: EdgeInsets.only(
+              left: Dimensions.width20,
+              top: Dimensions.height10,
+              right: Dimensions.width20),
+          child: GridView.count(
+            crossAxisCount: 4,
+            mainAxisSpacing: 10,
+            crossAxisSpacing: 10,
+            children: <Widget>[
+              Container(
+                width: 200,
+                height: 200,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
+                  border: Border.all(
+                    color: AppColors.border, //                   <--- border color
+                    width: 0.5,
+                  ),
+                ),
+                child: GestureDetector(
+                  onTap: () {
+                    //Get.to(KategoriProdukDetail(), arguments: "Makanan");
+                  },
+                  child: Column(
+                    mainAxisAlignment:
+                    MainAxisAlignment.center,
+                    children: [
+                      //image section
+                      Container(
+                        height: 40,
+                        width: 40,
+                        margin: EdgeInsets.only(
+                            left: Dimensions.width10 / 2,
+                            right: Dimensions.width10 / 2,
+                            top: Dimensions.height10 / 2,
+                            bottom: Dimensions.height10 / 2),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          image: DecorationImage(
+                              fit: BoxFit.fill,
+                              image:
+                              AssetImage("assets/images/beranda/Makanan Terdekat.png")),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(
+                            left: Dimensions.width10 / 4,
+                            right: Dimensions.width10 / 4),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text("Makanan Terdekat",textAlign: TextAlign.center, style: TextStyle(fontSize: Dimensions.height20/2) )
+                          ],
+                        ),
+                      )
+                      //text container
+                    ],
+                  ),
+                ),
+              ),
+
+              //Minuman
+              Container(
+                width: 200,
+                height: 200,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
+                  border: Border.all(
+                    color: AppColors.border, //                   <--- border color
+                    width:  0.5,
+                  ),
+                ),
+                child: GestureDetector(
+                  onTap: () {
+                  //  Get.to(KategoriProdukDetail(), arguments: "Minuman");
+                  },
+                  child: Column(
+                    mainAxisAlignment:
+                    MainAxisAlignment.center,
+                    children: [
+                      //image section
+                      Container(
+                        height: 40,
+                        width: 40,
+                        margin: EdgeInsets.only(
+                            left: Dimensions.width10 / 2,
+                            right: Dimensions.width10 / 2,
+                            top: Dimensions.height10 / 2,
+                            bottom: Dimensions.height10 / 2),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          image: DecorationImage(
+                              fit: BoxFit.fill,
+                              image:
+                              AssetImage("assets/images/beranda/Minuman Terdekat.png")),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(
+                            left: Dimensions.width10 / 4,
+                            right: Dimensions.width10 / 4),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Minuman Terdekat",textAlign: TextAlign.center, style: TextStyle(fontSize: Dimensions.height20/2) )
+                          ],
+                        ),
+                      )
+                      //text container
+                    ],
+                  ),
+                ),
+              ),
+
+              //PAKAIAN
+              Container(
+                width: 200,
+                height: 200,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
+                  border: Border.all(
+                    color: AppColors.border, //                   <--- border color
+                    width: 0.5,
+                  ),
+                ),
+                child: GestureDetector(
+                  onTap: () {
+                //    Get.to(KategoriProdukDetail(), arguments: "Pakaian");
+                  },
+                  child: Column(
+                    mainAxisAlignment:
+                    MainAxisAlignment.center,
+                    children: [
+                      //image section
+                      Container(
+                        height: 40,
+                        width: 40,
+                        margin: EdgeInsets.only(
+                            left: Dimensions.width10 / 2,
+                            right: Dimensions.width10 / 2,
+                            top: Dimensions.height10 / 2,
+                            bottom: Dimensions.height10 / 2),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          image: DecorationImage(
+                              fit: BoxFit.fill,
+                              image:
+                              AssetImage("assets/images/beranda/Promo Hari Ini.png")),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(
+                            left: Dimensions.width10 / 4,
+                            right: Dimensions.width10 / 4),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            BigText(
+                              text: "Promo Hari Ini",
+                              size: Dimensions.font20 / 2,
+                            ),
+                          ],
+                        ),
+                      )
+                      //text container
+                    ],
+                  ),
+                ),
+              ),
+
+              //Official Store
+              Container(
+                width: 200,
+                height: 200,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
+                  border: Border.all(
+                    color: AppColors.border, //                   <--- border color
+                    width: 0.5,
+                  ),
+                ),
+                child: GestureDetector(
+                  onTap: () {
+                 //   Get.to(KategoriProdukDetail(), arguments: "Souvenir");
+                  },
+                  child: Column(
+                    mainAxisAlignment:
+                    MainAxisAlignment.center,
+                    children: [
+                      //image section
+                      Container(
+                        height: 40,
+                        width: 40,
+                        margin: EdgeInsets.only(
+                            left: Dimensions.width10 / 2,
+                            right: Dimensions.width10 / 2,
+                            top: Dimensions.height10 / 2,
+                            bottom: Dimensions.height10 / 2),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          image: DecorationImage(
+                              fit: BoxFit.fill,
+                              image: AssetImage(
+                                  "assets/images/beranda/Official Store.png")),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(
+                            left: Dimensions.width10 / 4,
+                            right: Dimensions.width10 / 4),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            BigText(
+                              text: "Official Store",
+                              size: Dimensions.font20 / 2,
+                            ),
+                          ],
+                        ),
+                      )
+                      //text container
+                    ],
+                  ),
+                ),
+              ),
+
+              //Fashion Wanita
+              Container(
+                width: 200,
+                height: 200,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
+                  border: Border.all(
+                    color: AppColors.border, //                   <--- border color
+                    width: 0.5,
+                  ),
+                ),
+                child: GestureDetector(
+                  onTap: () {
+                 //   Get.to(KategoriProdukDetail(), arguments: "Perlengkapan Rumah");
+                  },
+                  child: Column(
+                    mainAxisAlignment:
+                    MainAxisAlignment.center,
+                    children: [
+                      //image section
+                      Container(
+                        height: 40,
+                        width: 40,
+                        margin: EdgeInsets.only(
+                            left: Dimensions.width10 / 2,
+                            right: Dimensions.width10 / 2,
+                            top: Dimensions.height10 / 2,
+                            bottom: Dimensions.height10 / 2),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          image: DecorationImage(
+                              fit: BoxFit.fill,
+                              image: AssetImage(
+                                  "assets/images/beranda/Fashion Wanita.png")),
+                        ),
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text("Fashion Wanita",textAlign: TextAlign.center, style: TextStyle(fontSize: Dimensions.height20/2) )
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              //Fashion Pria
+              Container(
+                width: 200,
+                height: 200,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
+                  border: Border.all(
+                    color: AppColors.border, //                   <--- border color
+                    width: 0.5,
+                  ),
+                ),
+                child: GestureDetector(
+                  onTap: () {
+                //    Get.to(KategoriProdukDetail(), arguments: "Ulos");
+                  },
+                  child: Column(
+                    mainAxisAlignment:
+                    MainAxisAlignment.center,
+                    children: [
+                      //image section
+                      Container(
+                        height: 40,
+                        width: 40,
+                        margin: EdgeInsets.only(
+                            left: Dimensions.width10 / 2,
+                            right: Dimensions.width10 / 2,
+                            top: Dimensions.height10 / 2,
+                            bottom: Dimensions.height10 / 2),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          image: DecorationImage(
+                              fit: BoxFit.fill,
+                              image: AssetImage("assets/images/beranda/Fashion Pria.png")),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(
+                            left: Dimensions.width10 / 4,
+                            right: Dimensions.width10 / 4),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            BigText(
+                              text: "Fashion Pria",
+                              size: Dimensions.font20 / 2,
+                            ),
+                          ],
+                        ),
+                      )
+                      //text container
+                    ],
+                  ),
+                ),
+              ),
+
+            ],
           ),
-        ),
-        SizedBox(
-          height: Dimensions.height45,
         ),
 
         //Populer produk
@@ -91,7 +436,7 @@ class _HomePageBodyState extends State<HomePageBody> {
           ),
         ),
         Container(
-          height: 250,
+          height: 280,
           margin: EdgeInsets.only(top: 10, bottom: 20),
           child: PageView.builder(
               controller: pageControllerPopulerProduct,
@@ -127,102 +472,102 @@ class _HomePageBodyState extends State<HomePageBody> {
         SizedBox(
           height: Dimensions.height30,
         ),
-        Container(
-          margin: EdgeInsets.only(left: Dimensions.width20),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              BigText(text: "Produk Terlaris"),
-            ],
-          ),
-        ),
-        GetBuilder<PopularProdukController>(builder: (popularProduk) {
-          return popularProduk.isLoaded
-              ? GridView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2, mainAxisExtent: 256),
-
-                  itemCount: popularProduk.popularProdukList.length,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        Get.toNamed(RouteHelper.getProdukDetail(
-                            popularProduk.popularProdukList[index].productId));
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(15),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 3,
-                                blurRadius: 10,
-                                offset: Offset(0, 3),
-                              )
-                            ]),
-                        margin: EdgeInsets.only(
-                            left: Dimensions.width20,
-                            right: Dimensions.width20,
-                            bottom: Dimensions.height10),
-                        child: GestureDetector(
-                          onTap: () {
-                            Get.toNamed(RouteHelper.getProdukDetail(
-                                popularProduk
-                                    .popularProdukList[index].productId));
-//                        Get.toNamed(RouteHelper.getProdukDetail(index));
-                          },
-                          child: Column(
-                            children: [
-                              //image section
-                              Container(
-                                width: 180,
-                                height: 120,
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        fit: BoxFit.cover,
-                                        image: AssetImage(
-                                            "assets/images/coffee.jpg"))),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(
-                                    left: Dimensions.width10,
-                                    right: Dimensions.width10),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    BigText(
-                                      text: popularProduk
-                                          .popularProdukList[index].productName.toString(),
-                                      size: Dimensions.font20,
-                                    ),
-                                    SizedBox(
-                                      height: Dimensions.height10,
-                                    ),
-                                    BigText(
-                                      text: CurrencyFormat.convertToIdr(
-                                          popularProduk
-                                              .popularProdukList[index].price,
-                                          0),
-                                      color: AppColors.redColor,
-                                      size: Dimensions.font16,
-                                    ),
-                                  ],
-                                ),
-                              )
-                              //text container
-                            ],
-                          ),
-                        ),
-                      ),
-                    );
-                  })
-              : CircularProgressIndicator(
-                  color: AppColors.redColor,
-                );
-        })
+//         Container(
+//           margin: EdgeInsets.only(left: Dimensions.width20),
+//           child: Row(
+//             crossAxisAlignment: CrossAxisAlignment.center,
+//             children: [
+//               BigText(text: "Produk Terlaris"),
+//             ],
+//           ),
+//         ),
+//         GetBuilder<PopularProdukController>(builder: (popularProduk) {
+//           return popularProduk.isLoaded
+//               ? GridView.builder(
+//                   physics: const NeverScrollableScrollPhysics(),
+//                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+//                       crossAxisCount: 2, mainAxisExtent: 256),
+//
+//                   itemCount: popularProduk.popularProdukList.length,
+//                   shrinkWrap: true,
+//                   itemBuilder: (context, index) {
+//                     return GestureDetector(
+//                       onTap: () {
+//                         Get.toNamed(RouteHelper.getProdukDetail(
+//                             popularProduk.popularProdukList[index].productId));
+//                       },
+//                       child: Container(
+//                         decoration: BoxDecoration(
+//                             color: Colors.white,
+//                             borderRadius: BorderRadius.circular(15),
+//                             boxShadow: [
+//                               BoxShadow(
+//                                 color: Colors.grey.withOpacity(0.5),
+//                                 spreadRadius: 3,
+//                                 blurRadius: 10,
+//                                 offset: Offset(0, 3),
+//                               )
+//                             ]),
+//                         margin: EdgeInsets.only(
+//                             left: Dimensions.width20,
+//                             right: Dimensions.width20,
+//                             bottom: Dimensions.height10),
+//                         child: GestureDetector(
+//                           onTap: () {
+//                             Get.toNamed(RouteHelper.getProdukDetail(
+//                                 popularProduk
+//                                     .popularProdukList[index].productId));
+// //                        Get.toNamed(RouteHelper.getProdukDetail(index));
+//                           },
+//                           child: Column(
+//                             children: [
+//                               //image section
+//                               Container(
+//                                 width: 180,
+//                                 height: 120,
+//                                 decoration: BoxDecoration(
+//                                     image: DecorationImage(
+//                                         fit: BoxFit.cover,
+//                                         image: AssetImage(
+//                                             "assets/images/coffee.jpg"))),
+//                               ),
+//                               Container(
+//                                 margin: EdgeInsets.only(
+//                                     left: Dimensions.width10,
+//                                     right: Dimensions.width10),
+//                                 child: Column(
+//                                   crossAxisAlignment: CrossAxisAlignment.start,
+//                                   children: [
+//                                     BigText(
+//                                       text: popularProduk
+//                                           .popularProdukList[index].productName.toString(),
+//                                       size: Dimensions.font20,
+//                                     ),
+//                                     SizedBox(
+//                                       height: Dimensions.height10,
+//                                     ),
+//                                     BigText(
+//                                       text: CurrencyFormat.convertToIdr(
+//                                           popularProduk
+//                                               .popularProdukList[index].price,
+//                                           0),
+//                                       color: AppColors.redColor,
+//                                       size: Dimensions.font16,
+//                                     ),
+//                                   ],
+//                                 ),
+//                               )
+//                               //text container
+//                             ],
+//                           ),
+//                         ),
+//                       ),
+//                     );
+//                   })
+//               : CircularProgressIndicator(
+//                   color: AppColors.redColor,
+//                 );
+//         })
       ],
     );
   }
@@ -292,7 +637,8 @@ class _HomePageBodyState extends State<HomePageBody> {
                               .popularProdukList[index].productId));
                         },
                         child: Container(
-                          width: 180,
+                          width: 150,
+                          height: 300,
                           decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(15),
@@ -307,7 +653,9 @@ class _HomePageBodyState extends State<HomePageBody> {
                           margin: EdgeInsets.only(
                               left: Dimensions.width20,
                               right: Dimensions.width20,
-                              bottom: Dimensions.height10),
+                              bottom: Dimensions.height20,
+                            top: Dimensions.height10
+                          ),
                           child: GestureDetector(
                             onTap: () {
                               Get.toNamed(RouteHelper.getProdukDetail(
@@ -316,6 +664,10 @@ class _HomePageBodyState extends State<HomePageBody> {
 //                        Get.toNamed(RouteHelper.getProdukDetail(index));
                             },
                             child: Column(
+                              mainAxisAlignment:
+                              MainAxisAlignment.start,
+                              crossAxisAlignment:
+                              CrossAxisAlignment.start,
                               children: [
                                 //image section
                                 Container(
@@ -332,23 +684,33 @@ class _HomePageBodyState extends State<HomePageBody> {
                                               "assets/images/coffee.jpg"))),
                                 ),
                                 Container(
-                                  margin: EdgeInsets.only(
-                                      left: Dimensions.width10,
-                                      right: Dimensions.width10),
+                                  padding: EdgeInsets.all(10.0),
                                   child: Column(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.start,
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       BigText(
                                         text: popularProduk
                                             .popularProdukList[index]
+                                            .namaKategori.toString(),
+                                        size: Dimensions.font16/1.5,
+                                      ),
+
+                                      TittleText(
+                                        text: popularProduk
+                                            .popularProdukList[index]
                                             .productName.toString(),
-                                        size: Dimensions.font20,
+                                        size: Dimensions.font16,
                                       ),
-                                      SizedBox(
-                                        height: Dimensions.height10,
+
+                                      SmallText(
+                                        text: popularProduk
+                                            .popularProdukList[index]
+                                            .namaMerchant.toString(),
                                       ),
-                                      BigText(
+                                      PriceText(
                                         text: CurrencyFormat.convertToIdr(
                                             popularProduk
                                                 .popularProdukList[index].price,
