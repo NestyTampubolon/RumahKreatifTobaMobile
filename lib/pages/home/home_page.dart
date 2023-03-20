@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:rumah_kreatif_toba/pages/account/account_page.dart';
+import 'package:rumah_kreatif_toba/pages/auth/register.dart';
 import 'package:rumah_kreatif_toba/pages/home/main_home_page.dart';
 import 'package:rumah_kreatif_toba/pages/kategori/kategori_produk.dart';
 
 import '../../utils/colors.dart';
+import '../auth/masuk.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -28,6 +30,7 @@ class _HomePageState extends State<HomePage> {
   List<Widget> _buildScreens() {
     return [
       MainHomePage(),
+      Masuk(),
       KategoriProduk(),
       AccountPage()
     ];
@@ -35,6 +38,12 @@ class _HomePageState extends State<HomePage> {
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
+      PersistentBottomNavBarItem(
+        icon: Icon(CupertinoIcons.home),
+        title: ("Home"),
+        activeColorPrimary: AppColors.redColor,
+        inactiveColorPrimary: CupertinoColors.systemGrey,
+      ),
       PersistentBottomNavBarItem(
         icon: Icon(CupertinoIcons.home),
         title: ("Home"),

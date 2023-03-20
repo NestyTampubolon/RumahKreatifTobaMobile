@@ -13,25 +13,27 @@ class AccountWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
-      padding: EdgeInsets.only(left: Dimensions.width20,
-      top: Dimensions.height10,
-      bottom: Dimensions.height10),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 1,
+            offset: Offset(0, 2),
+            color: Colors.grey.withOpacity(0.2),
+          )
+        ],
+      ),
+      padding: EdgeInsets.only(
+        left: Dimensions.width20,
+        top: Dimensions.height10,
+        bottom: Dimensions.height10,
+      ),
       child: Row(
         children: [
           appIcon,
-          SizedBox(width: Dimensions.width20,),
-          bigText
+          SizedBox(width: Dimensions.width20),
+          bigText,
         ],
-      ),
-      decoration: BoxDecoration(
-        boxShadow : [
-          BoxShadow(
-            blurRadius: 2,
-            offset: Offset(0,2),
-            color: Colors.grey.withOpacity(0.2)
-          )
-        ]
       ),
     );
   }

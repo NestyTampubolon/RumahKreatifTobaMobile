@@ -4,6 +4,11 @@ class AppConstants{
 
   static const String BASE_URL = "http://192.168.246.154/tobazonerework/public/api/";
   static const String POPULAR_PRODUCT_URL = "produkjson";
+  static const String REGISTRASI_URL = "register";
+  static const String LOGIN_URL = "login";
+  static const String USER = "user";
 
-  static const String TOKEN = "DBrumahkreatif";
+  static const String TOKEN = "";
+  static const String PHONE = "";
+  static const String PASSWORD = "";
 }

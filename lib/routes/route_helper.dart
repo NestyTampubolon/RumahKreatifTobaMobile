@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rumah_kreatif_toba/pages/auth/masuk.dart';
 import 'package:rumah_kreatif_toba/pages/home/home_page.dart';
 import 'package:rumah_kreatif_toba/pages/home/main_home_page.dart';
 import 'package:rumah_kreatif_toba/pages/kategori/kategori_produk.dart';
@@ -16,6 +17,7 @@ class RouteHelper {
   static const String produkDetail = "/produkjson";
   static const String keranjangPage = "/keranjang";
   static const String kategoriProdukDetail = "/kategoriProdukDetail";
+  static const String masuk = "/login";
 
   static String getSplashPage() => '$splashPage';
   static String getInitial() => '$initial';
@@ -23,10 +25,12 @@ class RouteHelper {
       '$produkDetail/$produkId';
   static String getKeranjangPage() => '$keranjangPage';
   static String getKategoriProdukDetail() => '$kategoriProdukDetail';
+  static String getMasukPage() => '$masuk';
 
   static List<GetPage> routes = [
     GetPage(name: splashPage, page: () => SplashScreen()),
     GetPage(name: initial, page: () => HomePage()),
+    GetPage(name: masuk, page: (){return Masuk();}, transition: Transition.fade),
     GetPage(
       name: produkDetail + '/:produkId', // Add named parameter ":produkId"
       page: () {

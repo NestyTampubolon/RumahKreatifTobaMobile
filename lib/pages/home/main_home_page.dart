@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:rumah_kreatif_toba/controllers/auth_controller.dart';
 import 'package:rumah_kreatif_toba/pages/home/home_page_body.dart';
 import 'package:rumah_kreatif_toba/utils/colors.dart';
 import 'package:rumah_kreatif_toba/widgets/big_text.dart';
@@ -79,8 +80,12 @@ class _MainHomePageState extends State<MainHomePage> {
                           builder: (controller) {
                           return GestureDetector(
                             onTap: () {
-                              if (controller.totalItems >= 1)
+                              if(Get.find<AuthController>().userLoggedIn()){
                                 Get.toNamed(RouteHelper.getKeranjangPage());
+                              }
+                              else{
+                                Get.toNamed(RouteHelper.getMasukPage());
+                              }
                             },
                             child: Stack(
                               children: [
