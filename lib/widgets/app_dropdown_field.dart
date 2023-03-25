@@ -1,36 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../utils/dimensions.dart';
+
 import '../utils/colors.dart';
+import '../utils/dimensions.dart';
 
-enum FormData {
-  Gender,
-}
-class Genders {
-  String genders;
-  Genders(this.genders);
-}
-
-class AppDropdownField extends StatelessWidget {
+class AppDropdownField extends StatefulWidget {
   final String hintText;
   final IconData icon;
-  bool isObscure;
-  AppDropdownField({Key? key, required this.hintText, required this.icon, this.isObscure = false}) : super(key: key);
+  final bool isObscure;
+  final TextEditingController controller;
 
-  FormData? selected;
-  List<DropdownMenuItem> generateItems(List<Genders> genders) {
-    List<DropdownMenuItem> items = [];
-    for (var item in genders) {
-      items.add(DropdownMenuItem(
-        child: Text(item.genders),
-        value: item,
-      ));
-    }
-    return items;
-  }
+  const AppDropdownField({Key? key, required this.hintText, required this.icon, required this.controller, this.isObscure = false}) : super(key: key);
 
-  Genders? selectedGender;
-  List<Genders> genders = [Genders("Laki-Laki"), Genders("Perempuan")];
+  @override
+  _AppDropdownState createState() => _AppDropdownState();
+}
+
+class _AppDropdownState extends State<AppDropdownField> {
+  String dropdownValue = 'Laki-laki';
 
   @override
   Widget build(BuildContext context) {
@@ -51,8 +38,8 @@ class AppDropdownField extends StatelessWidget {
       child: DropdownButtonHideUnderline(
         child: DropdownButtonFormField(
           decoration: InputDecoration(
-              hintText: hintText,
-              prefixIcon: Icon(icon, color: AppColors.redColor,),
+              hintText: widget.hintText,
+              prefixIcon: Icon(widget.icon, color: AppColors.redColor,),
               focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(Dimensions.radius15),
                   borderSide: BorderSide(
@@ -71,24 +58,21 @@ class AppDropdownField extends StatelessWidget {
                 borderRadius: BorderRadius.circular(Dimensions.radius15),
               )
           ),
-          value: selectedGender,
-          items: generateItems(genders),
-          onChanged: (item) {
-              selectedGender = item;
-              Text(
-                (selectedGender != null)
-                    ? selectedGender!.genders
-                    : "Belum ada terpilih",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                    color: Color.fromARGB(
-                        255, 245, 47, 47)),
-              );
-            }
+          value: widget.controller.text.isNotEmpty ? widget.controller.text : null,
+          onChanged: (String? newValue) {
+            setState(() {
+              dropdownValue = newValue!;
+            });
+            widget.controller.text = newValue!;
+          },
+          items: <String>['Laki-laki', 'Perempuan']
+              .map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
         ),
-
-
       ),
     );
   }

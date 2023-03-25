@@ -7,6 +7,8 @@ import '../models/users_models.dart';
 class AuthController extends GetxController implements GetxService{
   final AuthRepo authRepo;
   AuthController({required this.authRepo,});
+  List<dynamic> _userList=[];
+  List<dynamic> get userList => _userList;
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -18,6 +20,7 @@ class AuthController extends GetxController implements GetxService{
     late ResponseModel responseModel;
     if(response.statusCode == 200){
       authRepo.saveUserToken(response.body["token"]);
+      print("My token is" + response.body["token"]);
       responseModel = ResponseModel(true, response.body["token"]);
     }else{
       responseModel = ResponseModel(false, response.statusText!);
@@ -35,7 +38,7 @@ class AuthController extends GetxController implements GetxService{
     if(response.statusCode == 200){
       if (response.body["token"] != null) {
         authRepo.saveUserToken(response.body["token"]);
-        print(response.body["token"].toString());
+        print(response.body["token"]);
       }
       responseModel = ResponseModel(true, response.body["token"]);
     }else{

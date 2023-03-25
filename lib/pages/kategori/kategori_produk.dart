@@ -555,6 +555,63 @@ class _KategoriProdukState extends State<KategoriProduk> {
                     ),
                   ),
 
+                  //ULOS
+                  Container(
+                    width: 200,
+                    height: 200,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(
+                        color: AppColors.border, //                   <--- border color
+                        width: 0.5,
+                      ),
+                    ),
+                    child: GestureDetector(
+                      onTap: () {
+                        Get.to(KategoriProdukDetail(), arguments: "Ulos");
+                      },
+                      child: Column(
+                        mainAxisAlignment:
+                        MainAxisAlignment.center,
+                        children: [
+                          //image section
+                          Container(
+                            height: 40,
+                            width: 40,
+                            margin: EdgeInsets.only(
+                                left: Dimensions.width10 / 2,
+                                right: Dimensions.width10 / 2,
+                                top: Dimensions.height10 / 2,
+                                bottom: Dimensions.height10 / 2),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              image: DecorationImage(
+                                  fit: BoxFit.fill,
+                                  image: AssetImage("assets/images/kategori/Ulos.png")),
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(
+                                left: Dimensions.width10 / 4,
+                                right: Dimensions.width10 / 4),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                BigText(
+                                  text: "Ulos",
+                                  size: Dimensions.font20 / 2,
+                                ),
+                              ],
+                            ),
+                          )
+                          //text container
+                        ],
+                      ),
+                    ),
+                  ),
+
                   //SOUVENIR
                   Container(
                     width: 200,
@@ -662,63 +719,6 @@ class _KategoriProdukState extends State<KategoriProduk> {
                     ),
                   ),
 
-                  //ULOS
-                  Container(
-                    width: 200,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(
-                        color: AppColors.border, //                   <--- border color
-                        width: 0.5,
-                      ),
-                    ),
-                    child: GestureDetector(
-                      onTap: () {
-                        Get.to(KategoriProdukDetail(), arguments: "Ulos");
-                      },
-                      child: Column(
-                        mainAxisAlignment:
-                        MainAxisAlignment.center,
-                        children: [
-                          //image section
-                          Container(
-                            height: 40,
-                            width: 40,
-                            margin: EdgeInsets.only(
-                                left: Dimensions.width10 / 2,
-                                right: Dimensions.width10 / 2,
-                                top: Dimensions.height10 / 2,
-                                bottom: Dimensions.height10 / 2),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              image: DecorationImage(
-                                  fit: BoxFit.fill,
-                                  image: AssetImage("assets/images/kategori/Ulos.png")),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(
-                                left: Dimensions.width10 / 4,
-                                right: Dimensions.width10 / 4),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                BigText(
-                                  text: "Ulos",
-                                  size: Dimensions.font20 / 2,
-                                ),
-                              ],
-                            ),
-                          )
-                          //text container
-                        ],
-                      ),
-                    ),
-                  ),
-
                   //NON HALAL
                   Container(
                     width: 200,
@@ -765,6 +765,63 @@ class _KategoriProdukState extends State<KategoriProduk> {
                               children: [
                                 BigText(
                                   text: "Non Halal",
+                                  size: Dimensions.font20 / 2,
+                                ),
+                              ],
+                            ),
+                          )
+                          //text container
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  //JASA
+                  Container(
+                    width: 200,
+                    height: 200,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(
+                        color: AppColors.border, //
+                        width: 0.5,
+                      ),
+                    ),
+                    child: GestureDetector(
+                      onTap: () {
+                        Get.to(KategoriProdukDetail(), arguments: "Jasa");
+                      },
+                      child: Column(
+                        mainAxisAlignment:
+                        MainAxisAlignment.center,
+                        children: [
+                          //image section
+                          Container(
+                            height: 40,
+                            width: 40,
+                            margin: EdgeInsets.only(
+                                left: Dimensions.width10 / 2,
+                                right: Dimensions.width10 / 2,
+                                top: Dimensions.height10 / 2,
+                                bottom: Dimensions.height10 / 2),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              image: DecorationImage(
+                                  fit: BoxFit.fill,
+                                  image: AssetImage("assets/images/kategori/Jasa.png")),
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(
+                                left: Dimensions.width10 / 4,
+                                right: Dimensions.width10 / 4),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                BigText(
+                                  text: "Jasa",
                                   size: Dimensions.font20 / 2,
                                 ),
                               ],

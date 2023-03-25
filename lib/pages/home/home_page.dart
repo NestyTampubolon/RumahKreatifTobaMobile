@@ -6,7 +6,10 @@ import 'package:rumah_kreatif_toba/pages/account/account_page.dart';
 import 'package:rumah_kreatif_toba/pages/auth/register.dart';
 import 'package:rumah_kreatif_toba/pages/home/main_home_page.dart';
 import 'package:rumah_kreatif_toba/pages/kategori/kategori_produk.dart';
+import 'package:rumah_kreatif_toba/pages/keranjang/keranjang_page.dart';
 
+import '../../controllers/auth_controller.dart';
+import '../../routes/route_helper.dart';
 import '../../utils/colors.dart';
 import '../auth/masuk.dart';
 
@@ -27,10 +30,10 @@ class _HomePageState extends State<HomePage> {
     _controller = PersistentTabController(initialIndex: 0);
   }
 
+
   List<Widget> _buildScreens() {
     return [
       MainHomePage(),
-      Masuk(),
       KategoriProduk(),
       AccountPage()
     ];
@@ -38,12 +41,6 @@ class _HomePageState extends State<HomePage> {
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
-      PersistentBottomNavBarItem(
-        icon: Icon(CupertinoIcons.home),
-        title: ("Home"),
-        activeColorPrimary: AppColors.redColor,
-        inactiveColorPrimary: CupertinoColors.systemGrey,
-      ),
       PersistentBottomNavBarItem(
         icon: Icon(CupertinoIcons.home),
         title: ("Home"),

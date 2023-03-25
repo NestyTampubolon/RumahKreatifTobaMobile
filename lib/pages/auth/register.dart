@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:rumah_kreatif_toba/base/custom_loader.dart';
 import 'package:rumah_kreatif_toba/controllers/auth_controller.dart';
 import 'package:rumah_kreatif_toba/models/users_models.dart';
+import 'package:rumah_kreatif_toba/routes/route_helper.dart';
 import 'package:rumah_kreatif_toba/utils/colors.dart';
 import 'package:rumah_kreatif_toba/widgets/big_text.dart';
 import 'package:get/get.dart';
@@ -16,9 +17,6 @@ import 'package:intl/intl.dart';
 class Register extends StatelessWidget {
   const Register({Key? key}) : super(key: key);
 
-
-
-
   @override
   Widget build(BuildContext context) {
     TextEditingController dateinput = TextEditingController();
@@ -30,38 +28,72 @@ class Register extends StatelessWidget {
     var nomorTeleponController = TextEditingController();
     var tanggalLahirController = TextEditingController();
     var jenisKelaminController = TextEditingController();
+    var genderValue;
+    var birthdayValue;
 
-    void _registration(AuthController authController){
+    Future<void> _registration(AuthController authController) async {
       String name = namaLengkapController.text.trim();
       String username = usernameController.text.trim();
       String password = passwordController.text.trim();
+      String konfirmasiPassword = konfirmasiPasswordController.text.toString();
       String email = emailController.text.trim();
       String no_hp = nomorTeleponController.text.trim();
       String birthday = tanggalLahirController.text.trim();
       String gender = jenisKelaminController.text.trim();
 
-      if(name.isEmpty){
+      DateTime parsedBirthday = DateFormat('dd-MM-yyyy').parse(birthday);
+      String formattedDate = DateFormat('yyyy-MM-dd').format(parsedBirthday);
+      birthdayValue = formattedDate;
+
+      if (jenisKelaminController.text.trim() == "Laki-laki") {
+        gender = "L";
+      } else if (jenisKelaminController.text.trim() == "Perempuan") {
+        gender = "P";
+      }
+
+      if (name.isEmpty) {
         showCustomSnackBar("Nama masih kosong", title: "Nama");
-      }else if(username.isEmpty){
+      } else if (username.isEmpty) {
         showCustomSnackBar("Username masih kosong", title: "Username");
-      }else if(password.isEmpty){
+      } else if (password.isEmpty) {
         showCustomSnackBar("Password masih kosong", title: "Password");
-      }else if(email.isEmpty){
+      } else if (konfirmasiPassword.isEmpty) {
+        showCustomSnackBar("Konfirmasi Password masih kosong",
+            title: "Password");
+      } else if (email.isEmpty) {
         showCustomSnackBar("Email masih kosong", title: "Email");
-      }else if(!GetUtils.isEmail(email)){
+      } else if (!GetUtils.isEmail(email)) {
         showCustomSnackBar("Email tidak sesuai", title: "Invalid Email");
-      }else if(no_hp.isEmpty){
-        showCustomSnackBar("Nomor Telepon masih kosong", title: "Nomor Telepon");
-      }else if(birthday.isEmpty){
-        showCustomSnackBar("Tanggal Lahir masih kosong", title: "Tanggal Lahir");
-      }else if(gender.isEmpty){
-        showCustomSnackBar("Jenis Kelamin masih kosong", title: "Jenis Kelamin");
-      }else{
-        Users users = Users(name: name, username: username, password: password, email: email, no_hp: no_hp, birthday: birthday, gender: gender);
-        authController.registrasi(users).then((status){
-          if(status.isSuccess){
+      } else if (no_hp.isEmpty) {
+        showCustomSnackBar("Nomor Telepon masih kosong",
+            title: "Nomor Telepon");
+      } else if (gender == null) {
+        showCustomSnackBar("Jenis Kelamin masih kosong",
+            title: "Jenis Kelamin");
+      } else if (birthdayValue == null) {
+        showCustomSnackBar("Tanggal Lahir masih kosong",
+            title: "Tanggal Lahir");
+      } else if (konfirmasiPassword != password) {
+        showCustomSnackBar("Password tidak sama dengan Konfirmasi Password",
+            title: "Konfirmasi Password");
+      } else {
+        Users users = Users(
+            name: name,
+            username: username,
+            password: password,
+            email: email,
+            noHp: no_hp,
+            birthday: birthdayValue,
+            gender: gender);
+        authController.registrasi(users).then((status) {
+          if (status.isSuccess) {
             print("Sukses registrasi");
-          }else{
+            Get.snackbar("Registrasi", "Akun sudah berhasil di daftar silahkan kembali masuk dengan username dan passsword Anda!",
+                backgroundColor: AppColors.redColor,
+                colorText: Colors.white
+            );
+            Get.offNamed(RouteHelper.getInitial());
+          } else {
             showCustomSnackBar(status.message);
           }
         });
@@ -69,76 +101,132 @@ class Register extends StatelessWidget {
     }
 
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: GetBuilder<AuthController>(builder: (_authController){
-        return !_authController.isLoading?SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          child: Column(
-            children: [
-              SizedBox(height: Dimensions.screenHeight*0.05,),
-              Container(
-                width: Dimensions.screenHeight*0.25,
-                height: Dimensions.screenHeight*0.25,
-                margin: EdgeInsets.only(
-                    left: Dimensions.width10,
-                    right: Dimensions.width10),
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage(
-                            "assets/images/logo_rkt.png"))),
-              ),
-              AppTextField(textController: namaLengkapController, hintText: 'Nama Lengkap', icon: Icons.person,),
-              SizedBox(height: Dimensions.height20,),
-              AppTextField(textController: usernameController, hintText: 'Username', icon: Icons.person,),
-              SizedBox(height: Dimensions.height20,),
-              AppTextField(textController: emailController, hintText: 'Email', icon: Icons.mail,),
-              SizedBox(height: Dimensions.height20,),
-              AppTextField(textController: passwordController, hintText: 'Password', icon: Icons.lock, isObscure: true,),
-              SizedBox(height: Dimensions.height20,),
-              AppTextField(textController: konfirmasiPasswordController, hintText: 'Konfirmasi Password', icon: Icons.lock, isObscure: true,),
-              SizedBox(height: Dimensions.height20,),
-              AppTextField(textController: nomorTeleponController, hintText: 'Nomor Telepon', icon: Icons.phone_android,textInputType: TextInputType.number,),
-              SizedBox(height: Dimensions.height20,),
-              AppDateField(textController: tanggalLahirController, hintText: 'Tanggal Lahir', icon: Icons.calendar_today,),
-              SizedBox(height: Dimensions.height20,),
-              AppDropdownField(hintText: 'Jenis Kelamin', icon: Icons.people,),
-              SizedBox(height: Dimensions.height20,),
-              GestureDetector(
-                onTap : () {
-                  _registration(_authController);
-                },
-                child: Container(
-                    width: Dimensions.screenWidth/2,
-                    height: Dimensions.screenHeight/13,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(Dimensions.radius30),
-                        color: AppColors.redColor
-                    ),
-                    child: Center(
-                      child: BigText(text: "Daftar",
-                        size: Dimensions.font20,color: Colors.white,),
-                    )
-
-
-                ),
-              ),
-
-              SizedBox(height: Dimensions.height10,),
-              RichText(text: TextSpan(
-                  recognizer: TapGestureRecognizer()..onTap=()=>Get.back(),
-                  text: "Sudah memiliki akun?",
-                  style: TextStyle(
-                      color: Colors.grey[500],
-                      fontSize: Dimensions.font20
-                  )
-              )),
-              SizedBox(height: Dimensions.height15,),
-
-            ],
-          ),
-        ):CustomLoader();
-      })
-    );
+        backgroundColor: Colors.white,
+        body: GetBuilder<AuthController>(builder: (_authController) {
+          return !_authController.isLoading
+              ? SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: Dimensions.screenHeight * 0.05,
+                      ),
+                      Container(
+                        width: Dimensions.screenHeight * 0.25,
+                        height: Dimensions.screenHeight * 0.25,
+                        margin: EdgeInsets.only(
+                            left: Dimensions.width10,
+                            right: Dimensions.width10),
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image:
+                                    AssetImage("assets/images/logo_rkt.png"))),
+                      ),
+                      AppTextField(
+                        textController: namaLengkapController,
+                        hintText: 'Nama Lengkap',
+                        icon: Icons.person,
+                      ),
+                      SizedBox(
+                        height: Dimensions.height20,
+                      ),
+                      AppTextField(
+                        textController: usernameController,
+                        hintText: 'Username',
+                        icon: Icons.person,
+                      ),
+                      SizedBox(
+                        height: Dimensions.height20,
+                      ),
+                      AppTextField(
+                        textController: emailController,
+                        hintText: 'Email',
+                        icon: Icons.mail,
+                      ),
+                      SizedBox(
+                        height: Dimensions.height20,
+                      ),
+                      AppTextField(
+                        textController: passwordController,
+                        hintText: 'Password',
+                        icon: Icons.lock,
+                        isObscure: true,
+                      ),
+                      SizedBox(
+                        height: Dimensions.height20,
+                      ),
+                      AppTextField(
+                        textController: konfirmasiPasswordController,
+                        hintText: 'Konfirmasi Password',
+                        icon: Icons.lock,
+                        isObscure: true,
+                      ),
+                      SizedBox(
+                        height: Dimensions.height20,
+                      ),
+                      AppTextField(
+                        textController: nomorTeleponController,
+                        hintText: 'Nomor Telepon',
+                        icon: Icons.phone_android,
+                        textInputType: TextInputType.number,
+                      ),
+                      SizedBox(
+                        height: Dimensions.height20,
+                      ),
+                      AppDropdownField(
+                        hintText: 'Jenis Kelamin',
+                        icon: Icons.people,
+                        controller: jenisKelaminController,
+                      ),
+                      SizedBox(
+                        height: Dimensions.height20,
+                      ),
+                      AppDateField(
+                        textController: tanggalLahirController,
+                        hintText: 'Tanggal Lahir',
+                        icon: Icons.calendar_today,
+                      ),
+                      SizedBox(
+                        height: Dimensions.height20,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          _registration(_authController);
+                        },
+                        child: Container(
+                            width: Dimensions.screenWidth / 2,
+                            height: Dimensions.screenHeight / 13,
+                            decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.circular(Dimensions.radius30),
+                                color: AppColors.redColor),
+                            child: Center(
+                              child: BigText(
+                                text: "Daftar",
+                                size: Dimensions.font20,
+                                color: Colors.white,
+                              ),
+                            )),
+                      ),
+                      SizedBox(
+                        height: Dimensions.height10,
+                      ),
+                      RichText(
+                          text: TextSpan(
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () => Get.back(),
+                              text: "Sudah memiliki akun?",
+                              style: TextStyle(
+                                  color: Colors.grey[500],
+                                  fontSize: Dimensions.font20))),
+                      SizedBox(
+                        height: Dimensions.height15,
+                      ),
+                    ],
+                  ),
+                )
+              : CustomLoader();
+        }));
   }
 }
