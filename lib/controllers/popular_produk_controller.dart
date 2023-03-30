@@ -5,7 +5,7 @@ import 'package:rumah_kreatif_toba/models/produk_models.dart';
 import 'package:rumah_kreatif_toba/utils/colors.dart';
 import 'dart:convert';
 
-import '../data/repository/popular_produk_repo.dart';
+import '../data/repository/produk_repo.dart';
 import '../models/cart_models.dart';
 
 
@@ -14,10 +14,14 @@ class PopularProdukController extends GetxController{
   PopularProdukController({required this.popularProdukRepo});
   List<dynamic> _popularProdukList=[];
   List<dynamic> get popularProdukList => _popularProdukList;
+
+  List<dynamic> _kategoriProdukList=[];
+  List<dynamic> get kategoriProdukList => _kategoriProdukList;
   late CartController _cart;
 
   bool _isLoaded = false;
   bool get isLoaded => _isLoaded;
+
   Future<void> getPopularProdukList() async{
     Response response = await popularProdukRepo.getPopularProdukList();
     if(response.statusCode == 200){
@@ -26,6 +30,22 @@ class PopularProdukController extends GetxController{
       for (dynamic item in responseBody) {
         Produk produk = Produk.fromJson(item);
         _popularProdukList.add(produk);
+      }
+      _isLoaded = true;
+      update();
+    }else{
+
+    }
+  }
+
+  Future<void> getKategoriProdukList(String namaKategori) async{
+    Response response = await popularProdukRepo.getKategoriProdukList(namaKategori);
+    if(response.statusCode == 200){
+      List<dynamic> responseBody = response.body;
+      _kategoriProdukList = [];
+      for (dynamic item in responseBody) {
+        Produk produk = Produk.fromJson(item);
+        _kategoriProdukList.add(produk);
       }
       _isLoaded = true;
       update();
@@ -92,14 +112,14 @@ class PopularProdukController extends GetxController{
     update();
   }
 
-  int get totalItems{
-    return _cart.totalItems;
-  }
+
+
   List<CartModel> get getItems{
     return _cart.getItems;
   }
-  // int get totalItems{
-  //   return _cart.totalItems;
-  // }
+
+  int get totalItems{
+    return _cart.totalItems;
+  }
 
 }

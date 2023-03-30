@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rumah_kreatif_toba/controllers/auth_controller.dart';
+import 'package:rumah_kreatif_toba/controllers/cart_controller.dart';
 import 'package:rumah_kreatif_toba/pages/home/home_page_body.dart';
 import 'package:rumah_kreatif_toba/utils/colors.dart';
 import 'package:rumah_kreatif_toba/widgets/big_text.dart';
@@ -26,7 +27,7 @@ class _MainHomePageState extends State<MainHomePage> {
           Container(
             child: Container(
               margin: EdgeInsets.only(
-                  top: Dimensions.height45, bottom: Dimensions.height10),
+                  top: Dimensions.height30, bottom: Dimensions.height10),
               padding: EdgeInsets.only(
                   left: Dimensions.width20, right: Dimensions.width20),
               child: Row(
@@ -76,7 +77,7 @@ class _MainHomePageState extends State<MainHomePage> {
                                 BorderRadius.circular(Dimensions.radius15),
                             color: AppColors.redColor),
                       ),
-                      GetBuilder<PopularProdukController>(
+                      GetBuilder<CartController>(
                           builder: (controller) {
                           return GestureDetector(
                             onTap: () {
@@ -90,7 +91,7 @@ class _MainHomePageState extends State<MainHomePage> {
                             child: Stack(
                               children: [
                                 AppIcon(icon: Icons.shopping_cart_outlined, size: Dimensions.height45, iconColor: AppColors.redColor, backgroundColor: Colors.white.withOpacity(0.0),),
-                                Get.find<PopularProdukController>().inCartItems >= 1
+                                controller.keranjangList.length >= 1
                                     ? Positioned(
                                     right: 0,
                                     top: 0,
@@ -101,14 +102,12 @@ class _MainHomePageState extends State<MainHomePage> {
                                       backgroundColor: AppColors.notification,
                                     ))
                                     : Container(),
-                                Get.find<PopularProdukController>().inCartItems >= 1
+                                controller.keranjangList.length >= 1
                                     ? Positioned(
                                   right: 3,
                                   top: 3,
                                   child: BigText(
-                                    text: Get.find<PopularProdukController>()
-                                        .totalItems
-                                        .toString(),
+                                    text: controller.keranjangList.length.toString(),
                                     size: 12,
                                     color: Colors.white,
                                   ),

@@ -12,4 +12,10 @@ class PopularProdukRepo extends GetxService{
     return await apiClient.getData(AppConstants.POPULAR_PRODUCT_URL);
   }
 
+  Future<Response> getKategoriProdukList(String namaKategori) async{
+    return await apiClient.postData(AppConstants.KATEGORI_PRODUCT_URL, {"nama_kategori": namaKategori});
+  }
+
+
+
 }

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rumah_kreatif_toba/controllers/cart_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/popular_produk_controller.dart';
 import 'package:rumah_kreatif_toba/pages/home/home_page.dart';
 import 'package:rumah_kreatif_toba/pages/home/home_page_body.dart';
 import 'package:rumah_kreatif_toba/pages/home/main_home_page.dart';
 import 'package:rumah_kreatif_toba/pages/keranjang/keranjang_page.dart';
+import 'package:rumah_kreatif_toba/pages/pembelian/pembelian_page.dart';
 import 'package:rumah_kreatif_toba/pages/produk/produk_detail.dart';
 import 'package:rumah_kreatif_toba/routes/route_helper.dart';
 import 'helper/dependencies.dart' as dep;
@@ -24,15 +26,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.find<PopularProdukController>().getPopularProdukList();
+    Get.find<CartController>().getKeranjangList();
 
     return GetBuilder<PopularProdukController>(builder: (_){
-      return GetMaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Rumah Kreatif Toba',
-        // home: MainHomePage(),
-        initialRoute: RouteHelper.getSplashPage(),
-        getPages: RouteHelper.routes,
-      );
+      return GetBuilder<CartController>(builder: (_){
+        return GetMaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Rumah Kreatif Toba',
+           // home: PembelianPage(),
+          initialRoute: RouteHelper.getSplashPage(),
+          getPages: RouteHelper.routes,
+        );
+      });
+
     },);
 
   }

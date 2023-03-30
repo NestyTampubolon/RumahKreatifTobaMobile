@@ -4,7 +4,7 @@ import 'package:rumah_kreatif_toba/controllers/cart_controller.dart';
 import 'package:rumah_kreatif_toba/data/api/api_client.dart';
 import 'package:rumah_kreatif_toba/data/repository/auth_repo.dart';
 import 'package:rumah_kreatif_toba/data/repository/cart_repo.dart';
-import 'package:rumah_kreatif_toba/data/repository/popular_produk_repo.dart';
+import 'package:rumah_kreatif_toba/data/repository/produk_repo.dart';
 import 'package:rumah_kreatif_toba/data/repository/user_repo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -24,7 +24,7 @@ Future<void> init() async{
   //Get.lazyPut(() => ApiClient(appBaseUrl: "https://mvs.bslmeiyu.com"));
   //repos
   Get.lazyPut(() => PopularProdukRepo(apiClient: Get.find()));
-  Get.lazyPut(() => CartRepo(sharedPreferences: Get.find()));
+  Get.lazyPut(() => CartRepo(apiClient: Get.find(),sharedPreferences: Get.find()));
 
   //controllers
   Get.lazyPut(() => AuthController(authRepo: Get.find()));

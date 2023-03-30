@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rumah_kreatif_toba/controllers/popular_produk_controller.dart';
 import 'package:rumah_kreatif_toba/pages/kategori/kategori_produk_detail.dart';
 import 'package:rumah_kreatif_toba/utils/dimensions.dart';
 import 'package:rumah_kreatif_toba/widgets/big_text.dart';
 
+import '../../base/show_custom_message.dart';
 import '../../routes/route_helper.dart';
 import '../../utils/colors.dart';
 
@@ -353,26 +355,32 @@ import '../../utils/colors.dart';
 //   }
 // }
 
-class KategoriProduk extends StatefulWidget {
+
+class KategoriProduk extends StatelessWidget {
   const KategoriProduk({Key? key}) : super(key: key);
 
-  @override
-  State<KategoriProduk> createState() => _KategoriProdukState();
-}
 
-class _KategoriProdukState extends State<KategoriProduk> {
   @override
   Widget build(BuildContext context) {
+    var kategori;
+    Future<void> _getProduk(PopularProdukController produkController)async {
+      produkController.getKategoriProdukList(kategori);
+    }
+
     return Scaffold(
-        //backgroundColor: Colors.blue[100],
-        body: Column(
+      //backgroundColor: Colors.blue[100],
+        body: GetBuilder<PopularProdukController>(builder: (_produkController) {
+        return Column(
           children: [
             Container(
               margin: EdgeInsets.only(
                   left: Dimensions.width20,
                   top: Dimensions.height45,
                   right: Dimensions.width20),
-              child: BigText(text: "Kategori", size: Dimensions.font26*1.5,),
+              child: BigText(
+                text: "Kategori",
+                size: Dimensions.font26 * 1.5,
+              ),
             ),
             Container(
               height: 300,
@@ -392,17 +400,19 @@ class _KategoriProdukState extends State<KategoriProduk> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(15),
                       border: Border.all(
-                        color: AppColors.border, //                   <--- border color
+                        color:
+                        AppColors.border, //                   <--- border color
                         width: 0.5,
                       ),
                     ),
                     child: GestureDetector(
                       onTap: () {
-                          Get.to(KategoriProdukDetail(), arguments: "Makanan");
-                        },
+                        Get.to(KategoriProdukDetail(), arguments: "Makanan");
+                        kategori = "Makanan";
+                        _getProduk(_produkController);
+                      },
                       child: Column(
-                        mainAxisAlignment:
-                        MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           //image section
                           Container(
@@ -417,8 +427,8 @@ class _KategoriProdukState extends State<KategoriProduk> {
                               borderRadius: BorderRadius.circular(15),
                               image: DecorationImage(
                                   fit: BoxFit.fill,
-                                  image:
-                                  AssetImage("assets/images/kategori/Makanan.png")),
+                                  image: AssetImage(
+                                      "assets/images/kategori/Makanan.png")),
                             ),
                           ),
                           Container(
@@ -429,7 +439,10 @@ class _KategoriProdukState extends State<KategoriProduk> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Text("Makanan",textAlign: TextAlign.center, style: TextStyle(fontSize: Dimensions.height20/2) )
+                                Text("Makanan",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontSize: Dimensions.height20 / 2))
                               ],
                             ),
                           )
@@ -447,17 +460,19 @@ class _KategoriProdukState extends State<KategoriProduk> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(15),
                       border: Border.all(
-                        color: AppColors.border, //                   <--- border color
-                        width:  0.5,
+                        color:
+                        AppColors.border, //                   <--- border color
+                        width: 0.5,
                       ),
                     ),
                     child: GestureDetector(
                       onTap: () {
                         Get.to(KategoriProdukDetail(), arguments: "Minuman");
+                        kategori = "Minuman";
+                        _getProduk(_produkController);
                       },
                       child: Column(
-                        mainAxisAlignment:
-                        MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           //image section
                           Container(
@@ -472,8 +487,8 @@ class _KategoriProdukState extends State<KategoriProduk> {
                               borderRadius: BorderRadius.circular(15),
                               image: DecorationImage(
                                   fit: BoxFit.fill,
-                                  image:
-                                  AssetImage("assets/images/kategori/Minuman.png")),
+                                  image: AssetImage(
+                                      "assets/images/kategori/Minuman.png")),
                             ),
                           ),
                           Container(
@@ -505,17 +520,19 @@ class _KategoriProdukState extends State<KategoriProduk> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(15),
                       border: Border.all(
-                        color: AppColors.border, //                   <--- border color
+                        color:
+                        AppColors.border, //                   <--- border color
                         width: 0.5,
                       ),
                     ),
                     child: GestureDetector(
                       onTap: () {
                         Get.to(KategoriProdukDetail(), arguments: "Pakaian");
+                        kategori = "Pakaian";
+                        _getProduk(_produkController);
                       },
                       child: Column(
-                        mainAxisAlignment:
-                        MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           //image section
                           Container(
@@ -530,8 +547,8 @@ class _KategoriProdukState extends State<KategoriProduk> {
                               borderRadius: BorderRadius.circular(15),
                               image: DecorationImage(
                                   fit: BoxFit.fill,
-                                  image:
-                                  AssetImage("assets/images/kategori/Pakaian.png")),
+                                  image: AssetImage(
+                                      "assets/images/kategori/Pakaian.png")),
                             ),
                           ),
                           Container(
@@ -563,17 +580,19 @@ class _KategoriProdukState extends State<KategoriProduk> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(15),
                       border: Border.all(
-                        color: AppColors.border, //                   <--- border color
+                        color:
+                        AppColors.border, //                   <--- border color
                         width: 0.5,
                       ),
                     ),
                     child: GestureDetector(
                       onTap: () {
                         Get.to(KategoriProdukDetail(), arguments: "Ulos");
+                        kategori = "Ulos";
+                        _getProduk(_produkController);
                       },
                       child: Column(
-                        mainAxisAlignment:
-                        MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           //image section
                           Container(
@@ -588,7 +607,8 @@ class _KategoriProdukState extends State<KategoriProduk> {
                               borderRadius: BorderRadius.circular(15),
                               image: DecorationImage(
                                   fit: BoxFit.fill,
-                                  image: AssetImage("assets/images/kategori/Ulos.png")),
+                                  image: AssetImage(
+                                      "assets/images/kategori/Ulos.png")),
                             ),
                           ),
                           Container(
@@ -620,17 +640,19 @@ class _KategoriProdukState extends State<KategoriProduk> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(15),
                       border: Border.all(
-                        color: AppColors.border, //                   <--- border color
+                        color:
+                        AppColors.border, //                   <--- border color
                         width: 0.5,
                       ),
                     ),
                     child: GestureDetector(
                       onTap: () {
                         Get.to(KategoriProdukDetail(), arguments: "Souvenir");
+                        kategori = "Souvenir";
+                        _getProduk(_produkController);
                       },
                       child: Column(
-                        mainAxisAlignment:
-                        MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           //image section
                           Container(
@@ -678,17 +700,20 @@ class _KategoriProdukState extends State<KategoriProduk> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(15),
                       border: Border.all(
-                        color: AppColors.border, //                   <--- border color
+                        color:
+                        AppColors.border, //                   <--- border color
                         width: 0.5,
                       ),
                     ),
                     child: GestureDetector(
                       onTap: () {
-                        Get.to(KategoriProdukDetail(), arguments: "Perlengkapan Rumah");
+                        Get.to(KategoriProdukDetail(),
+                            arguments: "Perlengkapan Rumah");
+                        kategori = "Perlengkapan Rumah";
+                        _getProduk(_produkController);
                       },
                       child: Column(
-                        mainAxisAlignment:
-                        MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           //image section
                           Container(
@@ -711,7 +736,10 @@ class _KategoriProdukState extends State<KategoriProduk> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Text("Perlengkapan Rumah",textAlign: TextAlign.center, style: TextStyle(fontSize: Dimensions.height20/2) )
+                              Text("Perlengkapan Rumah",
+                                  textAlign: TextAlign.center,
+                                  style:
+                                  TextStyle(fontSize: Dimensions.height20 / 2))
                             ],
                           ),
                         ],
@@ -734,10 +762,11 @@ class _KategoriProdukState extends State<KategoriProduk> {
                     child: GestureDetector(
                       onTap: () {
                         Get.to(KategoriProdukDetail(), arguments: "Non Halal");
+                        kategori = "Non Halal";
+                        _getProduk(_produkController);
                       },
                       child: Column(
-                        mainAxisAlignment:
-                        MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           //image section
                           Container(
@@ -752,7 +781,8 @@ class _KategoriProdukState extends State<KategoriProduk> {
                               borderRadius: BorderRadius.circular(15),
                               image: DecorationImage(
                                   fit: BoxFit.fill,
-                                  image: AssetImage("assets/images/kategori/Non Halal.png")),
+                                  image: AssetImage(
+                                      "assets/images/kategori/Non Halal.png")),
                             ),
                           ),
                           Container(
@@ -791,10 +821,11 @@ class _KategoriProdukState extends State<KategoriProduk> {
                     child: GestureDetector(
                       onTap: () {
                         Get.to(KategoriProdukDetail(), arguments: "Jasa");
+                        kategori = "Jasa";
+                        _getProduk(_produkController);
                       },
                       child: Column(
-                        mainAxisAlignment:
-                        MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           //image section
                           Container(
@@ -809,7 +840,8 @@ class _KategoriProdukState extends State<KategoriProduk> {
                               borderRadius: BorderRadius.circular(15),
                               image: DecorationImage(
                                   fit: BoxFit.fill,
-                                  image: AssetImage("assets/images/kategori/Jasa.png")),
+                                  image: AssetImage(
+                                      "assets/images/kategori/Jasa.png")),
                             ),
                           ),
                           Container(
@@ -836,7 +868,6 @@ class _KategoriProdukState extends State<KategoriProduk> {
               ),
             )
           ],
-        )
-        );
+        );}));
   }
 }

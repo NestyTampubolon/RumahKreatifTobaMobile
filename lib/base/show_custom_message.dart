@@ -11,6 +11,6 @@ void showCustomSnackBar(String message, {bool isError = true, String title="Erro
     ),),
     colorText: Colors.white,
     snackPosition: SnackPosition.TOP,
-    backgroundColor: AppColors.redColor
+    backgroundColor: AppColors.notification_success
   );
 }
