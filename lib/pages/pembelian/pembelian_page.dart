@@ -181,18 +181,26 @@ class _PembelianPageState extends State<PembelianPage> {
                       height: Dimensions.height10,
                     ),
                     Divider(color: AppColors.buttonBackgroundColor),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        BigText(
-                          text: "Kampus",
-                          size: Dimensions.font16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        SmallText(text: "Jiso Kim"),
-                        SmallText(text: "Institut Teknologi Del")
-                      ],
+                    Container(
+                      margin: EdgeInsets.only(left: Dimensions.width10),
+                      child: Row(
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              BigText(
+                                text: "Kampus",
+                                size: Dimensions.font16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              SmallText(text: "Jiso Kim"),
+                              SmallText(text: "Institut Teknologi Del")
+                            ],
+                          ),
+                          SizedBox()
+                        ],
+                      ),
                     ),
                     Divider(color: AppColors.buttonBackgroundColor),
                     Container(

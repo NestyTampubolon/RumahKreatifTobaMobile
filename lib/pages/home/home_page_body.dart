@@ -86,10 +86,9 @@ class _HomePageBodyState extends State<HomePageBody> {
 
         GetBuilder<PopularProdukController>(builder: (_produkController) {
           return Container(
-            height: 300,
+            height: Dimensions.height45*5,
             margin: EdgeInsets.only(
                 left: Dimensions.width20,
-                top: Dimensions.height20,
                 right: Dimensions.width20),
             child: GridView.count(
               crossAxisCount: 4,
@@ -449,22 +448,17 @@ class _HomePageBodyState extends State<HomePageBody> {
                     ),
                   ),
                 ),
-
               ],
             ),
           );}),
         //Produk Terbaru
         Container(
           margin: EdgeInsets.only(left: Dimensions.width20),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              BigText(text: "Produk Terbaru",),
-            ],
-          ),
+          width: Dimensions.screenWidth,
+          child: BigText(text: "Makanan dan Minuman Terfavorit Untukmu",),
         ),
         Container(
-          height: 250,
+          height: Dimensions.height45*6,
           margin: EdgeInsets.only(top: 10, bottom: 20),
           child: PageView.builder(
               controller: pageControllerPopulerProduct,
@@ -476,6 +470,22 @@ class _HomePageBodyState extends State<HomePageBody> {
         SizedBox(
           height: Dimensions.height30,
         ),
+        Container(
+          margin: EdgeInsets.only(left: Dimensions.width20),
+          width: Dimensions.screenWidth,
+          child: BigText(text: "Pakaian Paling Diminati",),
+        ),
+        Container(
+          height: Dimensions.height45*6,
+          margin: EdgeInsets.only(top: 10, bottom: 20),
+          child: PageView.builder(
+              controller: pageControllerPopulerProduct,
+              itemCount: 10,
+              itemBuilder: (context, position) {
+                return _buildPageItemPopulerProduct(position);
+              }),
+        ),
+
 //         Container(
 //           margin: EdgeInsets.only(left: Dimensions.width20),
 //           child: Row(
@@ -646,8 +656,8 @@ class _HomePageBodyState extends State<HomePageBody> {
                             width: 150,
                             height: 300,
                             decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(15),
+                                borderRadius: BorderRadius.all(Radius.circular(
+                                    Dimensions.radius15)),
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.grey.withOpacity(0.5),
@@ -655,43 +665,17 @@ class _HomePageBodyState extends State<HomePageBody> {
                                     blurRadius: 10,
                                     offset: Offset(0, 3),
                                   )
-                                ]),
+                                ],
+                                color: Colors.white,
+                                image: DecorationImage(
+                                    fit: BoxFit.none,
+                                    image: AssetImage(
+                                        "assets/images/kategori/Lihat Semua.png"))),
                             margin: EdgeInsets.only(
                                 left: Dimensions.width20,
                                 right: Dimensions.width20,
                                 bottom: Dimensions.height20,
                                 top: Dimensions.height10
-                            ),
-                            child: GestureDetector(
-                              onTap: () {
-                                Get.toNamed(RouteHelper.getProdukDetail(
-                                    popularProduk
-                                        .popularProdukList[index].productId));
-//                        Get.toNamed(RouteHelper.getProdukDetail(index));
-                              },
-                              child: Column(
-                                mainAxisAlignment:
-                                MainAxisAlignment.start,
-                                crossAxisAlignment:
-                                CrossAxisAlignment.start,
-                                children: [
-                                  //image section
-                                  Container(
-                                    height: 120,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(
-                                                Dimensions.radius15),
-                                            topRight: Radius.circular(
-                                                Dimensions.radius15)),
-                                        image: DecorationImage(
-                                            fit: BoxFit.fill,
-                                            image: AssetImage(
-                                                "assets/images/coffee.jpg"))),
-                                  ),
-                                  //text container
-                                ],
-                              ),
                             ),
                           ),
                         );
@@ -756,13 +740,6 @@ class _HomePageBodyState extends State<HomePageBody> {
                                     crossAxisAlignment:
                                     CrossAxisAlignment.start,
                                     children: [
-                                      BigText(
-                                        text: popularProduk
-                                            .popularProdukList[index]
-                                            .namaKategori.toString(),
-                                        size: Dimensions.font16/1.5,
-                                      ),
-
                                       TittleText(
                                         text: popularProduk
                                             .popularProdukList[index]
