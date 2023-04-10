@@ -33,4 +33,3 @@ class UserController extends GetxController implements GetxService{
     return responseModel;
   }
 }
-

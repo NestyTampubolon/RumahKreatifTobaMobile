@@ -25,6 +25,9 @@ class CartController extends GetxController {
   List<dynamic> _merchantKeranjangList=[];
   List<dynamic> get merchantKeranjangList => _merchantKeranjangList;
 
+  List<int?> _checkedCartIds = [];
+  List<int?> get checkedCartIds => _checkedCartIds;
+
   int _totalItems = 0;
 
   @override
@@ -160,8 +163,6 @@ class CartController extends GetxController {
     late ResponseModel responseModel;
     if(response.statusCode == 200){
       getKeranjangList();
-      showCustomSnackBar("",
-          title: "Berhasil");
     }else{
       responseModel = ResponseModel(false, response.statusText!);
     }
@@ -181,8 +182,6 @@ class CartController extends GetxController {
             title: "Gagal");
       }
       getKeranjangList();
-      showCustomSnackBar("",
-          title: "Berhasil");
     }else{
       responseModel = ResponseModel(false, response.statusText!);
     }
@@ -190,6 +189,42 @@ class CartController extends GetxController {
     update();
     return responseModel;
   }
+
+  Map<String, bool> _checkedStatusMap = {};
+
+
+  // bool getMerchantCheckedStatus(String merchantName) {
+  //   return _checkedStatusMap[merchantName] ?? false;
+  // }
+
+  bool getMerchantCheckedStatus(String merchantName) {
+    bool allItemsChecked = true;
+    for (var item in _keranjangList) {
+      if (item.namaMerchant == merchantName) {
+        if (!_checkedCartMap.containsKey(item.productId.toString()) ||
+            !_checkedCartMap[item.productId.toString()]!) {
+          allItemsChecked = false;
+          break;
+        }
+      }
+    }
+    return _checkedStatusMap[merchantName] ?? allItemsChecked;
+  }
+
+  void setMerchantCheckedStatus(String merchantName, bool? value) {
+    _checkedStatusMap[merchantName] = value ?? false;
+  }
+
+  Map<String, bool> _checkedCartMap = {};
+
+  bool getCartCheckedStatus(int? cartId) {
+    return _checkedCartMap[cartId.toString()] ?? false;
+  }
+
+  void setCartCheckedStatus(int? cartId, bool? value) {
+    _checkedCartMap[cartId.toString()] = value ?? false;
+  }
+
 
   bool existInCart(Produk produk){
     if(_items.containsKey(produk.productId)){

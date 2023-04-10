@@ -43,10 +43,9 @@ class ProdukDetail extends StatelessWidget {
         await controller.getUser();
         cartController
             .tambahKeranjang(controller.users.id, productId.toInt(),
-                Get.find<PopularProdukController>().inCartItems)
+                1)
             .then((status) {
           if (status.isSuccess) {
-            print("Sukses registrasi");
             showCustomSnackBar("Produk berhasil ditambahkan ke keranjang",
                 title: "Berhasil", );
           } else {
@@ -69,7 +68,7 @@ class ProdukDetail extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Get.toNamed(RouteHelper.getInitial());
+                      Get.back();
                     },
                     child: AppIcon(icon: Icons.arrow_back),
                   ),
@@ -282,56 +281,56 @@ class ProdukDetail extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+                        // Container(
+                        //   padding: EdgeInsets.only(
+                        //       top: Dimensions.height10 / 2,
+                        //       bottom: Dimensions.height10 / 2,
+                        //       left: Dimensions.width10,
+                        //       right: Dimensions.width10),
+                        //   decoration: BoxDecoration(
+                        //       border: Border.all(
+                        //           color: AppColors.buttonBackgroundColor),
+                        //       borderRadius:
+                        //           BorderRadius.circular(Dimensions.radius20),
+                        //       color: Colors.white),
+                        //   child: Row(
+                        //     children: [
+                        //       GestureDetector(
+                        //         onTap: () {
+                        //           produk.setQuantity(false);
+                        //         },
+                        //         child: AppIcon(
+                        //             iconSize: Dimensions.iconSize16,
+                        //             iconColor: AppColors.redColor,
+                        //             backgroundColor: Colors.white,
+                        //             icon: Icons.remove),
+                        //       ),
+                        //       SizedBox(
+                        //         width: Dimensions.width10 / 2,
+                        //       ),
+                        //       BigText(text: produk.inCartItems.toString()),
+                        //       SizedBox(
+                        //         width: Dimensions.width10 / 2,
+                        //       ),
+                        //       GestureDetector(
+                        //         onTap: () {
+                        //           produk.setQuantity(true);
+                        //         },
+                        //         child: AppIcon(
+                        //             iconSize: Dimensions.iconSize16,
+                        //             iconColor: AppColors.redColor,
+                        //             backgroundColor: Colors.white,
+                        //             icon: Icons.add),
+                        //       )
+                        //     ],
+                        //   ),
+                        // ),
                         Container(
                           padding: EdgeInsets.only(
-                              top: Dimensions.height10 / 2,
-                              bottom: Dimensions.height10 / 2,
+                              top: Dimensions.height10/2 ,
+                              bottom: Dimensions.height10/2 ,
                               left: Dimensions.width10,
                               right: Dimensions.width10),
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: AppColors.buttonBackgroundColor),
-                              borderRadius:
-                                  BorderRadius.circular(Dimensions.radius20),
-                              color: Colors.white),
-                          child: Row(
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  produk.setQuantity(false);
-                                },
-                                child: AppIcon(
-                                    iconSize: Dimensions.iconSize16,
-                                    iconColor: AppColors.redColor,
-                                    backgroundColor: Colors.white,
-                                    icon: Icons.remove),
-                              ),
-                              SizedBox(
-                                width: Dimensions.width10 / 2,
-                              ),
-                              BigText(text: produk.inCartItems.toString()),
-                              SizedBox(
-                                width: Dimensions.width10 / 2,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  produk.setQuantity(true);
-                                },
-                                child: AppIcon(
-                                    iconSize: Dimensions.iconSize16,
-                                    iconColor: AppColors.redColor,
-                                    backgroundColor: Colors.white,
-                                    icon: Icons.add),
-                              )
-                            ],
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.only(
-                              top: Dimensions.height10 / 2,
-                              bottom: Dimensions.height10 / 2,
-                              left: Dimensions.width10,
-                              right: Dimensions.width20),
                           child: GestureDetector(
                               onTap: () {
                                 if (Get.find<AuthController>().userLoggedIn()) {
@@ -340,6 +339,61 @@ class ProdukDetail extends StatelessWidget {
                                   Get.toNamed(RouteHelper.getMasukPage());
                                 }
 
+                              },
+                              child: AppIcon(icon: Icons.message,iconSize: Dimensions.iconSize24, iconColor: AppColors.redColor, backgroundColor: Colors.white.withOpacity(0.0),),),
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: AppColors.redColor),
+                              borderRadius: BorderRadius.circular(
+                                  Dimensions.radius20 / 2),
+                              color: Colors.white),
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(
+                              top: Dimensions.height20/1.1 ,
+                              bottom: Dimensions.height20/1.1 ,
+                              left: Dimensions.width10,
+                              right: Dimensions.width10),
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: AppColors.redColor),
+                              borderRadius: BorderRadius.circular(
+                                  Dimensions.radius20 / 2),
+                              color: Colors.white),
+                          child: GestureDetector(
+                              onTap: () {
+                                if (Get.find<AuthController>().userLoggedIn()) {
+                                  _tambahKeranjang(cartController);
+                                } else {
+                                  Get.toNamed(RouteHelper.getMasukPage());
+                                }
+
+                              },
+                              child: Row(children: [
+                                BigText(
+                                  text: "Beli Langsung",
+                                  color: Colors.redAccent,
+                                  size: Dimensions.height15,
+                                ),
+                              ])),
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(
+                              top: Dimensions.height10 / 2,
+                              bottom: Dimensions.height10 / 2,
+                              left: Dimensions.width10,
+                              right: Dimensions.width20),
+                          decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.circular(Dimensions.radius20/2),
+                              color: AppColors.redColor),
+                          child: GestureDetector(
+                              onTap: () {
+                                if (Get.find<AuthController>().userLoggedIn()) {
+                                  _tambahKeranjang(cartController);
+                                } else {
+                                  Get.toNamed(RouteHelper.getMasukPage());
+                                }
                               },
                               child: Row(children: [
                                 AppIcon(
@@ -353,10 +407,6 @@ class ProdukDetail extends StatelessWidget {
                                   size: Dimensions.height15,
                                 ),
                               ])),
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.circular(Dimensions.radius20),
-                              color: AppColors.redColor),
                         )
                       ],
                     ),

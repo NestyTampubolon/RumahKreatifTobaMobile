@@ -4,6 +4,7 @@ import 'package:rumah_kreatif_toba/controllers/auth_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/user_controller.dart';
 import 'package:rumah_kreatif_toba/pages/account/account_widget.dart';
 import 'package:rumah_kreatif_toba/pages/auth/masuk.dart';
+import 'package:rumah_kreatif_toba/pages/pesanan/pesanan_page.dart';
 import 'package:rumah_kreatif_toba/utils/colors.dart';
 import 'package:rumah_kreatif_toba/utils/dimensions.dart';
 import 'package:rumah_kreatif_toba/widgets/app_icon.dart';
@@ -22,12 +23,11 @@ class AccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
-    print("konfirmasi");
-    print(_userLoggedIn);
     if (_userLoggedIn) {
       Get.find<UserController>().getUser();
     }
-    return Scaffold(
+    return
+      Scaffold(
         appBar: AppBar(
           backgroundColor: AppColors.redColor,
           title: BigText(
@@ -36,163 +36,193 @@ class AccountPage extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-        body: _userLoggedIn
+        body:
+        _userLoggedIn
             ? GetBuilder<UserController>(
                 builder: (userController) {
                   print(userController.users.username);
                   print(userController.isLoading);
                   return userController.isLoading
                       ? CustomLoader()
-                      : Container(
+                      :
+                  Container(
                           width: double.maxFinite,
                           margin: EdgeInsets.only(top: Dimensions.height20),
-                          child: Column(
-                            children: [
-                              AppIcon(
-                                icon: Icons.person,
-                                backgroundColor: AppColors.redColor,
-                                iconColor: Colors.white,
-                                iconSize: 65,
-                                size: Dimensions.height15 * 8,
-                              ),
-                              SizedBox(
-                                height: Dimensions.height20,
-                              ),
-                              Container(
-                                child: Column(
-                                  children: [
-                                    BigText(
-                                        text: userController.users.username
-                                            .toString()),
-                                    SmallText(
-                                        text: userController.users.email
-                                            .toString()),
-                                    SmallText(
-                                        text: userController.users.noHp
-                                            .toString())
-                                  ],
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                AppIcon(
+                                  icon: Icons.person,
+                                  backgroundColor: AppColors.redColor,
+                                  iconColor: Colors.white,
+                                  iconSize: 65,
+                                  size: Dimensions.height15 * 8,
                                 ),
-                              ),
-                              SizedBox(
-                                height: Dimensions.height20,
-                              ),
-                              //Profil
-                              AccountWidget(
-                                  appIcon: AppIcon(
-                                    icon: Icons.person,
-                                    backgroundColor: AppColors.redColor,
-                                    iconColor: Colors.white,
-                                    iconSize: Dimensions.height10 * 5 / 2,
-                                    size: Dimensions.height10 * 5,
+                                SizedBox(
+                                  height: Dimensions.height20,
+                                ),
+                                Container(
+                                  child: Column(
+                                    children: [
+                                      BigText(
+                                          text: userController.users.username
+                                              .toString()),
+                                      SmallText(
+                                          text: userController.users.email
+                                              .toString()),
+                                      SmallText(
+                                          text: userController.users.noHp
+                                              .toString())
+                                    ],
                                   ),
-                                  bigText: BigText(
-                                    text: "Profil",
-                                  )),
-                              SizedBox(
-                                height: Dimensions.height20,
-                              ),
+                                ),
+                                SizedBox(
+                                  height: Dimensions.height20,
+                                ),
 
-                              //Keranjangku
-                              GestureDetector(
-                                onTap: () {
-                                  if (Get.find<AuthController>()
-                                      .userLoggedIn()) {
-                                    // Get.toNamed(RouteHelper.getKeranjangPage());
-                                    print(userController.users.name.toString());
-                                  }
-                                },
-                                child: AccountWidget(
+                                //Profil
+                                AccountWidget(
                                     appIcon: AppIcon(
-                                      icon: Icons.house_siding_outlined,
+                                      icon: Icons.person,
                                       backgroundColor: AppColors.redColor,
                                       iconColor: Colors.white,
                                       iconSize: Dimensions.height10 * 5 / 2,
                                       size: Dimensions.height10 * 5,
                                     ),
                                     bigText: BigText(
-                                      text: "Toko",
+                                      text: "Profil",
                                     )),
-                              ),
-                              SizedBox(
-                                height: Dimensions.height20,
-                              ),
+                                SizedBox(
+                                  height: Dimensions.height20,
+                                ),
 
-                              //Keranjangku
-                              GestureDetector(
-                                onTap: () {
-                                  if (Get.find<AuthController>()
-                                      .userLoggedIn()) {
-                                    Get.toNamed(RouteHelper.getKeranjangPage());
-                                  }
-                                },
-                                child: AccountWidget(
-                                    appIcon: AppIcon(
-                                      icon: Icons.shopping_cart_outlined,
-                                      backgroundColor: AppColors.redColor,
-                                      iconColor: Colors.white,
-                                      iconSize: Dimensions.height10 * 5 / 2,
-                                      size: Dimensions.height10 * 5,
-                                    ),
-                                    bigText: BigText(
-                                      text: "Keranjangku",
-                                    )),
-                              ),
-                              SizedBox(
-                                height: Dimensions.height20,
-                              ),
 
-                              //Pesananku
-                              GestureDetector(
-                                onTap: () {
-                                  if (Get.find<AuthController>()
-                                      .userLoggedIn()) {
-                                    Get.find<AuthController>()
-                                        .clearSharedData();
-                                    Get.offNamed(RouteHelper.getInitial());
-                                  }
-                                },
-                                child: AccountWidget(
-                                    appIcon: AppIcon(
-                                      icon: Icons.shopping_bag_outlined,
-                                      backgroundColor: AppColors.redColor,
-                                      iconColor: Colors.white,
-                                      iconSize: Dimensions.height10 * 5 / 2,
-                                      size: Dimensions.height10 * 5,
-                                    ),
-                                    bigText: BigText(
-                                      text: "Pesananku",
-                                    )),
-                              ),
-                              SizedBox(
-                                height: Dimensions.height20,
-                              ),
+                                //Keranjangku
+                                GestureDetector(
+                                  onTap: () {
+                                    if (Get.find<AuthController>()
+                                        .userLoggedIn()) {
+                                      // Get.toNamed(RouteHelper.getKeranjangPage());
+                                      print(userController.users.name.toString());
+                                    }
+                                  },
+                                  child: AccountWidget(
+                                      appIcon: AppIcon(
+                                        icon: Icons.store,
+                                        backgroundColor: AppColors.redColor,
+                                        iconColor: Colors.white,
+                                        iconSize: Dimensions.height10 * 5 / 2,
+                                        size: Dimensions.height10 * 5,
+                                      ),
+                                      bigText: BigText(
+                                        text: "Toko",
+                                      )),
+                                ),
+                                SizedBox(
+                                  height: Dimensions.height20,
+                                ),
 
-                              //Keluar
-                              GestureDetector(
-                                onTap: () {
-                                  if (Get.find<AuthController>()
-                                      .userLoggedIn()) {
-                                    Get.find<AuthController>()
-                                        .clearSharedData();
-                                    Get.offNamed(RouteHelper.getInitial());
-                                  } else {
-                                    print("Anda sudah keluar");
-                                  }
-                                },
-                                child: AccountWidget(
-                                    appIcon: AppIcon(
-                                      icon: Icons.logout_sharp,
-                                      backgroundColor: AppColors.redColor,
-                                      iconColor: Colors.white,
-                                      iconSize: Dimensions.height10 * 5 / 2,
-                                      size: Dimensions.height10 * 5,
-                                    ),
-                                    bigText: BigText(
-                                      text: "Keluar",
-                                    )),
-                              )
-                            ],
-                          ),
+                                //Keranjangku
+                                GestureDetector(
+                                  onTap: () {
+                                    if (Get.find<AuthController>()
+                                        .userLoggedIn()) {
+                                      Get.toNamed(RouteHelper.getKeranjangPage());
+                                    }
+                                  },
+                                  child: AccountWidget(
+                                      appIcon: AppIcon(
+                                        icon: Icons.shopping_cart_outlined,
+                                        backgroundColor: AppColors.redColor,
+                                        iconColor: Colors.white,
+                                        iconSize: Dimensions.height10 * 5 / 2,
+                                        size: Dimensions.height10 * 5,
+                                      ),
+                                      bigText: BigText(
+                                        text: "Keranjangku",
+                                      )),
+                                ),
+                                SizedBox(
+                                  height: Dimensions.height20,
+                                ),
+
+                                //Pesananku
+                                GestureDetector(
+                                  onTap: () {
+                                    Get.to(PesananPage());
+                                  },
+                                  child: AccountWidget(
+                                      appIcon: AppIcon(
+                                        icon: Icons.receipt_long_outlined,
+                                        backgroundColor: AppColors.redColor,
+                                        iconColor: Colors.white,
+                                        iconSize: Dimensions.height10 * 5 / 2,
+                                        size: Dimensions.height10 * 5,
+                                      ),
+                                      bigText: BigText(
+                                        text: "Pesananku",
+                                      )),
+                                ),
+                                SizedBox(
+                                  height: Dimensions.height20,
+                                ),
+
+
+                                //Alamat
+                                GestureDetector(
+                                  onTap: () {
+                                    if (Get.find<AuthController>()
+                                        .userLoggedIn()) {
+                                      Get.find<AuthController>()
+                                          .clearSharedData();
+                                      Get.offNamed(RouteHelper.getInitial());
+                                    }
+                                  },
+                                  child: AccountWidget(
+                                      appIcon: AppIcon(
+                                        icon: Icons.location_on_outlined,
+                                        backgroundColor: AppColors.redColor,
+                                        iconColor: Colors.white,
+                                        iconSize: Dimensions.height10 * 5 / 2,
+                                        size: Dimensions.height10 * 5,
+                                      ),
+                                      bigText: BigText(
+                                        text: "Alamat",
+                                      )),
+                                ),
+                                SizedBox(
+                                  height: Dimensions.height20,
+                                ),
+
+
+                                //Keluar
+                                GestureDetector(
+                                  onTap: () {
+                                    if (Get.find<AuthController>()
+                                        .userLoggedIn()) {
+                                      Get.find<AuthController>()
+                                          .clearSharedData();
+                                      Get.offNamed(RouteHelper.getInitial());
+                                    } else {
+                                      print("Anda sudah keluar");
+                                    }
+                                  },
+                                  child: AccountWidget(
+                                      appIcon: AppIcon(
+                                        icon: Icons.logout_sharp,
+                                        backgroundColor: AppColors.redColor,
+                                        iconColor: Colors.white,
+                                        iconSize: Dimensions.height10 * 5 / 2,
+                                        size: Dimensions.height10 * 5,
+                                      ),
+                                      bigText: BigText(
+                                        text: "Keluar",
+                                      )),
+                                )
+                              ],
+                            ),
+                          )
+
                         );
                 },
               )
@@ -255,6 +285,7 @@ class AccountPage extends StatelessWidget {
                     ),
                   ),
                 ),
-              ));
+              )
+      );
   }
 }
