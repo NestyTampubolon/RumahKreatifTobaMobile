@@ -7,6 +7,8 @@ import 'package:rumah_kreatif_toba/pages/kategori/kategori_produk.dart';
 import 'package:rumah_kreatif_toba/pages/kategori/kategori_produk_detail.dart';
 import 'package:rumah_kreatif_toba/pages/keranjang/keranjang_page.dart';
 import 'package:rumah_kreatif_toba/pages/splash/splash_page.dart';
+import 'package:rumah_kreatif_toba/pages/toko/databank.dart';
+import 'package:rumah_kreatif_toba/pages/toko/toko.dart';
 
 import '../controllers/popular_produk_controller.dart';
 import '../pages/produk/produk_detail.dart';
@@ -18,19 +20,27 @@ class RouteHelper {
   static const String keranjangPage = "/keranjang";
   static const String kategoriProdukDetail = "/kategoriProdukDetail";
   static const String masuk = "/login";
+  static const String toko = "/toko";
+  static const String bank = "/bank";
 
   static String getSplashPage() => '$splashPage';
   static String getInitial() => '$initial';
-  static String getProdukDetail(int produkId) =>
-      '$produkDetail/$produkId';
+  static String getProdukDetail(int produkId) => '$produkDetail/$produkId';
   static String getKeranjangPage() => '$keranjangPage';
   static String getKategoriProdukDetail() => '$kategoriProdukDetail';
   static String getMasukPage() => '$masuk';
+  static String getTokoPage() => '$toko';
+  static String getBankPage() => '$bank';
 
   static List<GetPage> routes = [
     GetPage(name: splashPage, page: () => SplashScreen()),
     GetPage(name: initial, page: () => HomePage()),
-    GetPage(name: masuk, page: (){return Masuk();}, transition: Transition.fade),
+    GetPage(
+        name: masuk,
+        page: () {
+          return Masuk();
+        },
+        transition: Transition.fade),
     GetPage(
       name: produkDetail + '/:produkId', // Add named parameter ":produkId"
       page: () {
@@ -39,14 +49,14 @@ class RouteHelper {
       },
       transition: Transition.fadeIn,
     ),
-    
-    GetPage(name: keranjangPage, page: (){
-      return KeranjangPage();
-    },
-      transition: Transition.fadeIn
-    ),
-
+    GetPage(
+        name: keranjangPage,
+        page: () {
+          return KeranjangPage();
+        },
+        transition: Transition.fadeIn),
     GetPage(name: kategoriProdukDetail, page: () => KategoriProdukDetail()),
-
+    GetPage(name: toko, page: () => TokoPage()),
+    GetPage(name: bank, page: () => DataBankPage()),
   ];
 }

@@ -20,144 +20,135 @@ class Masuk extends StatelessWidget {
     var usernameController = TextEditingController();
     var passwordController = TextEditingController();
 
-    void _login(AuthController authController){
+    void _login(AuthController authController) {
       String username = usernameController.text.trim();
       String password = passwordController.text.trim();
 
-      if(username.isEmpty){
+      if (username.isEmpty) {
         showCustomSnackBar("Username masih kosong", title: "Username");
-      }else if(password.isEmpty){
+      } else if (password.isEmpty) {
         showCustomSnackBar("Password masih kosong", title: "Password");
-      }else{
-        authController.login(username, password).then((status){
-          if(status.isSuccess){
+      } else {
+        authController.login(username, password).then((status) {
+          if (status.isSuccess) {
             Get.toNamed(RouteHelper.getInitial());
-          }else{
+          } else {
             showCustomSnackBar(status.message);
           }
         });
       }
     }
+
     return Scaffold(
-      backgroundColor: Colors.white,
-
-      body: Column(
-        children: [
-          Container(
-            margin: EdgeInsets.only(
-                top: Dimensions.height45, left: Dimensions.height10),
-            child:Positioned(
-
-                top: Dimensions.height20 * 3,
-                left: Dimensions.width20,
-                right: Dimensions.width20,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Get.toNamed(RouteHelper.getInitial());
-                      },
-                      child:  AppIcon(
-                        icon: Icons.arrow_back,
-                        iconColor: Colors.white,
-                        backgroundColor: AppColors.redColor,
-                        iconSize: Dimensions.iconSize24,
-                      ),
-                    ),
-                    SizedBox(width: Dimensions.width20,),
-                  ],
-                )
-            ),
-          ),
-
-          GetBuilder<AuthController>(builder: (authController){
-            return !authController.isLoading?  SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: Column(
-                children: [
-                  SizedBox(height: Dimensions.screenHeight*0.05,),
-                  Container(
-                    width: Dimensions.screenHeight*0.25,
-                    height: Dimensions.screenHeight*0.25,
-                    margin: EdgeInsets.only(
-                        left: Dimensions.width10,
-                        right: Dimensions.width10),
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage(
-                                "assets/images/logo_rkt.png"))),
-                  ),
-                  SizedBox(height: Dimensions.height20,),
-                  AppTextField(textController: usernameController, hintText: 'Username', icon: Icons.person,),
-                  SizedBox(height: Dimensions.height20,),
-                  AppTextField(textController: passwordController, hintText: 'Password', icon: Icons.lock, isObscure: true,),
-                  SizedBox(height: Dimensions.height20,),
-                  Row(
-                    children: [
-                      Expanded(child: Container()),
-                      RichText(text: TextSpan(
-                          recognizer: TapGestureRecognizer()..onTap=()=>Get.back(),
-                          text: "Lupa kata sandi?",
-                          style: TextStyle(
-                              color: Colors.grey[500],
-                              fontSize: Dimensions.font20
-                          )
-                      )),
-                      SizedBox(width: Dimensions.width20,)
-                    ],
-                  ),
-                  SizedBox(height: Dimensions.height20,),
-                  GestureDetector(
-                    onTap: (){
-                      _login(authController);
-                    },
-                    child:Container(
-                        width: Dimensions.screenWidth/2,
-                        height: Dimensions.screenHeight/13,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(Dimensions.radius30),
-                            color: AppColors.redColor
-                        ),
-                        child: Center(
-                          child: BigText(text: "Masuk",
-                            size: Dimensions.font20,color: Colors.white,),
-                        )
-                    ),
-                  ),
-
-                  SizedBox(height: Dimensions.height10,),
-                  RichText(text: TextSpan(
-                      text: "Tidak memiliki Akun? ",
-                      style: TextStyle(
-                          color: Colors.grey[500],
-                          fontSize: Dimensions.font16
-                      ),
+        backgroundColor: Colors.white,
+        body: GetBuilder<AuthController>(
+          builder: (authController) {
+            return !authController.isLoading
+                ? SingleChildScrollView(
+                    physics: BouncingScrollPhysics(),
+                    child: Column(
                       children: [
-                        TextSpan(
-                            recognizer: TapGestureRecognizer()..onTap=()=>Get.to(() => Register(), transition: Transition.fadeIn),
-                            text: "Daftar",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                fontSize: Dimensions.font16
+                        SizedBox(
+                          height: Dimensions.screenHeight * 0.05,
+                        ),
+                        Container(
+                          width: Dimensions.screenHeight * 0.25,
+                          height: Dimensions.screenHeight * 0.25,
+                          margin: EdgeInsets.only(
+                              left: Dimensions.width10,
+                              right: Dimensions.width10),
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: AssetImage(
+                                      "assets/images/logo_rkt.png"))),
+                        ),
+                        SizedBox(
+                          height: Dimensions.height20,
+                        ),
+                        AppTextField(
+                          textController: usernameController,
+                          hintText: 'Username',
+                          icon: Icons.person,
+                        ),
+                        SizedBox(
+                          height: Dimensions.height20,
+                        ),
+                        AppTextField(
+                          textController: passwordController,
+                          hintText: 'Password',
+                          icon: Icons.lock,
+                          isObscure: true,
+                        ),
+                        SizedBox(
+                          height: Dimensions.height20,
+                        ),
+                        Row(
+                          children: [
+                            Expanded(child: Container()),
+                            RichText(
+                                text: TextSpan(
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () => Get.back(),
+                                    text: "Lupa kata sandi?",
+                                    style: TextStyle(
+                                        color: Colors.grey[500],
+                                        fontSize: Dimensions.font20))),
+                            SizedBox(
+                              width: Dimensions.width20,
                             )
-                        )
-                      ]
-                  )),
-                  SizedBox(height: Dimensions.height15,),
-
-                ],
-              ),
-            ) : CustomLoader();
-          },)
-        ],
-      )
-
-
-
-
-    );
+                          ],
+                        ),
+                        SizedBox(
+                          height: Dimensions.height20,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            _login(authController);
+                          },
+                          child: Container(
+                              width: Dimensions.screenWidth / 2,
+                              height: Dimensions.screenHeight / 13,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(
+                                      Dimensions.radius30),
+                                  color: AppColors.redColor),
+                              child: Center(
+                                child: BigText(
+                                  text: "Masuk",
+                                  size: Dimensions.font20,
+                                  color: Colors.white,
+                                ),
+                              )),
+                        ),
+                        SizedBox(
+                          height: Dimensions.height10,
+                        ),
+                        RichText(
+                            text: TextSpan(
+                                text: "Tidak memiliki Akun? ",
+                                style: TextStyle(
+                                    color: Colors.grey[500],
+                                    fontSize: Dimensions.font16),
+                                children: [
+                              TextSpan(
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () => Get.to(() => Register(),
+                                        transition: Transition.fadeIn),
+                                  text: "Daftar",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                      fontSize: Dimensions.font16))
+                            ])),
+                        SizedBox(
+                          height: Dimensions.height15,
+                        ),
+                      ],
+                    ),
+                  )
+                : CustomLoader();
+          },
+        ));
   }
 }

@@ -25,7 +25,8 @@ class HomePageBody extends StatefulWidget {
 
 class _HomePageBodyState extends State<HomePageBody> {
   PageController pageController = PageController(viewportFraction: 0.90);
-  PageController pageControllerPopulerProduct = PageController(viewportFraction: 0.90);
+  PageController pageControllerPopulerProduct =
+      PageController(viewportFraction: 0.90);
 
   var _currPageValue = 0.0;
   var _currPageValuePopulerProduct = 0.0;
@@ -97,7 +98,8 @@ class _HomePageBodyState extends State<HomePageBody> {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
                   border: Border.all(
-                    color: AppColors.border, //                   <--- border color
+                    color:
+                        AppColors.border, //                   <--- border color
                     width: 0.5,
                   ),
                 ),
@@ -106,8 +108,7 @@ class _HomePageBodyState extends State<HomePageBody> {
                     //Get.to(KategoriProdukDetail(), arguments: "Makanan");
                   },
                   child: Column(
-                    mainAxisAlignment:
-                    MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       //image section
                       Container(
@@ -122,8 +123,8 @@ class _HomePageBodyState extends State<HomePageBody> {
                           borderRadius: BorderRadius.circular(15),
                           image: DecorationImage(
                               fit: BoxFit.fill,
-                              image:
-                              AssetImage("assets/images/beranda/Makanan Terdekat.png")),
+                              image: AssetImage(
+                                  "assets/images/beranda/MakananTerdekat.png")),
                         ),
                       ),
                       Container(
@@ -134,7 +135,10 @@ class _HomePageBodyState extends State<HomePageBody> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text("Makanan Terdekat",textAlign: TextAlign.center, style: TextStyle(fontSize: Dimensions.height20/2) )
+                            Text("Makanan Terdekat",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: Dimensions.height20 / 2))
                           ],
                         ),
                       )
@@ -152,17 +156,17 @@ class _HomePageBodyState extends State<HomePageBody> {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
                   border: Border.all(
-                    color: AppColors.border, //                   <--- border color
-                    width:  0.5,
+                    color:
+                        AppColors.border, //                   <--- border color
+                    width: 0.5,
                   ),
                 ),
                 child: GestureDetector(
                   onTap: () {
-                  //  Get.to(KategoriProdukDetail(), arguments: "Minuman");
+                    //  Get.to(KategoriProdukDetail(), arguments: "Minuman");
                   },
                   child: Column(
-                    mainAxisAlignment:
-                    MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       //image section
                       Container(
@@ -177,8 +181,8 @@ class _HomePageBodyState extends State<HomePageBody> {
                           borderRadius: BorderRadius.circular(15),
                           image: DecorationImage(
                               fit: BoxFit.fill,
-                              image:
-                              AssetImage("assets/images/beranda/Minuman Terdekat.png")),
+                              image: AssetImage(
+                                  "assets/images/beranda/MinumanTerdekat.png")),
                         ),
                       ),
                       Container(
@@ -189,7 +193,10 @@ class _HomePageBodyState extends State<HomePageBody> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Minuman Terdekat",textAlign: TextAlign.center, style: TextStyle(fontSize: Dimensions.height20/2) )
+                            Text("Minuman Terdekat",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: Dimensions.height20 / 2))
                           ],
                         ),
                       )
@@ -207,17 +214,17 @@ class _HomePageBodyState extends State<HomePageBody> {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
                   border: Border.all(
-                    color: AppColors.border, //                   <--- border color
+                    color:
+                        AppColors.border, //                   <--- border color
                     width: 0.5,
                   ),
                 ),
                 child: GestureDetector(
                   onTap: () {
-                //    Get.to(KategoriProdukDetail(), arguments: "Pakaian");
+                    //    Get.to(KategoriProdukDetail(), arguments: "Pakaian");
                   },
                   child: Column(
-                    mainAxisAlignment:
-                    MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       //image section
                       Container(
@@ -232,8 +239,8 @@ class _HomePageBodyState extends State<HomePageBody> {
                           borderRadius: BorderRadius.circular(15),
                           image: DecorationImage(
                               fit: BoxFit.fill,
-                              image:
-                              AssetImage("assets/images/beranda/Promo Hari Ini.png")),
+                              image: AssetImage(
+                                  "assets/images/beranda/PromoHariIni.png")),
                         ),
                       ),
                       Container(
@@ -265,17 +272,17 @@ class _HomePageBodyState extends State<HomePageBody> {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
                   border: Border.all(
-                    color: AppColors.border, //                   <--- border color
+                    color:
+                        AppColors.border, //                   <--- border color
                     width: 0.5,
                   ),
                 ),
                 child: GestureDetector(
                   onTap: () {
-                 //   Get.to(KategoriProdukDetail(), arguments: "Souvenir");
+                    //   Get.to(KategoriProdukDetail(), arguments: "Souvenir");
                   },
                   child: Column(
-                    mainAxisAlignment:
-                    MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       //image section
                       Container(
@@ -291,7 +298,7 @@ class _HomePageBodyState extends State<HomePageBody> {
                           image: DecorationImage(
                               fit: BoxFit.fill,
                               image: AssetImage(
-                                  "assets/images/beranda/Official Store.png")),
+                                  "assets/images/beranda/OfficialStore.png")),
                         ),
                       ),
                       Container(
@@ -323,17 +330,17 @@ class _HomePageBodyState extends State<HomePageBody> {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
                   border: Border.all(
-                    color: AppColors.border, //                   <--- border color
+                    color:
+                        AppColors.border, //                   <--- border color
                     width: 0.5,
                   ),
                 ),
                 child: GestureDetector(
                   onTap: () {
-                 //   Get.to(KategoriProdukDetail(), arguments: "Perlengkapan Rumah");
+                    //   Get.to(KategoriProdukDetail(), arguments: "Perlengkapan Rumah");
                   },
                   child: Column(
-                    mainAxisAlignment:
-                    MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       //image section
                       Container(
@@ -349,14 +356,17 @@ class _HomePageBodyState extends State<HomePageBody> {
                           image: DecorationImage(
                               fit: BoxFit.fill,
                               image: AssetImage(
-                                  "assets/images/beranda/Fashion Wanita.png")),
+                                  "assets/images/beranda/FashionWanita.png")),
                         ),
                       ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text("Fashion Wanita",textAlign: TextAlign.center, style: TextStyle(fontSize: Dimensions.height20/2) )
+                          Text("Fashion Wanita",
+                              textAlign: TextAlign.center,
+                              style:
+                                  TextStyle(fontSize: Dimensions.height20 / 2))
                         ],
                       ),
                     ],
@@ -372,17 +382,17 @@ class _HomePageBodyState extends State<HomePageBody> {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
                   border: Border.all(
-                    color: AppColors.border, //                   <--- border color
+                    color:
+                        AppColors.border, //                   <--- border color
                     width: 0.5,
                   ),
                 ),
                 child: GestureDetector(
                   onTap: () {
-                //    Get.to(KategoriProdukDetail(), arguments: "Ulos");
+                    //    Get.to(KategoriProdukDetail(), arguments: "Ulos");
                   },
                   child: Column(
-                    mainAxisAlignment:
-                    MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       //image section
                       Container(
@@ -397,7 +407,8 @@ class _HomePageBodyState extends State<HomePageBody> {
                           borderRadius: BorderRadius.circular(15),
                           image: DecorationImage(
                               fit: BoxFit.fill,
-                              image: AssetImage("assets/images/beranda/Fashion Pria.png")),
+                              image: AssetImage(
+                                  "assets/images/beranda/FashionPria.png")),
                         ),
                       ),
                       Container(
@@ -420,7 +431,6 @@ class _HomePageBodyState extends State<HomePageBody> {
                   ),
                 ),
               ),
-
             ],
           ),
         ),
@@ -431,7 +441,9 @@ class _HomePageBodyState extends State<HomePageBody> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              BigText(text: "Produk Terlaris",),
+              BigText(
+                text: "Produk Terlaris",
+              ),
             ],
           ),
         ),
@@ -455,7 +467,9 @@ class _HomePageBodyState extends State<HomePageBody> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              BigText(text: "Produk Terbaru",),
+              BigText(
+                text: "Produk Terbaru",
+              ),
             ],
           ),
         ),
@@ -654,8 +668,7 @@ class _HomePageBodyState extends State<HomePageBody> {
                               left: Dimensions.width20,
                               right: Dimensions.width20,
                               bottom: Dimensions.height20,
-                            top: Dimensions.height10
-                          ),
+                              top: Dimensions.height10),
                           child: GestureDetector(
                             onTap: () {
                               Get.toNamed(RouteHelper.getProdukDetail(
@@ -664,10 +677,8 @@ class _HomePageBodyState extends State<HomePageBody> {
 //                        Get.toNamed(RouteHelper.getProdukDetail(index));
                             },
                             child: Column(
-                              mainAxisAlignment:
-                              MainAxisAlignment.start,
-                              crossAxisAlignment:
-                              CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 //image section
                                 Container(
@@ -686,29 +697,29 @@ class _HomePageBodyState extends State<HomePageBody> {
                                 Container(
                                   padding: EdgeInsets.all(10.0),
                                   child: Column(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     children: [
                                       BigText(
                                         text: popularProduk
                                             .popularProdukList[index]
-                                            .namaKategori.toString(),
-                                        size: Dimensions.font16/1.5,
+                                            .namaKategori
+                                            .toString(),
+                                        size: Dimensions.font16 / 1.5,
                                       ),
-
                                       TittleText(
                                         text: popularProduk
                                             .popularProdukList[index]
-                                            .productName.toString(),
+                                            .productName
+                                            .toString(),
                                         size: Dimensions.font16,
                                       ),
-
                                       SmallText(
                                         text: popularProduk
                                             .popularProdukList[index]
-                                            .namaMerchant.toString(),
+                                            .namaMerchant
+                                            .toString(),
                                       ),
                                       PriceText(
                                         text: CurrencyFormat.convertToIdr(

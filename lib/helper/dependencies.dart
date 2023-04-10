@@ -12,13 +12,15 @@ import '../controllers/popular_produk_controller.dart';
 import '../controllers/user_controller.dart';
 import '../utils/app_constants.dart';
 
-Future<void> init() async{
+Future<void> init() async {
   final sharedPreferences = await SharedPreferences.getInstance();
 
   Get.lazyPut(() => sharedPreferences);
   //api client
-  Get.lazyPut(() => ApiClient(appBaseUrl: AppConstants.BASE_URL, sharedPreferences:  Get.find()));
-  Get.lazyPut(() => AuthRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
+  Get.lazyPut(() => ApiClient(
+      appBaseUrl: AppConstants.BASE_URL, sharedPreferences: Get.find()));
+  Get.lazyPut(
+      () => AuthRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
   Get.lazyPut(() => UserRepo(apiClient: Get.find()));
 
   //Get.lazyPut(() => ApiClient(appBaseUrl: "https://mvs.bslmeiyu.com"));
@@ -29,7 +31,6 @@ Future<void> init() async{
   //controllers
   Get.lazyPut(() => AuthController(authRepo: Get.find()));
   Get.lazyPut(() => UserController(userRepo: Get.find()));
-  Get.lazyPut(() => PopularProdukController(popularProdukRepo:Get.find()));
+  Get.lazyPut(() => PopularProdukController(popularProdukRepo: Get.find()));
   Get.lazyPut(() => CartController(cartRepo: Get.find()));
-
 }

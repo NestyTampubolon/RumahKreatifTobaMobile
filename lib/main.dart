@@ -25,15 +25,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.find<PopularProdukController>().getPopularProdukList();
 
-    return GetBuilder<PopularProdukController>(builder: (_){
-      return GetMaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Rumah Kreatif Toba',
-        // home: MainHomePage(),
-        initialRoute: RouteHelper.getSplashPage(),
-        getPages: RouteHelper.routes,
-      );
-    },);
-
+    return GetBuilder<PopularProdukController>(
+      builder: (_) {
+        return GetMaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Rumah Kreatif Toba',
+          // home: MainHomePage(),
+          initialRoute: RouteHelper.getSplashPage(),
+          getPages: RouteHelper.routes,
+        );
+      },
+    );
   }
 }

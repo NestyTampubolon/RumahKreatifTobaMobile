@@ -4,10 +4,12 @@ import 'package:rumah_kreatif_toba/models/response_model.dart';
 
 import '../models/users_models.dart';
 
-class AuthController extends GetxController implements GetxService{
+class AuthController extends GetxController implements GetxService {
   final AuthRepo authRepo;
-  AuthController({required this.authRepo,});
-  List<dynamic> _userList=[];
+  AuthController({
+    required this.authRepo,
+  });
+  List<dynamic> _userList = [];
   List<dynamic> get userList => _userList;
 
   bool _isLoading = false;
@@ -18,11 +20,11 @@ class AuthController extends GetxController implements GetxService{
     update();
     Response response = await authRepo.registrasi(users);
     late ResponseModel responseModel;
-    if(response.statusCode == 200){
+    if (response.statusCode == 200) {
       authRepo.saveUserToken(response.body["token"]);
       print("My token is" + response.body["token"]);
       responseModel = ResponseModel(true, response.body["token"]);
-    }else{
+    } else {
       responseModel = ResponseModel(false, response.statusText!);
     }
     _isLoading = false;
@@ -35,13 +37,13 @@ class AuthController extends GetxController implements GetxService{
     update();
     Response response = await authRepo.login(username, password);
     late ResponseModel responseModel;
-    if(response.statusCode == 200){
+    if (response.statusCode == 200) {
       if (response.body["token"] != null) {
         authRepo.saveUserToken(response.body["token"]);
         print(response.body["token"]);
       }
       responseModel = ResponseModel(true, response.body["token"]);
-    }else{
+    } else {
       responseModel = ResponseModel(false, response.statusText!);
     }
     _isLoading = false;
@@ -49,16 +51,15 @@ class AuthController extends GetxController implements GetxService{
     return responseModel;
   }
 
-  void saveUserNumberAndPassword(String no_hp, String password)  {
+  void saveUserNumberAndPassword(String no_hp, String password) {
     authRepo.saveUserNumberAndPassword(no_hp, password);
   }
 
-  bool userLoggedIn(){
+  bool userLoggedIn() {
     return authRepo.userLoggedIn();
   }
 
-  bool clearSharedData(){
+  bool clearSharedData() {
     return authRepo.clearSharedData();
   }
 }
-

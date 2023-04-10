@@ -97,7 +97,7 @@ class AccountPage extends StatelessWidget {
                                 onTap: () {
                                   if (Get.find<AuthController>()
                                       .userLoggedIn()) {
-                                    // Get.toNamed(RouteHelper.getKeranjangPage());
+                                    Get.toNamed(RouteHelper.getTokoPage());
                                     print(userController.users.name.toString());
                                   }
                                 },
@@ -208,7 +208,8 @@ class AccountPage extends StatelessWidget {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Get.to(() => Masuk(), transition: Transition.fadeIn);
+                            Get.to(() => Masuk(),
+                                transition: Transition.fadeIn);
                           },
                           child: Container(
                               width: Dimensions.screenWidth / 3,
@@ -232,7 +233,8 @@ class AccountPage extends StatelessWidget {
                         //daftar
                         GestureDetector(
                           onTap: () {
-                            Get.to(() => Register(), transition: Transition.fadeIn);
+                            Get.to(() => Register(),
+                                transition: Transition.fadeIn);
                           },
                           child: Container(
                               width: Dimensions.screenWidth / 3,

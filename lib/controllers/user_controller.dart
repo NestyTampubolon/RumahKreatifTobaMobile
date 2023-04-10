@@ -1,15 +1,15 @@
 import 'dart:convert';
-
 import 'package:get/get.dart';
 import 'package:rumah_kreatif_toba/data/repository/auth_repo.dart';
 import 'package:rumah_kreatif_toba/models/response_model.dart';
-
 import '../data/repository/user_repo.dart';
 import '../models/users_models.dart';
 
-class UserController extends GetxController implements GetxService{
+class UserController extends GetxController implements GetxService {
   final UserRepo userRepo;
-  UserController({required this.userRepo,});
+  UserController({
+    required this.userRepo,
+  });
 
   bool _isLoading = false;
   late Users _users;
@@ -19,11 +19,11 @@ class UserController extends GetxController implements GetxService{
   Future<ResponseModel> getUser() async {
     Response response = await userRepo.getUserInfo();
     late ResponseModel responseModel;
-    if(response.statusCode == 200){
+    if (response.statusCode == 200) {
       _users = Users.fromJson(response.body);
       _isLoading = true;
       responseModel = ResponseModel(true, "successfully");
-    }else{
+    } else {
       print("tidak berhasil mendapatkan data");
       responseModel = ResponseModel(false, response.statusText!);
     }
@@ -33,4 +33,3 @@ class UserController extends GetxController implements GetxService{
     return responseModel;
   }
 }
-
