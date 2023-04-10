@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:get/get.dart';
+import 'package:rumah_kreatif_toba/controllers/auth_controller.dart';
 import 'package:rumah_kreatif_toba/data/repository/auth_repo.dart';
 import 'package:rumah_kreatif_toba/models/response_model.dart';
 import '../data/repository/user_repo.dart';
@@ -15,6 +16,7 @@ class UserController extends GetxController implements GetxService {
   late Users _users;
   bool get isLoading => _isLoading;
   Users get users => _users;
+  late AuthController _auth;
 
   Future<ResponseModel> getUser() async {
     Response response = await userRepo.getUserInfo();
@@ -24,10 +26,8 @@ class UserController extends GetxController implements GetxService {
       _isLoading = true;
       responseModel = ResponseModel(true, "successfully");
     } else {
-      print("tidak berhasil mendapatkan data");
       responseModel = ResponseModel(false, response.statusText!);
     }
-    print("berhasil mendapatkan data");
     _isLoading = false;
     update();
     return responseModel;

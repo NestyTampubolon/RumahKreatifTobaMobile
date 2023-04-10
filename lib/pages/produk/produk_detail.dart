@@ -13,7 +13,11 @@ import 'package:rumah_kreatif_toba/widgets/expandable_text_widget.dart';
 import 'package:rumah_kreatif_toba/widgets/price_text.dart';
 import 'package:rumah_kreatif_toba/widgets/tittle_text.dart';
 
+import '../../base/show_custom_message.dart';
+import '../../controllers/auth_controller.dart';
+import '../../controllers/user_controller.dart';
 import '../../models/produk_models.dart';
+import '../../utils/app_constants.dart';
 import '../../widgets/big_text.dart';
 import '../../widgets/currency_format.dart';
 
@@ -30,6 +34,28 @@ class ProdukDetail extends StatelessWidget {
     Get.find<PopularProdukController>()
         .initProduk(daftarproduk, Get.find<CartController>());
 
+    var userId;
+
+    Future<void> _tambahKeranjang(CartController cartController) async {
+      bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
+      if (_userLoggedIn) {
+        var controller = Get.find<UserController>();
+        await controller.getUser();
+        cartController
+            .tambahKeranjang(controller.users.id, productId.toInt(),
+                1)
+            .then((status) {
+          if (status.isSuccess) {
+            showCustomSnackBar("Produk berhasil ditambahkan ke keranjang",
+                title: "Berhasil", );
+          } else {
+            showCustomSnackBar(status.message);
+          }
+        });
+        cartController.getKeranjangList();
+      }
+    }
+
     return Scaffold(
         backgroundColor: Colors.white,
         body: CustomScrollView(
@@ -42,20 +68,24 @@ class ProdukDetail extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Get.toNamed(RouteHelper.getInitial());
+                      Get.back();
                     },
                     child: AppIcon(icon: Icons.arrow_back),
                   ),
-                  GetBuilder<PopularProdukController>(builder: (controller) {
+                  GetBuilder<CartController>(builder: (controller) {
                     return GestureDetector(
                       onTap: () {
-                        if (controller.inCartItems >= 1)
+                        if(Get.find<AuthController>().userLoggedIn()){
                           Get.toNamed(RouteHelper.getKeranjangPage());
+                        }
+                        else{
+                          Get.toNamed(RouteHelper.getMasukPage());
+                        }
                       },
                       child: Stack(
                         children: [
                           AppIcon(icon: Icons.shopping_cart_outlined),
-                          Get.find<PopularProdukController>().totalItems >= 1
+                          controller.keranjangList.length >= 1
                               ? Positioned(
                                   right: 0,
                                   top: 0,
@@ -66,14 +96,12 @@ class ProdukDetail extends StatelessWidget {
                                     backgroundColor: AppColors.notification,
                                   ))
                               : Container(),
-                          Get.find<PopularProdukController>().totalItems >= 1
+                          controller.keranjangList.length >= 1
                               ? Positioned(
                                   right: 3,
                                   top: 3,
                                   child: BigText(
-                                    text: Get.find<PopularProdukController>()
-                                        .totalItems
-                                        .toString(),
+                                    text: controller.keranjangList.length.toString(),
                                     size: 12,
                                     color: Colors.white,
                                   ),
@@ -140,7 +168,37 @@ class ProdukDetail extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Divider(color: AppColors.buttonBackgroundColor),
+                  Container(
+                    margin: EdgeInsets.only(
+                        left: Dimensions.width20,
+                        right: Dimensions.width20,
+                        bottom: Dimensions.height20),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Divider(color: AppColors.buttonBackgroundColor),
+                        BigText(
+                          text: "Kategori : " +
+                              daftarproduk.namaKategori.toString(),
+                          size: Dimensions.font26 / 2,
+                        ),
+                        BigText(
+                          text: "Berat : " +
+                              daftarproduk.heavy.toString() +
+                              " gr",
+                          size: Dimensions.font26 / 2,
+                        ),
+                        BigText(
+                          text: "Stok : " + daftarproduk.stok.toString(),
+                          size: Dimensions.font26 / 2,
+                        ),
+                        SizedBox(
+                          width: Dimensions.height20,
+                        ),
+                      ],
+                    ),
+                  ),
                   // SizedBox(height: Dimensions.height45,),
                   Container(
                     margin: EdgeInsets.only(
@@ -169,30 +227,36 @@ class ProdukDetail extends StatelessWidget {
                             height: 60,
                             width: 60,
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(Radius.circular(Dimensions.radius15)),
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(Dimensions.radius15)),
                                 image: DecorationImage(
                                     fit: BoxFit.cover,
                                     image: AssetImage(
                                         "assets/images/coffee.jpg"))),
                           ),
-                          SizedBox(width: Dimensions.width10,),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-
-                              BigText(
-                                text: daftarproduk.namaMerchant.toString(),
-                                fontWeight: FontWeight.bold,
-                              ),
-                              BigText(
-                                text: "Toba Samosir",
-                                size: Dimensions.font16 / 1.5,
-                              ),
-                              BigText(
-                                text: "Balige",
-                                size: Dimensions.font16 / 1.5,
-                              ),
-                            ],
+                          SizedBox(
+                            width: Dimensions.width10,
+                          ),
+                          Center(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                BigText(
+                                  text: daftarproduk.namaMerchant.toString(),
+                                  fontWeight: FontWeight.bold,
+                                  size: Dimensions.font26 / 2,
+                                ),
+                                BigText(
+                                  text: "Toba Samosir",
+                                  size: Dimensions.font16 / 1.5,
+                                ),
+                                BigText(
+                                  text: "Balige",
+                                  size: Dimensions.font16 / 1.5,
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       )),
@@ -206,90 +270,148 @@ class ProdukDetail extends StatelessWidget {
             return Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Container(
-                  height: Dimensions.bottomHeightBar,
-                  padding: EdgeInsets.only(
-                      top: Dimensions.height10,
-                      bottom: Dimensions.height10,
-                      left: Dimensions.width20,
-                      right: Dimensions.width20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.only(
-                            top: Dimensions.height10 / 2,
-                            bottom: Dimensions.height10 / 2,
-                            left: Dimensions.width10,
-                            right: Dimensions.width10),
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                color: AppColors.buttonBackgroundColor),
-                            borderRadius:
-                                BorderRadius.circular(Dimensions.radius20),
-                            color: Colors.white),
-                        child: Row(
-                          children: [
-                            GestureDetector(
+                GetBuilder<CartController>(builder: (cartController) {
+                  return Container(
+                    height: Dimensions.bottomHeightBar,
+                    padding: EdgeInsets.only(
+                        top: Dimensions.height10,
+                        bottom: Dimensions.height10,
+                        left: Dimensions.width20,
+                        right: Dimensions.width20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // Container(
+                        //   padding: EdgeInsets.only(
+                        //       top: Dimensions.height10 / 2,
+                        //       bottom: Dimensions.height10 / 2,
+                        //       left: Dimensions.width10,
+                        //       right: Dimensions.width10),
+                        //   decoration: BoxDecoration(
+                        //       border: Border.all(
+                        //           color: AppColors.buttonBackgroundColor),
+                        //       borderRadius:
+                        //           BorderRadius.circular(Dimensions.radius20),
+                        //       color: Colors.white),
+                        //   child: Row(
+                        //     children: [
+                        //       GestureDetector(
+                        //         onTap: () {
+                        //           produk.setQuantity(false);
+                        //         },
+                        //         child: AppIcon(
+                        //             iconSize: Dimensions.iconSize16,
+                        //             iconColor: AppColors.redColor,
+                        //             backgroundColor: Colors.white,
+                        //             icon: Icons.remove),
+                        //       ),
+                        //       SizedBox(
+                        //         width: Dimensions.width10 / 2,
+                        //       ),
+                        //       BigText(text: produk.inCartItems.toString()),
+                        //       SizedBox(
+                        //         width: Dimensions.width10 / 2,
+                        //       ),
+                        //       GestureDetector(
+                        //         onTap: () {
+                        //           produk.setQuantity(true);
+                        //         },
+                        //         child: AppIcon(
+                        //             iconSize: Dimensions.iconSize16,
+                        //             iconColor: AppColors.redColor,
+                        //             backgroundColor: Colors.white,
+                        //             icon: Icons.add),
+                        //       )
+                        //     ],
+                        //   ),
+                        // ),
+                        Container(
+                          padding: EdgeInsets.only(
+                              top: Dimensions.height10/2 ,
+                              bottom: Dimensions.height10/2 ,
+                              left: Dimensions.width10,
+                              right: Dimensions.width10),
+                          child: GestureDetector(
                               onTap: () {
-                                produk.setQuantity(false);
+                                if (Get.find<AuthController>().userLoggedIn()) {
+                                  _tambahKeranjang(cartController);
+                                } else {
+                                  Get.toNamed(RouteHelper.getMasukPage());
+                                }
+
                               },
-                              child: AppIcon(
-                                  iconSize: Dimensions.iconSize16,
-                                  iconColor: AppColors.redColor,
-                                  backgroundColor: Colors.white,
-                                  icon: Icons.remove),
-                            ),
-                            SizedBox(
-                              width: Dimensions.width10 / 2,
-                            ),
-                            BigText(text: produk.inCartItems.toString()),
-                            SizedBox(
-                              width: Dimensions.width10 / 2,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                produk.setQuantity(true);
-                              },
-                              child: AppIcon(
-                                  iconSize: Dimensions.iconSize16,
-                                  iconColor: AppColors.redColor,
-                                  backgroundColor: Colors.white,
-                                  icon: Icons.add),
-                            )
-                          ],
+                              child: AppIcon(icon: Icons.message,iconSize: Dimensions.iconSize24, iconColor: AppColors.redColor, backgroundColor: Colors.white.withOpacity(0.0),),),
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: AppColors.redColor),
+                              borderRadius: BorderRadius.circular(
+                                  Dimensions.radius20 / 2),
+                              color: Colors.white),
                         ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(
-                            top: Dimensions.height10 / 2,
-                            bottom: Dimensions.height10 / 2,
-                            left: Dimensions.width10,
-                            right: Dimensions.width20),
-                        child: GestureDetector(
-                            onTap: () {
-                              produk.addItem(daftarproduk);
-                            },
-                            child: Row(children: [
-                              AppIcon(
-                                  iconSize: Dimensions.iconSize16,
-                                  iconColor: Colors.white,
-                                  backgroundColor: AppColors.redColor,
-                                  icon: Icons.add),
-                              BigText(
-                                text: "Keranjang",
-                                color: Colors.white,
-                                size: Dimensions.height15,
-                              ),
-                            ])),
-                        decoration: BoxDecoration(
-                            borderRadius:
-                                BorderRadius.circular(Dimensions.radius20),
-                            color: AppColors.redColor),
-                      )
-                    ],
-                  ),
-                ),
+                        Container(
+                          padding: EdgeInsets.only(
+                              top: Dimensions.height20/1.1 ,
+                              bottom: Dimensions.height20/1.1 ,
+                              left: Dimensions.width10,
+                              right: Dimensions.width10),
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: AppColors.redColor),
+                              borderRadius: BorderRadius.circular(
+                                  Dimensions.radius20 / 2),
+                              color: Colors.white),
+                          child: GestureDetector(
+                              onTap: () {
+                                if (Get.find<AuthController>().userLoggedIn()) {
+                                  _tambahKeranjang(cartController);
+                                } else {
+                                  Get.toNamed(RouteHelper.getMasukPage());
+                                }
+
+                              },
+                              child: Row(children: [
+                                BigText(
+                                  text: "Beli Langsung",
+                                  color: Colors.redAccent,
+                                  size: Dimensions.height15,
+                                ),
+                              ])),
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(
+                              top: Dimensions.height10 / 2,
+                              bottom: Dimensions.height10 / 2,
+                              left: Dimensions.width10,
+                              right: Dimensions.width20),
+                          decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.circular(Dimensions.radius20/2),
+                              color: AppColors.redColor),
+                          child: GestureDetector(
+                              onTap: () {
+                                if (Get.find<AuthController>().userLoggedIn()) {
+                                  _tambahKeranjang(cartController);
+                                } else {
+                                  Get.toNamed(RouteHelper.getMasukPage());
+                                }
+                              },
+                              child: Row(children: [
+                                AppIcon(
+                                    iconSize: Dimensions.iconSize16,
+                                    iconColor: Colors.white,
+                                    backgroundColor: AppColors.redColor,
+                                    icon: Icons.add),
+                                BigText(
+                                  text: "Keranjang",
+                                  color: Colors.white,
+                                  size: Dimensions.height15,
+                                ),
+                              ])),
+                        )
+                      ],
+                    ),
+                  );
+                }),
               ],
             );
           },

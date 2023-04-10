@@ -16,6 +16,8 @@ class Produk {
   String? kontakToko;
   String? fotoMerchant;
   int? isVerified;
+  int? stock_id;
+  int? stok;
 
   Produk({
     required this.productId,
@@ -35,28 +37,30 @@ class Produk {
     required this.kontakToko,
     required this.fotoMerchant,
     required this.isVerified,
+    required this.stock_id,
+    required this.stok,
   });
 
   factory Produk.fromJson(Map<String, dynamic> json) {
     return Produk(
-      productId: json['product_id'],
-      merchantId: json['merchant_id'],
-      categoryId: json['category_id'],
-      productName: json['product_name'],
-      productDescription: json['product_description'],
-      price: json['price'],
-      heavy: json['heavy'],
-      isDeleted: json['is_deleted'],
-      createdAt: json['created_at'],
-      updatedAt: json['updated_at'],
-      namaKategori: json['nama_kategori'],
-      userId: json['user_id'],
-      namaMerchant: json['nama_merchant'],
-      deskripsiToko: json['deskripsi_toko'],
-      kontakToko: json['kontak_toko'],
-      fotoMerchant: json['foto_merchant'],
-      isVerified: json['is_verified'],
-    );
+        productId: json['product_id'],
+        merchantId: json['merchant_id'],
+        categoryId: json['category_id'],
+        productName: json['product_name'],
+        productDescription: json['product_description'],
+        price: json['price'],
+        heavy: json['heavy'],
+        isDeleted: json['is_deleted'],
+        createdAt: json['created_at'],
+        updatedAt: json['updated_at'],
+        namaKategori: json['nama_kategori'],
+        userId: json['user_id'],
+        namaMerchant: json['nama_merchant'],
+        deskripsiToko: json['deskripsi_toko'],
+        kontakToko: json['kontak_toko'],
+        fotoMerchant: json['foto_merchant'],
+        isVerified: json['is_verified'],
+        stock_id: json['stock_id'],
+        stok: json['stok']);
   }
-
 }
