@@ -19,10 +19,10 @@ class CartController extends GetxController {
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
-  List<dynamic> _keranjangList=[];
+  List<dynamic> _keranjangList = [];
   List<dynamic> get keranjangList => _keranjangList;
 
-  List<dynamic> _merchantKeranjangList=[];
+  List<dynamic> _merchantKeranjangList = [];
   List<dynamic> get merchantKeranjangList => _merchantKeranjangList;
 
   List<int?> _checkedCartIds = [];
@@ -34,7 +34,7 @@ class CartController extends GetxController {
   void onInit() {
     super.onInit();
     _tambahKeranjang(this);
-    getKeranjangList();// Call the function here
+    getKeranjangList(); // Call the function here
   }
 
   @override
@@ -50,7 +50,8 @@ class CartController extends GetxController {
         totalQuantity = value.jumlahMasukKeranjang! + jumlahMasukKeranjang;
         return CartModel(
           productId: value.productId,
-          jumlahMasukKeranjang: value.jumlahMasukKeranjang! + jumlahMasukKeranjang,
+          jumlahMasukKeranjang:
+              value.jumlahMasukKeranjang! + jumlahMasukKeranjang,
           merchantId: value.merchantId,
           categoryId: value.categoryId,
           productName: value.productName,
@@ -59,46 +60,47 @@ class CartController extends GetxController {
         );
       });
 
-      if(totalQuantity <=0){
+      if (totalQuantity <= 0) {
         _items.remove(produk.productId);
       }
-
     } else {
       // if(jumlahMasukKeranjang > 0){
-        print("length of the item is " + _items.length.toString());
-        _items.putIfAbsent(produk.productId!, () {
-          print("adding item to the cart " +
-              produk.productId!.toString() +
-              " quantity " +
-              jumlahMasukKeranjang.toString());
-          _items.forEach((key, value) {
-            print("quantity is " + value.jumlahMasukKeranjang.toString());
-          });
-          return CartModel(
-            productId: produk.productId,
-            jumlahMasukKeranjang: jumlahMasukKeranjang,
-            merchantId: produk.merchantId,
-            categoryId: produk.categoryId,
-            productName: produk.productName,
-            price: produk.price,
-            heavy: produk.heavy,
-          );
+      print("length of the item is " + _items.length.toString());
+      _items.putIfAbsent(produk.productId!, () {
+        print("adding item to the cart " +
+            produk.productId!.toString() +
+            " quantity " +
+            jumlahMasukKeranjang.toString());
+        _items.forEach((key, value) {
+          print("quantity is " + value.jumlahMasukKeranjang.toString());
         });
-    //  }
-
-    }update();
+        return CartModel(
+          productId: produk.productId,
+          jumlahMasukKeranjang: jumlahMasukKeranjang,
+          merchantId: produk.merchantId,
+          categoryId: produk.categoryId,
+          productName: produk.productName,
+          price: produk.price,
+          heavy: produk.heavy,
+        );
+      });
+      //  }
+    }
+    update();
   }
 
-  Future<ResponseModel> tambahKeranjang(int? user_id, int product_id, int jumlah_masuk_keranjang) async {
+  Future<ResponseModel> tambahKeranjang(
+      int? user_id, int product_id, int jumlah_masuk_keranjang) async {
     _isLoading = true;
     update();
-    Response response = await cartRepo.tambahKeranjang(user_id!, product_id, jumlah_masuk_keranjang);
+    Response response = await cartRepo.tambahKeranjang(
+        user_id!, product_id, jumlah_masuk_keranjang);
     late ResponseModel responseModel;
-    if(response.statusCode == 200){
+    if (response.statusCode == 200) {
       _totalItems = response.body;
       showCustomSnackBar("Produk berhasil ditambahkan ke keranjang",
           title: "Berhasil");
-    }else{
+    } else {
       responseModel = ResponseModel(false, response.statusText!);
     }
     _isLoading = false;
@@ -106,10 +108,10 @@ class CartController extends GetxController {
     return responseModel;
   }
 
-  Future<void> getKeranjangList() async{
+  Future<void> getKeranjangList() async {
     var controller = Get.find<UserController>();
     Response response = await cartRepo.getKeranjangList(controller.users.id!);
-    if(response.statusCode == 200){
+    if (response.statusCode == 200) {
       List<dynamic> responseBody = response.body["cart"];
       _keranjangList = [];
       for (dynamic item in responseBody) {
@@ -126,9 +128,7 @@ class CartController extends GetxController {
 
       _isLoading = true;
       update();
-    }else{
-
-    }
+    } else {}
   }
 
   Future<void> _tambahKeranjang(CartController cartController) async {
@@ -138,17 +138,15 @@ class CartController extends GetxController {
     }
   }
 
-
   Future<ResponseModel> hapusKeranjang(int cart_id) async {
     _isLoading = true;
     update();
     Response response = await cartRepo.hapusKeranjang(cart_id);
     late ResponseModel responseModel;
-    if(response.statusCode == 200){
-      showCustomSnackBar("Produk berhasil dihapus",
-          title: "Berhasil");
+    if (response.statusCode == 200) {
+      showCustomSnackBar("Produk berhasil dihapus", title: "Berhasil");
       getKeranjangList();
-    }else{
+    } else {
       responseModel = ResponseModel(false, response.statusText!);
     }
     _isLoading = false;
@@ -161,9 +159,9 @@ class CartController extends GetxController {
     update();
     Response response = await cartRepo.kurangKeranjang(cart_id);
     late ResponseModel responseModel;
-    if(response.statusCode == 200){
+    if (response.statusCode == 200) {
       getKeranjangList();
-    }else{
+    } else {
       responseModel = ResponseModel(false, response.statusText!);
     }
     _isLoading = false;
@@ -176,13 +174,12 @@ class CartController extends GetxController {
     update();
     Response response = await cartRepo.jumlahKeranjang(cart_id);
     late ResponseModel responseModel;
-    if(response.statusCode == 200){
-      if(response.body == 1){
-        showCustomSnackBar("Stok produk telah habis",
-            title: "Gagal");
+    if (response.statusCode == 200) {
+      if (response.body == 1) {
+        showCustomSnackBar("Stok produk telah habis", title: "Gagal");
       }
       getKeranjangList();
-    }else{
+    } else {
       responseModel = ResponseModel(false, response.statusText!);
     }
     _isLoading = false;
@@ -191,7 +188,6 @@ class CartController extends GetxController {
   }
 
   Map<String, bool> _checkedStatusMap = {};
-
 
   // bool getMerchantCheckedStatus(String merchantName) {
   //   return _checkedStatusMap[merchantName] ?? false;
@@ -225,19 +221,18 @@ class CartController extends GetxController {
     _checkedCartMap[cartId.toString()] = value ?? false;
   }
 
-
-  bool existInCart(Produk produk){
-    if(_items.containsKey(produk.productId)){
+  bool existInCart(Produk produk) {
+    if (_items.containsKey(produk.productId)) {
       return true;
     }
     return false;
   }
 
-  int getQuantity(Produk produk){
+  int getQuantity(Produk produk) {
     var quantity = 0;
-    if(_items.containsKey(produk.productId)){
+    if (_items.containsKey(produk.productId)) {
       _items.forEach((key, value) {
-        if(key == produk.productId){
+        if (key == produk.productId) {
           quantity = value.jumlahMasukKeranjang!;
         }
       });
@@ -255,8 +250,8 @@ class CartController extends GetxController {
     return _totalItems;
   }
 
-  List<CartModel> get getItems{
-    return  _items.entries.map((e) {
+  List<CartModel> get getItems {
+    return _items.entries.map((e) {
       return e.value;
     }).toList();
   }
@@ -268,5 +263,4 @@ class CartController extends GetxController {
     } as void Function(dynamic, dynamic));
     return total;
   }
-
 }

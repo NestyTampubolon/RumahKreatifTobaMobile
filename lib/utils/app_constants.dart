@@ -3,7 +3,8 @@ class AppConstants {
   static const int APP_VERSION = 1;
 
   static const String BASE_URL =
-      "http://192.168.145.154/tobazonerework/public/api/";
+      "http://172.26.43.66/RumahKreatifBackend/public/api/";
+
   static const String POPULAR_PRODUCT_URL = "produk";
   static const String KATEGORI_PRODUCT_URL = "lihat_produk";
 
@@ -22,6 +23,8 @@ class AppConstants {
   static const String MENUNGGU_PEMBAYARAN_URL = "menunggu_pembayaran";
   static const String BUKTI_PEMBAYARAN = "PostBuktiPembayaran";
   static const String DETAIL_PESANAN_URL = "detail_pesanan";
+
+  static const String Toko_URL = "toko";
 
   static const String TOKEN = "";
   static const String PHONE = "";

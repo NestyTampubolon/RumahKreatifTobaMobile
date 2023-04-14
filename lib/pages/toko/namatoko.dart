@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rumah_kreatif_toba/pages/kategori/kategori_produk_detail.dart';
 import 'package:rumah_kreatif_toba/pages/toko/infotokoktp.dart';
+import 'package:rumah_kreatif_toba/pages/toko/passwordtoko.dart';
 import 'package:rumah_kreatif_toba/pages/toko/toko.dart';
 import 'package:rumah_kreatif_toba/utils/dimensions.dart';
 import 'package:rumah_kreatif_toba/widgets/app_text_field.dart';
@@ -81,7 +82,7 @@ class _NamaTokoState extends State<NamaToko> {
                   Container(
                     child: AppTextField(
                       textController: NamaTokoController,
-                      hintText: "Apa nama Tokomu",
+                      hintText: "Tuliskan nama toko anda",
                       icon: Icons.shopping_bag,
                     ),
                   ),
@@ -105,7 +106,7 @@ class _NamaTokoState extends State<NamaToko> {
               height: 100,
             ),
             GestureDetector(
-              onTap: () => {Get.to(() => TokoKTP())},
+              onTap: () => {Get.to(() => PasswordTokoPage())},
               child: Container(
                   width: 306,
                   height: 45,

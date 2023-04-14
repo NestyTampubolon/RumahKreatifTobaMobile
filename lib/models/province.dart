@@ -5,7 +5,7 @@ class Province {
   Province({this.provinceId, this.province});
 
   Province.fromJson(Map<String, dynamic> json) {
-    provinceId = json['provinceId'];
+    provinceId = json['province_id'];
     province = json['province'];
   }
 
@@ -20,4 +20,7 @@ class Province {
     if (list.length == 0) return List<Province>.empty();
     return list.map((item) => Province.fromJson(item)).toList();
   }
+
+  @override
+  String toString() => province!;
 }

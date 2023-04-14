@@ -1,41 +1,34 @@
-import 'dart:async';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
+import 'package:rumah_kreatif_toba/models/city.dart';
 import 'package:rumah_kreatif_toba/models/province.dart';
+import 'package:rumah_kreatif_toba/models/subdistrict.dart';
+import 'package:rumah_kreatif_toba/pages/home/home_page.dart';
 import 'package:rumah_kreatif_toba/pages/toko/passwordtoko.dart';
 import 'package:rumah_kreatif_toba/utils/dimensions.dart';
-import 'package:rumah_kreatif_toba/widgets/app_dropdown_field.dart';
-import 'package:rumah_kreatif_toba/widgets/app_text_field.dart';
-import 'package:rumah_kreatif_toba/widgets/big_text.dart';
-import 'package:rumah_kreatif_toba/widgets/monserrat_text.dart';
-import 'package:rumah_kreatif_toba/widgets/small_text.dart';
-import '../../routes/route_helper.dart';
+import 'package:rumah_kreatif_toba/controllers/alamat_controller.dart';
+
 import '../../utils/colors.dart';
-import '../../widgets/app_icon.dart';
-import '../home/home_page.dart';
+import '../../widgets/big_text.dart';
 
-class AlamatTokoPage extends StatefulWidget {
-  const AlamatTokoPage({Key? key}) : super(key: key);
+class AlamatTokoPageState extends GetView<AlamatController> {
+  // var ProvinsiController = TextEditingController();
+  // var KabupatenController = TextEditingController();
+  // var KecamatanController = TextEditingController();
+  // var JalanController = TextEditingController();
 
-  @override
-  State<AlamatTokoPage> createState() => _AlamatTokoPageState();
-}
+  // const Provinsi({
+  //   Key? key,
+  //   required this.tipe,
+  // }) : super(key: key);
 
-class _AlamatTokoPageState extends State<AlamatTokoPage> {
-  var ProvinsiController = TextEditingController();
-  var KabupatenController = TextEditingController();
-  var KecamatanController = TextEditingController();
-  var JalanController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -74,77 +67,112 @@ class _AlamatTokoPageState extends State<AlamatTokoPage> {
                 ),
               ),
             ),
-            SizedBox(
-              height: 20,
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                    padding: EdgeInsets.all(20),
-                    child: Column(
-                      children: [
-                        DropdownSearch<Province>(
-                          asyncItems: (String filter) async {
-                            Uri url = Uri.parse(
-                                "https://pro.rajaongkir.com/api/province");
-                            try {
-                              final response = await http.get(
-                                url,
-                                headers: {
-                                  "key": "41df939eff72c9b050a81d89b4be72ba",
-                                },
-                              );
-
-                              var data = json.decode(response.body)
-                                  as Map<String, dynamic>;
-
-                              var statusCode =
-                                  data["rajaongkir"]["status"]["code"];
-
-                              if (statusCode != 200) {
-                                throw data["rajaongkir"]["status"]
-                                    ["description"];
-                              }
-
-                              var allProvince =
-                                  data["rajaongkir"]["result"] as List<dynamic>;
-
-                              var models = Province.fromJsonList(allProvince);
-                              return models;
-                            } catch (err) {
-                              print(err);
-                              return List<Province>.empty();
-                            }
-                          },
-                          onChanged: (value) => print(value!.province),
-                          dropdownDecoratorProps: DropDownDecoratorProps(
-                            dropdownSearchDecoration: InputDecoration(
-                              labelText: "Provinsi",
-                              hintText: "Provinsi anda",
-                            ),
-                          ),
-                        ),
-                      ],
-                    )),
-              ],
-            ),
             Container(
-              alignment: Alignment.topLeft,
-              padding: EdgeInsets.all(10),
-              child: SmallText(
-                text: " * Pastikan data yang pilih benar ",
-                size: 14,
+              padding: EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  DropdownSearch<Province>(
+                      showSearchBox: true,
+                      popupItemBuilder: (context, item, isSelected) => ListTile(
+                            title: Text("${item.province}"),
+                          ),
+                      dropdownSearchDecoration: InputDecoration(
+                        labelText: "Provinsi",
+                        contentPadding: EdgeInsets.symmetric(
+                          vertical: 10,
+                          horizontal: 15,
+                        ),
+                        border: OutlineInputBorder(),
+                      ),
+                      onFind: (text) async {
+                        var response = await Dio().get(
+                          "https://pro.rajaongkir.com/api/province",
+                          queryParameters: {
+                            "key": "41df939eff72c9b050a81d89b4be72ba",
+                          },
+                        );
+                        return Province.fromJsonList(
+                            response.data["rajaongkir"]["results"]);
+                      },
+                      onChanged: (value) => controller.provAsalId.value =
+                          value?.provinceId ?? "0"),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  DropdownSearch<City>(
+                      showSearchBox: true,
+                      popupItemBuilder: (context, item, isSelected) => ListTile(
+                            title: Text("${item.type} ${item.cityName}"),
+                          ),
+                      dropdownSearchDecoration: InputDecoration(
+                        labelText: "Kabupaten / Kota",
+                        contentPadding: EdgeInsets.symmetric(
+                          vertical: 10,
+                          horizontal: 15,
+                        ),
+                        border: OutlineInputBorder(),
+                      ),
+                      onFind: (text) async {
+                        var response = await Dio().get(
+                          "https://pro.rajaongkir.com/api/city?province=${controller.provAsalId}",
+                          queryParameters: {
+                            "key": "41df939eff72c9b050a81d89b4be72ba",
+                          },
+                        );
+                        return City.fromJsonList(
+                            response.data["rajaongkir"]["results"]);
+                      },
+                      onChanged: (value) =>
+                          controller.cityAsalId.value = value?.cityId ?? "0"),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  DropdownSearch<Subdistrict>(
+                    showSearchBox: true,
+                    popupItemBuilder: (context, item, isSelected) => ListTile(
+                      title: Text("${item.subdistrictName}"),
+                    ),
+                    dropdownSearchDecoration: InputDecoration(
+                      labelText: "Kecamatan",
+                      contentPadding: EdgeInsets.symmetric(
+                        vertical: 10,
+                        horizontal: 15,
+                      ),
+                      border: OutlineInputBorder(),
+                    ),
+                    onFind: (text) async {
+                      var response = await Dio().get(
+                        "https://pro.rajaongkir.com/api/subdistrict?city=${controller.cityAsalId}",
+                        queryParameters: {
+                          "key": "41df939eff72c9b050a81d89b4be72ba",
+                        },
+                      );
+                      return Subdistrict.fromJsonList(
+                          response.data["rajaongkir"]["results"]);
+                    },
+                    onChanged: (value) => print(
+                      value?.toJson(),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      labelText: "Alamat Lengkap",
+                      border: OutlineInputBorder(),
+                    ),
+                  )
+                ],
               ),
             ),
             SizedBox(
-              height: 50,
+              height: 20,
             ),
             GestureDetector(
               onTap: () => {
                 Get.to(
-                  () => PasswordTokoPage(),
+                  () => HomePage(),
                 ),
               },
               child: Container(

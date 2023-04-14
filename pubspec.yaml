@@ -45,7 +45,8 @@ dependencies:
   grouped_list: ^5.1.2
   image_picker: ^0.8.3
   clipboard: ^0.1.3
-  dropdown_search: ^5.0.6
+  dropdown_search: ^2.0.0
+  dio: ^5.1.1
 
 dev_dependencies:
   flutter_test:
@@ -85,14 +86,16 @@ flutter:
   - assets/images/beranda/OfficialStore.png
   - assets/images/beranda/PromoHariIni.png
 
-  - assets/images/kategori/makanan.png
-  - assets/images/kategori/minuman.png
+  - assets/images/kategori/Makanan.png
+  - assets/images/kategori/Minuman.png
   - assets/images/kategori/Non Halal.png
   - assets/images/kategori/Perlengkapan Rumah.png
-  - assets/images/kategori/souvenir.png 
-  - assets/images/kategori/ulos.png
-  - assets/images/kategori/pakaian.png
+  - assets/images/kategori/Souvenir.png
+  - assets/images/kategori/Ulos.png
+  - assets/images/kategori/Pakaian.png
   - assets/images/kategori/Jasa.png
+  - assets/images/kategori/Lihat Semua.png
+  -
 
   - assets/images/kategori_detail/Makanan.png
   - assets/images/kategori_detail/Minuman.png
