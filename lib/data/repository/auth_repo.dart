@@ -13,7 +13,8 @@ class AuthRepo {
   });
 
   Future<Response> registrasi(Users users) async {
-    return await apiClient.postData(AppConstants.REGISTRASI_URL, users.toJson());
+    return await apiClient.postData(
+        AppConstants.REGISTRASI_URL, users.toJson());
   }
 
   bool userLoggedIn() {
@@ -21,10 +22,11 @@ class AuthRepo {
   }
 
   Future<Response> login(String username, String password) async {
-    return await apiClient.postData(AppConstants.LOGIN_URL, {"username": username, "password": password});
+    return await apiClient.postData(
+        AppConstants.LOGIN_URL, {"username": username, "password": password});
   }
 
-  Future<String> getUserToken() async{
+  Future<String> getUserToken() async {
     return await sharedPreferences.getString(AppConstants.TOKEN) ?? "None";
   }
 
@@ -38,16 +40,15 @@ class AuthRepo {
   }
 
   Future<void> saveUserNumberAndPassword(String no_hp, String password) async {
-    try{
+    try {
       await sharedPreferences.setString(AppConstants.PHONE, no_hp);
       await sharedPreferences.setString(AppConstants.PASSWORD, password);
-    }catch(e){
+    } catch (e) {
       throw e;
     }
   }
 
-
-  bool clearSharedData(){
+  bool clearSharedData() {
     sharedPreferences.remove(AppConstants.TOKEN);
     sharedPreferences.remove(AppConstants.PASSWORD);
     sharedPreferences.remove(AppConstants.PHONE);

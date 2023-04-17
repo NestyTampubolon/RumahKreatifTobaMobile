@@ -1,8 +1,9 @@
-class AppConstants{
+class AppConstants {
   static const String APP_NAME = "Rumah Kreatif Toba";
   static const int APP_VERSION = 1;
 
-  static const String BASE_URL = "http://192.168.145.154/tobazonerework/public/api/";
+  static const String BASE_URL =
+      "http://192.168.220.154/tobazonerework/public/api/";
   static const String POPULAR_PRODUCT_URL = "produk";
   static const String KATEGORI_PRODUCT_URL = "lihat_produk";
 
@@ -19,9 +20,13 @@ class AppConstants{
   static const String BELI_PRODUK = "pengiriman";
   static const String PESANAN_URL = "daftar_pembelian";
   static const String MENUNGGU_PEMBAYARAN_URL = "menunggu_pembayaran";
+  static const String HAPUS_PESANAN_URL = "hapuspesanan";
   static const String BUKTI_PEMBAYARAN = "PostBuktiPembayaran";
   static const String DETAIL_PESANAN_URL = "detail_pesanan";
 
+  static const String TAMBAH_WISHLIST_URL = "tambahwishlist";
+  static const String DAFTAR_WISHLIST_URL = "daftarwishlist";
+  static const String HAPUS_WISHLIST_URL = "hapuswishlist";
 
   static const String TOKEN = "";
   static const String PHONE = "";

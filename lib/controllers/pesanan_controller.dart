@@ -7,6 +7,7 @@ import 'package:rumah_kreatif_toba/data/repository/pesanan_repo.dart';
 import 'package:rumah_kreatif_toba/models/purchase_models.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
+import '../base/show_custom_message.dart';
 import '../models/response_model.dart';
 import 'package:get/get.dart';
 
@@ -160,7 +161,7 @@ class PesananController extends GetxController {
       var item = purchaseId[i];
       http.MultipartRequest request = http.MultipartRequest(
           'POST',
-          Uri.parse('http://192.168.145.154/tobazonerework/public/api/PostBuktiPembayaran')
+          Uri.parse('http://192.168.220.154/tobazonerework/public/api/PostBuktiPembayaran')
       );
       if (GetPlatform.isMobile && data != null) {
         File _file = File(data.path);
@@ -180,6 +181,23 @@ class PesananController extends GetxController {
     }
 
     return responses;
+  }
+
+  Future<ResponseModel> hapusPesanan(String kode_pembelian) async {
+    _isLoading = true;
+    update();
+    Response response = await pesananRepo.hapusPesanan(kode_pembelian);
+    late ResponseModel responseModel;
+    if(response.statusCode == 200){
+      showCustomSnackBar("Pesanan berhasil dihapus",
+          title: "Berhasil");
+      getPesananMenungguBayaranList();
+    }else{
+      responseModel = ResponseModel(false, response.statusText!);
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
   }
 
 

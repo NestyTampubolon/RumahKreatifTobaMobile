@@ -18,7 +18,7 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen>  {
+class _SplashScreenState extends State<SplashScreen> {
   late Animation<double> animation;
   late AnimationController controller;
 
@@ -27,16 +27,12 @@ class _SplashScreenState extends State<SplashScreen>  {
   }
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     _loadResource();
 
-    Timer(
-      Duration(seconds: 2),
-        () => Get.offNamed(RouteHelper.getInitial())
-    );
+    Timer(Duration(seconds: 2), () => Get.offNamed(RouteHelper.getInitial()));
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +42,12 @@ class _SplashScreenState extends State<SplashScreen>  {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
 //          ScaleTransition(scale: animation, child:Center(child: Image.asset("assets/images/logo_rkt.png", width: 250,),) ,)
-          Center(child: Image.asset("assets/images/logo_rkt.png", width: Dimensions.splashImg,),) ,
-
+          Center(
+            child: Image.asset(
+              "assets/images/logo_rkt.png",
+              width: Dimensions.splashImg,
+            ),
+          ),
         ],
       ),
     );

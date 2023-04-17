@@ -3,6 +3,7 @@ import 'package:rumah_kreatif_toba/base/custom_loader.dart';
 import 'package:rumah_kreatif_toba/controllers/auth_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/user_controller.dart';
 import 'package:rumah_kreatif_toba/pages/account/account_widget.dart';
+import 'package:rumah_kreatif_toba/pages/account/profil/profil_page.dart';
 import 'package:rumah_kreatif_toba/pages/auth/masuk.dart';
 import 'package:rumah_kreatif_toba/pages/pesanan/pesanan_page.dart';
 import 'package:rumah_kreatif_toba/utils/colors.dart';
@@ -16,6 +17,7 @@ import '../../routes/route_helper.dart';
 import '../../utils/app_constants.dart';
 import '../../widgets/small_text.dart';
 import '../auth/register.dart';
+import 'main_account_page.dart';
 
 class AccountPage extends StatelessWidget {
   const AccountPage({Key? key}) : super(key: key);
@@ -26,31 +28,50 @@ class AccountPage extends StatelessWidget {
     if (_userLoggedIn) {
       Get.find<UserController>().getUser();
     }
-    return
-      Scaffold(
-        appBar: AppBar(
-          backgroundColor: AppColors.redColor,
-          title: BigText(
-            text: "Profil",
-            size: 24,
-            color: Colors.white,
-          ),
-        ),
-        body:
-        _userLoggedIn
+    return Scaffold(
+        // appBar: AppBar(
+        //   backgroundColor: AppColors.redColor,
+        //   title: BigText(
+        //     text: "Profil",
+        //     size: 24,
+        //     color: Colors.white,
+        //   ),
+        // ),
+        body: _userLoggedIn
             ? GetBuilder<UserController>(
                 builder: (userController) {
                   print(userController.users.username);
                   print(userController.isLoading);
                   return userController.isLoading
                       ? CustomLoader()
-                      :
-                  Container(
+                      : Container(
                           width: double.maxFinite,
                           margin: EdgeInsets.only(top: Dimensions.height20),
                           child: SingleChildScrollView(
                             child: Column(
                               children: [
+                                Container(
+                                  child: Container(
+                                    margin: EdgeInsets.only(
+                                        top: Dimensions.height30,
+                                        bottom: Dimensions.height10),
+                                    padding: EdgeInsets.only(
+                                        left: Dimensions.width20,
+                                        right: Dimensions.width20),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Container(
+                                          child: BigText(
+                                            text: "Profil",
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                                 AppIcon(
                                   icon: Icons.person,
                                   backgroundColor: AppColors.redColor,
@@ -81,36 +102,46 @@ class AccountPage extends StatelessWidget {
                                 ),
 
                                 //Profil
-                                AccountWidget(
-                                    appIcon: AppIcon(
-                                      icon: Icons.person,
-                                      backgroundColor: AppColors.redColor,
-                                      iconColor: Colors.white,
-                                      iconSize: Dimensions.height10 * 5 / 2,
-                                      size: Dimensions.height10 * 5,
-                                    ),
-                                    bigText: BigText(
-                                      text: "Profil",
-                                    )),
+                                GestureDetector(
+                                  onTap: () {
+                                    if (Get.find<AuthController>()
+                                        .userLoggedIn()) {
+                                      Get.to(ProfilPage());
+                                    }
+                                  },
+                                  child: AccountWidget(
+                                      appIcon: AppIcon(
+                                        icon: Icons.person,
+                                        backgroundColor:
+                                            Colors.white.withOpacity(0.0),
+                                        iconColor: AppColors.redColor,
+                                        iconSize: Dimensions.height10 * 5 / 2,
+                                        size: Dimensions.height10 * 5,
+                                      ),
+                                      bigText: BigText(
+                                        text: "Profil",
+                                      )),
+                                ),
                                 SizedBox(
                                   height: Dimensions.height20,
                                 ),
-
 
                                 //Keranjangku
                                 GestureDetector(
                                   onTap: () {
                                     if (Get.find<AuthController>()
                                         .userLoggedIn()) {
-                                      // Get.toNamed(RouteHelper.getKeranjangPage());
-                                      print(userController.users.name.toString());
+                                      Get.toNamed(RouteHelper.getTokoPage());
+                                      print(
+                                          userController.users.name.toString());
                                     }
                                   },
                                   child: AccountWidget(
                                       appIcon: AppIcon(
                                         icon: Icons.store,
-                                        backgroundColor: AppColors.redColor,
-                                        iconColor: Colors.white,
+                                        backgroundColor:
+                                            Colors.white.withOpacity(0.0),
+                                        iconColor: AppColors.redColor,
                                         iconSize: Dimensions.height10 * 5 / 2,
                                         size: Dimensions.height10 * 5,
                                       ),
@@ -127,14 +158,16 @@ class AccountPage extends StatelessWidget {
                                   onTap: () {
                                     if (Get.find<AuthController>()
                                         .userLoggedIn()) {
-                                      Get.toNamed(RouteHelper.getKeranjangPage());
+                                      Get.toNamed(
+                                          RouteHelper.getKeranjangPage());
                                     }
                                   },
                                   child: AccountWidget(
                                       appIcon: AppIcon(
                                         icon: Icons.shopping_cart_outlined,
-                                        backgroundColor: AppColors.redColor,
-                                        iconColor: Colors.white,
+                                        backgroundColor:
+                                            Colors.white.withOpacity(0.0),
+                                        iconColor: AppColors.redColor,
                                         iconSize: Dimensions.height10 * 5 / 2,
                                         size: Dimensions.height10 * 5,
                                       ),
@@ -154,8 +187,9 @@ class AccountPage extends StatelessWidget {
                                   child: AccountWidget(
                                       appIcon: AppIcon(
                                         icon: Icons.receipt_long_outlined,
-                                        backgroundColor: AppColors.redColor,
-                                        iconColor: Colors.white,
+                                        backgroundColor:
+                                            Colors.white.withOpacity(0.0),
+                                        iconColor: AppColors.redColor,
                                         iconSize: Dimensions.height10 * 5 / 2,
                                         size: Dimensions.height10 * 5,
                                       ),
@@ -166,8 +200,6 @@ class AccountPage extends StatelessWidget {
                                 SizedBox(
                                   height: Dimensions.height20,
                                 ),
-
-
                                 //Alamat
                                 GestureDetector(
                                   onTap: () {
@@ -181,8 +213,9 @@ class AccountPage extends StatelessWidget {
                                   child: AccountWidget(
                                       appIcon: AppIcon(
                                         icon: Icons.location_on_outlined,
-                                        backgroundColor: AppColors.redColor,
-                                        iconColor: Colors.white,
+                                        backgroundColor:
+                                            Colors.white.withOpacity(0.0),
+                                        iconColor: AppColors.redColor,
                                         iconSize: Dimensions.height10 * 5 / 2,
                                         size: Dimensions.height10 * 5,
                                       ),
@@ -194,7 +227,6 @@ class AccountPage extends StatelessWidget {
                                   height: Dimensions.height20,
                                 ),
 
-
                                 //Keluar
                                 GestureDetector(
                                   onTap: () {
@@ -204,88 +236,31 @@ class AccountPage extends StatelessWidget {
                                           .clearSharedData();
                                       Get.offNamed(RouteHelper.getInitial());
                                     } else {
+                                      Get.toNamed(RouteHelper.getInitial());
                                       print("Anda sudah keluar");
                                     }
                                   },
                                   child: AccountWidget(
                                       appIcon: AppIcon(
                                         icon: Icons.logout_sharp,
-                                        backgroundColor: AppColors.redColor,
-                                        iconColor: Colors.white,
+                                        backgroundColor:
+                                            Colors.white.withOpacity(0.0),
+                                        iconColor: AppColors.redColor,
                                         iconSize: Dimensions.height10 * 5 / 2,
                                         size: Dimensions.height10 * 5,
                                       ),
                                       bigText: BigText(
                                         text: "Keluar",
                                       )),
-                                )
+                                ),
+                                SizedBox(
+                                  height: Dimensions.height20,
+                                ),
                               ],
                             ),
-                          )
-
-                        );
+                          ));
                 },
               )
-            : Container(
-                child: Center(
-                  child: Container(
-                    width: double.maxFinite,
-                    height: Dimensions.height20 * 5,
-                    margin: EdgeInsets.only(
-                        left: Dimensions.width45, right: Dimensions.width45),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Get.to(() => Masuk(), transition: Transition.fadeIn);
-                          },
-                          child: Container(
-                              width: Dimensions.screenWidth / 3,
-                              height: Dimensions.screenHeight / 16,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(
-                                      Dimensions.radius30),
-                                  color: AppColors.redColor),
-                              child: Center(
-                                child: BigText(
-                                    text: "Masuk",
-                                    size: Dimensions.font20,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              )),
-                        ),
-
-                        SizedBox(
-                          width: Dimensions.width20,
-                        ),
-                        //daftar
-                        GestureDetector(
-                          onTap: () {
-                            Get.to(() => Register(), transition: Transition.fadeIn);
-                          },
-                          child: Container(
-                              width: Dimensions.screenWidth / 3,
-                              height: Dimensions.screenHeight / 16,
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.circular(Dimensions.radius30),
-                                color: Colors.white,
-                                border: Border.all(color: AppColors.redColor),
-                              ),
-                              child: Center(
-                                child: BigText(
-                                    text: "Daftar",
-                                    size: Dimensions.font20,
-                                    color: AppColors.redColor,
-                                    fontWeight: FontWeight.bold),
-                              )),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              )
-      );
+            : MainAccountPage());
   }
 }

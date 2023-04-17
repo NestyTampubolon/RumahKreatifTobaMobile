@@ -5,10 +5,13 @@ import 'package:rumah_kreatif_toba/controllers/popular_produk_controller.dart';
 import 'package:rumah_kreatif_toba/pages/kategori/kategori_produk_detail.dart';
 import 'package:rumah_kreatif_toba/utils/dimensions.dart';
 import 'package:rumah_kreatif_toba/widgets/big_text.dart';
-
 import '../../base/show_custom_message.dart';
+import '../../controllers/auth_controller.dart';
+import '../../controllers/cart_controller.dart';
 import '../../routes/route_helper.dart';
 import '../../utils/colors.dart';
+import '../../widgets/app_icon.dart';
+import '../../widgets/card_kategori.dart';
 
 // class KategoriProduk extends StatelessWidget {
 //   const KategoriProduk({Key? key}) : super(key: key);
@@ -355,519 +358,117 @@ import '../../utils/colors.dart';
 //   }
 // }
 
-
 class KategoriProduk extends StatelessWidget {
   const KategoriProduk({Key? key}) : super(key: key);
-
 
   @override
   Widget build(BuildContext context) {
     var kategori;
-    Future<void> _getProduk(PopularProdukController produkController)async {
+    Future<void> _getProduk(PopularProdukController produkController) async {
       produkController.getKategoriProdukList(kategori);
     }
 
     return Scaffold(
-      //backgroundColor: Colors.blue[100],
+        //backgroundColor: Colors.blue[100],
         body: GetBuilder<PopularProdukController>(builder: (_produkController) {
-        return Column(
-          children: [
-            Container(
+      return Column(
+        children: [
+          Container(
+            child: Container(
               margin: EdgeInsets.only(
-                  left: Dimensions.width20,
-                  top: Dimensions.height45,
-                  right: Dimensions.width20),
-              child: BigText(
-                text: "Kategori",
-                size: Dimensions.font26 * 1.5,
-              ),
-            ),
-            Container(
-              height: 300,
-              margin: EdgeInsets.only(
-                  left: Dimensions.width20,
-                  top: Dimensions.height20,
-                  right: Dimensions.width20),
-              child: GridView.count(
-                crossAxisCount: 4,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
-                children: <Widget>[
+                  top: Dimensions.height30, bottom: Dimensions.height10),
+              padding: EdgeInsets.only(
+                  left: Dimensions.width20, right: Dimensions.width20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
                   Container(
-                    width: 200,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(
-                        color:
-                        AppColors.border, //                   <--- border color
-                        width: 0.5,
-                      ),
-                    ),
-                    child: GestureDetector(
-                      onTap: () {
-                        Get.to(KategoriProdukDetail(), arguments: "Makanan");
-                        kategori = "Makanan";
-                        _getProduk(_produkController);
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                    child: BigText(text: "Kategori",fontWeight: FontWeight.bold,),
+                  ),
+                  Center(
+                      child: Row(
                         children: [
-                          //image section
                           Container(
-                            height: 40,
-                            width: 40,
-                            margin: EdgeInsets.only(
-                                left: Dimensions.width10 / 2,
-                                right: Dimensions.width10 / 2,
-                                top: Dimensions.height10 / 2,
-                                bottom: Dimensions.height10 / 2),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              image: DecorationImage(
-                                  fit: BoxFit.fill,
-                                  image: AssetImage(
-                                      "assets/images/kategori/Makanan.png")),
+                            width: Dimensions.height45,
+                            height: Dimensions.height45,
+                            child: Icon(
+                              Icons.search,
+                              color: AppColors.redColor,
+                              size: Dimensions.iconSize24,
                             ),
                           ),
-                          Container(
-                            margin: EdgeInsets.only(
-                                left: Dimensions.width10 / 4,
-                                right: Dimensions.width10 / 4),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text("Makanan",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        fontSize: Dimensions.height20 / 2))
-                              ],
-                            ),
-                          )
-                          //text container
-                        ],
-                      ),
-                    ),
-                  ),
+                          GetBuilder<CartController>(
+                              builder: (controller) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    if(Get.find<AuthController>().userLoggedIn()){
+                                      Get.toNamed(RouteHelper.getKeranjangPage());
+                                    }
+                                    else{
+                                      Get.toNamed(RouteHelper.getMasukPage());
+                                    }
+                                  },
+                                  child: Stack(
+                                    children: [
+                                      AppIcon(icon: Icons.shopping_cart_outlined, size: Dimensions.height45, iconColor: AppColors.redColor, backgroundColor: Colors.white.withOpacity(0.0),),
+                                      controller.keranjangList.length >= 1
+                                          ? Positioned(
+                                          right: 0,
+                                          top: 0,
+                                          child: AppIcon(
+                                            icon: Icons.circle,
+                                            size: 20,
+                                            iconColor: Colors.transparent,
+                                            backgroundColor: AppColors.notification,
+                                          ))
+                                          : Container(),
+                                      controller.keranjangList.length >= 1
+                                          ? Positioned(
+                                        right: 3,
+                                        top: 3,
+                                        child: BigText(
+                                          text: controller.keranjangList.length.toString(),
+                                          size: 12,
+                                          color: Colors.white,
+                                        ),
+                                      )
+                                          : Container(),
+                                    ],
+                                  ),
+                                );
 
-                  //Minuman
-                  Container(
-                    width: 200,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(
-                        color:
-                        AppColors.border, //                   <--- border color
-                        width: 0.5,
-                      ),
-                    ),
-                    child: GestureDetector(
-                      onTap: () {
-                        Get.to(KategoriProdukDetail(), arguments: "Minuman");
-                        kategori = "Minuman";
-                        _getProduk(_produkController);
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          //image section
-                          Container(
-                            height: 40,
-                            width: 40,
-                            margin: EdgeInsets.only(
-                                left: Dimensions.width10 / 2,
-                                right: Dimensions.width10 / 2,
-                                top: Dimensions.height10 / 2,
-                                bottom: Dimensions.height10 / 2),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              image: DecorationImage(
-                                  fit: BoxFit.fill,
-                                  image: AssetImage(
-                                      "assets/images/kategori/Minuman.png")),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(
-                                left: Dimensions.width10 / 4,
-                                right: Dimensions.width10 / 4),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                BigText(
-                                  text: "Minuman",
-                                  size: Dimensions.font20 / 2,
-                                ),
-                              ],
-                            ),
-                          )
-                          //text container
-                        ],
-                      ),
-                    ),
-                  ),
+                              })
 
-                  //PAKAIAN
-                  Container(
-                    width: 200,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(
-                        color:
-                        AppColors.border, //                   <--- border color
-                        width: 0.5,
-                      ),
-                    ),
-                    child: GestureDetector(
-                      onTap: () {
-                        Get.to(KategoriProdukDetail(), arguments: "Pakaian");
-                        kategori = "Pakaian";
-                        _getProduk(_produkController);
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          //image section
-                          Container(
-                            height: 40,
-                            width: 40,
-                            margin: EdgeInsets.only(
-                                left: Dimensions.width10 / 2,
-                                right: Dimensions.width10 / 2,
-                                top: Dimensions.height10 / 2,
-                                bottom: Dimensions.height10 / 2),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              image: DecorationImage(
-                                  fit: BoxFit.fill,
-                                  image: AssetImage(
-                                      "assets/images/kategori/Pakaian.png")),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(
-                                left: Dimensions.width10 / 4,
-                                right: Dimensions.width10 / 4),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                BigText(
-                                  text: "Pakaian",
-                                  size: Dimensions.font20 / 2,
-                                ),
-                              ],
-                            ),
-                          )
-                          //text container
                         ],
-                      ),
-                    ),
-                  ),
-
-                  //ULOS
-                  Container(
-                    width: 200,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(
-                        color:
-                        AppColors.border, //                   <--- border color
-                        width: 0.5,
-                      ),
-                    ),
-                    child: GestureDetector(
-                      onTap: () {
-                        Get.to(KategoriProdukDetail(), arguments: "Ulos");
-                        kategori = "Ulos";
-                        _getProduk(_produkController);
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          //image section
-                          Container(
-                            height: 40,
-                            width: 40,
-                            margin: EdgeInsets.only(
-                                left: Dimensions.width10 / 2,
-                                right: Dimensions.width10 / 2,
-                                top: Dimensions.height10 / 2,
-                                bottom: Dimensions.height10 / 2),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              image: DecorationImage(
-                                  fit: BoxFit.fill,
-                                  image: AssetImage(
-                                      "assets/images/kategori/Ulos.png")),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(
-                                left: Dimensions.width10 / 4,
-                                right: Dimensions.width10 / 4),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                BigText(
-                                  text: "Ulos",
-                                  size: Dimensions.font20 / 2,
-                                ),
-                              ],
-                            ),
-                          )
-                          //text container
-                        ],
-                      ),
-                    ),
-                  ),
-
-                  //SOUVENIR
-                  Container(
-                    width: 200,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(
-                        color:
-                        AppColors.border, //                   <--- border color
-                        width: 0.5,
-                      ),
-                    ),
-                    child: GestureDetector(
-                      onTap: () {
-                        Get.to(KategoriProdukDetail(), arguments: "Souvenir");
-                        kategori = "Souvenir";
-                        _getProduk(_produkController);
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          //image section
-                          Container(
-                            height: 40,
-                            width: 40,
-                            margin: EdgeInsets.only(
-                                left: Dimensions.width10 / 2,
-                                right: Dimensions.width10 / 2,
-                                top: Dimensions.height10 / 2,
-                                bottom: Dimensions.height10 / 2),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              image: DecorationImage(
-                                  fit: BoxFit.fill,
-                                  image: AssetImage(
-                                      "assets/images/kategori/Souvenir.png")),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(
-                                left: Dimensions.width10 / 4,
-                                right: Dimensions.width10 / 4),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                BigText(
-                                  text: "Souvenir",
-                                  size: Dimensions.font20 / 2,
-                                ),
-                              ],
-                            ),
-                          )
-                          //text container
-                        ],
-                      ),
-                    ),
-                  ),
-
-                  //PERLENGKAPAN RUMAH
-                  Container(
-                    width: 200,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(
-                        color:
-                        AppColors.border, //                   <--- border color
-                        width: 0.5,
-                      ),
-                    ),
-                    child: GestureDetector(
-                      onTap: () {
-                        Get.to(KategoriProdukDetail(),
-                            arguments: "Perlengkapan Rumah");
-                        kategori = "Perlengkapan Rumah";
-                        _getProduk(_produkController);
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          //image section
-                          Container(
-                            height: 40,
-                            width: 40,
-                            margin: EdgeInsets.only(
-                                left: Dimensions.width10 / 2,
-                                right: Dimensions.width10 / 2,
-                                top: Dimensions.height10 / 2,
-                                bottom: Dimensions.height10 / 2),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              image: DecorationImage(
-                                  fit: BoxFit.fill,
-                                  image: AssetImage(
-                                      "assets/images/kategori/Perlengkapan Rumah.png")),
-                            ),
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text("Perlengkapan Rumah",
-                                  textAlign: TextAlign.center,
-                                  style:
-                                  TextStyle(fontSize: Dimensions.height20 / 2))
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-
-                  //NON HALAL
-                  Container(
-                    width: 200,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(
-                        color: AppColors.border, //
-                        width: 0.5,
-                      ),
-                    ),
-                    child: GestureDetector(
-                      onTap: () {
-                        Get.to(KategoriProdukDetail(), arguments: "Non Halal");
-                        kategori = "Non Halal";
-                        _getProduk(_produkController);
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          //image section
-                          Container(
-                            height: 40,
-                            width: 40,
-                            margin: EdgeInsets.only(
-                                left: Dimensions.width10 / 2,
-                                right: Dimensions.width10 / 2,
-                                top: Dimensions.height10 / 2,
-                                bottom: Dimensions.height10 / 2),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              image: DecorationImage(
-                                  fit: BoxFit.fill,
-                                  image: AssetImage(
-                                      "assets/images/kategori/Non Halal.png")),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(
-                                left: Dimensions.width10 / 4,
-                                right: Dimensions.width10 / 4),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                BigText(
-                                  text: "Non Halal",
-                                  size: Dimensions.font20 / 2,
-                                ),
-                              ],
-                            ),
-                          )
-                          //text container
-                        ],
-                      ),
-                    ),
-                  ),
-
-                  //JASA
-                  Container(
-                    width: 200,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(
-                        color: AppColors.border, //
-                        width: 0.5,
-                      ),
-                    ),
-                    child: GestureDetector(
-                      onTap: () {
-                        Get.to(KategoriProdukDetail(), arguments: "Jasa");
-                        kategori = "Jasa";
-                        _getProduk(_produkController);
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          //image section
-                          Container(
-                            height: 40,
-                            width: 40,
-                            margin: EdgeInsets.only(
-                                left: Dimensions.width10 / 2,
-                                right: Dimensions.width10 / 2,
-                                top: Dimensions.height10 / 2,
-                                bottom: Dimensions.height10 / 2),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              image: DecorationImage(
-                                  fit: BoxFit.fill,
-                                  image: AssetImage(
-                                      "assets/images/kategori/Jasa.png")),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(
-                                left: Dimensions.width10 / 4,
-                                right: Dimensions.width10 / 4),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                BigText(
-                                  text: "Jasa",
-                                  size: Dimensions.font20 / 2,
-                                ),
-                              ],
-                            ),
-                          )
-                          //text container
-                        ],
-                      ),
-                    ),
-                  ),
+                      ))
                 ],
               ),
-            )
-          ],
-        );}));
+            ),
+          ),
+          Container(
+              height: Dimensions.height45 * 5,
+              margin: EdgeInsets.only(
+                  left: Dimensions.width20,
+                  right: Dimensions.width20,
+                  top: Dimensions.height10,
+                  bottom: Dimensions.height10),
+              child: GridView.count(
+                  crossAxisCount: 4,
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10,
+                  children: <Widget>[
+                    CardKategori(kategori: "Makanan"),
+                    CardKategori(kategori: "Minuman"),
+                    CardKategori(kategori: "Pakaian"),
+                    CardKategori(kategori: "Ulos"),
+                    CardKategori(kategori: "Souvenir"),
+                    CardKategori(kategori: "Perlengkapan Rumah"),
+                    CardKategori(kategori: "Non Halal"),
+                    CardKategori(kategori: "Jasa"),
+
+                  ]))
+        ],
+      );
+    }));
   }
 }

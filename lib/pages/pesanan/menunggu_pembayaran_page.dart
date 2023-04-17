@@ -52,6 +52,21 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
       }
     }
 
+    Future<void> _hapusPesanan(String kode_pembelian) async {
+      bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
+      if (_userLoggedIn) {
+        var controller = Get.find<PesananController>();
+        controller.hapusPesanan(kode_pembelian).then((status) async {
+          if (status.isSuccess) {
+            await controller.getPesananMenungguBayaranList();
+          } else {
+            showCustomSnackBar(status.message);
+          }
+        });
+        controller.getPesananMenungguBayaranList();
+      }
+    }
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -66,7 +81,7 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Get.back();
+                      Get.toNamed(RouteHelper.getPesananPage());
                     },
                     child: AppIcon(
                       icon: Icons.arrow_back,
@@ -89,7 +104,7 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
               return GridView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 1, mainAxisExtent: Dimensions.height45*3.5),
+                      crossAxisCount: 1, mainAxisExtent: Dimensions.height45*4),
                   itemCount: pesananController.pesananMenungguPembayaranList.length,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
@@ -147,12 +162,19 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                                   EdgeInsets.all(Dimensions.height10 / 2),
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(
-                                          Dimensions.radius20 / 2),
-                                      color: AppColors.notification_success),
-                                  child: BigText(
-                                    text: "Belum Bayar",
-                                    size: Dimensions.iconSize16,
-                                    color: Colors.white,
+                                          Dimensions.radius20 / 2)),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      _hapusPesanan(pesananController.pesananMenungguPembayaranList[index].kodePembelian.toString());
+                                    },
+                                    child: AppIcon(
+                                        iconSize: Dimensions
+                                            .iconSize24,
+                                        iconColor: AppColors
+                                            .redColor,
+                                        backgroundColor:
+                                        Colors.white,
+                                        icon: Icons.delete),
                                   ),
                                 )
                               ],

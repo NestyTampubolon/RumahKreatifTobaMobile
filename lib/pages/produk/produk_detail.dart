@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:rumah_kreatif_toba/controllers/cart_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/popular_produk_controller.dart';
+import 'package:rumah_kreatif_toba/controllers/wishlist_controller.dart';
 import 'package:rumah_kreatif_toba/pages/keranjang/keranjang_page.dart';
 import 'package:rumah_kreatif_toba/routes/route_helper.dart';
 import 'package:rumah_kreatif_toba/utils/colors.dart';
@@ -31,10 +32,14 @@ class ProdukDetail extends StatelessWidget {
     var daftarproduk = produkList
         .firstWhere((produk) => produk.productId == productId.toInt());
 
+    var wishlistList = Get.find<WishlistController>().wishlistList;
+    var isProdukExist = wishlistList
+        .any((wishlist) => wishlist.productId == productId.toInt());
+
+
     Get.find<PopularProdukController>()
         .initProduk(daftarproduk, Get.find<CartController>());
 
-    var userId;
 
     Future<void> _tambahKeranjang(CartController cartController) async {
       bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
@@ -53,6 +58,25 @@ class ProdukDetail extends StatelessWidget {
           }
         });
         cartController.getKeranjangList();
+      }
+    }
+
+    Future<void> _tambahWishlist() async {
+      bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
+      if (_userLoggedIn) {
+        var controller = Get.find<UserController>();
+        await controller.getUser();
+
+        var wishlistController = Get.find<WishlistController>();
+        wishlistController.tambahWishlist(controller.users.id, productId.toInt())
+            .then((status) {
+          if (status.isSuccess) {
+
+          } else {
+            showCustomSnackBar(status.message);
+          }
+        });
+        wishlistController.getWishlistList();
       }
     }
 
@@ -123,12 +147,6 @@ class ProdukDetail extends StatelessWidget {
                             left: Dimensions.width20,
                             right: Dimensions.width20,
                             top: Dimensions.height20),
-                        child: PriceText(
-                          text: CurrencyFormat.convertToIdr(
-                              daftarproduk.price, 0),
-                          color: AppColors.blackColor,
-                          size: Dimensions.font20,
-                        ),
                         width: double.maxFinite,
                         decoration: BoxDecoration(
                             color: Colors.white,
@@ -136,19 +154,49 @@ class ProdukDetail extends StatelessWidget {
                                 topLeft: Radius.circular(Dimensions.radius20),
                                 topRight:
                                     Radius.circular(Dimensions.radius20))),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            PriceText(
+                              text: CurrencyFormat.convertToIdr(
+                                  daftarproduk.price, 0),
+                              color: AppColors.blackColor,
+                              size: Dimensions.font20,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                if (Get.find<AuthController>().userLoggedIn()) {
+                                  var wishlistList = Get.find<WishlistController>().wishlistList;
+                                  var isProdukExist = wishlistList
+                                      .any((wishlist) => wishlist.productId == productId.toInt());
+
+                                  _tambahWishlist();
+                                } else {
+                                  Get.toNamed(RouteHelper.getMasukPage());
+                                }
+                              },
+                              child:  Container(
+                                child: isProdukExist
+                                    ? Icon(Icons.favorite, color: Colors.pink)
+                                    : Icon(Icons.favorite),
+                              ),
+                            )
+
+                          ],
+                        )
                       ),
                       Container(
                         padding: EdgeInsets.only(
                             left: Dimensions.width20,
                             right: Dimensions.width20),
+                        width: double.maxFinite,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                        ),
                         child: BigText(
                           text: daftarproduk.productName.toString(),
                           color: AppColors.blackColor,
                           size: Dimensions.font20,
-                        ),
-                        width: double.maxFinite,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
                         ),
                       ),
                     ],
@@ -179,18 +227,15 @@ class ProdukDetail extends StatelessWidget {
                       children: [
                         Divider(color: AppColors.buttonBackgroundColor),
                         BigText(
-                          text: "Kategori : " +
-                              daftarproduk.namaKategori.toString(),
+                          text: "Kategori : ${daftarproduk.namaKategori}",
                           size: Dimensions.font26 / 2,
                         ),
                         BigText(
-                          text: "Berat : " +
-                              daftarproduk.heavy.toString() +
-                              " gr",
+                          text: "Berat : ${daftarproduk.heavy} gr",
                           size: Dimensions.font26 / 2,
                         ),
                         BigText(
-                          text: "Stok : " + daftarproduk.stok.toString(),
+                          text: "Stok : ${daftarproduk.stok}",
                           size: Dimensions.font26 / 2,
                         ),
                         SizedBox(
@@ -331,6 +376,12 @@ class ProdukDetail extends StatelessWidget {
                               bottom: Dimensions.height10/2 ,
                               left: Dimensions.width10,
                               right: Dimensions.width10),
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: AppColors.redColor),
+                              borderRadius: BorderRadius.circular(
+                                  Dimensions.radius20 / 2),
+                              color: Colors.white),
                           child: GestureDetector(
                               onTap: () {
                                 if (Get.find<AuthController>().userLoggedIn()) {
@@ -341,12 +392,6 @@ class ProdukDetail extends StatelessWidget {
 
                               },
                               child: AppIcon(icon: Icons.message,iconSize: Dimensions.iconSize24, iconColor: AppColors.redColor, backgroundColor: Colors.white.withOpacity(0.0),),),
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: AppColors.redColor),
-                              borderRadius: BorderRadius.circular(
-                                  Dimensions.radius20 / 2),
-                              color: Colors.white),
                         ),
                         Container(
                           padding: EdgeInsets.only(
