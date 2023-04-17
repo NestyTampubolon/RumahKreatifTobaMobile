@@ -146,7 +146,7 @@ class _DataBankPageState extends State<DataBankPage> {
             GestureDetector(
               onTap: () => {
                 Get.to(
-                  () => AlamatTokoPage(),
+                  () => AlamatTokoPageState(),
                 ),
               },
               child: Container(

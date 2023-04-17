@@ -35,14 +35,12 @@ class _KeranjangPageState extends State<KeranjangPage> {
     value: (item) => false,
   );
 
-
   @override
   void initState() {
     super.initState();
     var controller = Get.find<CartController>();
     controller.getKeranjangList();
     allChecked = false;
-
   }
 
   @override
@@ -110,8 +108,6 @@ class _KeranjangPageState extends State<KeranjangPage> {
       return cartcontroller.keranjangList[index].jumlahMasukKeranjang;
     }
 
-
-
     return Scaffold(
         body: Stack(
           children: [
@@ -140,7 +136,6 @@ class _KeranjangPageState extends State<KeranjangPage> {
                       text: "Keranjang",
                       size: Dimensions.font20,
                     ),
-
                   ],
                 )),
             Positioned(
@@ -154,7 +149,7 @@ class _KeranjangPageState extends State<KeranjangPage> {
                     context: context,
                     removeTop: true,
                     child:
-                    GetBuilder<CartController>(builder: (cartController) {
+                        GetBuilder<CartController>(builder: (cartController) {
                       var _keranjangList = cartController.keranjangList;
                       var groupedKeranjangList = <String, List<CartModel>>{};
 
@@ -168,19 +163,18 @@ class _KeranjangPageState extends State<KeranjangPage> {
                         }
                       }
 
-
                       return ListView.builder(
                           itemCount: groupedKeranjangList.length,
                           itemBuilder: (_, merchantIndex) {
                             var merchantName = groupedKeranjangList.keys
                                 .elementAt(merchantIndex);
                             var merchantItems =
-                            groupedKeranjangList[merchantName]!;
+                                groupedKeranjangList[merchantName]!;
                             var isChecked = map[merchantName] ?? false;
                             isChecked = map[merchantName] ?? false;
                             return Container(
                               margin:
-                              EdgeInsets.only(bottom: Dimensions.height20),
+                                  EdgeInsets.only(bottom: Dimensions.height20),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -190,7 +184,8 @@ class _KeranjangPageState extends State<KeranjangPage> {
                                         value: isChecked,
                                         onChanged: (bool? value) {
                                           map[merchantName] = value!;
-                                          onMerchantClicked(merchantName, value ?? false, map);
+                                          onMerchantClicked(merchantName,
+                                              value ?? false, map);
                                           // Update isChecked variable when checkbox is clicked
                                           setState(() {
                                             isChecked = value!;
@@ -224,8 +219,8 @@ class _KeranjangPageState extends State<KeranjangPage> {
                                                   color: AppColors
                                                       .buttonBackgroundColor),
                                               borderRadius:
-                                              BorderRadius.circular(
-                                                  Dimensions.radius20),
+                                                  BorderRadius.circular(
+                                                      Dimensions.radius20),
                                               color: Colors.white),
                                           child: Column(
                                             children: [
@@ -234,20 +229,20 @@ class _KeranjangPageState extends State<KeranjangPage> {
                                                   GestureDetector(
                                                     onTap: () {
                                                       var produkIndex =
-                                                      item.productId!;
+                                                          item.productId!;
                                                       if (produkIndex >= 0) {
                                                         Get.toNamed(RouteHelper
                                                             .getProdukDetail(
-                                                            produkIndex));
+                                                                produkIndex));
                                                       }
                                                     },
                                                     child: Container(
                                                       width:
-                                                      Dimensions.height20 *
-                                                          5,
+                                                          Dimensions.height20 *
+                                                              5,
                                                       height:
-                                                      Dimensions.height20 *
-                                                          5,
+                                                          Dimensions.height20 *
+                                                              5,
                                                       margin: EdgeInsets.only(
                                                           top: Dimensions
                                                               .height10),
@@ -257,43 +252,43 @@ class _KeranjangPageState extends State<KeranjangPage> {
                                                               image: AssetImage(
                                                                   "assets/images/coffee.jpg")),
                                                           borderRadius:
-                                                          BorderRadius.circular(
-                                                              Dimensions
-                                                                  .radius20),
+                                                              BorderRadius.circular(
+                                                                  Dimensions
+                                                                      .radius20),
                                                           color: Colors.white),
                                                     ),
                                                   ),
                                                   SizedBox(
                                                       width:
-                                                      Dimensions.width10),
+                                                          Dimensions.width10),
                                                   ExcludeFocus(
                                                     child: Container(
                                                       height:
-                                                      Dimensions.height20 *
-                                                          5,
+                                                          Dimensions.height20 *
+                                                              5,
                                                       width:
-                                                      Dimensions.width45 *
-                                                          4,
+                                                          Dimensions.width45 *
+                                                              4,
                                                       child: Column(
                                                         crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
+                                                            CrossAxisAlignment
+                                                                .start,
                                                         mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceEvenly,
+                                                            MainAxisAlignment
+                                                                .spaceEvenly,
                                                         children: [
                                                           BigText(
                                                             text: item
                                                                 .productName!,
                                                             size: Dimensions
-                                                                .font26 /
+                                                                    .font26 /
                                                                 1.5,
                                                           ),
                                                           PriceText(
                                                             text: CurrencyFormat
                                                                 .convertToIdr(
-                                                                item.price,
-                                                                0),
+                                                                    item.price,
+                                                                    0),
                                                             size: Dimensions
                                                                 .font16,
                                                           ),
@@ -305,7 +300,7 @@ class _KeranjangPageState extends State<KeranjangPage> {
                                               ),
                                               Row(
                                                 mainAxisAlignment:
-                                                MainAxisAlignment.end,
+                                                    MainAxisAlignment.end,
                                                 children: [
                                                   GestureDetector(
                                                     onTap: () {
@@ -318,32 +313,32 @@ class _KeranjangPageState extends State<KeranjangPage> {
                                                         iconSize: Dimensions
                                                             .iconSize24,
                                                         iconColor:
-                                                        AppColors.redColor,
+                                                            AppColors.redColor,
                                                         backgroundColor:
-                                                        Colors.white,
+                                                            Colors.white,
                                                         icon: Icons.delete),
                                                   ),
                                                   Container(
                                                     width:
-                                                    Dimensions.width45 * 3,
+                                                        Dimensions.width45 * 3,
                                                     padding: EdgeInsets.only(
                                                         left:
-                                                        Dimensions.width10,
+                                                            Dimensions.width10,
                                                         right:
-                                                        Dimensions.width10),
+                                                            Dimensions.width10),
                                                     decoration: BoxDecoration(
                                                         border: Border.all(
                                                             color: AppColors
                                                                 .buttonBackgroundColor),
                                                         borderRadius:
-                                                        BorderRadius.circular(
-                                                            Dimensions
-                                                                .radius20),
+                                                            BorderRadius.circular(
+                                                                Dimensions
+                                                                    .radius20),
                                                         color: Colors.white),
                                                     child: Row(
                                                       mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
                                                       children: [
                                                         GestureDetector(
                                                           onTap: () {
@@ -356,19 +351,19 @@ class _KeranjangPageState extends State<KeranjangPage> {
                                                               iconSize: Dimensions
                                                                   .iconSize24,
                                                               iconColor:
-                                                              AppColors
-                                                                  .redColor,
+                                                                  AppColors
+                                                                      .redColor,
                                                               backgroundColor:
-                                                              Colors.white,
+                                                                  Colors.white,
                                                               icon:
-                                                              Icons.remove),
+                                                                  Icons.remove),
                                                         ),
                                                         BigText(
                                                           text: item
                                                               .jumlahMasukKeranjang
                                                               .toString(),
                                                           size: Dimensions
-                                                              .font26 /
+                                                                  .font26 /
                                                               1.5,
                                                         ), //produk.inCartItems.toString()),
                                                         GestureDetector(
@@ -381,10 +376,10 @@ class _KeranjangPageState extends State<KeranjangPage> {
                                                               iconSize: Dimensions
                                                                   .iconSize24,
                                                               iconColor:
-                                                              AppColors
-                                                                  .redColor,
+                                                                  AppColors
+                                                                      .redColor,
                                                               backgroundColor:
-                                                              Colors.white,
+                                                                  Colors.white,
                                                               icon: Icons.add),
                                                         )
                                                       ],
@@ -430,7 +425,7 @@ class _KeranjangPageState extends State<KeranjangPage> {
                             border: Border.all(
                                 color: AppColors.buttonBackgroundColor),
                             borderRadius:
-                            BorderRadius.circular(Dimensions.radius20),
+                                BorderRadius.circular(Dimensions.radius20),
                             color: Colors.white),
                         child: Row(
                           children: [
@@ -465,7 +460,7 @@ class _KeranjangPageState extends State<KeranjangPage> {
                             ])),
                         decoration: BoxDecoration(
                             borderRadius:
-                            BorderRadius.circular(Dimensions.radius20),
+                                BorderRadius.circular(Dimensions.radius20),
                             color: AppColors.redColor),
                       ),
                     ],
@@ -477,11 +472,12 @@ class _KeranjangPageState extends State<KeranjangPage> {
         ));
   }
 
-  void onMerchantClicked(String merchantName, bool value, Map<String, bool> map) {
+  void onMerchantClicked(
+      String merchantName, bool value, Map<String, bool> map) {
     map[merchantName] = value;
     var controller = Get.find<CartController>();
     var merchantItems = controller.merchantKeranjangList.firstWhere(
-          (element) => element.namaMerchant == merchantName,
+      (element) => element.namaMerchant == merchantName,
       orElse: () => null,
     );
     if (merchantItems != null) {
@@ -490,7 +486,6 @@ class _KeranjangPageState extends State<KeranjangPage> {
       }
     }
   }
-
 
   onAllClicked(ckbItem) {
     final newValue = ckbItem;

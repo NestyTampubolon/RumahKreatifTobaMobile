@@ -1,17 +1,10 @@
 import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rumah_kreatif_toba/pages/account/account_page.dart';
-import 'package:rumah_kreatif_toba/pages/kategori/kategori_produk_detail.dart';
-import 'package:rumah_kreatif_toba/pages/toko/namatoko.dart';
 import 'package:rumah_kreatif_toba/utils/dimensions.dart';
-import 'package:rumah_kreatif_toba/widgets/big_text.dart';
 import '../../routes/route_helper.dart';
 import '../../utils/colors.dart';
-import '../../widgets/app_icon.dart';
-import '../home/home_page.dart';
 
 class DaftarBerhasil extends StatefulWidget {
   const DaftarBerhasil({Key? key}) : super(key: key);

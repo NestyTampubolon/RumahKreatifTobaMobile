@@ -60,6 +60,7 @@ class RouteHelper {
         },
         transition: Transition.fade),
 
+
     GetPage(name: masuk, page: (){return Masuk();}, transition: Transition.fade),
     GetPage(name: pembelian, page: () => PembelianPage()),
     GetPage(name: pembayaran, page: () => PembayaranPage()),

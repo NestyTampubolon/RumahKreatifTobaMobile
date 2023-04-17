@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:rumah_kreatif_toba/controllers/alamat_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/auth_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/cart_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/pengiriman_controller.dart';
@@ -49,6 +50,7 @@ Future<void> init() async {
   Get.lazyPut(() => PengirimanController(pengirimanRepo: Get.find()));
   Get.put(() => PengirimanController(pengirimanRepo: Get.find()));
   Get.lazyPut(() => PesananController(pesananRepo: Get.find()));
+  Get.lazyPut(() => AlamatController());
   Get.put(PesananController(pesananRepo: Get.find()));
   Get.lazyPut(() => WishlistController(wishlistRepo: Get.find()));
   Get.put(WishlistController(wishlistRepo: Get.find()));
