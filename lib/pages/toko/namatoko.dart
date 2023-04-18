@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rumah_kreatif_toba/controllers/toko_controller.dart';
 import 'package:rumah_kreatif_toba/pages/kategori/kategori_produk_detail.dart';
 import 'package:rumah_kreatif_toba/pages/toko/infotokoktp.dart';
 import 'package:rumah_kreatif_toba/pages/toko/passwordtoko.dart';
@@ -27,87 +28,90 @@ class _NamaTokoState extends State<NamaToko> {
     var NamaTokoController = TextEditingController();
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              decoration: BoxDecoration(color: AppColors.border),
-              child: Container(
-                margin: EdgeInsets.only(
-                    top: Dimensions.height45, bottom: Dimensions.height15),
-                padding: EdgeInsets.only(
-                    left: Dimensions.width20, right: Dimensions.width20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Get.to(() => TokoPage());
-                          },
-                          child: AppIcon(icon: Icons.arrow_back),
-                        ),
-                        Container(
-                          width: 250,
-                          height: 30,
-                          margin: EdgeInsets.only(
-                              left: Dimensions.width10,
-                              right: Dimensions.width10),
-                          child: BigText(
-                            text: "Masukkan Info Toko",
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 100,
-            ),
-            Container(
-              // padding: EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.center,
+      body: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(color: AppColors.border),
+            child: Container(
+              margin: EdgeInsets.only(
+                  top: Dimensions.height45, bottom: Dimensions.height15),
+              padding: EdgeInsets.only(
+                  left: Dimensions.width20, right: Dimensions.width20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    child: AppTextField(
-                      textController: NamaTokoController,
-                      hintText: "Tuliskan nama toko anda",
-                      icon: Icons.shopping_bag,
-                    ),
+                  Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Get.to(() => TokoPage());
+                        },
+                        child: AppIcon(icon: Icons.arrow_back),
+                      ),
+                      Container(
+                        width: 250,
+                        height: 30,
+                        margin: EdgeInsets.only(
+                            left: Dimensions.width10,
+                            right: Dimensions.width10),
+                        child: BigText(
+                          text: "Masukkan Info Toko",
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(
-                      left: Dimensions.height20,
-                      right: Dimensions.height20,
-                    ),
-                    child: Text(
-                      "Nama yang menarik lebih mudah diingat pembeli nama yang sudah dipilih tidak dapat diubah",
-                      // style: TextStyle(color: Color.fromARGB(1, 66, 84, 102)),
-                    ),
-                  )
                 ],
               ),
             ),
-            SizedBox(
-              height: 100,
+          ),
+          SizedBox(
+            height: 100,
+          ),
+          Container(
+            // padding: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20),
             ),
-            GestureDetector(
-              onTap: () => {Get.to(() => PasswordTokoPage())},
-              child: Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  child: AppTextField(
+                    textController: NamaTokoController,
+                    hintText: "Tuliskan nama toko anda",
+                    icon: Icons.shopping_bag,
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  margin: EdgeInsets.only(
+                    left: Dimensions.height20,
+                    right: Dimensions.height20,
+                  ),
+                  child: Text(
+                    "Nama yang menarik lebih mudah diingat pembeli nama yang sudah dipilih tidak dapat diubah",
+                    // style: TextStyle(color: Color.fromARGB(1, 66, 84, 102)),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
+      bottomNavigationBar: GetBuilder<TokoController>(
+        builder: (tokoController) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              GestureDetector(
+                onTap: () => {Get.to(() => PasswordTokoPage())},
+                child: Container(
                   width: 306,
                   height: 45,
                   // alignment: Alignment.topCenter,
@@ -122,10 +126,12 @@ class _NamaTokoState extends State<NamaToko> {
                       size: Dimensions.font20,
                       color: Colors.white,
                     ),
-                  )),
-            )
-          ],
-        ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

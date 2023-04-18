@@ -4,16 +4,16 @@ import '../../utils/app_constants.dart';
 import '../api/api_client.dart';
 import 'package:get/get.dart';
 
-class TokoRepo {
+class tokoRepo {
   final ApiClient apiClient;
   final SharedPreferences sharedPreferences;
-  TokoRepo({
+  tokoRepo({
     required this.apiClient,
     required this.sharedPreferences,
   });
 
   Future<Response> registerToko(String nama_merchant, String password) async {
-    return await apiClient.postData(
-        AppConstants.Toko_URL, {"name": nama_merchant, "password": password});
+    return await apiClient.postData(AppConstants.Toko_URL,
+        {"nama_merchant": nama_merchant, "password": password});
   }
 }

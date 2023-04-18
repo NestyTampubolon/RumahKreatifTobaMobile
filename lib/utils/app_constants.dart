@@ -3,7 +3,7 @@ class AppConstants {
   static const int APP_VERSION = 1;
 
   static const String BASE_URL =
-      "http://172.26.43.66/RumahKreatifBackend/public/api/";
+      "http://172.26.43.189/RumahKreatifBackend/public/api/";
 
   static const String POPULAR_PRODUCT_URL = "produk";
   static const String KATEGORI_PRODUCT_URL = "lihat_produk";
