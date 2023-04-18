@@ -68,12 +68,12 @@ class _PesananPageState extends State<PesananPage> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Get.back();
+                      Get.offNamed(RouteHelper.getInitial());
                     },
                     child: AppIcon(
                       icon: Icons.arrow_back,
-                      iconColor: Colors.white,
-                      backgroundColor: AppColors.redColor,
+                      iconColor: AppColors.redColor,
+                      backgroundColor: Colors.white,
                       iconSize: Dimensions.iconSize24,
                     ),
                   ),
@@ -206,6 +206,7 @@ class _PesananPageState extends State<PesananPage> {
                           Container(
                             child: BigText(text: pesananController.pesananList[index].kodePembelian.toString()),
                           ),
+
                           Container(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,

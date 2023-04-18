@@ -15,16 +15,16 @@ class AccountWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.signColor,
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
         boxShadow: [
           BoxShadow(
-            blurRadius: 1,
+            color: Colors.grey.withOpacity(0.3),
+            spreadRadius: 1,
+            blurRadius: 5,
             offset: Offset(0, 2),
-            color: Colors.grey.withOpacity(0.2),
-          ),
+          )
         ],
-          borderRadius: BorderRadius.circular(
-              Dimensions.radius15),
       ),
       padding: EdgeInsets.only(
         left: Dimensions.width20,

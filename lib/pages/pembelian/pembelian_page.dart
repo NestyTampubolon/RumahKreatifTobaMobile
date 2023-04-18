@@ -94,8 +94,8 @@ class _PembelianPageState extends State<PembelianPage> {
                       },
                       child: AppIcon(
                         icon: Icons.arrow_back,
-                        iconColor: Colors.white,
-                        backgroundColor: AppColors.redColor,
+                        iconColor: AppColors.redColor,
+                        backgroundColor: Colors.white,
                         iconSize: Dimensions.iconSize24,
                       ),
                     ),
@@ -814,7 +814,7 @@ class _PembelianPageState extends State<PembelianPage> {
                         child: GestureDetector(
                             onTap: () {
                               _beliProduk();
-                              Get.toNamed(RouteHelper.getMenungguPembayaranPage());
+                              Get.offNamed(RouteHelper.getMenungguPembayaranPage());
                             },
                             child: Row(children: [
                               BigText(

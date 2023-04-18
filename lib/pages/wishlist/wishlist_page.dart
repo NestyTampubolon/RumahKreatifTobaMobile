@@ -274,25 +274,30 @@ class _WishlistPageState extends State<WishlistPage> {
                                                                   .width20),
                                                           child: Column(
                                                             children: [
-                                                              Row(children: [
-                                                                AppIcon(
-                                                                  icon: Icons
-                                                                      .highlight_remove_sharp,
-                                                                  size: Dimensions
-                                                                      .iconSize24,
-                                                                  iconColor:
-                                                                  AppColors
-                                                                      .redColor,
-                                                                  backgroundColor:
-                                                                  Colors.white
-                                                                      .withOpacity(
-                                                                      0.0),
-                                                                ),
-                                                                SizedBox(
-                                                                  width: Dimensions
-                                                                      .width20,
-                                                                ),
-                                                              ]),
+                                                              GestureDetector(
+                                                                onTap: (){
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                },
+                                                                child: Row(children: [
+                                                                  AppIcon(
+                                                                    icon: CupertinoIcons.xmark,
+                                                                    size: Dimensions
+                                                                        .iconSize24,
+                                                                    iconColor:
+                                                                    AppColors
+                                                                        .redColor,
+                                                                    backgroundColor:
+                                                                    Colors.white
+                                                                        .withOpacity(
+                                                                        0.0),
+                                                                  ),
+                                                                  SizedBox(
+                                                                    width: Dimensions
+                                                                        .width20,
+                                                                  ),
+                                                                ]),
+                                                              ),
                                                               Divider(
                                                                   color: AppColors
                                                                       .buttonBackgroundColor),

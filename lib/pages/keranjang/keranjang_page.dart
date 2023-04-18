@@ -137,8 +137,8 @@ class _KeranjangPageState extends State<KeranjangPage> {
                     },
                     child: AppIcon(
                       icon: Icons.arrow_back,
-                      iconColor: Colors.white,
-                      backgroundColor: AppColors.redColor,
+                      iconColor: AppColors.redColor,
+                      backgroundColor: Colors.white,
                       iconSize: Dimensions.iconSize24,
                     ),
                   ),

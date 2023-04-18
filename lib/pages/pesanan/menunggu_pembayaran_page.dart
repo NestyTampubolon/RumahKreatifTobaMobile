@@ -85,9 +85,8 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                     },
                     child: AppIcon(
                       icon: Icons.arrow_back,
-                      iconColor: Colors.white,
-                      backgroundColor: AppColors.redColor,
-                      iconSize: Dimensions.iconSize24,
+                      iconColor: AppColors.redColor,
+                      backgroundColor: Colors.white,
                     ),
                   ),
                   SizedBox(
