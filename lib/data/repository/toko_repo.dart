@@ -4,10 +4,10 @@ import '../../utils/app_constants.dart';
 import '../api/api_client.dart';
 import 'package:get/get.dart';
 
-class tokoRepo {
+class TokoRepo {
   final ApiClient apiClient;
   final SharedPreferences sharedPreferences;
-  tokoRepo({
+  TokoRepo({
     required this.apiClient,
     required this.sharedPreferences,
   });

@@ -7,6 +7,7 @@ import 'package:rumah_kreatif_toba/utils/colors.dart';
 import 'package:rumah_kreatif_toba/widgets/big_text.dart';
 import 'package:get/get.dart';
 import '../../controllers/popular_produk_controller.dart';
+import '../../controllers/user_controller.dart';
 import '../../routes/route_helper.dart';
 import '../../utils/dimensions.dart';
 import '../../widgets/app_icon.dart';
@@ -19,8 +20,25 @@ class MainHomePage extends StatefulWidget {
 }
 
 class _MainHomePageState extends State<MainHomePage> {
+
+  @override
+  void initState() {
+    super.initState();
+    bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
+    if (_userLoggedIn) {
+      Get.find<UserController>().getUser();
+      Get.find<CartController>().getKeranjangList();
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
+    bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
+    if (_userLoggedIn) {
+      Get.find<UserController>().getUser();
+      Get.find<CartController>().getKeranjangList();
+    }
     return Scaffold(
       body: Column(
         children: [
@@ -69,13 +87,9 @@ class _MainHomePageState extends State<MainHomePage> {
                         height: Dimensions.height45,
                         child: Icon(
                           Icons.search,
-                          color: Colors.white,
+                          color: AppColors.redColor,
                           size: Dimensions.iconSize24,
                         ),
-                        decoration: BoxDecoration(
-                            borderRadius:
-                                BorderRadius.circular(Dimensions.radius15),
-                            color: AppColors.redColor),
                       ),
                       GetBuilder<CartController>(
                           builder: (controller) {

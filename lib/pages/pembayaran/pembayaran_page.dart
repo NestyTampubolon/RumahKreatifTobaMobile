@@ -336,6 +336,9 @@ class _PembayaranPageState extends State<PembayaranPage> {
                 margin: EdgeInsets.all(Dimensions.height20),
                 padding: EdgeInsets.all(Dimensions.height20),
                 width: Dimensions.screenWidth,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(Dimensions.radius20),
+                    color: AppColors.redColor),
                 child: GestureDetector(
                     onTap: () {
                       pesananController.pickImage();
@@ -347,9 +350,6 @@ class _PembayaranPageState extends State<PembayaranPage> {
                         size: Dimensions.height15,
                       ),
                     ])),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(Dimensions.radius20),
-                    color: AppColors.redColor),
               ),
               pesananController.pickedFile != null
                   ? Padding(
@@ -398,6 +398,10 @@ class _PembayaranPageState extends State<PembayaranPage> {
                             bottom: Dimensions.height10,
                             left: Dimensions.width20,
                             right: Dimensions.width20),
+                        decoration: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.circular(Dimensions.radius20),
+                            color: AppColors.redColor),
                         child: GestureDetector(
                             onTap: () {
                                 Get.find<PesananController>().postBuktiPembayaran(_purchaseId);
@@ -410,10 +414,6 @@ class _PembayaranPageState extends State<PembayaranPage> {
                                 size: Dimensions.height15,
                               ),
                             ])),
-                        decoration: BoxDecoration(
-                            borderRadius:
-                                BorderRadius.circular(Dimensions.radius20),
-                            color: AppColors.redColor),
                       ),
                       // Container(
                       //   alignment : Alignment.center,

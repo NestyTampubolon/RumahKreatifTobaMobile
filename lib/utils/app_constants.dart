@@ -21,9 +21,12 @@ class AppConstants {
   static const String BELI_PRODUK = "pengiriman";
   static const String PESANAN_URL = "daftar_pembelian";
   static const String MENUNGGU_PEMBAYARAN_URL = "menunggu_pembayaran";
+  static const String HAPUS_PESANAN_URL = "hapuspesanan";
   static const String BUKTI_PEMBAYARAN = "PostBuktiPembayaran";
   static const String DETAIL_PESANAN_URL = "detail_pesanan";
-
+  static const String TAMBAH_WISHLIST_URL = "tambahwishlist";
+  static const String DAFTAR_WISHLIST_URL = "daftarwishlist";
+  static const String HAPUS_WISHLIST_URL = "hapuswishlist";
   static const String Toko_URL = "toko";
 
   static const String TOKEN = "";

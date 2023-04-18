@@ -18,6 +18,7 @@ import 'package:grouped_list/grouped_list.dart';
 
 import '../../base/show_custom_message.dart';
 import '../../controllers/auth_controller.dart';
+import '../../controllers/user_controller.dart';
 import '../../widgets/currency_format.dart';
 
 class KeranjangPage extends StatefulWidget {
@@ -51,6 +52,11 @@ class _KeranjangPageState extends State<KeranjangPage> {
   Widget build(BuildContext context) {
     bool _shouldRefreshList = false;
     var cartcontroller = Get.find<CartController>();
+
+    bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
+    if (_userLoggedIn) {
+      Get.find<UserController>().getUser();
+    }
 
     Future<void> _hapusKeranjang(int cart_id) async {
       bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();

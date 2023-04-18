@@ -1,0 +1,406 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:rumah_kreatif_toba/controllers/wishlist_controller.dart';
+
+import '../../base/show_custom_message.dart';
+import '../../controllers/auth_controller.dart';
+import '../../controllers/cart_controller.dart';
+import '../../controllers/user_controller.dart';
+import '../../routes/route_helper.dart';
+import '../../utils/colors.dart';
+import '../../utils/dimensions.dart';
+import '../../widgets/app_icon.dart';
+import '../../widgets/big_text.dart';
+import '../../widgets/currency_format.dart';
+import '../../widgets/price_text.dart';
+import '../../widgets/small_text.dart';
+import '../../widgets/tittle_text.dart';
+import '../account/main_account_page.dart';
+
+class WishlistPage extends StatefulWidget {
+  const WishlistPage({Key? key}) : super(key: key);
+
+  @override
+  State<WishlistPage> createState() => _WishlistPageState();
+}
+
+class _WishlistPageState extends State<WishlistPage> {
+  @override
+  void initState() {
+    super.initState();
+    Get.find<WishlistController>().getWishlistList();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
+    if (_userLoggedIn) {
+      Get.find<UserController>().getUser();
+      Get.find<CartController>().getKeranjangList();
+    }
+
+    Future<void> _tambahKeranjang(int product_id) async {
+      bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
+      if (_userLoggedIn) {
+        var controller = Get.find<UserController>();
+        await controller.getUser();
+        var cartController = Get.find<CartController>();
+        cartController
+            .tambahKeranjang(controller.users.id, product_id,
+            1)
+            .then((status) {
+          if (status.isSuccess) {
+            showCustomSnackBar("Produk berhasil ditambahkan ke keranjang",
+              title: "Berhasil", );
+          } else {
+            showCustomSnackBar(status.message);
+          }
+        });
+        cartController.getKeranjangList();
+      }
+    }
+
+    Future<void> _hapusWishlist(int wishlist_id) async {
+      bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
+      if (_userLoggedIn) {
+        var controller = Get.find<UserController>();
+        await controller.getUser();
+        var cartController = Get.find<WishlistController>();
+        cartController
+            .hapusWishlist(wishlist_id)
+            .then((status) {
+          if (status.isSuccess) {
+            showCustomSnackBar("Produk berhasil dihapus",
+              title: "Berhasil", );
+          } else {
+            showCustomSnackBar(status.message);
+          }
+        });
+        cartController.getWishlistList();
+      }
+    }
+    return Scaffold(
+      body: _userLoggedIn
+          ? Column(
+        children: [
+          Container(
+            child: Container(
+              margin: EdgeInsets.only(
+                  top: Dimensions.height30, bottom: Dimensions.height10),
+              padding: EdgeInsets.only(
+                  left: Dimensions.width20, right: Dimensions.width20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    child: BigText(
+                      text: "Wishlist",
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Center(
+                      child: Row(
+                    children: [
+                      Container(
+                        width: Dimensions.height45,
+                        height: Dimensions.height45,
+                        child: Icon(
+                          Icons.search,
+                          color: AppColors.redColor,
+                          size: Dimensions.iconSize24,
+                        ),
+                      ),
+                      GetBuilder<CartController>(builder: (controller) {
+                        return GestureDetector(
+                          onTap: () {
+                            if (Get.find<AuthController>().userLoggedIn()) {
+                              Get.toNamed(RouteHelper.getKeranjangPage());
+                            } else {
+                              Get.toNamed(RouteHelper.getMasukPage());
+                            }
+                          },
+                          child: Stack(
+                            children: [
+                              AppIcon(
+                                icon: Icons.shopping_cart_outlined,
+                                size: Dimensions.height45,
+                                iconColor: AppColors.redColor,
+                                backgroundColor: Colors.white.withOpacity(0.0),
+                              ),
+                              controller.keranjangList.length >= 1
+                                  ? Positioned(
+                                      right: 0,
+                                      top: 0,
+                                      child: AppIcon(
+                                        icon: Icons.circle,
+                                        size: 20,
+                                        iconColor: Colors.transparent,
+                                        backgroundColor: AppColors.notification,
+                                      ))
+                                  : Container(),
+                              controller.keranjangList.length >= 1
+                                  ? Positioned(
+                                      right: 3,
+                                      top: 3,
+                                      child: BigText(
+                                        text: controller.keranjangList.length
+                                            .toString(),
+                                        size: 12,
+                                        color: Colors.white,
+                                      ),
+                                    )
+                                  : Container(),
+                            ],
+                          ),
+                        );
+                      })
+                    ],
+                  ))
+                ],
+              ),
+            ),
+          ),
+          Expanded(child: SingleChildScrollView(
+            child: GetBuilder<WishlistController>(builder: (wishlistController) {
+              return wishlistController.isLoading
+                  ? GridView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2, mainAxisExtent: Dimensions.height45*7),
+                  itemCount: wishlistController.wishlistList.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        width: 150,
+                        height: Dimensions.height45*7,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(15),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.3),
+                                spreadRadius: 1,
+                                blurRadius: 5,
+                                offset: Offset(0, 2),
+                              )
+                            ]),
+                        margin: EdgeInsets.only(
+                            left: Dimensions.width20,
+                            right: Dimensions.width20,
+                            bottom: Dimensions.height20,
+                            top: Dimensions.height10/2),
+                        child: GestureDetector(
+                          onTap: () {},
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              //image section
+                              Container(
+                                height: Dimensions.height45*3,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(Dimensions.radius15),
+                                        topRight: Radius.circular(Dimensions.radius15)),
+                                    image: DecorationImage(
+                                        fit: BoxFit.fill,
+                                        image: AssetImage("assets/images/coffee.jpg"))),
+                              ),
+                              Container(
+                                padding: EdgeInsets.all(10.0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    TittleText(
+                                      text: wishlistController.wishlistList[index].productName,
+                                      size: Dimensions.font16,
+                                    ),
+                                    SmallText(
+                                      text: wishlistController.wishlistList[index].namaMerchant,
+                                    ),
+                                    PriceText(
+                                      text:CurrencyFormat.convertToIdr(
+                                          wishlistController.wishlistList[index].price,
+                                          0),
+                                      color: AppColors.redColor,
+                                      size: Dimensions.font16,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Container(
+                                          padding: EdgeInsets.only(
+                                              top: Dimensions.height10/2,
+                                              bottom: Dimensions.height10/2,
+                                              left: Dimensions.width10/2,
+                                              right: Dimensions.width10/2),
+                                          decoration: BoxDecoration(
+                                              border: Border.all(color: AppColors.border),
+                                              borderRadius: BorderRadius.circular(
+                                                  Dimensions.radius20 / 2),
+                                              color: Colors.white),
+                                          child: GestureDetector(
+                                              onTap: () {
+                                                showModalBottomSheet(
+                                                    backgroundColor:
+                                                    Colors.transparent,
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return SingleChildScrollView(
+                                                        child: Container(
+                                                          width: Dimensions
+                                                              .screenWidth,
+                                                          decoration: BoxDecoration(
+                                                              color: Colors.white,
+                                                              borderRadius: BorderRadius.only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                      Dimensions
+                                                                          .radius20),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                      Dimensions
+                                                                          .radius20))),
+                                                          padding: EdgeInsets.only(
+                                                              top: Dimensions
+                                                                  .height10,
+                                                              left: Dimensions
+                                                                  .width20,
+                                                              right: Dimensions
+                                                                  .width20),
+                                                          child: Column(
+                                                            children: [
+                                                              Row(children: [
+                                                                AppIcon(
+                                                                  icon: Icons
+                                                                      .highlight_remove_sharp,
+                                                                  size: Dimensions
+                                                                      .iconSize24,
+                                                                  iconColor:
+                                                                  AppColors
+                                                                      .redColor,
+                                                                  backgroundColor:
+                                                                  Colors.white
+                                                                      .withOpacity(
+                                                                      0.0),
+                                                                ),
+                                                                SizedBox(
+                                                                  width: Dimensions
+                                                                      .width20,
+                                                                ),
+                                                              ]),
+                                                              Divider(
+                                                                  color: AppColors
+                                                                      .buttonBackgroundColor),
+                                                              Container(
+                                                                height: Dimensions.height45*2,
+                                                                padding: EdgeInsets.only(
+                                                                    left: Dimensions
+                                                                        .width20,
+                                                                    right: Dimensions
+                                                                        .width20,
+                                                                    top: Dimensions
+                                                                        .height20),
+                                                                child: Column(
+                                                                  children: [
+                                                                    InkWell(
+                                                                      onTap: () {
+                                                                        _hapusWishlist(wishlistController.wishlistList[index].wishlistId);
+                                                                        Navigator.pop(
+                                                                            context);
+                                                                      },
+                                                                      child:
+                                                                      Row(children: [
+                                                                        AppIcon(
+                                                                          icon: Icons
+                                                                              .delete,
+                                                                          size: Dimensions
+                                                                              .iconSize24,
+                                                                          iconColor:
+                                                                          AppColors
+                                                                              .redColor,
+                                                                          backgroundColor:
+                                                                          Colors.white
+                                                                              .withOpacity(
+                                                                              0.0),
+                                                                        ),
+                                                                        SizedBox(
+                                                                          width: Dimensions
+                                                                              .width20,
+                                                                        ),
+                                                                        BigText(
+                                                                          text: "Hapus",
+                                                                        )
+                                                                      ]),
+                                                                    ),
+                                                                    SizedBox(
+                                                                        height: Dimensions
+                                                                            .height10),
+                                                                  ],
+                                                                ),
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      );
+                                                    });
+                                              },
+                                              child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  children: [
+                                                    Icon(Icons.more_horiz, color: AppColors.blackColor,),
+                                                  ])),
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.only(
+                                              top: Dimensions.height10/2,
+                                              bottom: Dimensions.height10/2,
+                                              left: Dimensions.width10/2,
+                                              right: Dimensions.width10/2),
+                                          decoration: BoxDecoration(
+                                              border: Border.all(color: AppColors.redColor),
+                                              borderRadius: BorderRadius.circular(
+                                                  Dimensions.radius20 / 2),
+                                              color: Colors.white),
+                                          child: GestureDetector(
+                                              onTap: () {
+                                                _tambahKeranjang(wishlistController.wishlistList[index].productId);
+                                              },
+                                              child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  children: [
+                                                    Icon(Icons.add, color: AppColors.redColor,),
+                                                    BigText(
+                                                      text: "Keranjang",
+                                                      color: AppColors.redColor,
+                                                      size: Dimensions.height15,
+                                                    ),
+                                                  ])),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              )
+                              //text container
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+              )
+                  : CircularProgressIndicator(
+                color: AppColors.redColor,
+              );
+            }),
+          )),
+        ],
+      ) : MainAccountPage(),
+    );
+  }
+}

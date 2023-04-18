@@ -24,4 +24,8 @@ class PesananRepo{
   Future<Response> postBuktiPembayaran(List purchase_id, String proof_of_payment_image ) async {
     return await apiClient.postData(AppConstants.BUKTI_PEMBAYARAN, {"purchase_id": purchase_id, "proof_of_payment_image" : proof_of_payment_image });
   }
+
+  Future<Response> hapusPesanan(String kode_pembelian) async{
+    return await apiClient.postData(AppConstants.HAPUS_PESANAN_URL, {"kode_pembelian": kode_pembelian});
+  }
 }
