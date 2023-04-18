@@ -13,7 +13,7 @@ class TokoRepo {
   });
 
   Future<Response> registerToko(String nama_merchant, String password) async {
-    return await apiClient.postData(
-        AppConstants.Toko_URL, {"name": nama_merchant, "password": password});
+    return await apiClient.postData(AppConstants.Toko_URL,
+        {"nama_merchant": nama_merchant, "password": password});
   }
 }
