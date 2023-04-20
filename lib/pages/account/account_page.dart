@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rumah_kreatif_toba/base/custom_loader.dart';
 import 'package:rumah_kreatif_toba/controllers/auth_controller.dart';
+import 'package:rumah_kreatif_toba/controllers/toko_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/user_controller.dart';
 import 'package:rumah_kreatif_toba/pages/account/account_widget.dart';
 import 'package:rumah_kreatif_toba/pages/account/profil/profil_page.dart';
@@ -131,9 +132,7 @@ class AccountPage extends StatelessWidget {
                                   onTap: () {
                                     if (Get.find<AuthController>()
                                         .userLoggedIn()) {
-                                      Get.toNamed(RouteHelper.getTokoPage());
-                                      print(
-                                          userController.users.name.toString());
+                                     Get.find<TokoController>().cekVerifikasi();
                                     }
                                   },
                                   child: AccountWidget(

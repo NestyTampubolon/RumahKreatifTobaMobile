@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:rumah_kreatif_toba/controllers/bank_controller.dart';
 import 'package:rumah_kreatif_toba/pages/account/account_page.dart';
 import 'package:rumah_kreatif_toba/pages/kategori/kategori_produk_detail.dart';
 import 'package:rumah_kreatif_toba/pages/toko/alamattoko.dart';
@@ -14,6 +15,9 @@ import 'package:rumah_kreatif_toba/widgets/app_text_field.dart';
 import 'package:rumah_kreatif_toba/widgets/big_text.dart';
 import 'package:rumah_kreatif_toba/widgets/monserrat_text.dart';
 import 'package:rumah_kreatif_toba/widgets/small_text.dart';
+import '../../base/show_custom_message.dart';
+import '../../controllers/toko_controller.dart';
+import '../../controllers/user_controller.dart';
 import '../../routes/route_helper.dart';
 import '../../utils/colors.dart';
 import '../../widgets/app_dropdown_field_bank.dart';
@@ -28,11 +32,6 @@ class DataBankPage extends StatefulWidget {
 }
 
 class _DataBankPageState extends State<DataBankPage> {
-  var DataBankController = TextEditingController();
-  var PemilikBankController = TextEditingController();
-  var NomorBankController = TextEditingController();
-  var DataBankValue;
-
   @override
   void initState() {
     super.initState();
@@ -40,38 +39,64 @@ class _DataBankPageState extends State<DataBankPage> {
 
   @override
   Widget build(BuildContext context) {
-    String Bank = DataBankController.text.trim();
+    var DataBankController = TextEditingController();
+    var PemilikBankController = TextEditingController();
+    var NomorBankController = TextEditingController();
+    var DataBankValue;
+
+    Future<void> _tambahRekening() async {
+      String namabank = DataBankController.text.trim();
+      String norekening = NomorBankController.text.trim();
+      String atasnama = PemilikBankController.text.trim();
+
+
+      if(namabank.isEmpty){
+        showCustomSnackBar("Nama bank masih kosong", title: "Nama");
+      }else if(norekening.isEmpty){
+        showCustomSnackBar("No rekening masih kosong", title: "No Rekening");
+      }else if(atasnama.isEmpty){
+        showCustomSnackBar("Atas nama masih kosong", title: "Atas Nama");
+      }else{
+        var userController = Get.find<UserController>();
+        await userController.getUser();
+
+        var controller = Get.find<BankController>();
+        controller.tambahRekening(userController.users.id, namabank, norekening, atasnama).then((status) async {
+
+        });
+      }
+    }
 
     return Scaffold(
-      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
-              decoration: BoxDecoration(color: AppColors.border),
               child: Container(
                 margin: EdgeInsets.only(
                     top: Dimensions.height45, bottom: Dimensions.height15),
                 padding: EdgeInsets.only(
                     left: Dimensions.width20, right: Dimensions.width20),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        Container(
-                          width: 250,
-                          height: 30,
-                          margin: EdgeInsets.only(
-                              left: Dimensions.width10,
-                              right: Dimensions.width10),
-                          child: BigText(
-                            text: "Masukkan Info Bank",
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
+                    GestureDetector(
+                      onTap: () {
+                        Get.toNamed(RouteHelper.getInitial());
+                      },
+                      child: AppIcon(
+                        icon: Icons.arrow_back,
+                        iconColor: AppColors.redColor,
+                        backgroundColor: Colors.white,
+                        iconSize: Dimensions.iconSize24,
+                      ),
+                    ),
+                    SizedBox(
+                      width: Dimensions.width20,
+                    ),
+                    BigText(
+                      text: "Masukkan Info Bank",
+                      size: Dimensions.font20,
                     ),
                   ],
                 ),
@@ -90,7 +115,7 @@ class _DataBankPageState extends State<DataBankPage> {
                       AppDropdownFieldBank(
                         hintText: 'Nama Bank',
                         icon: Icons.comment_bank_rounded,
-                        controller: DataBankController,
+                        controller: PemilikBankController,
                       ),
                       SizedBox(
                         height: Dimensions.height10,
@@ -103,26 +128,25 @@ class _DataBankPageState extends State<DataBankPage> {
                   child: Column(
                     children: [
                       AppTextField(
-                        hintText: 'Nama Pemilik Bank',
-                        icon: Icons.people,
-                        textController: PemilikBankController,
-                      ),
-                      SizedBox(
-                        height: Dimensions.height10,
-                      ),
-                    ],
-                  ),
-                ),
-                //
-                Container(
-                  child: Column(
-                    children: [
-                      AppTextField(
-                        hintText: 'Nomor Rekening Bank',
+                        hintText: 'No Rekening',
                         icon: Icons.book,
-                        textController: NomorBankController,
+                        textController: DataBankController,
                         textInputType: TextInputType.number,
-                        // textInputType: TextInputType.number,
+                      ),
+                      SizedBox(
+                        height: Dimensions.height10,
+                      ),
+                    ],
+                  ),
+                ),
+                //
+                Container(
+                  child: Column(
+                    children: [
+                      AppTextField(
+                        hintText: 'Atas Nama',
+                        icon: Icons.people,
+                        textController: NomorBankController,
                       ),
                       SizedBox(
                         height: Dimensions.height10,
@@ -136,7 +160,7 @@ class _DataBankPageState extends State<DataBankPage> {
               alignment: Alignment.topLeft,
               padding: EdgeInsets.all(10),
               child: SmallText(
-                text: " * Pastikan data yang pilih benar ",
+                text: " * Pastikan data yang masukkan benar ",
                 size: 14,
               ),
             ),
@@ -145,21 +169,14 @@ class _DataBankPageState extends State<DataBankPage> {
             ),
             GestureDetector(
               onTap: () => {
-                Get.to(
-                  () => AlamatTokoPageState(),
-                ),
+                _tambahRekening()
               },
               child: Container(
                 width: 306,
                 height: 45,
-                // alignment: Alignment.topCenter,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                      color: AppColors.border,
-                      width: 3,
-                    ),
-                    color: AppColors.border),
+                    color: AppColors.redColor),
                 child: Center(
                   child: BigText(
                     text: "Kirim",

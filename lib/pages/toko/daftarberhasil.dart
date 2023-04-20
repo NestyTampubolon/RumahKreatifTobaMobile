@@ -93,7 +93,7 @@ class _DaftarBerhasilState extends State<DaftarBerhasil> {
                         left: Dimensions.width20, right: Dimensions.width20),
                     width: 200,
                     child: Text(
-                      "Selamat Jisoo Tokomu Sudah Berhasil Terdaftar",
+                      "Selamat Tokomu Sudah Berhasil Terdaftar",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 40,

@@ -43,7 +43,6 @@ class PesananController extends GetxController {
     Response response = await pesananRepo.getPesananList(controller.users.id!);
     late ResponseModel responseModel;
     if (response.statusCode == 200) {
-      print(response.body);
       List<dynamic> responseBody = response.body;
       _pesananList = [];
       for (dynamic item in responseBody) {
@@ -65,7 +64,6 @@ class PesananController extends GetxController {
         await pesananRepo.getPesananMenungguBayaranList(controller.users.id!);
     late ResponseModel responseModel;
     if (response.statusCode == 200) {
-      print(response.body);
       List<dynamic> responseBody = response.body;
       _pesananMenungguPembayaranList = [];
       for (dynamic item in responseBody) {
@@ -140,7 +138,6 @@ class PesananController extends GetxController {
         Map map = decodedData;
         // Your code here
         String message = map["message"] ?? "";
-        print(message);
         _imagePath = message;
       } else {
         // Handle error

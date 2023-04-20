@@ -45,7 +45,6 @@ class WishlistController extends GetxController{
       }
       _isLoading = true;
       update();
-      print(response.body);
     }else{
 
     }

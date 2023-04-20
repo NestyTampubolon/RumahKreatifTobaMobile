@@ -3,7 +3,7 @@ class AppConstants {
   static const int APP_VERSION = 1;
 
   static const String BASE_URL =
-      "http://172.26.43.189/RumahKreatifBackend/public/api/";
+      "http://192.168.43.97/tobazonerework/public/api/";
 
   static const String POPULAR_PRODUCT_URL = "produk";
   static const String KATEGORI_PRODUCT_URL = "lihat_produk";
@@ -27,7 +27,13 @@ class AppConstants {
   static const String TAMBAH_WISHLIST_URL = "tambahwishlist";
   static const String DAFTAR_WISHLIST_URL = "daftarwishlist";
   static const String HAPUS_WISHLIST_URL = "hapuswishlist";
+
   static const String Toko_URL = "toko";
+
+  static const String VERIFIKASI_TOKO_URL = "verifikasitoko";
+  static const String CEK_VERIFIKASI_URL = "cekverifikasi";
+
+  static const String TAMBAH_REKENING_URL = "postrekening";
 
   static const String TOKEN = "";
   static const String PHONE = "";

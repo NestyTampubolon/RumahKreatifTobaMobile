@@ -103,7 +103,6 @@ class _PembayaranPageState extends State<PembayaranPage> {
         controller.postBuktiPembayaran(_purchaseId).then((status) async {
           Get.to(PesananPage());
         });
-
     }
 
     return Scaffold(
@@ -147,9 +146,6 @@ class _PembayaranPageState extends State<PembayaranPage> {
                     _purchaseId.add(item.purchaseId);
                   }
                 }
-
-
-
                 return Container();
               }),
               Container(

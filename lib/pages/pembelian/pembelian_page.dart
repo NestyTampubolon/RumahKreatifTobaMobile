@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rumah_kreatif_toba/controllers/pengiriman_controller.dart';
 import 'package:rumah_kreatif_toba/widgets/payment_option_button.dart';
@@ -409,18 +410,24 @@ class _PembelianPageState extends State<PembelianPage> {
                                                     child: Column(
                                                       children: [
                                                         Row(children: [
-                                                          AppIcon(
-                                                            icon: Icons
-                                                                .highlight_remove_sharp,
-                                                            size: Dimensions
-                                                                .iconSize24,
-                                                            iconColor:
-                                                            AppColors
-                                                                .redColor,
-                                                            backgroundColor:
-                                                            Colors.white
-                                                                .withOpacity(
-                                                                0.0),
+                                                          GestureDetector(
+                                                            onTap:(){
+                                                              Navigator.pop(
+                                                                  context);
+                                                            },
+                                                            child: AppIcon(
+                                                              icon: CupertinoIcons
+                                                                  .xmark,
+                                                              size: Dimensions
+                                                                  .iconSize24,
+                                                              iconColor:
+                                                              AppColors
+                                                                  .redColor,
+                                                              backgroundColor:
+                                                              Colors.white
+                                                                  .withOpacity(
+                                                                  0.0),
+                                                            ),
                                                           ),
                                                           SizedBox(
                                                             width: Dimensions

@@ -12,8 +12,12 @@ class TokoRepo {
     required this.sharedPreferences,
   });
 
-  Future<Response> registerToko(String nama_merchant, String password) async {
-    return await apiClient.postData(AppConstants.Toko_URL,
-        {"nama_merchant": nama_merchant, "password": password});
+  Future<Response> verifikasiToko(int user_id, String foto_ktp, String ktp_dan_selfie) async {
+    return await apiClient.postData(AppConstants.VERIFIKASI_TOKO_URL, {"user_id": user_id, "foto_ktp": foto_ktp, "ktp_dan_selfie": ktp_dan_selfie});
   }
+
+  Future<Response> cekVerifikasi(int user_id) async {
+    return await apiClient.postData(AppConstants.CEK_VERIFIKASI_URL, {"user_id": user_id});
+  }
+
 }
