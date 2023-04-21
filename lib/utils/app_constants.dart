@@ -3,7 +3,7 @@ class AppConstants {
   static const int APP_VERSION = 1;
 
   static const String BASE_URL =
-      "http://192.168.43.97/tobazonerework/public/api/";
+      "http://172.20.10.4/RumahKreatifBackend/public/api/";
 
   static const String POPULAR_PRODUCT_URL = "produk";
   static const String KATEGORI_PRODUCT_URL = "lihat_produk";

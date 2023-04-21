@@ -49,19 +49,20 @@ class TokoController extends GetxController {
 
   final _pickerSelfieKTP = ImagePicker();
   Future<void> pickImageSelfieKTP() async {
-    _pickedFileSelfieKTP = await _pickerSelfieKTP.getImage(source: ImageSource.gallery);
+    _pickedFileSelfieKTP =
+        await _pickerSelfieKTP.getImage(source: ImageSource.gallery);
     update();
   }
-
 
   Future<bool> verifikasiToko(int? user_id) async {
     _isLoading = true;
     update();
     bool success = false;
 
-
     // Send the request
-    http.StreamedResponse? response = (await uploadVerifikasiToko(user_id, _pickedFileKTP, _pickedFileSelfieKTP)) as http.StreamedResponse?;
+    http.StreamedResponse? response = (await uploadVerifikasiToko(
+            user_id, _pickedFileKTP, _pickedFileSelfieKTP))
+        as http.StreamedResponse?;
     if (response?.statusCode == 200) {
       success = true;
       dynamic decodedData = jsonDecode(await response!.stream.bytesToString());
@@ -84,61 +85,52 @@ class TokoController extends GetxController {
     return success;
   }
 
-  Future<List<http.StreamedResponse>> uploadVerifikasiToko(int? user_id, PickedFile? KTP, PickedFile? SelfieKTP) async {
+  Future<List<http.StreamedResponse>> uploadVerifikasiToko(
+      int? user_id, PickedFile? KTP, PickedFile? SelfieKTP) async {
     List<http.StreamedResponse> responses = [];
 
-      http.MultipartRequest request = http.MultipartRequest(
-          'POST',
-          Uri.parse('http://192.168.43.97/tobazonerework/public/api/verifikasitoko')
-      );
-      if (GetPlatform.isMobile && KTP != null && SelfieKTP != null) {
-        File _fileKTP = File(KTP.path);
-        request.files.add(http.MultipartFile(
-            'foto_ktp',
-            _fileKTP.readAsBytes().asStream(),
-            _fileKTP.lengthSync(),
-            filename: _fileKTP.path.split('/').last
-        ));
+    http.MultipartRequest request = http.MultipartRequest(
+        'POST',
+        Uri.parse(
+            'http://192.168.43.97/tobazonerework/public/api/verifikasitoko'));
+    if (GetPlatform.isMobile && KTP != null && SelfieKTP != null) {
+      File _fileKTP = File(KTP.path);
+      request.files.add(http.MultipartFile(
+          'foto_ktp', _fileKTP.readAsBytes().asStream(), _fileKTP.lengthSync(),
+          filename: _fileKTP.path.split('/').last));
 
-        File _fileSelfieKTP = File(KTP.path);
-        request.files.add(http.MultipartFile(
-            'ktp_dan_selfie',
-            _fileSelfieKTP.readAsBytes().asStream(),
-            _fileSelfieKTP.lengthSync(),
-            filename: _fileSelfieKTP.path.split('/').last
-        ));
-      }
-      request.fields['user_id'] = user_id.toString();
-      http.StreamedResponse response = await request.send();
-      if (response.statusCode == 200) {
-        Get.toNamed(RouteHelper.getInitial());
-        print("Uploaded!");
-      }
-      responses.add(response);
+      File _fileSelfieKTP = File(KTP.path);
+      request.files.add(http.MultipartFile('ktp_dan_selfie',
+          _fileSelfieKTP.readAsBytes().asStream(), _fileSelfieKTP.lengthSync(),
+          filename: _fileSelfieKTP.path.split('/').last));
+    }
+    request.fields['user_id'] = user_id.toString();
+    http.StreamedResponse response = await request.send();
+    if (response.statusCode == 200) {
+      Get.toNamed(RouteHelper.getInitial());
+      print("Uploaded!");
+    }
+    responses.add(response);
     return responses;
   }
 
-
-  Future<void> cekVerifikasi() async{
+  Future<void> cekVerifikasi() async {
     var controller = Get.find<UserController>();
     Response response = await tokoRepo.cekVerifikasi(controller.users.id!);
-    if(response.statusCode == 200){
-     if(response.body == 0){
-       Get.to(DaftarBerhasil());
-     }else if(response.body == 1){
-       Get.to(MenungguVerifikasi());
-     }else if(response.body == 2){
-       Get.toNamed(RouteHelper.getTokoPage());
-     }
+    if (response.statusCode == 200) {
+      if (response.body == 0) {
+        Get.to(DaftarBerhasil());
+      } else if (response.body == 1) {
+        Get.to(MenungguVerifikasi());
+      } else if (response.body == 2) {
+        Get.toNamed(RouteHelper.getTokoPage());
+      }
       _isLoading = true;
       update();
-    }else{
-
-    }
+    } else {}
   }
 
   // bool cekUser() {
   //   return _responseBodycekVerifikasi;
   // }
-
 }

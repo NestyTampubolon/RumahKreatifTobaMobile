@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rumah_kreatif_toba/pages/account/profil/profil_page.dart';
+import 'package:rumah_kreatif_toba/pages/alamat/daftaralamat.dart';
+import 'package:rumah_kreatif_toba/pages/alamat/tambahalamat.dart';
 import 'package:rumah_kreatif_toba/pages/auth/masuk.dart';
 import 'package:rumah_kreatif_toba/pages/home/home_page.dart';
 import 'package:rumah_kreatif_toba/pages/home/main_home_page.dart';
@@ -34,6 +36,8 @@ class RouteHelper {
   static const String menungguPembayaran = "/menunggu_pembayaran";
   static const String detailPesanan = "/detail_pesanan";
   static const String profil = "/profil";
+  static const String daftaralamat = "/daftar_alamat";
+  static const String tambahalamat = "/tambah_alamat";
 
   static String getSplashPage() => '$splashPage';
   static String getInitial() => '$initial';
@@ -49,6 +53,8 @@ class RouteHelper {
   static String getMenungguPembayaranPage() => '$menungguPembayaran';
   static String getDetailPesananPage() => '$detailPesanan';
   static String getProfilPage() => '$profil';
+  static String getDaftarAlamatPage() => '$daftaralamat';
+  static String getTambahAlamatPage() => '$tambahalamat';
 
   static List<GetPage> routes = [
     GetPage(name: splashPage, page: () => SplashScreen()),
@@ -59,9 +65,12 @@ class RouteHelper {
           return Masuk();
         },
         transition: Transition.fade),
-
-
-    GetPage(name: masuk, page: (){return Masuk();}, transition: Transition.fade),
+    GetPage(
+        name: masuk,
+        page: () {
+          return Masuk();
+        },
+        transition: Transition.fade),
     GetPage(name: pembelian, page: () => PembelianPage()),
     GetPage(name: pembayaran, page: () => PembayaranPage()),
     GetPage(name: pesanan, page: () => PesananPage()),
@@ -82,8 +91,13 @@ class RouteHelper {
           return KeranjangPage();
         },
         transition: Transition.fadeIn),
-    GetPage(name: kategoriProdukDetail, page: () => KategoriProdukDetail(), transition: Transition.fadeIn),
+    GetPage(
+        name: kategoriProdukDetail,
+        page: () => KategoriProdukDetail(),
+        transition: Transition.fadeIn),
     GetPage(name: toko, page: () => TokoPage()),
     GetPage(name: bank, page: () => DataBankPage()),
+    GetPage(name: daftaralamat, page: () => DaftarAlamatPage()),
+    GetPage(name: tambahalamat, page: () => TambahAlamatPage()),
   ];
 }
