@@ -20,4 +20,12 @@ class TokoRepo {
     return await apiClient.postData(AppConstants.CEK_VERIFIKASI_URL, {"user_id": user_id});
   }
 
+  Future<Response> tambahToko(int user_id, String nama_merchant, String deskripsi_toko, String kontak_toko, String foto_merchant) async {
+    return await apiClient.postData(AppConstants.TAMBAH_TOKO_URL, {"user_id": user_id, "nama_merchant":nama_merchant, "deskripsi_toko":deskripsi_toko, "kontak_toko": kontak_toko, "foto_merchant" : foto_merchant});
+  }
+
+  Future<Response> masukToko(int user_id, String password) async {
+    return await apiClient.postData(AppConstants.MASUK_TOKO_URL, {"user_id": user_id, "password":password});
+  }
+
 }

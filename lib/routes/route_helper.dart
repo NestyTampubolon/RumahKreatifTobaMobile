@@ -13,6 +13,7 @@ import 'package:rumah_kreatif_toba/pages/pesanan/detail_pesanan_page.dart';
 import 'package:rumah_kreatif_toba/pages/pesanan/menunggu_pembayaran_page.dart';
 import 'package:rumah_kreatif_toba/pages/splash/splash_page.dart';
 import 'package:rumah_kreatif_toba/pages/toko/databank.dart';
+import 'package:rumah_kreatif_toba/pages/toko/menungguverifikasitoko.dart';
 import 'package:rumah_kreatif_toba/pages/toko/toko.dart';
 
 import '../controllers/popular_produk_controller.dart';
@@ -34,6 +35,7 @@ class RouteHelper {
   static const String menungguPembayaran = "/menunggu_pembayaran";
   static const String detailPesanan = "/detail_pesanan";
   static const String profil = "/profil";
+  static const String menungguVerifikasiToko = "/menunggu_verifikasi_toko";
 
   static String getSplashPage() => '$splashPage';
   static String getInitial() => '$initial';
@@ -49,6 +51,7 @@ class RouteHelper {
   static String getMenungguPembayaranPage() => '$menungguPembayaran';
   static String getDetailPesananPage() => '$detailPesanan';
   static String getProfilPage() => '$profil';
+  static String getMenungguVerifikasiTokoPage() => '$menungguVerifikasiToko';
 
   static List<GetPage> routes = [
     GetPage(name: splashPage, page: () => SplashScreen()),
@@ -68,6 +71,7 @@ class RouteHelper {
     GetPage(name: menungguPembayaran, page: () => MenungguPembayaranPage()),
     GetPage(name: detailPesanan, page: () => DetailPesananPage()),
     GetPage(name: profil, page: () => ProfilPage()),
+    GetPage(name: menungguVerifikasiToko, page: () => MenungguVerifikasiToko()),
     GetPage(
       name: produkDetail + '/:produkId', // Add named parameter ":produkId"
       page: () {

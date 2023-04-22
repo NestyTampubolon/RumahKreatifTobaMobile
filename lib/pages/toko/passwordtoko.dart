@@ -3,17 +3,13 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
-import 'package:rumah_kreatif_toba/pages/account/account_page.dart';
-import 'package:rumah_kreatif_toba/pages/kategori/kategori_produk_detail.dart';
-import 'package:rumah_kreatif_toba/pages/toko/daftarberhasil.dart';
-import 'package:rumah_kreatif_toba/pages/toko/namatoko.dart';
+import 'package:rumah_kreatif_toba/controllers/toko_controller.dart';
 import 'package:rumah_kreatif_toba/utils/dimensions.dart';
-import 'package:rumah_kreatif_toba/widgets/app_dropdown_field.dart';
 import 'package:rumah_kreatif_toba/widgets/app_text_field.dart';
 import 'package:rumah_kreatif_toba/widgets/big_text.dart';
-import 'package:rumah_kreatif_toba/widgets/monserrat_text.dart';
 import 'package:rumah_kreatif_toba/widgets/small_text.dart';
+import '../../base/show_custom_message.dart';
+import '../../controllers/user_controller.dart';
 import '../../routes/route_helper.dart';
 import '../../utils/colors.dart';
 import '../../widgets/app_dropdown_field_bank.dart';
@@ -37,13 +33,31 @@ class _PasswordTokoPageState extends State<PasswordTokoPage> {
 
   @override
   Widget build(BuildContext context) {
+    var PasswordTokoController = TextEditingController();
+
+
+    Future<void> _tambahRekening() async {
+      String password = PasswordTokoController.text.trim();
+
+      if(password.isEmpty){
+        showCustomSnackBar("Password masih kosong", title: "Password");
+      }else{
+        var userController = Get.find<UserController>();
+        await userController.getUser();
+
+        var controller = Get.find<TokoController>();
+        controller.masukToko(userController.users.id, password).then((status) async {
+
+        });
+      }
+    }
+
     return Scaffold(
-      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
-              decoration: BoxDecoration(color: AppColors.border),
+              decoration: BoxDecoration(color: AppColors.redColor),
               child: Container(
                 margin: EdgeInsets.only(
                     top: Dimensions.height45, bottom: Dimensions.height15),
@@ -56,7 +70,7 @@ class _PasswordTokoPageState extends State<PasswordTokoPage> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Get.to(() => NamaToko());
+
                           },
                           child: AppIcon(icon: Icons.arrow_back),
                         ),
@@ -92,6 +106,7 @@ class _PasswordTokoPageState extends State<PasswordTokoPage> {
                         hintText: 'Password',
                         icon: Icons.lock,
                         textController: PasswordTokoController,
+                        isObscure: true,
                       ),
                       SizedBox(
                         height: Dimensions.height10,
@@ -114,9 +129,7 @@ class _PasswordTokoPageState extends State<PasswordTokoPage> {
             ),
             GestureDetector(
               onTap: () => {
-                Get.to(
-                  () => DaftarBerhasil(),
-                ),
+                _tambahRekening(),
               },
               child: Container(
                 width: 306,
@@ -124,11 +137,7 @@ class _PasswordTokoPageState extends State<PasswordTokoPage> {
                 // alignment: Alignment.topCenter,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                      color: AppColors.border,
-                      width: 3,
-                    ),
-                    color: AppColors.border),
+                    color: AppColors.redColor),
                 child: Center(
                   child: BigText(
                     text: "Masuk",

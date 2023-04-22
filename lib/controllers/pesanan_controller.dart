@@ -158,7 +158,7 @@ class PesananController extends GetxController {
       var item = purchaseId[i];
       http.MultipartRequest request = http.MultipartRequest(
           'POST',
-          Uri.parse('http://192.168.220.154/tobazonerework/public/api/PostBuktiPembayaran')
+          Uri.parse(AppConstants.BASE_URL+AppConstants.BUKTI_PEMBAYARAN)
       );
       if (GetPlatform.isMobile && data != null) {
         File _file = File(data.path);
