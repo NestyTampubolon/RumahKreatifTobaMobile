@@ -132,7 +132,8 @@ class AccountPage extends StatelessWidget {
                                   onTap: () {
                                     if (Get.find<AuthController>()
                                         .userLoggedIn()) {
-                                     Get.find<TokoController>().cekVerifikasi();
+                                      Get.find<TokoController>()
+                                          .cekVerifikasi();
                                     }
                                   },
                                   child: AccountWidget(
@@ -204,9 +205,9 @@ class AccountPage extends StatelessWidget {
                                   onTap: () {
                                     if (Get.find<AuthController>()
                                         .userLoggedIn()) {
-                                      Get.find<AuthController>()
-                                          .clearSharedData();
-                                      Get.offNamed(RouteHelper.getInitial());
+                                      Get.toNamed(
+                                        RouteHelper.getDaftarAlamatPage(),
+                                      );
                                     }
                                   },
                                   child: AccountWidget(

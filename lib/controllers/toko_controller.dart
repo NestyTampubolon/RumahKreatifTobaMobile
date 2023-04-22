@@ -9,8 +9,6 @@ import 'package:rumah_kreatif_toba/pages/toko/passwordtoko.dart';
 import 'dart:io';
 import '../base/show_custom_message.dart';
 import '../data/repository/toko_repo.dart';
-import '../models/toko_models.dart';
-import '../models/users_models.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 
@@ -96,10 +94,8 @@ class TokoController extends GetxController {
       int? user_id, PickedFile? KTP, PickedFile? SelfieKTP) async {
     List<http.StreamedResponse> responses = [];
 
-    http.MultipartRequest request = http.MultipartRequest(
-        'POST',
-        Uri.parse(
-            AppConstants.BASE_URL+AppConstants.VERIFIKASI_TOKO_URL));
+    http.MultipartRequest request = http.MultipartRequest('POST',
+        Uri.parse(AppConstants.BASE_URL + AppConstants.VERIFIKASI_TOKO_URL));
     if (GetPlatform.isMobile && KTP != null && SelfieKTP != null) {
       File _fileKTP = File(KTP.path);
       request.files.add(http.MultipartFile(
@@ -127,7 +123,7 @@ class TokoController extends GetxController {
     if (response.statusCode == 200) {
       if (response.body == 0) {
         Get.to(DaftarBerhasil());
-      }else if (response.body == 1) {
+      } else if (response.body == 1) {
         Get.to(NamaToko());
       } else if (response.body == 2) {
         Get.to(PasswordTokoPage());
@@ -135,7 +131,7 @@ class TokoController extends GetxController {
         Get.to(MenungguVerifikasiToko());
       } else if (response.body == 4) {
         Get.to(MenungguVerifikasi());
-      }else if (response.body == 5) {
+      } else if (response.body == 5) {
         Get.to(TokoKTP());
       }
       _isLoading = true;
@@ -199,10 +195,8 @@ class TokoController extends GetxController {
       PickedFile? fotoMerchant) async {
     List<http.StreamedResponse> responses = [];
 
-    http.MultipartRequest request = http.MultipartRequest(
-        'POST',
-        Uri.parse(
-            AppConstants.BASE_URL+AppConstants.TAMBAH_TOKO_URL));
+    http.MultipartRequest request = http.MultipartRequest('POST',
+        Uri.parse(AppConstants.BASE_URL + AppConstants.TAMBAH_TOKO_URL));
     if (GetPlatform.isMobile && fotoMerchant != null) {
       File _fileFotoMerchant = File(fotoMerchant.path);
       request.files.add(http.MultipartFile(
@@ -218,14 +212,14 @@ class TokoController extends GetxController {
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
       Get.offNamed(RouteHelper.getMenungguVerifikasiTokoPage());
-      showCustomSnackBar("Pendaftaran toko berhasil, tunggu toko Anda diverifikasi",
+      showCustomSnackBar(
+          "Pendaftaran toko berhasil, tunggu toko Anda diverifikasi",
           title: "Berhasil");
       print("Uploaded!");
     }
     responses.add(response);
     return responses;
   }
-
 
   Future<ResponseModel> masukToko(int? user_id, String password) async {
     _isLoading = true;

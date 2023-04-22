@@ -49,21 +49,21 @@ class _DataBankPageState extends State<DataBankPage> {
       String norekening = NomorBankController.text.trim();
       String atasnama = PemilikBankController.text.trim();
 
-
-      if(namabank.isEmpty){
+      if (namabank.isEmpty) {
         showCustomSnackBar("Nama bank masih kosong", title: "Nama");
-      }else if(norekening.isEmpty){
+      } else if (norekening.isEmpty) {
         showCustomSnackBar("No rekening masih kosong", title: "No Rekening");
-      }else if(atasnama.isEmpty){
+      } else if (atasnama.isEmpty) {
         showCustomSnackBar("Atas nama masih kosong", title: "Atas Nama");
-      }else{
+      } else {
         var userController = Get.find<UserController>();
         await userController.getUser();
 
         var controller = Get.find<BankController>();
-        controller.tambahRekening(userController.users.id, namabank, norekening, atasnama).then((status) async {
-
-        });
+        controller
+            .tambahRekening(
+                userController.users.id, namabank, norekening, atasnama)
+            .then((status) async {});
       }
     }
 
@@ -168,9 +168,7 @@ class _DataBankPageState extends State<DataBankPage> {
               height: 50,
             ),
             GestureDetector(
-              onTap: () => {
-                _tambahRekening()
-              },
+              onTap: () => {_tambahRekening()},
               child: Container(
                 width: 306,
                 height: 45,

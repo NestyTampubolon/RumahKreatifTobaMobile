@@ -28,7 +28,6 @@ class PesananPage extends StatefulWidget {
 }
 
 class _PesananPageState extends State<PesananPage> {
-
   @override
   void initState() {
     bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
@@ -40,7 +39,6 @@ class _PesananPageState extends State<PesananPage> {
 
   @override
   Widget build(BuildContext context) {
-
     Future<void> _getDetailPesananList(String kode_pembelian) async {
       bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
       if (_userLoggedIn) {
@@ -54,6 +52,7 @@ class _PesananPageState extends State<PesananPage> {
         });
       }
     }
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -88,7 +87,7 @@ class _PesananPageState extends State<PesananPage> {
               ),
             ),
             GestureDetector(
-              onTap: (){
+              onTap: () {
                 Get.toNamed(RouteHelper.getMenungguPembayaranPage());
               },
               child: Container(
@@ -101,7 +100,8 @@ class _PesananPageState extends State<PesananPage> {
                 padding: EdgeInsets.all(Dimensions.height10),
                 decoration: BoxDecoration(
                     border: Border.all(color: AppColors.redColor),
-                    borderRadius: BorderRadius.circular(Dimensions.radius20 / 2),
+                    borderRadius:
+                        BorderRadius.circular(Dimensions.radius20 / 2),
                     color: Colors.white),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -112,7 +112,8 @@ class _PesananPageState extends State<PesananPage> {
                       decoration: BoxDecoration(
                           image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: AssetImage("assets/images/indonesian-rupiah.png"))),
+                              image: AssetImage(
+                                  "assets/images/indonesian-rupiah.png"))),
                     ),
                     SmallText(
                       text: "Menunggu Pembayaran",
@@ -133,7 +134,8 @@ class _PesananPageState extends State<PesananPage> {
               return GridView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 1, mainAxisExtent: Dimensions.height45*3.5),
+                      crossAxisCount: 1,
+                      mainAxisExtent: Dimensions.height45 * 3.5),
                   itemCount: pesananController.pesananList.length,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
@@ -150,7 +152,7 @@ class _PesananPageState extends State<PesananPage> {
                           border: Border.all(
                               color: AppColors.buttonBackgroundColor),
                           borderRadius:
-                          BorderRadius.circular(Dimensions.radius20),
+                              BorderRadius.circular(Dimensions.radius20),
                           color: Colors.white),
                       child: Column(
                         children: [
@@ -167,20 +169,23 @@ class _PesananPageState extends State<PesananPage> {
                                           iconSize: Dimensions.iconSize24,
                                           iconColor: AppColors.redColor,
                                           backgroundColor:
-                                          Colors.white.withOpacity(0.0),
+                                              Colors.white.withOpacity(0.0),
                                         ),
                                       ),
                                       Column(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.start,
+                                            MainAxisAlignment.start,
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                         children: [
                                           BigText(
                                             text: "Belanja",
                                             size: Dimensions.font16,
                                           ),
-                                          SmallText(text: pesananController.pesananList[index].createdAt.toString())
+                                          SmallText(
+                                              text: pesananController
+                                                  .pesananList[index].createdAt
+                                                  .toString())
                                         ],
                                       )
                                     ],
@@ -188,7 +193,7 @@ class _PesananPageState extends State<PesananPage> {
                                 ),
                                 Container(
                                   padding:
-                                  EdgeInsets.all(Dimensions.height10 / 2),
+                                      EdgeInsets.all(Dimensions.height10 / 2),
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(
                                           Dimensions.radius20 / 2),
@@ -204,9 +209,11 @@ class _PesananPageState extends State<PesananPage> {
                           ),
                           Divider(color: AppColors.buttonBackgroundColor),
                           Container(
-                            child: BigText(text: pesananController.pesananList[index].kodePembelian.toString()),
+                            child: BigText(
+                                text: pesananController
+                                    .pesananList[index].kodePembelian
+                                    .toString()),
                           ),
-
                           Container(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -216,15 +223,17 @@ class _PesananPageState extends State<PesananPage> {
                                     children: [
                                       Column(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.start,
+                                            MainAxisAlignment.start,
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                         children: [
                                           SmallText(text: "Total Belanja"),
                                           PriceText(
                                             text: CurrencyFormat.convertToIdr(
-                                                pesananController.pesananList[index].hargaPembelian
-                                            , 0),
+                                                pesananController
+                                                    .pesananList[index]
+                                                    .hargaPembelian,
+                                                0),
                                             size: Dimensions.font16,
                                           ),
                                         ],
@@ -232,39 +241,39 @@ class _PesananPageState extends State<PesananPage> {
                                     ],
                                   ),
                                 ),
-                               GestureDetector(
-                                 onTap: (){
-                                   _getDetailPesananList(pesananController.pesananList[index].kodePembelian.toString());
-                                 },
-                                 child:  Container(
-                                   padding: EdgeInsets.only(
-                                       top: Dimensions.height10 / 2,
-                                       bottom: Dimensions.height10 / 2,
-                                       left: Dimensions.height10,
-                                       right: Dimensions.height10),
-                                   decoration: BoxDecoration(
-                                       border:
-                                       Border.all(color: AppColors.redColor),
-                                       borderRadius: BorderRadius.circular(
-                                           Dimensions.radius20 / 2),
-                                       color: Colors.white),
-                                   child: BigText(
-                                     text: "Lihat Detail",
-                                     size: Dimensions.iconSize16,
-                                     color: AppColors.redColor,
-                                   ),
-                                 ),
-                               )
+                                GestureDetector(
+                                  onTap: () {
+                                    _getDetailPesananList(pesananController
+                                        .pesananList[index].kodePembelian
+                                        .toString());
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.only(
+                                        top: Dimensions.height10 / 2,
+                                        bottom: Dimensions.height10 / 2,
+                                        left: Dimensions.height10,
+                                        right: Dimensions.height10),
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: AppColors.redColor),
+                                        borderRadius: BorderRadius.circular(
+                                            Dimensions.radius20 / 2),
+                                        color: Colors.white),
+                                    child: BigText(
+                                      text: "Lihat Detail",
+                                      size: Dimensions.iconSize16,
+                                      color: AppColors.redColor,
+                                    ),
+                                  ),
+                                )
                               ],
                             ),
                           ),
                         ],
                       ),
                     );
-                  }
-              );
+                  });
             }),
-
 
             // GetBuilder<PesananController>(builder: (pesananController) {
             //   return Expanded(child: ListView.builder(
