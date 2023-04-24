@@ -4,52 +4,58 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:rumah_kreatif_toba/pages/account/account_page.dart';
 import 'package:rumah_kreatif_toba/pages/home/main_home_page.dart';
 import 'package:rumah_kreatif_toba/pages/kategori/kategori_produk.dart';
+import 'package:rumah_kreatif_toba/pages/toko/hometoko/hometoko.dart';
+import 'package:rumah_kreatif_toba/pages/toko/produk/produk_page.dart';
 import 'package:rumah_kreatif_toba/pages/wishlist/wishlist_page.dart';
 
-import '../../utils/colors.dart';
+import '../../../utils/colors.dart';
+import '../profil/profiltoko_page.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class HomeTokoPage extends StatefulWidget {
+  final int initialIndex; // Add this line
+
+  const HomeTokoPage({Key? key, required this.initialIndex}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomeTokoPage> createState() => _HomeTokoPageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  late PersistentTabController _controller;
+class _HomeTokoPageState extends State<HomeTokoPage> {
+  late PersistentTabController controller;
 
   @override
   void initState() {
     super.initState();
-    _controller = PersistentTabController(initialIndex: 0);
+    controller = PersistentTabController(initialIndex: widget.initialIndex);
   }
+
 
   List<Widget> _buildScreens() {
     return [
-      MainHomePage(),
-      KategoriProduk(),
+      HomeToko(),
+      ProdukPage(),
       WishlistPage(),
-      AccountPage(),
+      ProfilTokoPage(),
     ];
   }
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
-        icon: Icon(CupertinoIcons.home),
+        icon: Icon(CupertinoIcons.house_alt),
         title: ("Home"),
         activeColorPrimary: AppColors.redColor,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(CupertinoIcons.rectangle_grid_2x2_fill),
+        icon: Icon(CupertinoIcons.cube_box),
         title: ("Produk"),
         activeColorPrimary: AppColors.redColor,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(CupertinoIcons.heart),
-        title: ("Wishlist"),
+        icon: Icon(CupertinoIcons.doc_text),
+        title: ("Pembelian"),
         activeColorPrimary: AppColors.redColor,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
@@ -66,17 +72,17 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return PersistentTabView(
       context,
-      controller: _controller,
+      controller: controller,
       screens: _buildScreens(),
       items: _navBarsItems(),
       confineInSafeArea: true,
       backgroundColor: Colors.white, // Default is Colors.white.
       handleAndroidBackButtonPress: true, // Default is true.
       resizeToAvoidBottomInset:
-          true, // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
+      true, // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
       stateManagement: true, // Default is true.
       hideNavigationBarWhenKeyboardShows:
-          true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
+      true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
       decoration: NavBarDecoration(
         borderRadius: BorderRadius.circular(10.0),
         colorBehindNavBar: Colors.white,
@@ -95,7 +101,7 @@ class _HomePageState extends State<HomePage> {
         duration: Duration(milliseconds: 200),
       ),
       navBarStyle:
-          NavBarStyle.style13, // Choose the nav bar style with this property.
+      NavBarStyle.style12, // Choose the nav bar style with this property.
     );
   }
 }

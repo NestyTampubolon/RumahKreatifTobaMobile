@@ -3,7 +3,10 @@ class AppConstants {
   static const int APP_VERSION = 1;
 
   static const String BASE_URL =
-      "http://192.168.207.154/tobazonerework/public/api/";
+      "http://192.168.7.154/tobazonerework/public/api/";
+
+  static const String BASE_URL_IMAGE =
+      "http://192.168.7.154/tobazonerework/public/asset/";
 
   static const String POPULAR_PRODUCT_URL = "produk";
   static const String KATEGORI_PRODUCT_URL = "lihat_produk";
@@ -36,6 +39,14 @@ class AppConstants {
   static const String TAMBAH_REKENING_URL = "postrekening";
   static const String TAMBAH_TOKO_URL = "posttambahtoko";
   static const String MASUK_TOKO_URL = "masuktoko";
+
+  static const String KATEGORI_URL = "pilihkategori";
+
+  static const String TAMBAH_PRODUK_URL = "tambahproduk";
+  static const String DAFTAR_PRODUK_URL = "daftarproduk";
+
+  static const String PROFIL_TOKO_URL = "profilmerchant";
+
 
   static const String TOKEN = "";
   static const String PHONE = "";

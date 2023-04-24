@@ -6,17 +6,20 @@ import 'package:rumah_kreatif_toba/controllers/bank_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/cart_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/pengiriman_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/pesanan_controller.dart';
+import 'package:rumah_kreatif_toba/controllers/produk_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/toko_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/wishlist_controller.dart';
 import 'package:rumah_kreatif_toba/data/api/api_client.dart';
 import 'package:rumah_kreatif_toba/data/repository/auth_repo.dart';
 import 'package:rumah_kreatif_toba/data/repository/cart_repo.dart';
+import 'package:rumah_kreatif_toba/data/repository/categories_repo.dart';
 import 'package:rumah_kreatif_toba/data/repository/produk_repo.dart';
 import 'package:rumah_kreatif_toba/data/repository/toko_repo.dart';
 import 'package:rumah_kreatif_toba/data/repository/user_repo.dart';
 import 'package:rumah_kreatif_toba/data/repository/wishlist_repo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../controllers/categories_controller.dart';
 import '../controllers/popular_produk_controller.dart';
 import '../controllers/user_controller.dart';
 import '../data/repository/bank_repo.dart';
@@ -50,6 +53,8 @@ Future<void> init() async {
           () => TokoRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
   Get.lazyPut(
           () => BankRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
+  Get.lazyPut(
+          () => CategoriesRepo(apiClient: Get.find()));
 
   //controllers
   Get.lazyPut(() => AuthController(authRepo: Get.find()));
@@ -65,4 +70,7 @@ Future<void> init() async {
   Get.put(WishlistController(wishlistRepo: Get.find()));
   Get.lazyPut(() => TokoController(tokoRepo: Get.find()));
   Get.lazyPut(() => BankController(bankRepo: Get.find()));
+  Get.lazyPut(() => CategoriesController(categoriesRepo: Get.find()));
+  Get.put(() => CategoriesController(categoriesRepo: Get.find()));
+  Get.lazyPut(() => ProdukController(produkRepo: Get.find()));
 }

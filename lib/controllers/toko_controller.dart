@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:rumah_kreatif_toba/controllers/user_controller.dart';
 import 'package:rumah_kreatif_toba/models/response_model.dart';
+import 'package:rumah_kreatif_toba/models/toko_models.dart';
 import 'package:rumah_kreatif_toba/pages/toko/daftarberhasil.dart';
+import 'package:rumah_kreatif_toba/pages/toko/hometoko/hometoko_page.dart';
 import 'package:rumah_kreatif_toba/pages/toko/namatoko.dart';
 import 'package:rumah_kreatif_toba/pages/toko/passwordtoko.dart';
 import 'dart:io';
@@ -12,6 +14,7 @@ import '../data/repository/toko_repo.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 
+import '../pages/toko/hometoko/hometoko.dart';
 import '../pages/toko/infotokoktp.dart';
 import '../pages/toko/menungguverifikasi.dart';
 import '../pages/toko/menungguverifikasitoko.dart';
@@ -27,6 +30,9 @@ class TokoController extends GetxController {
   });
   List<dynamic> _tokoList = [];
   List<dynamic> get tokoList => _tokoList;
+
+  List<dynamic> _profilTokoList = [];
+  List<dynamic> get profilTokoList => _profilTokoList;
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -229,8 +235,31 @@ class TokoController extends GetxController {
     if (response.statusCode == 200) {
       if (response.body == 200) {
         showCustomSnackBar("Berhasil Masuk", title: "Berhasil");
-        Get.toNamed(RouteHelper.getInitial());
+         profilToko();
+        Get.to(HomeTokoPage(initialIndex: 0));
       }
+    } else {
+      responseModel = ResponseModel(false, response.statusText!);
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  Future<ResponseModel> profilToko() async {
+    _isLoading = true;
+    update();
+    var controller = Get.find<UserController>();
+    Response response = await tokoRepo.profilToko(controller.users.id!);
+    late ResponseModel responseModel;
+    if (response.statusCode == 200) {
+      List<dynamic> responseBody = response.body;
+      _profilTokoList = [];
+      for (dynamic item in responseBody) {
+        Toko toko = Toko.fromJson(item);
+        _profilTokoList.add(toko);
+      }
+      update();
     } else {
       responseModel = ResponseModel(false, response.statusText!);
     }

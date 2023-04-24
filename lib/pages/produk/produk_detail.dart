@@ -37,10 +37,6 @@ class ProdukDetail extends StatelessWidget {
         .any((wishlist) => wishlist.productId == productId.toInt());
 
 
-    Get.find<PopularProdukController>()
-        .initProduk(daftarproduk, Get.find<CartController>());
-
-
     Future<void> _tambahKeranjang(CartController cartController) async {
       bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
       if (_userLoggedIn) {

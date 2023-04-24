@@ -2,9 +2,10 @@ class Toko {
   int? merchant_id;
   int? user_id;
   String? nama_merchant;
-  Null? deskripsi_toko;
-  Null? kontak_toko;
-  Null? is_verified;
+  String? deskripsi_toko;
+  String? kontak_toko;
+  String? foto_merchant;
+  int? is_verified;
   String? createdAt;
   String? updatedAt;
 
@@ -14,6 +15,7 @@ class Toko {
     this.nama_merchant,
     this.deskripsi_toko,
     this.kontak_toko,
+    this.foto_merchant,
     this.is_verified,
     this.createdAt,
     this.updatedAt,
@@ -26,6 +28,7 @@ class Toko {
       nama_merchant: json['nama_merchant'],
       deskripsi_toko: json['deskripsi_toko'],
       kontak_toko: json['kontak_toko'],
+      foto_merchant: json['foto_merchant'],
       is_verified: json['is_verified'],
       createdAt: json['created_at'],
       updatedAt: json['updated_at'],
@@ -39,6 +42,7 @@ class Toko {
     data['nama_merchant'] = this.nama_merchant;
     data['deskripsi_toko'] = this.deskripsi_toko;
     data['kontak_toko'] = this.kontak_toko;
+    data['foto_merchant'] = this.foto_merchant;
     data['is_verified'] = this.is_verified;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;

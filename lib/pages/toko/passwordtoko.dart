@@ -4,11 +4,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rumah_kreatif_toba/controllers/toko_controller.dart';
+import 'package:rumah_kreatif_toba/pages/toko/hometoko/hometoko.dart';
 import 'package:rumah_kreatif_toba/utils/dimensions.dart';
 import 'package:rumah_kreatif_toba/widgets/app_text_field.dart';
 import 'package:rumah_kreatif_toba/widgets/big_text.dart';
 import 'package:rumah_kreatif_toba/widgets/small_text.dart';
 import '../../base/show_custom_message.dart';
+import '../../controllers/categories_controller.dart';
 import '../../controllers/user_controller.dart';
 import '../../routes/route_helper.dart';
 import '../../utils/colors.dart';
@@ -47,7 +49,7 @@ class _PasswordTokoPageState extends State<PasswordTokoPage> {
 
         var controller = Get.find<TokoController>();
         controller.masukToko(userController.users.id, password).then((status) async {
-
+          Get.find<CategoriesController>().getKategoriList();
         });
       }
     }

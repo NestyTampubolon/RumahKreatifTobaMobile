@@ -28,4 +28,8 @@ class TokoRepo {
     return await apiClient.postData(AppConstants.MASUK_TOKO_URL, {"user_id": user_id, "password":password});
   }
 
+  Future<Response> profilToko(int user_id) async {
+    return await apiClient.postData(AppConstants.PROFIL_TOKO_URL, {"user_id": user_id});
+  }
+
 }
