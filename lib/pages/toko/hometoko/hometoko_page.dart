@@ -9,6 +9,8 @@ import 'package:rumah_kreatif_toba/pages/toko/produk/produk_page.dart';
 import 'package:rumah_kreatif_toba/pages/wishlist/wishlist_page.dart';
 
 import '../../../utils/colors.dart';
+import '../../pembelian/pembelian_page.dart';
+import '../pembelian/pembelian_page.dart';
 import '../profil/profiltoko_page.dart';
 
 class HomeTokoPage extends StatefulWidget {
@@ -34,7 +36,7 @@ class _HomeTokoPageState extends State<HomeTokoPage> {
     return [
       HomeToko(),
       ProdukPage(),
-      WishlistPage(),
+      DaftarPembelianPage(),
       ProfilTokoPage(),
     ];
   }

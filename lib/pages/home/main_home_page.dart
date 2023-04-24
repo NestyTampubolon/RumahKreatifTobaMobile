@@ -11,6 +11,7 @@ import '../../controllers/user_controller.dart';
 import '../../routes/route_helper.dart';
 import '../../utils/dimensions.dart';
 import '../../widgets/app_icon.dart';
+import '../search/search_page.dart';
 
 class MainHomePage extends StatefulWidget {
   const MainHomePage({Key? key}) : super(key: key);
@@ -82,13 +83,18 @@ class _MainHomePageState extends State<MainHomePage> {
                   Center(
                       child: Row(
                     children: [
-                      Container(
-                        width: Dimensions.height45,
-                        height: Dimensions.height45,
-                        child: Icon(
-                          Icons.search,
-                          color: AppColors.redColor,
-                          size: Dimensions.iconSize24,
+                      GestureDetector(
+                        onTap: (){
+                          Get.to(SearchPage());
+                        },
+                        child: Container(
+                          width: Dimensions.height45,
+                          height: Dimensions.height45,
+                          child: Icon(
+                            Icons.search,
+                            color: AppColors.redColor,
+                            size: Dimensions.iconSize24,
+                          ),
                         ),
                       ),
                       GetBuilder<CartController>(
