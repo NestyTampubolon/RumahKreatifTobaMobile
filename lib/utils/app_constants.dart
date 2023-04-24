@@ -37,6 +37,9 @@ class AppConstants {
   static const String CEK_VERIFIKASI_URL = "cekverifikasi";
 
   static const String TAMBAH_REKENING_URL = "postrekening";
+  static const String DAFTAR_REKENING_URL = "daftarrekening";
+  static const String HAPUS_REKENING_URL = "hapusrekening";
+
   static const String TAMBAH_TOKO_URL = "posttambahtoko";
   static const String MASUK_TOKO_URL = "masuktoko";
 

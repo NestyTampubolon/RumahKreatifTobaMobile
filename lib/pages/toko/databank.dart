@@ -63,7 +63,9 @@ class _DataBankPageState extends State<DataBankPage> {
         controller
             .tambahRekening(
                 userController.users.id, namabank, norekening, atasnama)
-            .then((status) async {});
+            .then((status) async {
+          Get.back();
+        });
       }
     }
 
@@ -82,7 +84,7 @@ class _DataBankPageState extends State<DataBankPage> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Get.toNamed(RouteHelper.getInitial());
+                        Get.back();
                       },
                       child: AppIcon(
                         icon: Icons.arrow_back,
@@ -115,7 +117,7 @@ class _DataBankPageState extends State<DataBankPage> {
                       AppDropdownFieldBank(
                         hintText: 'Nama Bank',
                         icon: Icons.comment_bank_rounded,
-                        controller: PemilikBankController,
+                        controller: DataBankController,
                       ),
                       SizedBox(
                         height: Dimensions.height10,
@@ -130,7 +132,7 @@ class _DataBankPageState extends State<DataBankPage> {
                       AppTextField(
                         hintText: 'No Rekening',
                         icon: Icons.book,
-                        textController: DataBankController,
+                        textController: NomorBankController,
                         textInputType: TextInputType.number,
                       ),
                       SizedBox(
@@ -146,7 +148,7 @@ class _DataBankPageState extends State<DataBankPage> {
                       AppTextField(
                         hintText: 'Atas Nama',
                         icon: Icons.people,
-                        textController: NomorBankController,
+                        textController: PemilikBankController,
                       ),
                       SizedBox(
                         height: Dimensions.height10,

@@ -12,6 +12,7 @@ import 'package:get/get.dart';
 
 import '../../../routes/route_helper.dart';
 import '../../../widgets/small_text.dart';
+import '../rekening/daftarrekening.dart';
 
 class ProfilTokoPage extends StatelessWidget {
   const ProfilTokoPage({Key? key}) : super(key: key);
@@ -126,6 +127,7 @@ class ProfilTokoPage extends StatelessWidget {
                       //Rekening
                       GestureDetector(
                         onTap: () {
+                          Get.to(DaftarRekening());
                         },
                         child: AccountWidget(
                             appIcon: AppIcon(
