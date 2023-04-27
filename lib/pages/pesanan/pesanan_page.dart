@@ -19,6 +19,7 @@ import '../../widgets/currency_format.dart';
 import '../../widgets/price_text.dart';
 import '../../widgets/small_text.dart';
 import '../../widgets/tittle_text.dart';
+import '../home/home_page.dart';
 
 class PesananPage extends StatefulWidget {
   const PesananPage({Key? key}) : super(key: key);
@@ -67,7 +68,9 @@ class _PesananPageState extends State<PesananPage> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Get.offNamed(RouteHelper.getInitial());
+                      Get.to(
+                            () => HomePage(initialIndex: 3),
+                      );
                     },
                     child: AppIcon(
                       icon: Icons.arrow_back,

@@ -18,6 +18,7 @@ import '../../routes/route_helper.dart';
 import '../../utils/app_constants.dart';
 import '../../widgets/small_text.dart';
 import '../auth/register.dart';
+import '../home/home_page.dart';
 import 'main_account_page.dart';
 
 class AccountPage extends StatelessWidget {
@@ -41,8 +42,6 @@ class AccountPage extends StatelessWidget {
         body: _userLoggedIn
             ? GetBuilder<UserController>(
                 builder: (userController) {
-                  print(userController.users.username);
-                  print(userController.isLoading);
                   return userController.isLoading
                       ? CustomLoader()
                       : Container(
@@ -87,13 +86,13 @@ class AccountPage extends StatelessWidget {
                                   child: Column(
                                     children: [
                                       BigText(
-                                          text: userController.users.username
+                                          text: userController.usersList[0].username
                                               .toString()),
                                       SmallText(
-                                          text: userController.users.email
+                                          text: userController.usersList[0].email
                                               .toString()),
                                       SmallText(
-                                          text: userController.users.noHp
+                                          text: userController.usersList[0].noHp
                                               .toString())
                                     ],
                                   ),
@@ -236,7 +235,8 @@ class AccountPage extends StatelessWidget {
                                           .clearSharedData();
                                       Get.offNamed(RouteHelper.getInitial());
                                     } else {
-                                      Get.toNamed(RouteHelper.getInitial());
+                                      Get.to(
+                                            () => HomePage(initialIndex: 0));
                                       print("Anda sudah keluar");
                                     }
                                   },

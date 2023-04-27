@@ -14,6 +14,8 @@ class AppConstants {
   static const String REGISTRASI_URL = "register";
   static const String LOGIN_URL = "login";
   static const String USER_URL = "user";
+  static const String UBAH_PROFIL_URL = "ubahprofil";
+  static const String UBAH_PASSWORD_URL = "ubahpassword";
 
   static const String TAMBAH_KERANJANG_URL = "tambahkeranjang";
   static const String KERANJANG_URL = "keranjang";

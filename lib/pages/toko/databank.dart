@@ -56,13 +56,13 @@ class _DataBankPageState extends State<DataBankPage> {
       } else if (atasnama.isEmpty) {
         showCustomSnackBar("Atas nama masih kosong", title: "Atas Nama");
       } else {
-        var userController = Get.find<UserController>();
+        var userController = Get.find<UserController>().usersList[0];
         await userController.getUser();
 
         var controller = Get.find<BankController>();
         controller
             .tambahRekening(
-                userController.users.id, namabank, norekening, atasnama)
+                userController.id, namabank, norekening, atasnama)
             .then((status) async {
           Get.back();
         });

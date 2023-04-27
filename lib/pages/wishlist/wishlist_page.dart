@@ -17,6 +17,7 @@ import '../../widgets/price_text.dart';
 import '../../widgets/small_text.dart';
 import '../../widgets/tittle_text.dart';
 import '../account/main_account_page.dart';
+import '../search/search_page.dart';
 
 class WishlistPage extends StatefulWidget {
   const WishlistPage({Key? key}) : super(key: key);
@@ -43,11 +44,11 @@ class _WishlistPageState extends State<WishlistPage> {
     Future<void> _tambahKeranjang(int product_id) async {
       bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
       if (_userLoggedIn) {
-        var controller = Get.find<UserController>();
+        var controller = Get.find<UserController>().usersList[0];
         await controller.getUser();
         var cartController = Get.find<CartController>();
         cartController
-            .tambahKeranjang(controller.users.id, product_id,
+            .tambahKeranjang(controller.id, product_id,
             1)
             .then((status) {
           if (status.isSuccess) {
@@ -87,7 +88,7 @@ class _WishlistPageState extends State<WishlistPage> {
           Container(
             child: Container(
               margin: EdgeInsets.only(
-                  top: Dimensions.height30, bottom: Dimensions.height10),
+                  top: Dimensions.height30),
               padding: EdgeInsets.only(
                   left: Dimensions.width20, right: Dimensions.width20),
               child: Row(
@@ -102,13 +103,18 @@ class _WishlistPageState extends State<WishlistPage> {
                   Center(
                       child: Row(
                     children: [
-                      Container(
-                        width: Dimensions.height45,
-                        height: Dimensions.height45,
-                        child: Icon(
-                          Icons.search,
-                          color: AppColors.redColor,
-                          size: Dimensions.iconSize24,
+                      GestureDetector(
+                        onTap: (){
+                          Get.to(SearchPage());
+                        },
+                        child: Container(
+                          width: Dimensions.height45,
+                          height: Dimensions.height45,
+                          child: Icon(
+                            Icons.search,
+                            color: AppColors.redColor,
+                            size: Dimensions.iconSize24,
+                          ),
                         ),
                       ),
                       GetBuilder<CartController>(builder: (controller) {
@@ -190,8 +196,7 @@ class _WishlistPageState extends State<WishlistPage> {
                         margin: EdgeInsets.only(
                             left: Dimensions.width20,
                             right: Dimensions.width20,
-                            bottom: Dimensions.height20,
-                            top: Dimensions.height10/2),
+                            bottom: Dimensions.height20,),
                         child: GestureDetector(
                           onTap: () {},
                           child: Column(

@@ -7,9 +7,9 @@ import '../utils/colors.dart';
 class AppDateField extends StatelessWidget {
   final TextEditingController textController;
   final String hintText;
-  final IconData icon;
+  final IconData? icon;
   bool isObscure;
-  AppDateField({Key? key, required this.textController, required this.hintText, required this.icon, this.isObscure = false}) : super(key: key);
+  AppDateField({Key? key, required this.textController, required this.hintText, this.icon, this.isObscure = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

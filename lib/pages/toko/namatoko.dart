@@ -43,11 +43,11 @@ class _NamaTokoState extends State<NamaToko> {
       }else if(kontaktoko.isEmpty){
         showCustomSnackBar("Kontak toko masih kosong", title: "Kontak Toko");
       }else{
-        var userController = Get.find<UserController>();
+        var userController = Get.find<UserController>().usersList[0];
         await userController.getUser();
 
         var controller = Get.find<TokoController>();
-        controller.tambahToko(userController.users.id, namatoko, deskripsitoko, kontaktoko).then((status) async {
+        controller.tambahToko(userController.id, namatoko, deskripsitoko, kontaktoko).then((status) async {
 
         });
       }

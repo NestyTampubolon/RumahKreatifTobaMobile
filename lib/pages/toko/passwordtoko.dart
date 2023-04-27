@@ -4,18 +4,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rumah_kreatif_toba/controllers/toko_controller.dart';
-import 'package:rumah_kreatif_toba/pages/toko/hometoko/hometoko.dart';
 import 'package:rumah_kreatif_toba/utils/dimensions.dart';
-import 'package:rumah_kreatif_toba/widgets/app_text_field.dart';
 import 'package:rumah_kreatif_toba/widgets/big_text.dart';
 import 'package:rumah_kreatif_toba/widgets/small_text.dart';
 import '../../base/show_custom_message.dart';
 import '../../controllers/categories_controller.dart';
 import '../../controllers/user_controller.dart';
-import '../../routes/route_helper.dart';
 import '../../utils/colors.dart';
-import '../../widgets/app_dropdown_field_bank.dart';
 import '../../widgets/app_icon.dart';
+import '../../widgets/app_text_field_password.dart';
 import '../home/home_page.dart';
 
 class PasswordTokoPage extends StatefulWidget {
@@ -44,11 +41,11 @@ class _PasswordTokoPageState extends State<PasswordTokoPage> {
       if(password.isEmpty){
         showCustomSnackBar("Password masih kosong", title: "Password");
       }else{
-        var userController = Get.find<UserController>();
+        var userController = Get.find<UserController>().usersList[0];
         await userController.getUser();
 
         var controller = Get.find<TokoController>();
-        controller.masukToko(userController.users.id, password).then((status) async {
+        controller.masukToko(userController.id, password).then((status) async {
           Get.find<CategoriesController>().getKategoriList();
         });
       }
@@ -72,7 +69,9 @@ class _PasswordTokoPageState extends State<PasswordTokoPage> {
                       children: [
                         GestureDetector(
                           onTap: () {
-
+                            Get.to(
+                                  () => HomePage(initialIndex: 3),
+                            );
                           },
                           child: AppIcon(icon: Icons.arrow_back),
                         ),
@@ -104,11 +103,10 @@ class _PasswordTokoPageState extends State<PasswordTokoPage> {
                 Container(
                   child: Column(
                     children: [
-                      AppTextField(
+                      AppTextFieldPassword(
                         hintText: 'Password',
                         icon: Icons.lock,
                         textController: PasswordTokoController,
-                        isObscure: true,
                       ),
                       SizedBox(
                         height: Dimensions.height10,

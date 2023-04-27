@@ -7,7 +7,14 @@ class UserRepo {
   UserRepo({required this.apiClient});
 
   Future<Response> getUserInfo() async {
-    //apiClient.getData(uri)
     return await apiClient.getData(AppConstants.USER_URL);
+  }
+
+  Future<Response> ubahProfil(int user_id, String name, String no_hp, String birthday, String gender) async {
+    return await apiClient.postData(AppConstants.UBAH_PROFIL_URL, {"user_id": user_id, "name":name, "no_hp":no_hp, "birthday": birthday, "gender" : gender});
+  }
+
+  Future<Response> ubahPassword(int user_id, String password, String password_baru) async {
+    return await apiClient.postData(AppConstants.UBAH_PASSWORD_URL, {"user_id": user_id, "password":password, "password_baru":password_baru});
   }
 }

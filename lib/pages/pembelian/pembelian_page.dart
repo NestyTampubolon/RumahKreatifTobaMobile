@@ -60,11 +60,11 @@ class _PembelianPageState extends State<PembelianPage> {
       bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
       if (_userLoggedIn) {
         var controller = Get.find<PengirimanController>();
-        var userController = Get.find<UserController>();
+        var userController = Get.find<UserController>().usersList[0];
         await userController.getUser();
 
         controller
-            .beliProduk(userController.users.id, _carId, _merchantId,
+            .beliProduk(userController.id, _carId, _merchantId,
             _metodePembelian, _hargaPembelian, "", "", "", "")
             .then((status) async {
           if (status.isSuccess) {

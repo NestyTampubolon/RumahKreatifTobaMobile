@@ -35,8 +35,8 @@ class WishlistController extends GetxController{
   }
 
   Future<void> getWishlistList() async{
-    var controller = Get.find<UserController>();
-    Response response = await wishlistRepo.getWishlistList(controller.users.id!);
+    var controller = Get.find<UserController>().usersList[0];
+    Response response = await wishlistRepo.getWishlistList(controller.id!);
     if(response.statusCode == 200){
       List<dynamic> responseBody = response.body;
       _wishlistList = [];
@@ -59,6 +59,7 @@ class WishlistController extends GetxController{
     if(response.statusCode == 200){
       showCustomSnackBar("Wishlist berhasil dihapus",
           title: "Berhasil");
+      getWishlistList();
     }else{
       responseModel = ResponseModel(false, response.statusText!);
     }

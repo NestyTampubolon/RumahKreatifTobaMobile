@@ -17,6 +17,7 @@ import '../../utils/dimensions.dart';
 import '../../widgets/card_kategori.dart';
 import '../../widgets/currency_format.dart';
 import '../kategori/kategori_produk_detail.dart';
+import 'home_page.dart';
 
 class HomePageBody extends StatefulWidget {
   const HomePageBody({Key? key}) : super(key: key);
@@ -124,8 +125,9 @@ class _HomePageBodyState extends State<HomePageBody> {
                       ),
                       child: GestureDetector(
                         onTap: () {
-                          Get.to(KategoriProdukDetail(), arguments: kategori);
-                          _getProduk(_produkController);
+                          Get.to(
+                                () => HomePage(initialIndex: 1),
+                          );
                         },
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,

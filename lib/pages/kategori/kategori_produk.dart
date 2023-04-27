@@ -12,6 +12,7 @@ import '../../routes/route_helper.dart';
 import '../../utils/colors.dart';
 import '../../widgets/app_icon.dart';
 import '../../widgets/card_kategori.dart';
+import '../search/search_page.dart';
 
 // class KategoriProduk extends StatelessWidget {
 //   const KategoriProduk({Key? key}) : super(key: key);
@@ -388,13 +389,18 @@ class KategoriProduk extends StatelessWidget {
                   Center(
                       child: Row(
                         children: [
-                          Container(
-                            width: Dimensions.height45,
-                            height: Dimensions.height45,
-                            child: Icon(
-                              Icons.search,
-                              color: AppColors.redColor,
-                              size: Dimensions.iconSize24,
+                          GestureDetector(
+                            onTap: (){
+                              Get.to(SearchPage());
+                            },
+                            child: Container(
+                              width: Dimensions.height45,
+                              height: Dimensions.height45,
+                              child: Icon(
+                                Icons.search,
+                                color: AppColors.redColor,
+                                size: Dimensions.iconSize24,
+                              ),
                             ),
                           ),
                           GetBuilder<CartController>(

@@ -9,7 +9,8 @@ import 'package:rumah_kreatif_toba/pages/wishlist/wishlist_page.dart';
 import '../../utils/colors.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  final int initialIndex;
+  const HomePage({Key? key, required this.initialIndex}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -21,7 +22,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _controller = PersistentTabController(initialIndex: 0);
+    _controller = PersistentTabController(initialIndex: widget.initialIndex);
   }
 
   List<Widget> _buildScreens() {

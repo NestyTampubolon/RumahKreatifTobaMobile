@@ -175,7 +175,7 @@ Widget DeleteButton() {
       child: GestureDetector(
         onTap: () => {
           Get.to(
-            () => HomePage(),
+            () => HomePage(initialIndex: 3),
           ),
         },
         child: Container(

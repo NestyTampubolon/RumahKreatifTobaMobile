@@ -51,12 +51,12 @@ class TambahProdukPage extends StatelessWidget {
       } else if (kategori.isEmpty) {
         showCustomSnackBar("Kategori masih kosong", title: "Kategori");
       } else {
-        var userController = Get.find<UserController>();
+        var userController = Get.find<UserController>().usersList[0];
         await userController.getUser();
 
         var controller = Get.find<ProdukController>();
         controller
-            .tambahProduk(userController.users.id, namaproduk, deskripsi, harga,
+            .tambahProduk(userController.id, namaproduk, deskripsi, harga,
                 berat, kategori, stok)
             .then((status) async {});
       }

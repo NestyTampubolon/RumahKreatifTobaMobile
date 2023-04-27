@@ -22,33 +22,48 @@ import '../../utils/app_constants.dart';
 import '../../widgets/big_text.dart';
 import '../../widgets/currency_format.dart';
 
-class ProdukDetail extends StatelessWidget {
+
+class ProdukDetail extends StatefulWidget {
   final int productId;
   const ProdukDetail({Key? key, required this.productId}) : super(key: key);
+
+  @override
+  State<ProdukDetail> createState() => _ProdukDetailState();
+}
+
+class _ProdukDetailState extends State<ProdukDetail> {
+  bool isProdukExist = false;
+
+  @override
+  void initState() {
+    super.initState();
+    var wishlistList = Get.find<WishlistController>().wishlistList;
+    isProdukExist = wishlistList.any((wishlist) => wishlist.productId == widget.productId.toInt());
+  }
 
   @override
   Widget build(BuildContext context) {
     var produkList = Get.find<PopularProdukController>().popularProdukList;
     var daftarproduk = produkList
-        .firstWhere((produk) => produk.productId == productId.toInt());
+        .firstWhere((produk) => produk.productId == widget.productId.toInt());
 
     var wishlistList = Get.find<WishlistController>().wishlistList;
-    var isProdukExist = wishlistList
-        .any((wishlist) => wishlist.productId == productId.toInt());
+     isProdukExist = wishlistList
+        .any((wishlist) => wishlist.productId == widget.productId.toInt());
 
 
     Future<void> _tambahKeranjang(CartController cartController) async {
       bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
       if (_userLoggedIn) {
-        var controller = Get.find<UserController>();
+        var controller = Get.find<UserController>().usersList[0];
         await controller.getUser();
         cartController
-            .tambahKeranjang(controller.users.id, productId.toInt(),
-                1)
+            .tambahKeranjang(controller.id, widget.productId.toInt(),
+            1)
             .then((status) {
           if (status.isSuccess) {
             showCustomSnackBar("Produk berhasil ditambahkan ke keranjang",
-                title: "Berhasil", );
+              title: "Berhasil", );
           } else {
             showCustomSnackBar(status.message);
           }
@@ -60,11 +75,11 @@ class ProdukDetail extends StatelessWidget {
     Future<void> _tambahWishlist() async {
       bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
       if (_userLoggedIn) {
-        var controller = Get.find<UserController>();
+        var controller = Get.find<UserController>().usersList[0];
         await controller.getUser();
 
         var wishlistController = Get.find<WishlistController>();
-        wishlistController.tambahWishlist(controller.users.id, productId.toInt())
+        wishlistController.tambahWishlist(controller.id, widget.productId.toInt())
             .then((status) {
           if (status.isSuccess) {
 
@@ -107,25 +122,25 @@ class ProdukDetail extends StatelessWidget {
                           AppIcon(icon: Icons.shopping_cart_outlined),
                           controller.keranjangList.length >= 1
                               ? Positioned(
-                                  right: 0,
-                                  top: 0,
-                                  child: AppIcon(
-                                    icon: Icons.circle,
-                                    size: 20,
-                                    iconColor: Colors.transparent,
-                                    backgroundColor: AppColors.notification,
-                                  ))
+                              right: 0,
+                              top: 0,
+                              child: AppIcon(
+                                icon: Icons.circle,
+                                size: 20,
+                                iconColor: Colors.transparent,
+                                backgroundColor: AppColors.notification,
+                              ))
                               : Container(),
                           controller.keranjangList.length >= 1
                               ? Positioned(
-                                  right: 3,
-                                  top: 3,
-                                  child: BigText(
-                                    text: controller.keranjangList.length.toString(),
-                                    size: 12,
-                                    color: Colors.white,
-                                  ),
-                                )
+                            right: 3,
+                            top: 3,
+                            child: BigText(
+                              text: controller.keranjangList.length.toString(),
+                              size: 12,
+                              color: Colors.white,
+                            ),
+                          )
                               : Container(),
                         ],
                       ),
@@ -139,47 +154,49 @@ class ProdukDetail extends StatelessWidget {
                   child: Column(
                     children: [
                       Container(
-                        padding: EdgeInsets.only(
-                            left: Dimensions.width20,
-                            right: Dimensions.width20,
-                            top: Dimensions.height20),
-                        width: double.maxFinite,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(Dimensions.radius20),
-                                topRight:
-                                    Radius.circular(Dimensions.radius20))),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            PriceText(
-                              text: CurrencyFormat.convertToIdr(
-                                  daftarproduk.price, 0),
-                              color: AppColors.blackColor,
-                              size: Dimensions.font20,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                if (Get.find<AuthController>().userLoggedIn()) {
-                                  var wishlistList = Get.find<WishlistController>().wishlistList;
-                                  var isProdukExist = wishlistList
-                                      .any((wishlist) => wishlist.productId == productId.toInt());
-
-                                  _tambahWishlist();
-                                } else {
-                                  Get.toNamed(RouteHelper.getMasukPage());
-                                }
-                              },
-                              child:  Container(
-                                child: isProdukExist
-                                    ? Icon(Icons.favorite, color: Colors.pink)
-                                    : Icon(Icons.favorite),
+                          padding: EdgeInsets.only(
+                              left: Dimensions.width20,
+                              right: Dimensions.width20,
+                              top: Dimensions.height20),
+                          width: double.maxFinite,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(Dimensions.radius20),
+                                  topRight:
+                                  Radius.circular(Dimensions.radius20))),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              PriceText(
+                                text: CurrencyFormat.convertToIdr(
+                                    daftarproduk.price, 0),
+                                color: AppColors.blackColor,
+                                size: Dimensions.font20,
                               ),
-                            )
+                              GestureDetector(
+                                onTap: () {
+                                  if (Get.find<AuthController>().userLoggedIn()) {
+                                    var wishlistList = Get.find<WishlistController>().wishlistList;
+                                    isProdukExist = wishlistList.any(
+                                            (wishlist) => wishlist.productId == widget.productId.toInt());
+                                    _tambahWishlist();
+                                    //widget.productId
+                                    setState(() {
+                                      isProdukExist = !isProdukExist;
+                                    });
+                                  } else {
+                                    Get.toNamed(RouteHelper.getMasukPage());
+                                  }
+                                },
+                                child: Icon(
+                                  Icons.favorite,
+                                  color: isProdukExist ? Colors.pink : null,
+                                ),
+                              )
 
-                          ],
-                        )
+                            ],
+                          )
                       ),
                       Container(
                         padding: EdgeInsets.only(
@@ -379,15 +396,15 @@ class ProdukDetail extends StatelessWidget {
                                   Dimensions.radius20 / 2),
                               color: Colors.white),
                           child: GestureDetector(
-                              onTap: () {
-                                if (Get.find<AuthController>().userLoggedIn()) {
-                                  _tambahKeranjang(cartController);
-                                } else {
-                                  Get.toNamed(RouteHelper.getMasukPage());
-                                }
+                            onTap: () {
+                              if (Get.find<AuthController>().userLoggedIn()) {
+                                _tambahKeranjang(cartController);
+                              } else {
+                                Get.toNamed(RouteHelper.getMasukPage());
+                              }
 
-                              },
-                              child: AppIcon(icon: Icons.message,iconSize: Dimensions.iconSize24, iconColor: AppColors.redColor, backgroundColor: Colors.white.withOpacity(0.0),),),
+                            },
+                            child: AppIcon(icon: Icons.message,iconSize: Dimensions.iconSize24, iconColor: AppColors.redColor, backgroundColor: Colors.white.withOpacity(0.0),),),
                         ),
                         Container(
                           padding: EdgeInsets.only(
@@ -426,7 +443,7 @@ class ProdukDetail extends StatelessWidget {
                               right: Dimensions.width20),
                           decoration: BoxDecoration(
                               borderRadius:
-                                  BorderRadius.circular(Dimensions.radius20/2),
+                              BorderRadius.circular(Dimensions.radius20/2),
                               color: AppColors.redColor),
                           child: GestureDetector(
                               onTap: () {
@@ -459,3 +476,5 @@ class ProdukDetail extends StatelessWidget {
         ));
   }
 }
+
+

@@ -14,6 +14,8 @@ import '../../widgets/app_dropdown_field.dart';
 import '../../widgets/app_text_field.dart';
 import 'package:intl/intl.dart';
 
+import '../../widgets/app_text_field_password.dart';
+
 class Register extends StatelessWidget {
   const Register({Key? key}) : super(key: key);
 
@@ -147,20 +149,18 @@ class Register extends StatelessWidget {
                       SizedBox(
                         height: Dimensions.height20,
                       ),
-                      AppTextField(
+                      AppTextFieldPassword(
                         textController: passwordController,
                         hintText: 'Password',
                         icon: Icons.lock,
-                        isObscure: true,
                       ),
                       SizedBox(
                         height: Dimensions.height20,
                       ),
-                      AppTextField(
+                      AppTextFieldPassword(
                         textController: konfirmasiPasswordController,
                         hintText: 'Konfirmasi Password',
                         icon: Icons.lock,
-                        isObscure: true,
                       ),
                       SizedBox(
                         height: Dimensions.height20,

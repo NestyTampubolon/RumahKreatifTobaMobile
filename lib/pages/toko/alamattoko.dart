@@ -172,7 +172,7 @@ class AlamatTokoPageState extends GetView<AlamatController> {
             GestureDetector(
               onTap: () => {
                 Get.to(
-                  () => HomePage(),
+                  () => HomePage(initialIndex: 3),
                 ),
               },
               child: Container(

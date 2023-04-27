@@ -5,19 +5,19 @@ import '../utils/colors.dart';
 import '../utils/dimensions.dart';
 
 class AppDropdownField extends StatefulWidget {
-  final String hintText;
-  final IconData icon;
+  final String? hintText;
+  final IconData? icon;
   final bool isObscure;
   final TextEditingController controller;
 
-  const AppDropdownField({Key? key, required this.hintText, required this.icon, required this.controller, this.isObscure = false}) : super(key: key);
+  const AppDropdownField({Key? key, this.hintText, this.icon, required this.controller, this.isObscure = false}) : super(key: key);
 
   @override
   _AppDropdownState createState() => _AppDropdownState();
 }
 
 class _AppDropdownState extends State<AppDropdownField> {
-  String dropdownValue = 'Laki-laki';
+  String? dropdownValue ;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class _AppDropdownState extends State<AppDropdownField> {
         child: DropdownButtonFormField(
           decoration: InputDecoration(
               hintText: widget.hintText,
-              prefixIcon: Icon(widget.icon, color: AppColors.redColor,),
+              prefixIcon: widget.icon == null ? null : Icon(widget.icon, color: AppColors.redColor,),
               focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(Dimensions.radius15),
                   borderSide: BorderSide(

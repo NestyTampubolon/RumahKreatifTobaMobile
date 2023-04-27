@@ -5,11 +5,12 @@ import '../utils/colors.dart';
 
 class InputTextField extends StatelessWidget {
   final TextEditingController textController;
-  final String hintText;
+  final String? hintText;
+  final String? labelText;
   final TextInputType textInputType;
 
   bool isObscure;
-  InputTextField({Key? key, required this.textController, required this.hintText, this.isObscure = false, this.textInputType = TextInputType.text}) : super(key: key);
+  InputTextField({Key? key, required this.textController, this.hintText, this.isObscure = false, this.textInputType = TextInputType.text, this.labelText}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

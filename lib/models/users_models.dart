@@ -19,43 +19,41 @@ class Users {
 
   Users(
       {this.id,
-      this.username,
-      this.email,
-      this.emailVerifiedAt,
-      this.password,
-      this.isAdmin,
-      this.isBanned,
-      this.rememberToken,
-      this.createdAt,
-      this.updatedAt,
-      this.profileId,
-      this.userId,
-      this.name,
-      this.noHp,
-      this.birthday,
-      this.gender,
-      this.deletedAt});
+        this.username,
+        this.email,
+        this.emailVerifiedAt,
+        this.password,
+        this.isAdmin,
+        this.isBanned,
+        this.rememberToken,
+        this.createdAt,
+        this.updatedAt,
+        this.profileId,
+        this.userId,
+        this.name,
+        this.noHp,
+        this.birthday,
+        this.gender,
+        this.deletedAt});
 
-  factory Users.fromJson(Map<String, dynamic> json) {
-    return Users(
-      id: json['id'],
-      username: json['username'],
-      email: json['email'],
-      emailVerifiedAt: json['email_verified_at'],
-      password: json['password'],
-      isAdmin: json['is_admin'],
-      isBanned: json['is_banned'],
-      rememberToken: json['remember_token'],
-      createdAt: json['created_at'],
-      updatedAt: json['updated_at'],
-      profileId: json['profile_id'],
-      userId: json['user_id'],
-      name: json['name'],
-      noHp: json['no_hp'],
-      birthday: json['birthday'],
-      gender: json['gender'],
-      deletedAt: json['deleted_at'],
-    );
+  Users.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    username = json['username'];
+    email = json['email'];
+    emailVerifiedAt = json['email_verified_at'];
+    password = json['password'];
+    isAdmin = json['is_admin'];
+    isBanned = json['is_banned'];
+    rememberToken = json['remember_token'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    profileId = json['profile_id'];
+    userId = json['user_id'];
+    name = json['name'];
+    noHp = json['no_hp'];
+    birthday = json['birthday'];
+    gender = json['gender'];
+    deletedAt = json['deleted_at'];
   }
 
   Map<String, dynamic> toJson() {

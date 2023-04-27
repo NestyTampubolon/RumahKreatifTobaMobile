@@ -61,8 +61,8 @@ class PopularProdukController extends GetxController{
   List<dynamic> get daftarProdukList => _daftarProdukList;
 
   Future<void> getProdukList() async{
-    var controller = Get.find<UserController>();
-    Response response = await popularProdukRepo.getProdukList(controller.users.id!);
+    var controller = Get.find<UserController>().usersList[0];
+    Response response = await popularProdukRepo.getProdukList(controller.id!);
     if(response.statusCode == 200){
       List<dynamic> responseBody = response.body;
       _daftarProdukList = [];

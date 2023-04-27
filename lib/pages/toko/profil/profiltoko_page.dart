@@ -64,11 +64,11 @@ class ProfilTokoPage extends StatelessWidget {
                         child: Column(
                           children: [
                             BigText(
-                                text: userController.users.username.toString()),
+                                text: userController.usersList[0].username.toString()),
                             SmallText(
-                                text: userController.users.email.toString()),
+                                text: userController.usersList[0].email.toString()),
                             SmallText(
-                                text: userController.users.noHp.toString())
+                                text: userController.usersList[0].noHp.toString())
                           ],
                         ),
                       ),

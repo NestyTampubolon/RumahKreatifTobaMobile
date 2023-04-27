@@ -12,6 +12,7 @@ import '../../controllers/auth_controller.dart';
 import '../../utils/dimensions.dart';
 import '../../widgets/app_icon.dart';
 import '../../widgets/app_text_field.dart';
+import '../../widgets/app_text_field_password.dart';
 
 class Masuk extends StatelessWidget {
   const Masuk({Key? key}) : super(key: key);
@@ -107,30 +108,13 @@ class Masuk extends StatelessWidget {
                               SizedBox(
                                 height: Dimensions.height20,
                               ),
-                              AppTextField(
+                              AppTextFieldPassword(
                                 textController: passwordController,
                                 hintText: 'Password',
                                 icon: Icons.lock,
-                                isObscure: true,
                               ),
                               SizedBox(
                                 height: Dimensions.height20,
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(child: Container()),
-                                  RichText(
-                                      text: TextSpan(
-                                          recognizer: TapGestureRecognizer()
-                                            ..onTap = () => Get.back(),
-                                          text: "Lupa kata sandi?",
-                                          style: TextStyle(
-                                              color: Colors.grey[500],
-                                              fontSize: Dimensions.font20))),
-                                  SizedBox(
-                                    width: Dimensions.width20,
-                                  )
-                                ],
                               ),
                               SizedBox(
                                 height: Dimensions.height20,

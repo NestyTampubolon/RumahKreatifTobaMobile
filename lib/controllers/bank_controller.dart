@@ -39,8 +39,8 @@ class BankController extends GetxController{
   List<dynamic> get daftarRekeningList => _daftarRekeningList;
 
   Future<void> getRekeningList() async{
-    var controller = Get.find<UserController>();
-    Response response = await bankRepo.getRekeningList(controller.users.id!);
+    var controller = Get.find<UserController>().usersList[0];
+    Response response = await bankRepo.getRekeningList(controller.id!);
     if(response.statusCode == 200){
       List<dynamic> responseBody = response.body;
       _daftarRekeningList = [];

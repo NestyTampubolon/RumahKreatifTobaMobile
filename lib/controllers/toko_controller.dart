@@ -124,8 +124,8 @@ class TokoController extends GetxController {
   }
 
   Future<void> cekVerifikasi() async {
-    var controller = Get.find<UserController>();
-    Response response = await tokoRepo.cekVerifikasi(controller.users.id!);
+    var controller = Get.find<UserController>().usersList[0];
+    Response response = await tokoRepo.cekVerifikasi(controller.id!);
     if (response.statusCode == 200) {
       if (response.body == 0) {
         Get.to(DaftarBerhasil());
@@ -249,8 +249,8 @@ class TokoController extends GetxController {
   Future<ResponseModel> profilToko() async {
     _isLoading = true;
     update();
-    var controller = Get.find<UserController>();
-    Response response = await tokoRepo.profilToko(controller.users.id!);
+    var controller = Get.find<UserController>().usersList[0];
+    Response response = await tokoRepo.profilToko(controller.id!);
     late ResponseModel responseModel;
     if (response.statusCode == 200) {
       List<dynamic> responseBody = response.body;
