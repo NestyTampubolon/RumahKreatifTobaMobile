@@ -42,7 +42,6 @@ class _PasswordTokoPageState extends State<PasswordTokoPage> {
         showCustomSnackBar("Password masih kosong", title: "Password");
       }else{
         var userController = Get.find<UserController>().usersList[0];
-        await userController.getUser();
 
         var controller = Get.find<TokoController>();
         controller.masukToko(userController.id, password).then((status) async {
@@ -56,7 +55,7 @@ class _PasswordTokoPageState extends State<PasswordTokoPage> {
         child: Column(
           children: [
             Container(
-              decoration: BoxDecoration(color: AppColors.redColor),
+             // decoration: BoxDecoration(color: AppColors.redColor),
               child: Container(
                 margin: EdgeInsets.only(
                     top: Dimensions.height45, bottom: Dimensions.height15),
@@ -83,7 +82,6 @@ class _PasswordTokoPageState extends State<PasswordTokoPage> {
                               right: Dimensions.width10),
                           child: BigText(
                             text: "Password Toko",
-                            color: Colors.white,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

@@ -4,6 +4,7 @@ import 'package:rumah_kreatif_toba/controllers/alamat_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/auth_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/bank_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/cart_controller.dart';
+import 'package:rumah_kreatif_toba/controllers/pembelian_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/pengiriman_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/pesanan_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/produk_controller.dart';
@@ -23,6 +24,7 @@ import '../controllers/categories_controller.dart';
 import '../controllers/popular_produk_controller.dart';
 import '../controllers/user_controller.dart';
 import '../data/repository/bank_repo.dart';
+import '../data/repository/pembelian_repo.dart';
 import '../data/repository/pengiriman_repo.dart';
 import '../data/repository/pesanan_repo.dart';
 import '../utils/app_constants.dart';
@@ -55,6 +57,8 @@ Future<void> init() async {
           () => BankRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
   Get.lazyPut(
           () => CategoriesRepo(apiClient: Get.find()));
+  Get.lazyPut(
+          () => PembelianRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
 
   //controllers
   Get.lazyPut(() => AuthController(authRepo: Get.find()));
@@ -73,4 +77,5 @@ Future<void> init() async {
   Get.lazyPut(() => CategoriesController(categoriesRepo: Get.find()));
   Get.put(() => CategoriesController(categoriesRepo: Get.find()));
   Get.lazyPut(() => ProdukController(produkRepo: Get.find()));
+  Get.lazyPut(() => PembelianController(pembelianRepo: Get.find()));
 }

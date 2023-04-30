@@ -28,6 +28,7 @@ class PurchaseModel {
   int? price;
   int? heavy;
   int? isDeleted;
+  String? name;
 
   PurchaseModel(
       {this.purchaseId,
@@ -58,7 +59,8 @@ class PurchaseModel {
         this.productDescription,
         this.price,
         this.heavy,
-        this.isDeleted});
+        this.isDeleted,
+        this.name});
 
   PurchaseModel.fromJson(Map<String, dynamic> json) {
     purchaseId = json['purchase_id'];
@@ -90,6 +92,7 @@ class PurchaseModel {
     price = json['price'];
     heavy = json['heavy'];
     isDeleted = json['is_deleted'];
+    name = json['name'];
   }
 
   Map<String, dynamic> toJson() {
@@ -123,6 +126,7 @@ class PurchaseModel {
     data['price'] = this.price;
     data['heavy'] = this.heavy;
     data['is_deleted'] = this.isDeleted;
+    data['name'] = this.name;
     return data;
   }
 }

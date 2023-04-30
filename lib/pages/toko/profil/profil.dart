@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:rumah_kreatif_toba/pages/toko/profil/ubah_toko.dart';
 import 'package:rumah_kreatif_toba/utils/app_constants.dart';
 import 'package:rumah_kreatif_toba/widgets/big_text.dart';
 
@@ -126,6 +127,7 @@ class Profil extends StatelessWidget {
                                         color: Colors.white),
                                     child: GestureDetector(
                                         onTap: () {
+                                          Get.to(UbahTokoPage());
                                         },
                                         child: Row(
                                             mainAxisAlignment: MainAxisAlignment.center,
