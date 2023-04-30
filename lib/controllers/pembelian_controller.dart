@@ -4,11 +4,14 @@ import 'package:rumah_kreatif_toba/data/repository/pembelian_repo.dart';
 import '../base/show_custom_message.dart';
 import '../models/purchase_models.dart';
 import '../models/response_model.dart';
+import 'package:get/get.dart';
 
-class PembelianController extends GetxController{
+import '../pages/toko/hometoko/hometoko_page.dart';
+import '../pages/toko/pembelian/pembelian_page.dart';
+
+class PembelianController extends GetxController {
   final PembelianRepo pembelianRepo;
   PembelianController({required this.pembelianRepo});
-
 
   List<dynamic> _pembelianList = [];
   List<dynamic> get pembelianList => _pembelianList;
@@ -25,10 +28,10 @@ class PembelianController extends GetxController{
     getPembelianList(); // Call the function here
   }
 
-  Future<void> getPembelianList() async{
+  Future<void> getPembelianList() async {
     var controller = Get.find<UserController>().usersList[0];
     Response response = await pembelianRepo.daftarPembelian(controller.id!);
-    if(response.statusCode == 200){
+    if (response.statusCode == 200) {
       List<dynamic> responseBody = response.body;
       _pembelianList = [];
       for (dynamic item in responseBody) {
@@ -37,9 +40,7 @@ class PembelianController extends GetxController{
       }
       _isLoading = true;
       update();
-    }else{
-
-    }
+    } else {}
   }
 
   Future<ResponseModel> detailPembelian(String kode_pembelian) async {
@@ -61,5 +62,18 @@ class PembelianController extends GetxController{
     return responseModel;
   }
 
-
+  Future<ResponseModel> updateStatusPembelian(int purchase_id) async {
+    Response response = await pembelianRepo.updateStatusPembelian(purchase_id);
+    late ResponseModel responseModel;
+    if (response.statusCode == 200) {
+      getPembelianList();
+      Get.to(HomeTokoPage(initialIndex: 2));
+      responseModel = ResponseModel(true, "successfully");
+    } else {
+      responseModel = ResponseModel(false, response.statusText!);
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
 }

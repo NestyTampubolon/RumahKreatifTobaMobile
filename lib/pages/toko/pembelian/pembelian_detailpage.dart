@@ -31,10 +31,20 @@ class _PembelianDetailPageState extends State<PembelianDetailPage> {
       Get.find<UserController>().getUser();
     }
   }
+  bool _cekStatus = Get.find<PembelianController>().detailPembelianList[0].statusPembelian == "Perlu Dikemas";
 
   @override
   Widget build(BuildContext context) {
     var detailPembelian = Get.find<PembelianController>().detailPembelianList;
+    Future<void> _updateStatusPembelian(int purchase_id) async {
+      bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
+      if (_userLoggedIn) {
+        var controller = Get.find<PembelianController>();
+        controller.updateStatusPembelian(purchase_id).then((status) async {
+        });
+      }
+    }
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -94,9 +104,21 @@ class _PembelianDetailPageState extends State<PembelianDetailPage> {
                     child: Row(
                       children: [
                         BigText(
-                          text: detailPembelian[0].kodePembelian,
+                          text: detailPembelian[0].statusPembelian.toString(),
                           size: Dimensions.font20,
                           fontWeight: FontWeight.bold,
+                        )
+                      ],
+                    ),
+                  ),
+                  Divider(color: AppColors.buttonBackgroundColor),
+                  Container(
+                    margin: EdgeInsets.only(bottom: Dimensions.height10),
+                    child: Row(
+                      children: [
+                        BigText(
+                          text: detailPembelian[0].kodePembelian.toString(),
+                          size: Dimensions.font16,
                         )
                       ],
                     ),
@@ -252,33 +274,27 @@ class _PembelianDetailPageState extends State<PembelianDetailPage> {
                                 Container(
                                   child: Row(
                                     mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.end,
                                     children: [
-                                      Container(
-                                        child: Row(
-                                          children: [
-                                            Column(
-                                              mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                              crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                              children: [
-                                                SmallText(
-                                                    text: "Total Harga"),
-                                                PriceText(
-                                                  text: CurrencyFormat
-                                                      .convertToIdr(
-                                                      controller
-                                                          .detailPembelianList[index]
-                                                          .hargaPembelianProduk,
-                                                      0),
-                                                  size: Dimensions.font16,
-                                                ),
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                      ),
+                                      Column(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                        children: [
+                                          SmallText(
+                                              text: "Total Harga"),
+                                          PriceText(
+                                            text: CurrencyFormat
+                                                .convertToIdr(
+                                                controller
+                                                    .detailPembelianList[index]
+                                                    .hargaPembelianProduk,
+                                                0),
+                                            size: Dimensions.font16,
+                                          ),
+                                        ],
+                                      )
                                     ],
                                   ),
                                 ),
@@ -290,7 +306,111 @@ class _PembelianDetailPageState extends State<PembelianDetailPage> {
                 ],
               ),
             ),
+            Container(
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.3),
+                      spreadRadius: 1,
+                      blurRadius: 5,
+                      offset: Offset(0, 2),
+                    )
+                  ]),
+              margin: EdgeInsets.only(
+                  top: Dimensions.height20
+              ),
 
+              padding: EdgeInsets.only(
+                  top: Dimensions.height30,
+                  left: Dimensions.width20,
+                  right: Dimensions.width20,
+                  bottom: Dimensions.height30),
+              child: Column(
+                children: [
+                  Container(
+                    child: Row(
+                      children: [
+                        BigText(
+                          text: "Rincian Pembayaran",
+                          size: Dimensions.font20,
+                          fontWeight: FontWeight.bold,
+                        )
+                      ],
+                    ),
+                  ),
+                  Divider(color: AppColors.buttonBackgroundColor),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(bottom: Dimensions.height10),
+                        child: Row(
+                          children: [
+                            BigText(
+                              text: "Total Harga",
+                              size: Dimensions.font16,
+                            )
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: Dimensions.height10),
+                        child: Row(
+                          children: [
+                            PriceText(
+                              text: CurrencyFormat
+                                  .convertToIdr(
+                                  detailPembelian[0].hargaPembelian,
+                                  0),
+                              size: Dimensions.font16,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(bottom: Dimensions.height10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        BigText(
+                          text: "Total Ongkos Kirim",
+                          size: Dimensions.font16,
+                        ),
+                        PriceText(
+                          text: CurrencyFormat
+                              .convertToIdr(
+                              detailPembelian[0].ongkir,
+                              0),
+                          size: Dimensions.font16,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Divider(color: AppColors.buttonBackgroundColor),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      BigText(
+                        text: "Total Belanja",
+                        size: Dimensions.font20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      PriceText(
+                        text: CurrencyFormat
+                            .convertToIdr(
+                            detailPembelian[0].hargaPembelian,
+                            0),
+                        size: Dimensions.font16,
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+            _cekStatus ?
             Container(
               decoration: BoxDecoration(
                   color: Colors.white,
@@ -327,18 +447,23 @@ class _PembelianDetailPageState extends State<PembelianDetailPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(),
-                      Container(
-                        width: Dimensions.width45*3,
-                        height: Dimensions.height30,
-                        // alignment: Alignment.topCenter,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: AppColors.redColor),
-                        child: Center(
-                          child: BigText(
-                            text: "Konfirmasi",
-                            size: Dimensions.font16,
-                            color: Colors.white,
+                      GestureDetector(
+                        onTap: (){
+                          _updateStatusPembelian(detailPembelian[0].purchaseId);
+                        },
+                        child: Container(
+                          width: Dimensions.width45*3,
+                          height: Dimensions.height30,
+                          // alignment: Alignment.topCenter,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: AppColors.redColor),
+                          child: Center(
+                            child: BigText(
+                              text: "Konfirmasi",
+                              size: Dimensions.font16,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
@@ -346,7 +471,7 @@ class _PembelianDetailPageState extends State<PembelianDetailPage> {
                   )
                 ],
               ),
-            ),
+            ) : SizedBox()
           ],
         ),
       ),

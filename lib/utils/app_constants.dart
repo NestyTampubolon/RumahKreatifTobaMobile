@@ -3,10 +3,10 @@ class AppConstants {
   static const int APP_VERSION = 1;
 
   static const String BASE_URL =
-      "http://192.168.43.97/tobazonerework/public/api/";
+      "http://192.168.7.154/tobazonerework/public/api/";
 
   static const String BASE_URL_IMAGE =
-      "http://192.168.43.97/tobazonerework/public/asset/";
+      "http://192.168.7.154/tobazonerework/public/asset/";
 
   static const String POPULAR_PRODUCT_URL = "produk";
   static const String KATEGORI_PRODUCT_URL = "lihat_produk";
@@ -55,6 +55,7 @@ class AppConstants {
 
   static const String DAFTAR_PEMBELIAN_URL = "daftarpembelian";
   static const String DETAIL_PEMBELIAN_URL = "detailpembelian";
+  static const String UPDATE_STATUS_PEMBELIAN_URL = "updatestatuspembelian";
 
   static const String TOKEN = "";
   static const String PHONE = "";

@@ -97,9 +97,9 @@ class _DaftarPembelianPageState extends State<DaftarPembelianPage>
             children: [
               GetBuilder<PembelianController>(builder: (controller) {
                 var _menungguKonfirmasiList = controller.pembelianList
-                    .where((item) => item.statusPembelian == "status2_ambil")
+                    .where((item) => item.statusPembelian == "Perlu Dikemas")
                     .toList();
-                return GridView.builder(
+                return RefreshIndicator(child: GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 1,
                         mainAxisExtent: Dimensions.height45 * 5),
@@ -119,14 +119,14 @@ class _DaftarPembelianPageState extends State<DaftarPembelianPage>
                             border: Border.all(
                                 color: AppColors.buttonBackgroundColor),
                             borderRadius:
-                                BorderRadius.circular(Dimensions.radius20),
+                            BorderRadius.circular(Dimensions.radius20),
                             color: Colors.white),
                         child: Column(
                           children: [
                             Container(
                               child: Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
                                     child: Row(
@@ -137,14 +137,14 @@ class _DaftarPembelianPageState extends State<DaftarPembelianPage>
                                             iconSize: Dimensions.iconSize24,
                                             iconColor: AppColors.redColor,
                                             backgroundColor:
-                                                Colors.white.withOpacity(0.0),
+                                            Colors.white.withOpacity(0.0),
                                           ),
                                         ),
                                         Column(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.start,
+                                          MainAxisAlignment.start,
                                           crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                           children: [
                                             BigText(
                                               text: "Belanja",
@@ -152,25 +152,27 @@ class _DaftarPembelianPageState extends State<DaftarPembelianPage>
                                             ),
                                             SmallText(
                                                 text: _menungguKonfirmasiList[index].name
-                                                    .toString())
+                                                    .toString()),
+                                            Container(
+                                                height: Dimensions.height20,
+                                                padding: EdgeInsets.only(right: Dimensions.width10, left: Dimensions.width10),
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(Dimensions.radius30),
+                                                  color: AppColors.notification_success.withOpacity(0.3),
+                                                ),
+                                                child: Center(
+                                                  child: BigText(
+                                                      text: _menungguKonfirmasiList[index].statusPembelian
+                                                          .toString(),
+                                                      size: Dimensions.font16/1.5,
+                                                      color: AppColors.notification_success,
+                                                      fontWeight: FontWeight.bold),
+                                                )),
                                           ],
                                         )
                                       ],
                                     ),
                                   ),
-                                  Container(
-                                    padding:
-                                        EdgeInsets.all(Dimensions.height10 / 2),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(
-                                            Dimensions.radius20 / 2),
-                                        color: AppColors.notification_success),
-                                    child: BigText(
-                                      text: "Perlu Dikemas",
-                                      size: Dimensions.iconSize16,
-                                      color: Colors.white,
-                                    ),
-                                  )
                                 ],
                               ),
                             ),
@@ -261,16 +263,16 @@ class _DaftarPembelianPageState extends State<DaftarPembelianPage>
                             Container(
                               child: Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
                                     child: Row(
                                       children: [
                                         Column(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.start,
+                                          MainAxisAlignment.start,
                                           crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                           children: [
                                             SmallText(text: "Total Belanja"),
                                             PriceText(
@@ -315,16 +317,16 @@ class _DaftarPembelianPageState extends State<DaftarPembelianPage>
                           ],
                         ),
                       );
-                    });
+                    }), onRefresh: () => Get.find<PembelianController>().getPembelianList());
               }),
               GetBuilder<PembelianController>(builder: (controller) {
                 var _sudahKonfirmasiList = controller.pembelianList
-                    .where((item) => item.statusPembelian != "status2_ambil")
+                    .where((item) => item.statusPembelian != "Perlu Dikemas")
                     .toList();
-                return GridView.builder(
+                return RefreshIndicator(child: GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 1,
-                        mainAxisExtent: Dimensions.height45 * 5),
+                        mainAxisExtent: Dimensions.height45 * 5.5),
                     itemCount: _sudahKonfirmasiList.length,
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
@@ -374,25 +376,27 @@ class _DaftarPembelianPageState extends State<DaftarPembelianPage>
                                             ),
                                             SmallText(
                                                 text: _sudahKonfirmasiList[index].name
-                                                    .toString())
+                                                    .toString()),
+                                            Container(
+                                                height: Dimensions.height20,
+                                                padding: EdgeInsets.only(right: Dimensions.width10, left: Dimensions.width10),
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(Dimensions.radius30),
+                                                  color: AppColors.notification_success.withOpacity(0.3),
+                                                ),
+                                                child: Center(
+                                                  child: BigText(
+                                                      text: _sudahKonfirmasiList[index].statusPembelian
+                                                          .toString(),
+                                                      size: Dimensions.font16/1.5,
+                                                      color: AppColors.notification_success,
+                                                      fontWeight: FontWeight.bold),
+                                                )),
                                           ],
                                         )
                                       ],
                                     ),
                                   ),
-                                  Container(
-                                    padding:
-                                    EdgeInsets.all(Dimensions.height10 / 2),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(
-                                            Dimensions.radius20 / 2),
-                                        color: AppColors.notification_success),
-                                    child: BigText(
-                                      text: "Perlu Dikemas",
-                                      size: Dimensions.iconSize16,
-                                      color: Colors.white,
-                                    ),
-                                  )
                                 ],
                               ),
                             ),
@@ -536,7 +540,7 @@ class _DaftarPembelianPageState extends State<DaftarPembelianPage>
                           ],
                         ),
                       );
-                    });
+                    }), onRefresh: () => Get.find<PembelianController>().getPembelianList());
               })
             ],
           ),
