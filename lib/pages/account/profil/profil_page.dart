@@ -29,32 +29,35 @@ class ProfilPage extends StatelessWidget {
               Column(
                 children: [
                   Container(
-                    margin: EdgeInsets.only(
-                        top: Dimensions.height30,
-                        left: Dimensions.width20,
-                        right: Dimensions.width20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Get.to(HomePage(initialIndex: 3));
-                          },
-                          child: AppIcon(
-                            icon: Icons.arrow_back,
-                            iconColor: AppColors.redColor,
-                            backgroundColor: Colors.white.withOpacity(0.0),
-                            iconSize: Dimensions.iconSize24,
+                    child: Container(
+                      margin: EdgeInsets.only(
+                          top: Dimensions.height30),
+                      padding: EdgeInsets.only(
+                          left: Dimensions.width20, right: Dimensions.width20),
+                      child: Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Get.to(HomePage(initialIndex: 3));
+                            },
+                            child: AppIcon(
+                              icon: Icons.arrow_back,
+                              iconColor: AppColors.redColor,
+                              backgroundColor: Colors.white.withOpacity(0.0),
+                              iconSize: Dimensions.iconSize24,
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          width: Dimensions.width20,
-                        ),
-                        BigText(
-                          text: "Profil",
-                          size: Dimensions.font20,
-                        ),
-                      ],
+                          SizedBox(
+                            width: Dimensions.width20,
+                          ),
+                          Container(
+                            child: BigText(
+                              text: "Profil",
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   Container(

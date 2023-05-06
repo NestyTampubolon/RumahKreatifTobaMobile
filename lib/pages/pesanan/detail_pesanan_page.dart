@@ -97,7 +97,7 @@ class _DetailPesananPageState extends State<DetailPesananPage> {
                     child: Row(
                       children: [
                         BigText(
-                          text: "Selesai",
+                          text: detailPesanan[0].statusPembelian.toString(),
                           size: Dimensions.font20,
                           fontWeight: FontWeight.bold,
                         )

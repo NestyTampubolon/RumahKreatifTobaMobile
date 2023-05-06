@@ -389,20 +389,6 @@ class KategoriProduk extends StatelessWidget {
                   Center(
                       child: Row(
                         children: [
-                          GestureDetector(
-                            onTap: (){
-                              Get.to(SearchPage());
-                            },
-                            child: Container(
-                              width: Dimensions.height45,
-                              height: Dimensions.height45,
-                              child: Icon(
-                                Icons.search,
-                                color: AppColors.redColor,
-                                size: Dimensions.iconSize24,
-                              ),
-                            ),
-                          ),
                           GetBuilder<CartController>(
                               builder: (controller) {
                                 return GestureDetector(

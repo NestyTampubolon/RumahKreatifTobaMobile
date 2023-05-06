@@ -18,28 +18,29 @@ class Produk {
   int? isVerified;
   int? stock_id;
   int? stok;
+  String? productImageName;
 
-  Produk({
-    required this.productId,
-    required this.merchantId,
-    required this.categoryId,
-    required this.productName,
-    required this.productDescription,
-    required this.price,
-    required this.heavy,
-    required this.isDeleted,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.namaKategori,
-    required this.userId,
-    required this.namaMerchant,
-    required this.deskripsiToko,
-    required this.kontakToko,
-    required this.fotoMerchant,
-    required this.isVerified,
-    required this.stock_id,
-    required this.stok,
-  });
+  Produk(
+      {required this.productId,
+      required this.merchantId,
+      required this.categoryId,
+      required this.productName,
+      required this.productDescription,
+      required this.price,
+      required this.heavy,
+      required this.isDeleted,
+      required this.createdAt,
+      required this.updatedAt,
+      required this.namaKategori,
+      required this.userId,
+      required this.namaMerchant,
+      required this.deskripsiToko,
+      required this.kontakToko,
+      required this.fotoMerchant,
+      required this.isVerified,
+      required this.stock_id,
+      required this.stok,
+      required this.productImageName});
 
   factory Produk.fromJson(Map<String, dynamic> json) {
     return Produk(
@@ -61,6 +62,7 @@ class Produk {
         fotoMerchant: json['foto_merchant'],
         isVerified: json['is_verified'],
         stock_id: json['stock_id'],
-        stok: json['stok']);
+        stok: json['stok'],
+        productImageName: json['product_image_name']);
   }
 }

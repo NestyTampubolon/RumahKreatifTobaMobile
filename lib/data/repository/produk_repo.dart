@@ -25,4 +25,12 @@ class PopularProdukRepo extends GetxService {
   Future<Response> tambahProduk(int user_id, String product_name, List product_image, String product_description, int price, int heavy, String kategori, int stok) async {
     return await apiClient.postData(AppConstants.TAMBAH_PRODUK_URL, {"user_id": user_id, "product_name" : product_name, "product_image" : product_image, "product_description" : product_description, "price" : price, "heavy" : heavy, "kategori" : kategori, "stok":stok});
   }
+
+  Future<Response> hapusProduk(int product_id) async {
+    return await apiClient.postData(AppConstants.HAPUS_PRODUK_URL, {"product_id": product_id});
+  }
+
+  Future<Response> detailProduk(int product_id) async {
+    return await apiClient.postData(AppConstants.DETAIL_PRODUK_URL, {"product_id": product_id});
+  }
 }

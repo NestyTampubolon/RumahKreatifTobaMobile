@@ -57,7 +57,6 @@ class _DataBankPageState extends State<DataBankPage> {
         showCustomSnackBar("Atas nama masih kosong", title: "Atas Nama");
       } else {
         var userController = Get.find<UserController>().usersList[0];
-        await userController.getUser();
 
         var controller = Get.find<BankController>();
         controller

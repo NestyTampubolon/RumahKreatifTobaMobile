@@ -17,6 +17,7 @@ import '../../widgets/big_text.dart';
 import '../../widgets/currency_format.dart';
 import '../../widgets/price_text.dart';
 import '../../widgets/small_text.dart';
+import 'detail_pesanan_page.dart';
 
 
 class MenungguPembayaranPage extends StatefulWidget {
@@ -27,6 +28,7 @@ class MenungguPembayaranPage extends StatefulWidget {
 }
 
 class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
+
   @override
   void initState() {
     bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
@@ -38,6 +40,7 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
 
   @override
   Widget build(BuildContext context) {
+    Get.find<PesananController>().getPesananMenungguBayaranList();
     Future<void> _getDetailPesananList(String kode_pembelian) async {
       bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
       if (_userLoggedIn) {
@@ -45,6 +48,20 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
         controller.getDetailPesananList(kode_pembelian).then((status) async {
           if (status.isSuccess) {
             Get.to(PembayaranPage());
+          } else {
+            showCustomSnackBar(status.message);
+          }
+        });
+      }
+    }
+
+    Future<void> _getDetailPesanan(String kode_pembelian) async {
+      bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
+      if (_userLoggedIn) {
+        var controller = Get.find<PesananController>();
+        controller.getDetailPesananList(kode_pembelian).then((status) async {
+          if (status.isSuccess) {
+            Get.to(DetailPesananPage());
           } else {
             showCustomSnackBar(status.message);
           }
@@ -103,7 +120,7 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
               return GridView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 1, mainAxisExtent: Dimensions.height45*4),
+                      crossAxisCount: 1, mainAxisExtent: Dimensions.height45*5),
                   itemCount: pesananController.pesananMenungguPembayaranList.length,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
@@ -150,7 +167,24 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                                             text: "Belanja",
                                             size: Dimensions.font16,
                                           ),
-                                          SmallText(text: pesananController.pesananMenungguPembayaranList[index].createdAt.toString())
+                                          SmallText(
+                                              text: pesananController.pesananMenungguPembayaranList[index].name
+                                                  .toString()),
+                                          Container(
+                                              height: Dimensions.height20,
+                                              padding: EdgeInsets.only(right: Dimensions.width10, left: Dimensions.width10),
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(Dimensions.radius30),
+                                                color: AppColors.notification_success.withOpacity(0.3),
+                                              ),
+                                              child: Center(
+                                                child: BigText(
+                                                    text: pesananController.pesananMenungguPembayaranList[index].statusPembelian
+                                                        .toString(),
+                                                    size: Dimensions.font16/1.5,
+                                                    color: AppColors.notification_success,
+                                                    fontWeight: FontWeight.bold),
+                                              )),
                                         ],
                                       )
                                     ],
@@ -181,8 +215,87 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                           ),
                           Divider(color: AppColors.buttonBackgroundColor),
                           Container(
-                            child: BigText(text: pesananController.pesananMenungguPembayaranList[index].kodePembelian.toString()),
+                            child: Row(
+                              mainAxisAlignment:
+                              MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+
+                                  child: Row(
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () {
+                                          var produkIndex =
+                                          pesananController.pesananMenungguPembayaranList[index]
+                                              .productId!;
+                                          if (produkIndex >= 0) {
+                                            Get.toNamed(RouteHelper
+                                                .getProdukDetail(
+                                                produkIndex));
+                                          }
+                                        },
+                                        child: Container(
+                                          width:
+                                          Dimensions.height20 *
+                                              3,
+                                          height:
+                                          Dimensions.height20 *
+                                              3,
+                                          margin: EdgeInsets.only(
+                                              top: Dimensions
+                                                  .height10),
+                                          decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                  fit: BoxFit.cover,
+                                                  image: AssetImage(
+                                                      "assets/images/coffee.jpg")),
+                                              borderRadius:
+                                              BorderRadius.circular(
+                                                  Dimensions
+                                                      .radius20),
+                                              color: Colors.white),
+                                        ),
+                                      ),
+                                      SizedBox(width: Dimensions.width20,),
+                                      Column(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            width : Dimensions.screenWidth/1.6,
+                                            child: BigText(
+                                              text: pesananController.pesananMenungguPembayaranList[index]
+                                                  .productName,
+                                              size: Dimensions.font16,
+                                            ),
+                                          ),
+                                          Row(
+                                            children: [
+                                              SmallText(
+                                                  text: "${ pesananController.pesananMenungguPembayaranList[index]
+                                                      .jumlahPembelianProduk} x "),
+                                              PriceText(
+                                                text: CurrencyFormat
+                                                    .convertToIdr(
+                                                    pesananController.pesananMenungguPembayaranList[index]
+                                                        .price,
+                                                    0),
+                                                size: Dimensions.font16,
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
+                          SizedBox(height: Dimensions.height10,),
+
                           Container(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -208,6 +321,7 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                                     ],
                                   ),
                                 ),
+                                pesananController.pesananMenungguPembayaranList[index].statusPembelian == "Belum Bayar" ?
                                 GestureDetector(
                                   onTap: (){
                                     _getDetailPesananList(pesananController.pesananMenungguPembayaranList[index].kodePembelian.toString());
@@ -230,6 +344,30 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                                       color: AppColors.redColor,
                                     ),
                                   ) ,
+                                ) : GestureDetector(
+                                  onTap: () {
+                                    _getDetailPesanan(pesananController
+                                        .pesananMenungguPembayaranList[index].kodePembelian
+                                        .toString());
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.only(
+                                        top: Dimensions.height10 / 2,
+                                        bottom: Dimensions.height10 / 2,
+                                        left: Dimensions.height10,
+                                        right: Dimensions.height10),
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: AppColors.redColor),
+                                        borderRadius: BorderRadius.circular(
+                                            Dimensions.radius20 / 2),
+                                        color: Colors.white),
+                                    child: BigText(
+                                      text: "Lihat Detail",
+                                      size: Dimensions.iconSize16,
+                                      color: AppColors.redColor,
+                                    ),
+                                  ),
                                 )
 
                               ],

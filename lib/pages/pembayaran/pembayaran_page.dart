@@ -97,10 +97,10 @@ class _PembayaranPageState extends State<PembayaranPage> {
 
     List<int> _purchaseId = [];
 
-    Future<void> uploadProofOfPayment(List<int> _purchaseId) async {
+    Future<void> uploadProofOfPayment() async {
 
         var controller = Get.find<PesananController>();
-        controller.postBuktiPembayaran(_purchaseId).then((status) async {
+        controller.postBuktiPembayaran(detailPesanan[0].purchaseId).then((status) async {
           Get.to(PesananPage());
         });
     }
@@ -400,8 +400,7 @@ class _PembayaranPageState extends State<PembayaranPage> {
                             color: AppColors.redColor),
                         child: GestureDetector(
                             onTap: () {
-                                Get.find<PesananController>().postBuktiPembayaran(_purchaseId);
-                                Get.to(PesananPage());
+                              uploadProofOfPayment();
                             },
                             child: Row(children: [
                               BigText(

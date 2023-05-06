@@ -1,3 +1,4 @@
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,8 +25,7 @@ import '../../widgets/currency_format.dart';
 
 
 class ProdukDetail extends StatefulWidget {
-  final int productId;
-  const ProdukDetail({Key? key, required this.productId}) : super(key: key);
+  const ProdukDetail({Key? key}) : super(key: key);
 
   @override
   State<ProdukDetail> createState() => _ProdukDetailState();
@@ -34,31 +34,50 @@ class ProdukDetail extends StatefulWidget {
 class _ProdukDetailState extends State<ProdukDetail> {
   bool isProdukExist = false;
 
+  PageController pageController = PageController(viewportFraction: 0.90);
+  PageController pageControllerPopulerProduct =
+  PageController(viewportFraction: 0.90);
+
+  var _currPageValue = 0.0;
+  var _currPageValuePopulerProduct = 0.0;
+  double _scaleFactor = 0.8;
+  double _height = 200;
   @override
   void initState() {
     super.initState();
+    pageController.addListener(() {
+      setState(() {
+        _currPageValue = pageController.page!;
+      });
+    });
+    pageControllerPopulerProduct.addListener(() {
+      setState(() {
+        _currPageValuePopulerProduct = pageControllerPopulerProduct.page!;
+      });
+    });
+
+    super.initState();
     var wishlistList = Get.find<WishlistController>().wishlistList;
-    isProdukExist = wishlistList.any((wishlist) => wishlist.productId == widget.productId.toInt());
+    isProdukExist = wishlistList.any((wishlist) => wishlist.productId == Get.find<PopularProdukController>().detailProdukList[0].productId.toInt());
   }
+
 
   @override
   Widget build(BuildContext context) {
-    var produkList = Get.find<PopularProdukController>().popularProdukList;
+    var produkList = Get.find<PopularProdukController>().detailProdukList;
     var daftarproduk = produkList
-        .firstWhere((produk) => produk.productId == widget.productId.toInt());
+        .firstWhere((produk) => produk.productId == produkList[0].productId.toInt());
 
     var wishlistList = Get.find<WishlistController>().wishlistList;
      isProdukExist = wishlistList
-        .any((wishlist) => wishlist.productId == widget.productId.toInt());
-
+        .any((wishlist) => wishlist.productId == produkList[0].productId.toInt());
 
     Future<void> _tambahKeranjang(CartController cartController) async {
       bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
       if (_userLoggedIn) {
         var controller = Get.find<UserController>().usersList[0];
-        await controller.getUser();
         cartController
-            .tambahKeranjang(controller.id, widget.productId.toInt(),
+            .tambahKeranjang(controller.id, produkList[0].productId.toInt(),
             1)
             .then((status) {
           if (status.isSuccess) {
@@ -76,10 +95,9 @@ class _ProdukDetailState extends State<ProdukDetail> {
       bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
       if (_userLoggedIn) {
         var controller = Get.find<UserController>().usersList[0];
-        await controller.getUser();
 
         var wishlistController = Get.find<WishlistController>();
-        wishlistController.tambahWishlist(controller.id, widget.productId.toInt())
+        wishlistController.tambahWishlist(controller.id, produkList[0].productId.toInt())
             .then((status) {
           if (status.isSuccess) {
 
@@ -93,139 +111,160 @@ class _ProdukDetailState extends State<ProdukDetail> {
 
     return Scaffold(
         backgroundColor: Colors.white,
-        body: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              automaticallyImplyLeading: false,
-              toolbarHeight: 60,
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Get.back();
-                    },
-                    child: AppIcon(icon: Icons.arrow_back),
-                  ),
-                  GetBuilder<CartController>(builder: (controller) {
-                    return GestureDetector(
-                      onTap: () {
-                        if(Get.find<AuthController>().userLoggedIn()){
-                          Get.toNamed(RouteHelper.getKeranjangPage());
-                        }
-                        else{
-                          Get.toNamed(RouteHelper.getMasukPage());
-                        }
-                      },
-                      child: Stack(
-                        children: [
-                          AppIcon(icon: Icons.shopping_cart_outlined),
-                          controller.keranjangList.length >= 1
-                              ? Positioned(
-                              right: 0,
-                              top: 0,
-                              child: AppIcon(
-                                icon: Icons.circle,
-                                size: 20,
-                                iconColor: Colors.transparent,
-                                backgroundColor: AppColors.notification,
-                              ))
-                              : Container(),
-                          controller.keranjangList.length >= 1
-                              ? Positioned(
-                            right: 3,
-                            top: 3,
-                            child: BigText(
-                              text: controller.keranjangList.length.toString(),
-                              size: 12,
-                              color: Colors.white,
-                            ),
-                          )
-                              : Container(),
-                        ],
-                      ),
-                    );
-                  })
-                ],
-              ),
-              pinned: true,
-              bottom: PreferredSize(
-                  preferredSize: Size.fromHeight(20),
-                  child: Column(
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                child: Container(
+                  margin: EdgeInsets.only(
+                      top: Dimensions.height30, bottom: Dimensions.height10),
+                  padding: EdgeInsets.only(
+                      left: Dimensions.width20, right: Dimensions.width20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                          padding: EdgeInsets.only(
-                              left: Dimensions.width20,
-                              right: Dimensions.width20,
-                              top: Dimensions.height20),
-                          width: double.maxFinite,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(Dimensions.radius20),
-                                  topRight:
-                                  Radius.circular(Dimensions.radius20))),
+                      GestureDetector(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: AppIcon(icon: Icons.arrow_back,size: Dimensions.height45, iconColor: AppColors.redColor, backgroundColor: Colors.white.withOpacity(0.0),),
+                      ),
+                      Center(
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              PriceText(
-                                text: CurrencyFormat.convertToIdr(
-                                    daftarproduk.price, 0),
-                                color: AppColors.blackColor,
-                                size: Dimensions.font20,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  if (Get.find<AuthController>().userLoggedIn()) {
-                                    var wishlistList = Get.find<WishlistController>().wishlistList;
-                                    isProdukExist = wishlistList.any(
-                                            (wishlist) => wishlist.productId == widget.productId.toInt());
-                                    _tambahWishlist();
-                                    //widget.productId
-                                    setState(() {
-                                      isProdukExist = !isProdukExist;
-                                    });
-                                  } else {
-                                    Get.toNamed(RouteHelper.getMasukPage());
-                                  }
-                                },
-                                child: Icon(
-                                  Icons.favorite,
-                                  color: isProdukExist ? Colors.pink : null,
-                                ),
-                              )
+                              GetBuilder<CartController>(
+                                  builder: (controller) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        if(Get.find<AuthController>().userLoggedIn()){
+                                          Get.toNamed(RouteHelper.getKeranjangPage());
+                                        }
+                                        else{
+                                          Get.toNamed(RouteHelper.getMasukPage());
+                                        }
+                                      },
+                                      child: Stack(
+                                        children: [
+                                          AppIcon(icon: Icons.shopping_cart_outlined, size: Dimensions.height45, iconColor: AppColors.redColor, backgroundColor: Colors.white.withOpacity(0.0),),
+                                          controller.keranjangList.length >= 1
+                                              ? Positioned(
+                                              right: 0,
+                                              top: 0,
+                                              child: AppIcon(
+                                                icon: Icons.circle,
+                                                size: 20,
+                                                iconColor: Colors.transparent,
+                                                backgroundColor: AppColors.notification,
+                                              ))
+                                              : Container(),
+                                          controller.keranjangList.length >= 1
+                                              ? Positioned(
+                                            right: 3,
+                                            top: 3,
+                                            child: BigText(
+                                              text: controller.keranjangList.length.toString(),
+                                              size: 12,
+                                              color: Colors.white,
+                                            ),
+                                          )
+                                              : Container(),
+                                        ],
+                                      ),
+                                    );
+
+                                  })
 
                             ],
-                          )
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(
-                            left: Dimensions.width20,
-                            right: Dimensions.width20),
-                        width: double.maxFinite,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                        ),
-                        child: BigText(
-                          text: daftarproduk.productName.toString(),
-                          color: AppColors.blackColor,
-                          size: Dimensions.font20,
-                        ),
-                      ),
+                          ))
                     ],
-                  )),
-              backgroundColor: AppColors.redColor,
-              expandedHeight: 300,
-              flexibleSpace: FlexibleSpaceBar(
-                background: Image.asset(
-                  "assets/images/coffee.jpg",
-                  width: double.maxFinite,
-                  fit: BoxFit.cover,
+                  ),
                 ),
               ),
-            ),
-            SliverToBoxAdapter(
-              child: Column(
+              Container(
+                height: Dimensions.pageView,
+                margin: EdgeInsets.only(top: 10, bottom: 20),
+                child: PageView.builder(
+                    controller: pageController,
+                    itemCount: produkList.length,
+                    itemBuilder: (context, position) {
+                      return _buildPageItem(position, produkList[position]);
+                    }),
+              ),
+              new DotsIndicator(
+                dotsCount: produkList.isEmpty ? 1 : produkList.length,
+                position: _currPageValue,
+                decorator: DotsDecorator(
+                  activeColor: AppColors.redColor,
+                  size: const Size.square(9.0),
+                  activeSize: const Size(18.0, 9.0),
+                  activeShape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5.0)),
+                ),
+              ),
+              Column(
+                children: [
+                  Container(
+                      padding: EdgeInsets.only(
+                          left: Dimensions.width20,
+                          right: Dimensions.width20,
+                          top: Dimensions.height20),
+                      width: double.maxFinite,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(Dimensions.radius20),
+                              topRight:
+                              Radius.circular(Dimensions.radius20))),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          PriceText(
+                            text: CurrencyFormat.convertToIdr(
+                                daftarproduk.price, 0),
+                            color: AppColors.blackColor,
+                            size: Dimensions.font20,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              if (Get.find<AuthController>().userLoggedIn()) {
+                                var wishlistList = Get.find<WishlistController>().wishlistList;
+                                isProdukExist = wishlistList.any(
+                                        (wishlist) => wishlist.productId == produkList[0].productId.toInt());
+                                _tambahWishlist();
+                                //widget.productId
+                                setState(() {
+                                  isProdukExist = !isProdukExist;
+                                });
+                              } else {
+                                Get.toNamed(RouteHelper.getMasukPage());
+                              }
+                            },
+                            child: Icon(
+                              Icons.favorite,
+                              color: isProdukExist ? Colors.pink : null,
+                            ),
+                          )
+
+                        ],
+                      )
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(
+                        left: Dimensions.width20,
+                        right: Dimensions.width20),
+                    width: double.maxFinite,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                    ),
+                    child: BigText(
+                      text: daftarproduk.productName.toString(),
+                      color: AppColors.blackColor,
+                      size: Dimensions.font20,
+                    ),
+                  ),
+                ],
+              ),
+              Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -287,10 +326,16 @@ class _ProdukDetailState extends State<ProdukDetail> {
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.all(
                                     Radius.circular(Dimensions.radius15)),
-                                image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: AssetImage(
-                                        "assets/images/coffee.jpg"))),
+                                // image: DecorationImage(
+                                //     fit: BoxFit.cover,
+                                //     image: AssetImage(
+                                //         "assets/images/coffee.jpg"))
+                            ),
+                            child: BigText(
+                              text: daftarproduk.fotoMerchant.toString(),
+                              fontWeight: FontWeight.bold,
+                              size: Dimensions.font26 / 2,
+                            ),
                           ),
                           SizedBox(
                             width: Dimensions.width10,
@@ -319,9 +364,9 @@ class _ProdukDetailState extends State<ProdukDetail> {
                         ],
                       )),
                 ],
-              ),
-            ),
-          ],
+              )
+            ],
+          ),
         ),
         bottomNavigationBar: GetBuilder<PopularProdukController>(
           builder: (produk) {
@@ -475,6 +520,57 @@ class _ProdukDetailState extends State<ProdukDetail> {
           },
         ));
   }
+
+
+  Widget _buildPageItem(int index, Produk produkList) {
+    Matrix4 matrix = new Matrix4.identity();
+    if (index == _currPageValue.floor()) {
+      var currScale = 1 - (_currPageValue - index) * (1 - _scaleFactor);
+      var currTrans = _height * (1 - currScale) / 2;
+      matrix = Matrix4.diagonal3Values(1, currScale, 1)
+        ..setTranslationRaw(0, currTrans, 0);
+    } else if (index == _currPageValue.floor() + 1) {
+      var currScale =
+          _scaleFactor + (_currPageValue - index + 1) * (1 - _scaleFactor);
+      var currTrans = _height * (1 - currScale) / 2;
+      matrix = Matrix4.diagonal3Values(1, currScale, 1);
+      matrix = Matrix4.diagonal3Values(1, currScale, 1)
+        ..setTranslationRaw(0, currTrans, 0);
+    } else if (index == _currPageValue.floor() - 1) {
+      var currScale = 1 - (_currPageValue - index) * (1 - _scaleFactor);
+      var currTrans = _height * (1 - currScale) / 2;
+      matrix = Matrix4.diagonal3Values(1, currScale, 1);
+      matrix = Matrix4.diagonal3Values(1, currScale, 1)
+        ..setTranslationRaw(0, currTrans, 0);
+    } else {
+      var currScale = 0.8;
+      matrix = Matrix4.diagonal3Values(1, currScale, 1)
+        ..setTranslationRaw(0, _height * (1 - _scaleFactor) / 2, 1);
+    }
+
+    return Transform(
+      transform: matrix,
+      child: Stack(
+        children: [
+          Container(
+            height: Dimensions.pageViewContainer,
+            margin: EdgeInsets.only(
+                left: Dimensions.width10, right: Dimensions.width10),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
+                color: index.isEven ? Color(0xFF69c5df) : Color(0xFF9294cc),
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage("assets/images/coffee.jpg"))),
+            child: BigText(text: produkList.productImageName.toString(),),
+          )
+        ],
+      ),
+    );
+  }
+
 }
+
+
 
 

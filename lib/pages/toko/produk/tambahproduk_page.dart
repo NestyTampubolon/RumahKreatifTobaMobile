@@ -52,8 +52,6 @@ class TambahProdukPage extends StatelessWidget {
         showCustomSnackBar("Kategori masih kosong", title: "Kategori");
       } else {
         var userController = Get.find<UserController>().usersList[0];
-        await userController.getUser();
-
         var controller = Get.find<ProdukController>();
         controller
             .tambahProduk(userController.id, namaproduk, deskripsi, harga,
@@ -400,7 +398,7 @@ class TambahProdukPage extends StatelessWidget {
                 right: Dimensions.width20,
                 bottom: Dimensions.height10),
             child: BigText(
-              text: "Harga",
+              text: "Stok",
               size: Dimensions.font16,
             ),
           ),
@@ -413,24 +411,28 @@ class TambahProdukPage extends StatelessWidget {
             height: Dimensions.height20,
           ),
 
-          GestureDetector(
-            onTap: () {
-              _tambahProduk();
-            },
-            child: Container(
-                width: Dimensions.width45 * 3,
-                height: Dimensions.height45,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(Dimensions.radius30),
-                    color: AppColors.redColor),
-                child: Center(
-                  child: BigText(
-                    text: "Tambah",
-                    size: Dimensions.font20,
-                    color: Colors.white,
-                  ),
-                )),
-          ),
+          Center(
+            child:  GestureDetector(
+                onTap: () {
+                  _tambahProduk();
+                },
+                child: Container(
+                    width: Dimensions.width45 * 3,
+                    height: Dimensions.height45,
+                    margin: EdgeInsets.only(bottom: Dimensions.height10),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(Dimensions.radius30),
+                        color: AppColors.redColor),
+                    child: Center(
+                      child:BigText(
+                        text: "Tambah",
+                        size: Dimensions.font20,
+                        color: Colors.white,
+                      ) ,
+                    )
+                )
+            ),
+          )
         ],
       ),
     ));

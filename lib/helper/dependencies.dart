@@ -78,4 +78,5 @@ Future<void> init() async {
   Get.put(() => CategoriesController(categoriesRepo: Get.find()));
   Get.lazyPut(() => ProdukController(produkRepo: Get.find()));
   Get.lazyPut(() => PembelianController(pembelianRepo: Get.find()));
+  Get.put(() => PembelianController(pembelianRepo: Get.find()));
 }

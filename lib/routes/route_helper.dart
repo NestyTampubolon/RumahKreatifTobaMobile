@@ -41,7 +41,7 @@ class RouteHelper {
 
   static const String daftaralamat = "/daftar_alamat";
   static const String tambahalamat = "/tambah_alamat";
-
+  static const String ubahproduk = "/ubahproduk";
 
   static String getSplashPage() => '$splashPage';
   static String getInitial() => '$initial';
@@ -59,6 +59,7 @@ class RouteHelper {
   static String getProfilPage() => '$profil';
   static String getMenungguVerifikasiTokoPage() => '$menungguVerifikasiToko';
 
+  static String getUbahProduk(int produkId) => '$ubahproduk/$produkId';
   static String getDaftarAlamatPage() => '$daftaralamat';
   static String getTambahAlamatPage() => '$tambahalamat';
 
@@ -87,8 +88,7 @@ class RouteHelper {
     GetPage(
       name: produkDetail + '/:produkId', // Add named parameter ":produkId"
       page: () {
-        var productId = Get.parameters['produkId'];
-        return ProdukDetail(productId: int.parse(productId!));
+        return ProdukDetail();
       },
       transition: Transition.fadeIn,
     ),

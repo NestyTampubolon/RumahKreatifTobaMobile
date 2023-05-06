@@ -6,8 +6,12 @@ import 'package:rumah_kreatif_toba/models/produk_models.dart';
 import 'package:rumah_kreatif_toba/utils/colors.dart';
 import 'dart:convert';
 
+import '../base/show_custom_message.dart';
 import '../data/repository/produk_repo.dart';
 import '../models/cart_models.dart';
+import '../models/response_model.dart';
+import '../pages/produk/produk_detail.dart';
+import '../routes/route_helper.dart';
 
 
 class PopularProdukController extends GetxController{
@@ -15,6 +19,21 @@ class PopularProdukController extends GetxController{
   PopularProdukController({required this.popularProdukRepo});
   List<dynamic> _popularProdukList=[];
   List<dynamic> get popularProdukList => _popularProdukList;
+
+  List<dynamic> _produkmakananminumanList=[];
+  List<dynamic> get produkMakananMinumanList => _produkmakananminumanList;
+
+  List<dynamic> _produkPakaianList=[];
+  List<dynamic> get produkPakaianList => _produkPakaianList;
+
+  List<dynamic> _produkTerbaruList=[];
+  List<dynamic> get produkTerbaruList => _produkTerbaruList;
+
+  List<dynamic> _detailProdukList=[];
+  List<dynamic> get detailProdukList => _detailProdukList;
+
+  List<dynamic> _imageProdukList=[];
+  List<dynamic> get imageProdukList => _imageProdukList;
 
   List<dynamic> _kategoriProdukList=[];
   List<dynamic> get kategoriProdukList => _kategoriProdukList;
@@ -26,12 +45,49 @@ class PopularProdukController extends GetxController{
   Future<void> getPopularProdukList() async{
     Response response = await popularProdukRepo.getPopularProdukList();
     if(response.statusCode == 200){
-      List<dynamic> responseBody = response.body;
+      List<dynamic> responseBodyproduk = response.body["products"];
       _popularProdukList = [];
-      for (dynamic item in responseBody) {
+      for (dynamic item in responseBodyproduk) {
         Produk produk = Produk.fromJson(item);
         _popularProdukList.add(produk);
       }
+
+
+      late ResponseModel responseModel;
+      if (response.statusCode == 200) {
+        List<dynamic> responseBody = response.body["produk_makanan_minuman_terlaris"];
+        _produkmakananminumanList.clear();
+        for (dynamic item in responseBody) {
+          Produk produk = Produk.fromJson(item);
+          _produkmakananminumanList.add(produk);
+        }
+
+        List<dynamic> responseBodyTerlaris= response.body["produk_pakaian_terlaris"];
+        _produkPakaianList.clear();
+        for (dynamic item in responseBodyTerlaris) {
+          Produk produk = Produk.fromJson(item);
+          _produkPakaianList.add(produk);
+        }
+
+        List<dynamic> responseBodyTerbaru= response.body["new_products"];
+        _produkTerbaruList.clear();
+        for (dynamic item in responseBodyTerbaru) {
+          Produk produk = Produk.fromJson(item);
+          _produkTerbaruList.add(produk);
+        }
+
+        List<dynamic> responseBodyImage= response.body["product_images"];
+        _imageProdukList.clear();
+        for (dynamic item in responseBodyImage) {
+          Produk produk = Produk.fromJson(item);
+          _imageProdukList.add(produk);
+        }
+
+        responseModel = ResponseModel(true, "successfully");
+      } else {
+        responseModel = ResponseModel(false, response.statusText!);
+      }
+
       _isLoaded = true;
       update();
     }else{
@@ -75,6 +131,44 @@ class PopularProdukController extends GetxController{
     }else{
 
     }
+  }
+
+  Future<ResponseModel> hapusProduk(int product_id) async {
+    Response response = await popularProdukRepo.hapusProduk(product_id);
+    late ResponseModel responseModel;
+    if(response.statusCode == 200){
+      showCustomSnackBar("Produk berhasil dihapus",
+          title: "Berhasil");
+      getProdukList();
+    }else{
+      responseModel = ResponseModel(false, response.statusText!);
+    }
+    _isLoaded = true;
+    update();
+    return responseModel;
+  }
+
+
+
+  Future<ResponseModel> detailProduk(int product_id) async {
+    Response response = await popularProdukRepo.detailProduk(product_id);
+    late ResponseModel responseModel;
+    if (response.statusCode == 200) {
+      List<dynamic> responseBody = response.body;
+      _detailProdukList.clear();
+      for (dynamic item in responseBody) {
+        Produk produk = Produk.fromJson(item);
+        _detailProdukList.add(produk);
+      }
+      print("halloo ${product_id}");
+      Get.to(ProdukDetail());
+      responseModel = ResponseModel(true, "successfully");
+    } else {
+      responseModel = ResponseModel(false, response.statusText!);
+    }
+    _isLoaded = false;
+    update();
+    return responseModel;
   }
 
 }

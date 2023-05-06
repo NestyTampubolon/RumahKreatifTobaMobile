@@ -85,7 +85,7 @@ class _MainHomePageState extends State<MainHomePage> {
                     children: [
                       GestureDetector(
                         onTap: (){
-                          Get.to(SearchPage());
+                          Get.to(SearchPage(kategori: 'All',));
                         },
                         child: Container(
                           width: Dimensions.height45,

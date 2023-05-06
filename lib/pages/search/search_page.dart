@@ -8,13 +8,15 @@ import '../../utils/colors.dart';
 import '../../utils/dimensions.dart';
 import '../../widgets/app_icon.dart';
 import '../../widgets/big_text.dart';
+import '../../widgets/card_produk.dart';
 import '../../widgets/currency_format.dart';
 import '../../widgets/price_text.dart';
 import '../../widgets/small_text.dart';
 import '../../widgets/tittle_text.dart';
 
 class SearchPage extends StatefulWidget {
-  const SearchPage({Key? key}) : super(key: key);
+  final String kategori;
+  const SearchPage({Key? key, required this.kategori}) : super(key: key);
 
   @override
   State<SearchPage> createState() => _SearchPageState();
@@ -33,7 +35,12 @@ class _SearchPageState extends State<SearchPage> {
     if (keyword.isEmpty) {
       results = [];
     }  else {
-      results = Get.find<PopularProdukController>().popularProdukList.where((produk) => produk.productName.toLowerCase().contains(keyword.toLowerCase())).toList();
+      if(widget.kategori == "All"){
+        results = Get.find<PopularProdukController>().popularProdukList.where((produk) => produk.productName.toLowerCase().contains(keyword.toLowerCase())).toList();
+      }else{
+        results = Get.find<PopularProdukController>().popularProdukList.where((produk) => produk.productName.toLowerCase().contains(keyword.toLowerCase())).where((produk) => produk.namaKategori.toString() == widget.kategori).toList();
+      }
+
     }
 
     setState(() {
@@ -58,7 +65,6 @@ class _SearchPageState extends State<SearchPage> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        // Get.toNamed(RouteHelper.getInitial());
                         Get.back();
                       },
                       child: AppIcon(
@@ -78,7 +84,7 @@ class _SearchPageState extends State<SearchPage> {
                       child: TextField(
                         onChanged: (value) => _search(value),
                         decoration: InputDecoration(
-                            hintText: "Cari di Rumah Kreatif",
+                            hintText: widget.kategori == "All" ? "Cari di Rumah Kreatif" : "Cari di ${widget.kategori}" ,
                             prefixIcon: Icon(
                               Icons.search,
                               color: AppColors.redColor,
@@ -108,89 +114,10 @@ class _SearchPageState extends State<SearchPage> {
                   itemCount: _list.length,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        Get.toNamed(RouteHelper.getProdukDetail(
-                            _list[index].productId));
-                      },
-                      child: Container(
-                        width: 150,
-                        height: 300,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(15),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 3,
-                                blurRadius: 10,
-                                offset: Offset(0, 3),
-                              )
-                            ]),
-                        margin: EdgeInsets.only(
-                            left: Dimensions.width20,
-                            right: Dimensions.width20,
-                            bottom: Dimensions.height20,
-                            top: Dimensions.height10),
-                        child: GestureDetector(
-                          onTap: () {
-                            Get.toNamed(RouteHelper.getProdukDetail(_list[index].productId));
-//                        Get.toNamed(RouteHelper.getProdukDetail(index));
-                          },
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              //image section
-                              Container(
-                                height: 120,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.only(
-                                        topLeft:
-                                        Radius.circular(Dimensions.radius15),
-                                        topRight:
-                                        Radius.circular(Dimensions.radius15)),
-                                    image: DecorationImage(
-                                        fit: BoxFit.fill,
-                                        image: AssetImage(
-                                            "assets/images/coffee.jpg"))),
-                              ),
-                              Container(
-                                padding: EdgeInsets.all(10.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    BigText(
-                                      text: _list[index].namaKategori
-                                          .toString(),
-                                      size: Dimensions.font16 / 1.5,
-                                    ),
-                                    TittleText(
-                                      text: _list[index].productName
-                                          .toString(),
-                                      size: Dimensions.font16,
-                                    ),
-                                    SmallText(
-                                      text: _list[index].namaMerchant
-                                          .toString(),
-                                    ),
-                                    PriceText(
-                                      text: CurrencyFormat.convertToIdr(
-                                          _list[index].price,
-                                          0),
-                                      color: AppColors.redColor,
-                                      size: Dimensions.font16,
-                                    ),
-                                  ],
-                                ),
-                              )
-                              //text container
-                            ],
-                          ),
-                        ),
-                      ),
-                    );
+                    var gambarproduk = Get.find<PopularProdukController>()
+                        .imageProdukList
+                        .where((produk) => produk.productId == _list[index].productId);
+                    return CardProduk(product_id : _list[index].productId,productImageName : gambarproduk.single.productImageName, productName : _list[index].productName, namaMerchant : _list[index].namaMerchant, price: _list[index].price, );
                   })
             ])));;
   }

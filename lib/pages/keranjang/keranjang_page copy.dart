@@ -18,35 +18,46 @@ import 'package:grouped_list/grouped_list.dart';
 
 import '../../base/show_custom_message.dart';
 import '../../controllers/auth_controller.dart';
+import '../../controllers/user_controller.dart';
 import '../../widgets/currency_format.dart';
 
 class KeranjangPageCopy extends StatefulWidget {
   const KeranjangPageCopy({Key? key}) : super(key: key);
 
   @override
-  State<KeranjangPageCopy> createState() => _KeranjangPageState();
+  State<KeranjangPageCopy> createState() => _KeranjangPageCopyState();
 }
 
-class _KeranjangPageState extends State<KeranjangPageCopy> {
+class _KeranjangPageCopyState extends State<KeranjangPageCopy> {
+  bool? allChecked = false;
+  bool? isChecked = false;
+  Map<String, bool> map = {};
+
   @override
   void initState() {
     super.initState();
     var controller = Get.find<CartController>();
     controller.getKeranjangList();
-
-    print('hello world');
+    allChecked = false;
+    map = Map.fromIterable(
+      Get.find<CartController>()
+          .merchantKeranjangList
+          .where((item) => item.namaMerchant != null),
+      key: (item) => item.namaMerchant,
+      value: (item) => false,
+    );
   }
 
-  StreamController<void> _refreshController =
-      StreamController<void>.broadcast();
   @override
   Widget build(BuildContext context) {
-    bool isChecked = false;
+    bool _cekKeranjang = Get.find<CartController>().keranjangList.isEmpty;
+
     bool _shouldRefreshList = false;
     var cartcontroller = Get.find<CartController>();
 
-    void _update() {
-      setState(() {});
+    bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
+    if (_userLoggedIn) {
+      Get.find<UserController>().getUser();
     }
 
     Future<void> _hapusKeranjang(int cart_id) async {
@@ -58,7 +69,6 @@ class _KeranjangPageState extends State<KeranjangPageCopy> {
             showCustomSnackBar("Produk berhasil ditambahkan ke keranjang",
                 title: "Berhasil");
             await controller.getKeranjangList();
-            _update();
           } else {
             showCustomSnackBar(status.message);
           }
@@ -74,7 +84,6 @@ class _KeranjangPageState extends State<KeranjangPageCopy> {
         controller.kurangKeranjang(cart_id).then((status) async {
           if (status.isSuccess) {
             await controller.getKeranjangList();
-            initState();
           } else {
             showCustomSnackBar(status.message);
           }
@@ -90,7 +99,6 @@ class _KeranjangPageState extends State<KeranjangPageCopy> {
         controller.jumlahKeranjang(cart_id).then((status) async {
           if (status.isSuccess) {
             await controller.getKeranjangList();
-            initState();
           } else {
             showCustomSnackBar(status.message);
           }
@@ -103,7 +111,9 @@ class _KeranjangPageState extends State<KeranjangPageCopy> {
       double total = 0.0;
       final cartController = Get.find<CartController>();
       for (final item in cartController.keranjangList) {
-        total += item.price * item.jumlahMasukKeranjang;
+        if (cartController.getCartCheckedStatus(item.productId)) {
+          total += item.price * item.jumlahMasukKeranjang;
+        }
       }
       return total;
     }
@@ -113,678 +123,588 @@ class _KeranjangPageState extends State<KeranjangPageCopy> {
     }
 
     return Scaffold(
-        body: Stack(
-          children: [
-            Positioned(
-                top: Dimensions.height30,
-                left: Dimensions.width20,
-                right: Dimensions.width20,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Get.toNamed(RouteHelper.getInitial());
-                      },
-                      child: AppIcon(
-                        icon: Icons.arrow_back,
-                        iconColor: Colors.white,
-                        backgroundColor: AppColors.redColor,
-                        iconSize: Dimensions.iconSize24,
+      body: !_cekKeranjang
+          ? Stack(
+              children: [
+                Positioned(
+                  top: Dimensions.height30,
+                  left: Dimensions.width20,
+                  right: Dimensions.width20,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          // Get.toNamed(RouteHelper.getInitial());
+                          Get.back();
+                        },
+                        child: AppIcon(
+                          icon: Icons.arrow_back,
+                          iconColor: AppColors.redColor,
+                          backgroundColor: Colors.white,
+                          iconSize: Dimensions.iconSize24,
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      width: Dimensions.width20,
-                    ),
-                    BigText(
-                      text: "Keranjang",
-                      size: Dimensions.font20,
-                    ),
-                  ],
-                )),
-            // Positioned(
-            //     top: Dimensions.height20 * 3,
-            //     left: Dimensions.width20,
-            //     right: Dimensions.width20,
-            //     bottom: 0,
-            //     child: Container(
-            //       margin: EdgeInsets.only(top: Dimensions.height15),
-            //       child: RefreshIndicator(
-            //           onRefresh: () async {
-            //             var controller = Get.find<CartController>();
-            //             await controller.getKeranjangList();
-            //           },
-            //           child: GroupedListView<CartModel, String>(
-            //             elements:
-            //             cartcontroller.keranjangList.cast<CartModel>(),
-            //             groupBy: (CartModel element) =>
-            //             element.namaMerchant!,
-            //             groupSeparatorBuilder: (groupByValue) => Padding(
-            //               padding: EdgeInsets.all(8),
-            //               child: Row(
-            //                 children: [
-            //                   Container(
-            //                     margin: EdgeInsets.only(
-            //                         bottom: Dimensions.height10 / 2,
-            //                         top: Dimensions.height10 / 2),
-            //                     child: BigText(
-            //                       text: groupByValue,
-            //                       size: Dimensions.font16,
-            //                     ),
-            //                   )
-            //                 ],
-            //               ),
-            //             ),
-            //             itemBuilder: (context, CartModel element) {
-            //               return Container(
-            //                 width: double.maxFinite,
-            //                 height: 150,
-            //                 margin: EdgeInsets.only(
-            //                     bottom: Dimensions.height10 / 2,
-            //                     top: Dimensions.height10 / 2),
-            //                 padding: EdgeInsets.only(
-            //                     left: Dimensions.width20,
-            //                     right: Dimensions.width20),
-            //                 decoration: BoxDecoration(
-            //                     border: Border.all(
-            //                         color: AppColors.buttonBackgroundColor),
-            //                     borderRadius: BorderRadius.circular(
-            //                         Dimensions.radius20),
-            //                     color: Colors.white),
-            //                 child: Column(
-            //                   children: [
-            //                     Row(
-            //                       children: [
-            //                         GestureDetector(
-            //                           onTap: () {
-            //                             var produkIndex =
-            //                             element.productId!;
-            //                             if (produkIndex >= 0) {
-            //                               Get.toNamed(
-            //                                   RouteHelper.getProdukDetail(
-            //                                       produkIndex));
-            //                             }
-            //                           },
-            //                           child: Container(
-            //                             width: Dimensions.height20 * 5,
-            //                             height: Dimensions.height20 * 5,
-            //                             margin: EdgeInsets.only(
-            //                                 top: Dimensions.height10),
-            //                             decoration: BoxDecoration(
-            //                                 image: DecorationImage(
-            //                                     fit: BoxFit.cover,
-            //                                     image: AssetImage(
-            //                                         "assets/images/coffee.jpg")),
-            //                                 borderRadius:
-            //                                 BorderRadius.circular(
-            //                                     Dimensions.radius20),
-            //                                 color: Colors.white),
-            //                           ),
-            //                         ),
-            //                         SizedBox(width: Dimensions.width10),
-            //                         ExcludeFocus(
-            //                           child: Container(
-            //                             height: Dimensions.height20 * 5,
-            //                             width: Dimensions.width45 * 4,
-            //                             child: Column(
-            //                               crossAxisAlignment:
-            //                               CrossAxisAlignment.start,
-            //                               mainAxisAlignment:
-            //                               MainAxisAlignment.spaceEvenly,
-            //                               children: [
-            //                                 BigText(
-            //                                   text: element.productName!,
-            //                                   size: Dimensions.font26 / 1.5,
-            //                                 ),
-            //                                 PriceText(
-            //                                   text: CurrencyFormat
-            //                                       .convertToIdr(
-            //                                       element.price, 0),
-            //                                   size: Dimensions.font16,
-            //                                 ),
-            //                               ],
-            //                             ),
-            //                           ),
-            //                         ),
-            //                       ],
-            //                     ),
-            //                     Row(
-            //                       mainAxisAlignment: MainAxisAlignment.end,
-            //                       children: [
-            //                         GestureDetector(
-            //                           onTap: () {
-            //                             //produk.setQuantity(false);
-            //                             //cartController.addItem(_keranjangList[index].produk!, -1);
-            //                             _hapusKeranjang(element.cartId!);
-            //                             _update();
-            //                           },
-            //                           child: AppIcon(
-            //                               iconSize: Dimensions.iconSize24,
-            //                               iconColor: AppColors.redColor,
-            //                               backgroundColor: Colors.white,
-            //                               icon: Icons.delete),
-            //                         ),
-            //                         Container(
-            //                           width: Dimensions.width45 * 3,
-            //                           padding: EdgeInsets.only(
-            //                               left: Dimensions.width10,
-            //                               right: Dimensions.width10),
-            //                           decoration: BoxDecoration(
-            //                               border: Border.all(
-            //                                   color: AppColors
-            //                                       .buttonBackgroundColor),
-            //                               borderRadius:
-            //                               BorderRadius.circular(
-            //                                   Dimensions.radius20),
-            //                               color: Colors.white),
-            //                           child: Row(
-            //                             mainAxisAlignment:
-            //                             MainAxisAlignment.spaceBetween,
-            //                             children: [
-            //                               GestureDetector(
-            //                                 onTap: () {
-            //                                   //produk.setQuantity(false);
-            //                                   //cartController.addItem(_keranjangList[index].produk!, -1);
-            //                                   _kurangKeranjang(
-            //                                       element.cartId!);
-            //                                 },
-            //                                 child: AppIcon(
-            //                                     iconSize:
-            //                                     Dimensions.iconSize24,
-            //                                     iconColor:
-            //                                     AppColors.redColor,
-            //                                     backgroundColor:
-            //                                     Colors.white,
-            //                                     icon: Icons.remove),
-            //                               ),
-            //                               BigText(
-            //                                 text: element
-            //                                     .jumlahMasukKeranjang
-            //                                     .toString(),
-            //                                 size: Dimensions.font26 / 1.5,
-            //                               ), //produk.inCartItems.toString()),
-            //                               GestureDetector(
-            //                                 onTap: () {
-            //                                   //cartController.addItem(_keranjangList[index].produk!, 1);
-            //                                   _jumlahKeranjang(
-            //                                       element.cartId!);
-            //                                 },
-            //                                 child: AppIcon(
-            //                                     iconSize:
-            //                                     Dimensions.iconSize24,
-            //                                     iconColor:
-            //                                     AppColors.redColor,
-            //                                     backgroundColor:
-            //                                     Colors.white,
-            //                                     icon: Icons.add),
-            //                               )
-            //                             ],
-            //                           ),
-            //                         )
-            //                       ],
-            //                     )
-            //                   ],
-            //                 ),
-            //               );
-            //             },
-            //             useStickyGroupSeparators: false, // optional
-            //             floatingHeader: true, // optional
-            //             order: GroupedListOrder.ASC, // optional
-            //           )),
-            //     )),
-            Positioned(
-                top: Dimensions.height20 * 5,
-                left: Dimensions.width20,
-                right: Dimensions.width20,
-                bottom: 0,
-                child: Container(
-                  margin: EdgeInsets.only(top: Dimensions.height15),
-                  child: MediaQuery.removePadding(
-                    context: context,
-                    removeTop: true,
-                    child:
-                        GetBuilder<CartController>(builder: (cartController) {
-                      var _keranjangList = cartController.getItems;
-                      return ListView.builder(
-                          itemCount: cartController.getItems.length,
-                          itemBuilder: (_, index) {
-                            String currentMerchantName = cartController
-                                .merchantKeranjangList[index].merchantName!;
-                            List merchantItems = cartController
-                                .merchantKeranjangList
-                                .where((item) =>
-                                    item.merchantName == currentMerchantName)
-                                .toList();
+                      SizedBox(
+                        width: Dimensions.width20,
+                      ),
+                      BigText(
+                        text: "Keranjang",
+                        size: Dimensions.font20,
+                      ),
+                    ],
+                  ),
+                ),
+                Positioned(
+                  top: Dimensions.height20 * 5,
+                  left: Dimensions.width20,
+                  right: Dimensions.width20,
+                  bottom: 0,
+                  child: Container(
+                      margin: EdgeInsets.only(top: Dimensions.height10 / 2),
+                      child: MediaQuery.removePadding(
+                        context: context,
+                        removeTop: true,
+                        child: GetBuilder<CartController>(
+                            builder: (cartController) {
+                          var _keranjangList = cartController.keranjangList;
+                          var groupedKeranjangList =
+                              <String, List<CartModel>>{};
 
-                            return ExpansionTile(
-                              title: Text(currentMerchantName),
-                              children: [
-                                ListView.builder(
-                                    shrinkWrap: true,
-                                    physics: ClampingScrollPhysics(),
-                                    itemCount: merchantItems.length,
-                                    itemBuilder: (_, index) {
-                                      CartModel item = merchantItems[index];
-                                      return Container(
-                                        width: double.maxFinite,
-                                        height: 150,
-                                        margin: EdgeInsets.only(
-                                            bottom: Dimensions.height10 / 2,
-                                            top: Dimensions.height10 / 2),
-                                        padding: EdgeInsets.only(
-                                            left: Dimensions.width20,
-                                            right: Dimensions.width20),
-                                        decoration: BoxDecoration(
-                                            border: Border.all(
-                                                color: AppColors.buttonBackgroundColor),
-                                            borderRadius: BorderRadius.circular(
-                                                Dimensions.radius20),
-                                            color: Colors.white),
-                                        child: Column(
-                                          children: [
-                                            Row(
-                                              children: [
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    var produkIndex =
-                                                    item.productId!;
-                                                    if (produkIndex >= 0) {
-                                                      Get.toNamed(
-                                                          RouteHelper.getProdukDetail(
-                                                              produkIndex));
+                          // Group items by merchant name
+                          for (var item in _keranjangList) {
+                            var merchantName = item.namaMerchant!;
+                            if (groupedKeranjangList[merchantName] == null) {
+                              groupedKeranjangList[merchantName] = [item];
+                            } else {
+                              groupedKeranjangList[merchantName]!.add(item);
+                            }
+                          }
+
+                          return ListView.builder(
+                              itemCount: groupedKeranjangList.length,
+                              itemBuilder: (_, merchantIndex) {
+                                var merchantName = groupedKeranjangList.keys
+                                    .elementAt(merchantIndex);
+                                var merchantItems =
+                                    groupedKeranjangList[merchantName]!;
+
+                                return Container(
+                                  margin: EdgeInsets.only(
+                                      bottom: Dimensions.height20),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Checkbox(
+                                              activeColor: AppColors.redColor,
+                                              value: cartController
+                                                      .getMerchantCheckedStatus(
+                                                          merchantName) &&
+                                                  merchantItems.every((item) =>
+                                                      cartController
+                                                          .getCartCheckedStatus(
+                                                              item.productId)),
+                                              onChanged: (bool? value) {
+                                                // Set the checked status for the merchant
+                                                cartController
+                                                    .setMerchantCheckedStatus(
+                                                        merchantName, value);
+
+                                                // Update the checked status for all items in the merchant's list
+                                                for (var item
+                                                    in merchantItems) {
+                                                  cartController
+                                                      .setCartCheckedStatus(
+                                                          item.productId,
+                                                          value);
+                                                }
+                                                setState(() {
+                                                  if (value == true) {
+                                                    for (var item in merchantItems) {
+                                                      if (!cartController.checkedCartIds.contains(item.cartId)) {
+                                                        cartController.checkedCartIds.add(item.cartId);
+                                                      }
                                                     }
-                                                  },
-                                                  child: Container(
-                                                    width: Dimensions.height20 * 5,
-                                                    height: Dimensions.height20 * 5,
-                                                    margin: EdgeInsets.only(
-                                                        top: Dimensions.height10),
-                                                    decoration: BoxDecoration(
-                                                        image: DecorationImage(
-                                                            fit: BoxFit.cover,
-                                                            image: AssetImage(
-                                                                "assets/images/coffee.jpg")),
-                                                        borderRadius:
-                                                        BorderRadius.circular(
-                                                            Dimensions.radius20),
-                                                        color: Colors.white),
-                                                  ),
-                                                ),
-                                                SizedBox(width: Dimensions.width10),
-                                                ExcludeFocus(
-                                                  child: Container(
-                                                    height: Dimensions.height20 * 5,
-                                                    width: Dimensions.width45 * 4,
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                      mainAxisAlignment:
-                                                      MainAxisAlignment.spaceEvenly,
-                                                      children: [
-                                                        BigText(
-                                                          text: item.productName!,
-                                                          size: Dimensions.font26 / 1.5,
-                                                        ),
-                                                        PriceText(
-                                                          text: CurrencyFormat
-                                                              .convertToIdr(
-                                                              item.price, 0),
-                                                          size: Dimensions.font16,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.end,
+                                                  }
+                                                  // If the checkbox is unchecked, remove the productId from the list
+                                                  else if (value == false) {
+                                                    for (var item
+                                                    in merchantItems) {
+                                                      cartController
+                                                          .checkedCartIds.remove(
+                                                          item.cartId);
+                                                    }
+                                                  }
+                                                });
+                                              }),
+                                          BigText(
+                                            text: merchantName,
+                                            size: Dimensions.font20,
+                                          ),
+                                        ],
+                                      ),
+                                      ListView.builder(
+                                          shrinkWrap: true,
+                                          physics: ClampingScrollPhysics(),
+                                          itemCount: merchantItems.length,
+                                          itemBuilder: (_, index) {
+                                            CartModel item =
+                                                merchantItems[index];
+                                            return Row(
                                               children: [
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    //produk.setQuantity(false);
-                                                    //cartController.addItem(_keranjangList[index].produk!, -1);
-                                                    _hapusKeranjang(item.cartId!);
-                                                    _update();
-                                                  },
-                                                  child: AppIcon(
-                                                      iconSize: Dimensions.iconSize24,
-                                                      iconColor: AppColors.redColor,
-                                                      backgroundColor: Colors.white,
-                                                      icon: Icons.delete),
-                                                ),
+                                                Checkbox(
+                                                    activeColor:
+                                                        AppColors.redColor,
+                                                    value: cartController
+                                                        .getCartCheckedStatus(
+                                                            item.productId),
+                                                    onChanged: (bool? value) {
+                                                      cartController
+                                                          .setCartCheckedStatus(
+                                                              item.productId,
+                                                              value);
+                                                      setState(() {
+                                                        // Update the total price
+                                                        calculateTotal();
+                                                        // If the checkbox is checked, add the cartId to the list
+
+                                                        if (value == true &&
+                                                            !cartController
+                                                                .checkedCartIds
+                                                                .contains(item
+                                                                    .productId)) {
+                                                          cartController
+                                                              .checkedCartIds
+                                                              .add(item.cartId);
+                                                        }
+                                                        // If the checkbox is unchecked, remove the productId from the list
+                                                        else if (value ==
+                                                            false) {
+                                                          cartController
+                                                              .checkedCartIds
+                                                              .remove(
+                                                                  item.cartId);
+                                                        }
+                                                      });
+                                                    }),
                                                 Container(
-                                                  width: Dimensions.width45 * 3,
+                                                  width:
+                                                      Dimensions.screenWidth /
+                                                          1.35,
+                                                  height: 150,
+                                                  margin: EdgeInsets.only(
+                                                      bottom:
+                                                          Dimensions.height10 /
+                                                              2,
+                                                      top: Dimensions.height10 /
+                                                          2),
                                                   padding: EdgeInsets.only(
                                                       left: Dimensions.width10,
-                                                      right: Dimensions.width10),
+                                                      right:
+                                                          Dimensions.width10),
                                                   decoration: BoxDecoration(
                                                       border: Border.all(
                                                           color: AppColors
                                                               .buttonBackgroundColor),
                                                       borderRadius:
-                                                      BorderRadius.circular(
-                                                          Dimensions.radius20),
+                                                          BorderRadius.circular(
+                                                              Dimensions
+                                                                  .radius20),
                                                       color: Colors.white),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                    MainAxisAlignment.spaceBetween,
+                                                  child: Column(
                                                     children: [
-                                                      GestureDetector(
-                                                        onTap: () {
-                                                          //produk.setQuantity(false);
-                                                          //cartController.addItem(_keranjangList[index].produk!, -1);
-                                                          _kurangKeranjang(
-                                                              item.cartId!);
-                                                        },
-                                                        child: AppIcon(
-                                                            iconSize:
-                                                            Dimensions.iconSize24,
-                                                            iconColor:
-                                                            AppColors.redColor,
-                                                            backgroundColor:
-                                                            Colors.white,
-                                                            icon: Icons.remove),
+                                                      Row(
+                                                        children: [
+                                                          GestureDetector(
+                                                            onTap: () {
+                                                              var produkIndex =
+                                                                  item.productId!;
+                                                              if (produkIndex >=
+                                                                  0) {
+                                                                Get.toNamed(RouteHelper
+                                                                    .getProdukDetail(
+                                                                        produkIndex));
+                                                              }
+                                                            },
+                                                            child: Container(
+                                                              width: Dimensions
+                                                                      .height20 *
+                                                                  4,
+                                                              height: Dimensions
+                                                                      .height20 *
+                                                                  4,
+                                                              margin: EdgeInsets.only(
+                                                                  top: Dimensions
+                                                                      .height10),
+                                                              decoration: BoxDecoration(
+                                                                  image: DecorationImage(
+                                                                      fit: BoxFit
+                                                                          .cover,
+                                                                      image: AssetImage(
+                                                                          "assets/images/coffee.jpg")),
+                                                                  borderRadius:
+                                                                      BorderRadius.circular(
+                                                                          Dimensions
+                                                                              .radius20),
+                                                                  color: Colors
+                                                                      .white),
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                              width: Dimensions
+                                                                  .width10),
+                                                          ExcludeFocus(
+                                                            child: Container(
+                                                              height: Dimensions
+                                                                      .height20 *
+                                                                  5,
+                                                              width: Dimensions
+                                                                      .width45 *
+                                                                  3,
+                                                              child: Column(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceEvenly,
+                                                                children: [
+                                                                  BigText(
+                                                                    text: item
+                                                                        .productName!,
+                                                                    size: Dimensions
+                                                                            .font26 /
+                                                                        1.5,
+                                                                  ),
+                                                                  PriceText(
+                                                                    text: CurrencyFormat
+                                                                        .convertToIdr(
+                                                                            item.price,
+                                                                            0),
+                                                                    size: Dimensions
+                                                                        .font16,
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
                                                       ),
-                                                      BigText(
-                                                        text: item
-                                                            .jumlahMasukKeranjang
-                                                            .toString(),
-                                                        size: Dimensions.font26 / 1.5,
-                                                      ), //produk.inCartItems.toString()),
-                                                      GestureDetector(
-                                                        onTap: () {
-                                                          //cartController.addItem(_keranjangList[index].produk!, 1);
-                                                          _jumlahKeranjang(
-                                                              item.cartId!);
-                                                        },
-                                                        child: AppIcon(
-                                                            iconSize:
-                                                            Dimensions.iconSize24,
-                                                            iconColor:
-                                                            AppColors.redColor,
-                                                            backgroundColor:
-                                                            Colors.white,
-                                                            icon: Icons.add),
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .end,
+                                                        children: [
+                                                          GestureDetector(
+                                                            onTap: () {
+                                                              _hapusKeranjang(
+                                                                  item.cartId!);
+                                                            },
+                                                            child: AppIcon(
+                                                                iconSize: Dimensions
+                                                                    .iconSize24,
+                                                                iconColor:
+                                                                    AppColors
+                                                                        .redColor,
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .white,
+                                                                icon: Icons
+                                                                    .delete),
+                                                          ),
+                                                          Container(
+                                                            width: Dimensions
+                                                                    .width45 *
+                                                                3,
+                                                            padding: EdgeInsets.only(
+                                                                left: Dimensions
+                                                                    .width10,
+                                                                right: Dimensions
+                                                                    .width10),
+                                                            decoration: BoxDecoration(
+                                                                border: Border.all(
+                                                                    color: AppColors
+                                                                        .buttonBackgroundColor),
+                                                                borderRadius:
+                                                                    BorderRadius.circular(
+                                                                        Dimensions
+                                                                            .radius20),
+                                                                color: Colors
+                                                                    .white),
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              children: [
+                                                                GestureDetector(
+                                                                  onTap: () {
+                                                                    //produk.setQuantity(false);
+                                                                    //cartController.addItem(_keranjangList[index].produk!, -1);
+                                                                    _kurangKeranjang(
+                                                                        item.cartId!);
+                                                                  },
+                                                                  child: AppIcon(
+                                                                      iconSize:
+                                                                          Dimensions
+                                                                              .iconSize24,
+                                                                      iconColor:
+                                                                          AppColors
+                                                                              .redColor,
+                                                                      backgroundColor:
+                                                                          Colors
+                                                                              .white,
+                                                                      icon: Icons
+                                                                          .remove),
+                                                                ),
+                                                                BigText(
+                                                                  text: item
+                                                                      .jumlahMasukKeranjang
+                                                                      .toString(),
+                                                                  size: Dimensions
+                                                                          .font26 /
+                                                                      1.5,
+                                                                ), //produk.inCartItems.toString()),
+                                                                GestureDetector(
+                                                                  onTap: () {
+                                                                    //cartController.addItem(_keranjangList[index].produk!, 1);
+                                                                    _jumlahKeranjang(
+                                                                        item.cartId!);
+                                                                  },
+                                                                  child: AppIcon(
+                                                                      iconSize:
+                                                                          Dimensions
+                                                                              .iconSize24,
+                                                                      iconColor:
+                                                                          AppColors
+                                                                              .redColor,
+                                                                      backgroundColor:
+                                                                          Colors
+                                                                              .white,
+                                                                      icon: Icons
+                                                                          .add),
+                                                                )
+                                                              ],
+                                                            ),
+                                                          )
+                                                        ],
                                                       )
                                                     ],
                                                   ),
                                                 )
                                               ],
-                                            )
-                                          ],
-                                        ),
-                                      );
-                                    }),
-                              ],
-                            );
-                          });
-                    }),
-                  ),
-                )),
-            // Positioned(
-            //     top: Dimensions.height20 * 5,
-            //     left: Dimensions.width20,
-            //     right: Dimensions.width20,
-            //     bottom: 0,
-            //     child: Container(
-            //       margin: EdgeInsets.only(top: Dimensions.height15),
-            //       child: MediaQuery.removePadding(
-            //         context: context,
-            //         removeTop: true,
-            //         child:
-            //             GetBuilder<CartController>(builder: (cartController) {
-            //           var _keranjangList = cartController.getItems;
-            //           return ListView.builder(
-            //               itemCount: cartController.getItems.length,
-            //               itemBuilder: (_, index) {
-            //                 String currentMerchantName = cartController
-            //                     .merchantKeranjangList[index].merchantName!;
-            //                 List merchantItems = cartController
-            //                     .keranjangList
-            //                     .where((item) =>
-            //                         item.merchantName == currentMerchantName)
-            //                     .toList();
-            //                 print(merchantItems);
-            //
-            //                 return ExpansionTile(
-            //                   title: Text(currentMerchantName),
-            //                   children: [
-            //                     ListView.builder(
-            //                         shrinkWrap: true,
-            //                         physics: ClampingScrollPhysics(),
-            //                         itemCount: merchantItems.length,
-            //                         itemBuilder: (_, index) {
-            //                           CartModel item = merchantItems[index];
-            //                           print(merchantItems);
-            //                           return Container(
-            //                             width: double.maxFinite,
-            //                             height: 150,
-            //                             margin: EdgeInsets.only(
-            //                                 bottom: Dimensions.height10 / 2,
-            //                                 top: Dimensions.height10 / 2),
-            //                             padding: EdgeInsets.only(
-            //                                 left: Dimensions.width20,
-            //                                 right: Dimensions.width20),
-            //                             decoration: BoxDecoration(
-            //                                 border: Border.all(
-            //                                     color: AppColors.buttonBackgroundColor),
-            //                                 borderRadius: BorderRadius.circular(
-            //                                     Dimensions.radius20),
-            //                                 color: Colors.white),
-            //                             child: Column(
-            //                               children: [
-            //                                 Row(
-            //                                   children: [
-            //                                     GestureDetector(
-            //                                       onTap: () {
-            //                                         var produkIndex =
-            //                                         item.productId!;
-            //                                         if (produkIndex >= 0) {
-            //                                           Get.toNamed(
-            //                                               RouteHelper.getProdukDetail(
-            //                                                   produkIndex));
-            //                                         }
-            //                                       },
-            //                                       child: Container(
-            //                                         width: Dimensions.height20 * 5,
-            //                                         height: Dimensions.height20 * 5,
-            //                                         margin: EdgeInsets.only(
-            //                                             top: Dimensions.height10),
-            //                                         decoration: BoxDecoration(
-            //                                             image: DecorationImage(
-            //                                                 fit: BoxFit.cover,
-            //                                                 image: AssetImage(
-            //                                                     "assets/images/coffee.jpg")),
-            //                                             borderRadius:
-            //                                             BorderRadius.circular(
-            //                                                 Dimensions.radius20),
-            //                                             color: Colors.white),
-            //                                       ),
-            //                                     ),
-            //                                     SizedBox(width: Dimensions.width10),
-            //                                     ExcludeFocus(
-            //                                       child: Container(
-            //                                         height: Dimensions.height20 * 5,
-            //                                         width: Dimensions.width45 * 4,
-            //                                         child: Column(
-            //                                           crossAxisAlignment:
-            //                                           CrossAxisAlignment.start,
-            //                                           mainAxisAlignment:
-            //                                           MainAxisAlignment.spaceEvenly,
-            //                                           children: [
-            //                                             BigText(
-            //                                               text: item.productName!,
-            //                                               size: Dimensions.font26 / 1.5,
-            //                                             ),
-            //                                             PriceText(
-            //                                               text: CurrencyFormat
-            //                                                   .convertToIdr(
-            //                                                   item.price, 0),
-            //                                               size: Dimensions.font16,
-            //                                             ),
-            //                                           ],
-            //                                         ),
-            //                                       ),
-            //                                     ),
-            //                                   ],
-            //                                 ),
-            //                                 Row(
-            //                                   mainAxisAlignment: MainAxisAlignment.end,
-            //                                   children: [
-            //                                     GestureDetector(
-            //                                       onTap: () {
-            //                                         //produk.setQuantity(false);
-            //                                         //cartController.addItem(_keranjangList[index].produk!, -1);
-            //                                         _hapusKeranjang(item.cartId!);
-            //                                         _update();
-            //                                       },
-            //                                       child: AppIcon(
-            //                                           iconSize: Dimensions.iconSize24,
-            //                                           iconColor: AppColors.redColor,
-            //                                           backgroundColor: Colors.white,
-            //                                           icon: Icons.delete),
-            //                                     ),
-            //                                     Container(
-            //                                       width: Dimensions.width45 * 3,
-            //                                       padding: EdgeInsets.only(
-            //                                           left: Dimensions.width10,
-            //                                           right: Dimensions.width10),
-            //                                       decoration: BoxDecoration(
-            //                                           border: Border.all(
-            //                                               color: AppColors
-            //                                                   .buttonBackgroundColor),
-            //                                           borderRadius:
-            //                                           BorderRadius.circular(
-            //                                               Dimensions.radius20),
-            //                                           color: Colors.white),
-            //                                       child: Row(
-            //                                         mainAxisAlignment:
-            //                                         MainAxisAlignment.spaceBetween,
-            //                                         children: [
-            //                                           GestureDetector(
-            //                                             onTap: () {
-            //                                               //produk.setQuantity(false);
-            //                                               //cartController.addItem(_keranjangList[index].produk!, -1);
-            //                                               _kurangKeranjang(
-            //                                                   item.cartId!);
-            //                                             },
-            //                                             child: AppIcon(
-            //                                                 iconSize:
-            //                                                 Dimensions.iconSize24,
-            //                                                 iconColor:
-            //                                                 AppColors.redColor,
-            //                                                 backgroundColor:
-            //                                                 Colors.white,
-            //                                                 icon: Icons.remove),
-            //                                           ),
-            //                                           BigText(
-            //                                             text: item
-            //                                                 .jumlahMasukKeranjang
-            //                                                 .toString(),
-            //                                             size: Dimensions.font26 / 1.5,
-            //                                           ), //produk.inCartItems.toString()),
-            //                                           GestureDetector(
-            //                                             onTap: () {
-            //                                               //cartController.addItem(_keranjangList[index].produk!, 1);
-            //                                               _jumlahKeranjang(
-            //                                                   item.cartId!);
-            //                                             },
-            //                                             child: AppIcon(
-            //                                                 iconSize:
-            //                                                 Dimensions.iconSize24,
-            //                                                 iconColor:
-            //                                                 AppColors.redColor,
-            //                                                 backgroundColor:
-            //                                                 Colors.white,
-            //                                                 icon: Icons.add),
-            //                                           )
-            //                                         ],
-            //                                       ),
-            //                                     )
-            //                                   ],
-            //                                 )
-            //                               ],
-            //                             ),
-            //                           );
-            //                         }),
-            //                   ],
-            //                 );
-            //               });
-            //         }),
-            //       ),
-            //     ))
-          ],
-        ),
-        bottomNavigationBar: GetBuilder<CartController>(
-          builder: (cartController) {
-            return Column(
-              mainAxisSize: MainAxisSize.min,
+                                            );
+                                          }),
+                                    ],
+                                  ),
+                                );
+                              });
+                        }),
+                      )),
+                )
+              ],
+            )
+          : Stack(
               children: [
-                Container(
-                  height: Dimensions.height45 * 2,
-                  padding: EdgeInsets.only(
-                      top: Dimensions.height10,
-                      bottom: Dimensions.height10,
-                      left: Dimensions.width20,
-                      right: Dimensions.width20),
+                Positioned(
+                  top: Dimensions.height30,
+                  left: Dimensions.width20,
+                  right: Dimensions.width20,
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Container(
-                        padding: EdgeInsets.only(
-                            top: Dimensions.height10,
-                            bottom: Dimensions.height10,
-                            left: Dimensions.width20,
-                            right: Dimensions.width20),
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                color: AppColors.buttonBackgroundColor),
-                            borderRadius:
-                                BorderRadius.circular(Dimensions.radius20),
-                            color: Colors.white),
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              width: Dimensions.width10 / 2,
-                            ),
-                            PriceText(
-                              text: CurrencyFormat.convertToIdr(
-                                  calculateTotal(), 0),
-                              size: Dimensions.font16,
-                            ),
-                            SizedBox(
-                              width: Dimensions.width10 / 2,
-                            ),
-                          ],
+                      GestureDetector(
+                        onTap: () {
+                          // Get.toNamed(RouteHelper.getInitial());
+                          Get.back();
+                        },
+                        child: AppIcon(
+                          icon: Icons.arrow_back,
+                          iconColor: AppColors.redColor,
+                          backgroundColor: Colors.white,
+                          iconSize: Dimensions.iconSize24,
                         ),
                       ),
-                      Container(
-                        padding: EdgeInsets.only(
-                            top: Dimensions.height10,
-                            bottom: Dimensions.height10,
-                            left: Dimensions.width20,
-                            right: Dimensions.width20),
-                        child: GestureDetector(
-                            onTap: () {},
-                            child: Row(children: [
-                              BigText(
-                                text: "Checkout",
-                                color: Colors.white,
-                                size: Dimensions.height15,
-                              ),
-                            ])),
-                        decoration: BoxDecoration(
-                            borderRadius:
-                                BorderRadius.circular(Dimensions.radius20),
-                            color: AppColors.redColor),
+                      SizedBox(
+                        width: Dimensions.width20,
+                      ),
+                      BigText(
+                        text: "Keranjang",
+                        size: Dimensions.font20,
                       ),
                     ],
                   ),
                 ),
+
+                Positioned(
+                  top: Dimensions.height30 * 5,
+                  left: Dimensions.width20,
+                  right: Dimensions.width20,
+                  bottom: 0,
+                  child: Container(
+                    child: Center(
+                      child: Column(
+                        children: [
+                          Container(
+                            height: Dimensions.height45*5,
+                            width: Dimensions.width45*5,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(Radius.circular(
+                                    Dimensions.radius15)),
+                                image: DecorationImage(
+                                    fit: BoxFit.fill,
+                                    image: AssetImage(
+                                        "assets/images/keranjang_kosong.png"))),
+                          ),
+                          BigText(text: "Keranjang Kosong")
+                        ],
+                      ),
+                    )
+                  ),
+                )
               ],
-            );
-          },
-        ));
+            ),
+
+      bottomNavigationBar:
+      !_cekKeranjang ?
+      GetBuilder<CartController>(
+        builder: (cartController) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                height: Dimensions.height45 * 2,
+                padding: EdgeInsets.only(
+                    top: Dimensions.height10,
+                    bottom: Dimensions.height10,
+                    left: Dimensions.width20,
+                    right: Dimensions.width20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.only(
+                          top: Dimensions.height10,
+                          bottom: Dimensions.height10,
+                          left: Dimensions.width20,
+                          right: Dimensions.width20),
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              color: AppColors.buttonBackgroundColor),
+                          borderRadius:
+                              BorderRadius.circular(Dimensions.radius20),
+                          color: Colors.white),
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            width: Dimensions.width10 / 2,
+                          ),
+                          PriceText(
+                            text: CurrencyFormat.convertToIdr(
+                                calculateTotal(), 0),
+                            size: Dimensions.font16,
+                          ),
+                          SizedBox(
+                            width: Dimensions.width10 / 2,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(
+                          top: Dimensions.height10,
+                          bottom: Dimensions.height10,
+                          left: Dimensions.width20,
+                          right: Dimensions.width20),
+                      child: GestureDetector(
+                          onTap: () {
+                            Get.toNamed(RouteHelper.getPembelianPage());
+                          },
+                          child: Row(children: [
+                            BigText(
+                              text: "Checkout",
+                              color: Colors.white,
+                              size: Dimensions.height15,
+                            ),
+                          ])),
+                      decoration: BoxDecoration(
+                          borderRadius:
+                              BorderRadius.circular(Dimensions.radius20),
+                          color: AppColors.redColor),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
+        },
+      ) :
+          SizedBox(),
+    );
   }
+
+  void onMerchantClicked(String merchantName, bool value) {
+    var controller = Get.find<CartController>();
+    var merchantItems = controller.merchantKeranjangList.firstWhere(
+      (element) => element.namaMerchant == merchantName,
+      orElse: () => null,
+    );
+    if (merchantItems != null) {
+      for (var item in merchantItems.items) {
+        item.isChecked = value;
+      }
+    }
+  }
+
+  void onItemClicked(String merchantName, CartModel item, bool value) {
+    var controller = Get.find<CartController>();
+    var merchantItems = controller.merchantKeranjangList.firstWhere(
+      (element) => element.namaMerchant == merchantName,
+      orElse: () => null,
+    );
+    if (merchantItems != null) {
+      var currentItem = merchantItems.items.firstWhere(
+        (element) => element.id == item.id,
+        orElse: () => null,
+      );
+      if (currentItem != null) {
+        currentItem.isChecked = value ?? false;
+      }
+    }
+  }
+
+  onAllClicked(ckbItem) {
+    final newValue = ckbItem;
+    setState(() {
+      ckbItem = newValue;
+      // checkBoxList.forEach((element){
+      //   element.value = newValue;
+      // });
+      allChecked = ckbItem ?? false;
+      print(allChecked);
+    });
+  }
+
+  // onItemClicked(CheckBoxModal ckbItem){
+  //   final newValue = !ckbItem.value;
+  //   setState(() {
+  //     ckbItem.value = newValue;
+  //
+  //     if(!newValue){
+  //       allChecked.value = false;
+  //     }else{
+  //       final allListChecked = checkBoxList.every((element) => element.value);
+  //       allChecked.value = allListChecked;
+  //     }
+  //   });
+  // }
+}
+
+class CheckBoxModal {
+  String title;
+  bool value;
+
+  CheckBoxModal({required this.title, this.value = false});
 }

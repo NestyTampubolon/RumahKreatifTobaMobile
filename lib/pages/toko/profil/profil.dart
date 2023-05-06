@@ -9,6 +9,8 @@ import '../../../utils/colors.dart';
 import '../../../utils/dimensions.dart';
 import '../../../widgets/app_icon.dart';
 import 'package:get/get.dart';
+
+import '../../../widgets/expandable_text_widget.dart';
 class Profil extends StatelessWidget {
   const Profil({Key? key}) : super(key: key);
 
@@ -72,11 +74,19 @@ class Profil extends StatelessWidget {
                               SizedBox(
                                 height: Dimensions.height20,
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   BigText(text: "Deskripsi Toko", color: AppColors.signColor, size: Dimensions.font16),
-                                  BigText(text: profilToko[0].deskripsi_toko.toString(), size: Dimensions.font16 ),
+                                  Container(
+                                    margin: EdgeInsets.only(
+                                        left: Dimensions.width20, right: Dimensions.width20),
+                                    child: SingleChildScrollView(
+                                      child: ExpandableTextWidget(
+                                          text: profilToko[0].deskripsi_toko.toString()),
+                                    ),
+                                  ),
                                 ],
                               ),
                               SizedBox(
@@ -94,6 +104,7 @@ class Profil extends StatelessWidget {
                               ),
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   BigText(text: "Gambar Toko", color: AppColors.signColor, size: Dimensions.font16),
                                   Container(

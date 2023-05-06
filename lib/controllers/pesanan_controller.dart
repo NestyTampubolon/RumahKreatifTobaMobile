@@ -11,6 +11,7 @@ import '../base/show_custom_message.dart';
 import '../models/response_model.dart';
 import 'package:get/get.dart';
 
+import '../pages/pesanan/pesanan_page.dart';
 import '../utils/app_constants.dart';
 
 class PesananController extends GetxController {
@@ -120,7 +121,7 @@ class PesananController extends GetxController {
     _pickedFile = await _picker.getImage(source: ImageSource.gallery);
     update();
   }
-  Future<bool> postBuktiPembayaran(List<int> purchaseId) async {
+  Future<bool> postBuktiPembayaran(int purchaseId) async {
     _isLoading = true;
     update();
     bool success = false;
@@ -151,31 +152,29 @@ class PesananController extends GetxController {
     return success;
   }
 
-  Future<List<http.StreamedResponse>> updateProfile(List<int> purchaseId, PickedFile? data) async {
+  Future<List<http.StreamedResponse>> updateProfile(int purchaseId, PickedFile? data) async {
     List<http.StreamedResponse> responses = [];
 
-    for (int i = 0; i < purchaseId.length; i++) {
-      var item = purchaseId[i];
-      http.MultipartRequest request = http.MultipartRequest(
-          'POST',
-          Uri.parse(AppConstants.BASE_URL+AppConstants.BUKTI_PEMBAYARAN)
-      );
-      if (GetPlatform.isMobile && data != null) {
-        File _file = File(data.path);
-        request.files.add(http.MultipartFile(
-            'proof_of_payment_image',
-            _file.readAsBytes().asStream(),
-            _file.lengthSync(),
-            filename: _file.path.split('/').last
-        ));
-      }
-      request.fields['purchase_id'] = item.toString();
-      http.StreamedResponse response = await request.send();
-      if (response.statusCode == 200) {
-        print("Uploaded!");
-      }
-      responses.add(response);
+    http.MultipartRequest request = http.MultipartRequest(
+        'POST',
+        Uri.parse(AppConstants.BASE_URL+AppConstants.BUKTI_PEMBAYARAN)
+    );
+    if (GetPlatform.isMobile && data != null) {
+      File _file = File(data.path);
+      request.files.add(http.MultipartFile(
+          'proof_of_payment_image',
+          _file.readAsBytes().asStream(),
+          _file.lengthSync(),
+          filename: _file.path.split('/').last
+      ));
     }
+    request.fields['purchase_id'] = purchaseId.toString();
+    http.StreamedResponse response = await request.send();
+    if (response.statusCode == 200) {
+      Get.to(PesananPage());
+      print("Uploaded!");
+    }
+    responses.add(response);
 
     return responses;
   }

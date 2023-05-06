@@ -67,12 +67,20 @@ class _PasswordTokoPageState extends State<PasswordTokoPage> {
                     Row(
                       children: [
                         GestureDetector(
-                          onTap: () {
+                          onTap: (){
                             Get.to(
                                   () => HomePage(initialIndex: 3),
                             );
                           },
-                          child: AppIcon(icon: Icons.arrow_back),
+                          child: Container(
+                            width: Dimensions.height45,
+                            height: Dimensions.height45,
+                            child: Icon(
+                              Icons.arrow_back,
+                              color: AppColors.redColor,
+                              size: Dimensions.iconSize24,
+                            ),
+                          ),
                         ),
                         Container(
                           width: 250,
@@ -118,7 +126,7 @@ class _PasswordTokoPageState extends State<PasswordTokoPage> {
               alignment: Alignment.topLeft,
               padding: EdgeInsets.all(10),
               child: SmallText(
-                text: " * Pastikan password yang anda masukkan benar! ",
+                text: " * Pastikan password yang Anda masukkan benar!",
                 size: 14,
               ),
             ),

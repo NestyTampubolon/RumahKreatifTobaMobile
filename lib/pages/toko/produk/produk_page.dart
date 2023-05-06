@@ -2,11 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rumah_kreatif_toba/controllers/categories_controller.dart';
 import 'package:rumah_kreatif_toba/pages/toko/produk/tambahproduk_page.dart';
+import 'package:rumah_kreatif_toba/pages/toko/produk/ubahproduk_page.dart';
 import 'package:rumah_kreatif_toba/utils/colors.dart';
 import 'package:rumah_kreatif_toba/widgets/price_text.dart';
 import 'package:rumah_kreatif_toba/widgets/small_text.dart';
 import 'package:rumah_kreatif_toba/widgets/tittle_text.dart';
 import 'package:get/get.dart';
+import '../../../base/show_custom_message.dart';
+import '../../../controllers/auth_controller.dart';
 import '../../../controllers/popular_produk_controller.dart';
 import '../../../utils/dimensions.dart';
 import '../../../widgets/big_text.dart';
@@ -23,15 +26,36 @@ class _ProdukPageState extends State<ProdukPage> {
   @override
   Widget build(BuildContext context) {
     Get.find<PopularProdukController>().getProdukList();
-
+    Get.find<CategoriesController>().getKategoriList();
     Future<void> _kategorilist() async {
       var controller = Get.find<CategoriesController>();
-      controller
-          .getKategoriList()
-          .then((status) async {
+      controller.getKategoriList().then((status) async {
         Get.to(TambahProdukPage());
       });
+    }
 
+    Future<void> _hapusProduk(int product_id) async {
+      var cartController = Get.find<PopularProdukController>();
+      cartController.hapusProduk(product_id).then((status) {
+        if (status.isSuccess) {
+        } else {
+          showCustomSnackBar(status.message);
+        }
+      });
+    }
+
+    Future<void> _detailProdukList(int product_id) async {
+      bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
+      if (_userLoggedIn) {
+        var controller = Get.find<PopularProdukController>();
+        controller.detailProduk(product_id).then((status) async {
+          if (status.isSuccess) {
+            Get.to(UbahProdukPage());
+          } else {
+            showCustomSnackBar(status.message);
+          }
+        });
+      }
     }
 
     return Scaffold(
@@ -54,14 +78,14 @@ class _ProdukPageState extends State<ProdukPage> {
                       ),
                     ),
                     GestureDetector(
-                      onTap: (){
+                      onTap: () {
                         _kategorilist();
                       },
-                      child:  Container(
+                      child: Container(
                           child: Icon(
-                            Icons.add,
-                            color: AppColors.redColor,
-                          )),
+                        Icons.add,
+                        color: AppColors.redColor,
+                      )),
                     )
                   ],
                 ),
@@ -72,11 +96,18 @@ class _ProdukPageState extends State<ProdukPage> {
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: controller.daftarProdukList.length,
                   shrinkWrap: true,
-                  itemBuilder: (_, index)  {
+                  itemBuilder: (_, index) {
                     return Container(
-                      width: Dimensions.screenWidth/1.2,
-                      padding: EdgeInsets.only(left: Dimensions.width20, right: Dimensions.width20, bottom: Dimensions.height10),
-                      margin: EdgeInsets.only(left: Dimensions.width20, right: Dimensions.width20, bottom: Dimensions.height10),
+                      width: Dimensions.screenWidth / 1.2,
+                      padding: EdgeInsets.only(
+                        left: Dimensions.width20,
+                        right: Dimensions.width20,
+                        bottom: Dimensions.height10,
+                      ),
+                      margin: EdgeInsets.only(
+                          left: Dimensions.width20,
+                          right: Dimensions.width20,
+                          bottom: Dimensions.height10),
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(15),
@@ -91,95 +122,91 @@ class _ProdukPageState extends State<ProdukPage> {
                       child: Column(
                         children: [
                           Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Container(
                                 width: Dimensions.height20 * 4,
                                 height: Dimensions.height20 * 4,
                                 margin: EdgeInsets.only(
-                                    top: Dimensions.height10, right: Dimensions.width10),
+                                    top: Dimensions.height10,
+                                    right: Dimensions.width10),
                                 decoration: BoxDecoration(
                                     image: DecorationImage(
                                         fit: BoxFit.cover,
-                                        image: AssetImage("assets/images/coffee.jpg")),
-                                    borderRadius:
-                                    BorderRadius.circular(Dimensions.radius20),
+                                        image: AssetImage(
+                                            "assets/images/coffee.jpg")),
+                                    borderRadius: BorderRadius.circular(
+                                        Dimensions.radius20),
                                     color: Colors.white),
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Container(
-                                    width : Dimensions.width45*5,
+                                    width: Dimensions.width45 * 4.7,
                                     child: BigText(
                                       text: controller
-                                          .daftarProdukList[index]
-                                          .productName
+                                          .daftarProdukList[index].productName
                                           .toString(),
                                       size: Dimensions.font20,
                                     ),
                                   ),
                                   PriceText(
-                                    text: CurrencyFormat.convertToIdr(controller
-                                        .daftarProdukList[index]
-                                        .price, 0),
+                                    text: CurrencyFormat.convertToIdr(
+                                        controller
+                                            .daftarProdukList[index].price,
+                                        0),
                                     color: AppColors.redColor,
                                     size: Dimensions.font16,
                                   ),
-                                  SmallText(text: "Stok : ${controller
-                                      .daftarProdukList[index]
-                                      .stok
-                                      .toString()}")
+                                  SmallText(
+                                      text:
+                                          "Stok : ${controller.daftarProdukList[index].stok.toString()}")
                                 ],
-                              )
+                              ),
+                              PopupMenuButton(
+                                itemBuilder: (BuildContext context) {
+                                  return [
+                                    PopupMenuItem(
+                                      child: TextButton(
+                                        onPressed: () {
+                                          _detailProdukList(controller
+                                              .daftarProdukList[index]
+                                              .productId);
+                                        },
+                                        child: Text( 'Ubah'),
+                                      ),
+                                    ),
+                                    PopupMenuItem(
+                                      child: TextButton(
+                                        onPressed: () {
+                                          _hapusProduk(controller
+                                              .daftarProdukList[index]
+                                              .productId);
+                                        },
+                                        child: Text('Hapus'),
+                                      ),
+                                    ),
+                                  ];
+                                },
+                                offset: Offset(0,
+                                    30), // set the offset to show the menu in front of the icon
+                                child: GestureDetector(
+                                  child: Container(
+                                    child: Icon(Icons.more_vert_outlined),
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
-                          Container(
-                            margin: EdgeInsets.only(top: Dimensions.height20),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                    width: Dimensions.width45*2.5,
-                                    height: Dimensions.height30,
-                                    decoration: BoxDecoration(
-                                      borderRadius:
-                                      BorderRadius.circular(Dimensions.radius15),
-                                      color: Colors.white.withOpacity(0.0),
-                                      border: Border.all(color: AppColors.redColor),
-                                    ),
-                                    child: Center(
-                                      child: TittleText(text: "Ubah Harga", size: Dimensions.font16/1.5,),
-                                    )
-                                ),
-                                Container(
-                                    width: Dimensions.width45*2.5,
-                                    height: Dimensions.height30,
-                                    decoration: BoxDecoration(
-                                      borderRadius:
-                                      BorderRadius.circular(Dimensions.radius15),
-                                      color: Colors.white.withOpacity(0.0),
-                                      border: Border.all(color: AppColors.redColor),
-                                    ),
-                                    child: Center(
-                                      child: TittleText(text: "Ubah Stok", size: Dimensions.font16/1.5,),
-                                    )
-                                ),
-                                Container(
-                                  child: Icon(
-                                      Icons.more_vert_outlined
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-
                         ],
                       ),
                     );
                   });
             }),
-            SizedBox(height: Dimensions.height20,)
-
+            SizedBox(
+              height: Dimensions.height20,
+            )
           ],
         ),
       ),

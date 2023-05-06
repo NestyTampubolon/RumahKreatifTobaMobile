@@ -21,20 +21,6 @@ class ProdukController extends GetxController {
   bool _isLoaded = false;
   bool get isLoaded => _isLoaded;
 
-  PickedFile? _pickedFileGambarProduk1;
-  PickedFile? get pickedFileGambarProduk1 => _pickedFileGambarProduk1;
-
-  String? _imagePathGambarProduk1;
-  String? get imagePathGambarProduk1 => _imagePathGambarProduk1;
-
-  final _pickerGambarProduk1 = ImagePicker();
-  Future<void> pickImageGambarProduk1() async {
-    _pickedFileGambarProduk1 =
-    await _pickerGambarProduk1.getImage(source: ImageSource.gallery);
-    update();
-  }
-
-
   PickedFile? _pickedFileFotoMerchant;
   PickedFile? get pickedFileFotoMerchant => _pickedFileFotoMerchant;
 
@@ -117,6 +103,19 @@ class ProdukController extends GetxController {
     return responses;
   }
 
+  PickedFile? _pickedFileGambarProduk1;
+  PickedFile? get pickedFileGambarProduk1 => _pickedFileGambarProduk1;
+
+  String? _imagePathGambarProduk1;
+  String? get imagePathGambarProduk1 => _imagePathGambarProduk1;
+
+  final _pickerGambarProduk1 = ImagePicker();
+  Future<void> pickImageGambarProduk1() async {
+    _pickedFileGambarProduk1 =
+    await _pickerGambarProduk1.getImage(source: ImageSource.gallery);
+    update();
+  }
+
   PickedFile? _pickedFileGambarProduk2;
   PickedFile? get pickedFileGambarProduk2 => _pickedFileGambarProduk2;
 
@@ -163,13 +162,13 @@ class ProdukController extends GetxController {
         _pickedFileGambarProduk3
     );
 
+
     dynamic decodedData;
 
     for (StreamedResponse resp in response) {
       if (resp.statusCode == 200) {
         success = true;
         decodedData = jsonDecode(await resp.stream.bytesToString());
-
         if (decodedData is Map) {
           Map map = decodedData;
           // Your code here
@@ -231,15 +230,168 @@ class ProdukController extends GetxController {
 
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
-      HomeTokoPage(initialIndex: 1);
+      Get.to(HomeTokoPage(initialIndex: 1));
       showCustomSnackBar(
           "Tambah produk berhasil",
           title: "Berhasil");
       print("Uploaded!");
+
     }
     responses.add(response);
     return responses;
   }
+
+
+  //ubah produk
+  PickedFile? _pickedFileGambarUbahProduk1;
+  PickedFile? get pickedFileGambarUbahProduk1 => _pickedFileGambarUbahProduk1;
+
+  String? _imagePathGambarUbahProduk1;
+  String? get imagePathGambarUbahProduk1 => _imagePathGambarUbahProduk1;
+
+  final _pickerGambarUbahProduk1 = ImagePicker();
+  Future<void> pickImageGambarUbahProduk1() async {
+    _pickedFileGambarUbahProduk1 =
+    await _pickerGambarUbahProduk1.getImage(source: ImageSource.gallery);
+    update();
+  }
+
+  PickedFile? _pickedFileGambarUbahProduk2;
+  PickedFile? get pickedFileGambarUbahProduk2 => _pickedFileGambarUbahProduk2;
+
+  String? _imagePathGambarUbahProduk2;
+  String? get imagePathGambarUbahProduk2 => _imagePathGambarUbahProduk2;
+
+  final _pickerGambarUbahProduk2 = ImagePicker();
+  Future<void> pickImageGambarUbahProduk2() async {
+    _pickedFileGambarUbahProduk2  =
+    await _pickerGambarUbahProduk2 .getImage(source: ImageSource.gallery);
+    update();
+  }
+
+
+  PickedFile? _pickedFileGambarUbahProduk3;
+  PickedFile? get pickedFileGambarUbahProduk3 => _pickedFileGambarUbahProduk3;
+
+  String? _imagePathGambarUbahProduk3;
+  String? get imagePathGambarUbahProduk3 => _imagePathGambarUbahProduk3;
+
+  final _pickerGambarUbahProduk3  = ImagePicker();
+  Future<void> pickImageGambarUbahProduk3() async {
+    _pickedFileGambarUbahProduk3 =
+    await _pickerGambarUbahProduk3.getImage(source: ImageSource.gallery);
+    update();
+  }
+
+  Future<bool> ubahProduk(int? product_id, String product_name, String product_description, int price, int heavy, String kategori, int stok) async {
+    _isLoaded = true;
+    update();
+    bool success = false;
+
+    // Send the request
+    List<http.StreamedResponse>? response = (await uploadUbahProduk(
+        product_id,
+        product_name,
+        product_description,
+        price,
+        heavy,
+        kategori,
+        stok,
+        _pickedFileGambarUbahProduk1,
+        _pickedFileGambarUbahProduk2,
+        _pickedFileGambarUbahProduk3
+    )).cast<StreamedResponse>();
+
+
+    dynamic decodedData;
+
+    for (StreamedResponse resp in response) {
+      if (resp.statusCode == 200) {
+        success = true;
+        decodedData = jsonDecode(await resp.stream.bytesToString());
+        if (decodedData is Map) {
+          Map map = decodedData;
+          // Your code here
+          String message = map["message"] ?? "";
+          print(message);
+          _imagePathGambarUbahProduk1 = message;
+        } else {
+          // Handle error
+          print('Error: Response was not a map');
+        }
+        break; // Exit the loop after the first successful response
+      }
+    }
+
+    if (!success) {
+      print('Error: Response status code was not 200');
+    }
+
+    update();
+    return success;
+  }
+
+  Future<List<dynamic>> uploadUbahProduk(
+      int? product_id,
+      String product_name,
+      String product_description,
+      int price,
+      int heavy,
+      String kategori,
+      int stok,
+      PickedFile? GambarProduk1,
+      PickedFile? GambarProduk2,
+      PickedFile? GambarProduk3
+      ) async {
+    List<dynamic> result = [];
+
+    http.MultipartRequest request = http.MultipartRequest(
+        'POST',
+        Uri.parse(AppConstants.BASE_URL + AppConstants.UBAH_PRODUK_URL)
+    );
+
+    if (GetPlatform.isMobile && GambarProduk1 != null && GambarProduk2 != null && GambarProduk3 != null ) {
+      File _fileGambarUbahProduk1 = File(GambarProduk1.path);
+      request.files.add(http.MultipartFile(
+          'product_image[0]',
+          _fileGambarUbahProduk1.readAsBytes().asStream(),
+          _fileGambarUbahProduk1.lengthSync(),
+          filename: _fileGambarUbahProduk1.path.split('/').last
+      ));
+
+      File _fileGambarUbahProduk2 = File(GambarProduk2.path);
+      request.files.add(http.MultipartFile(
+          'product_image[1]',
+          _fileGambarUbahProduk2.readAsBytes().asStream(),
+          _fileGambarUbahProduk2.lengthSync(),
+          filename: _fileGambarUbahProduk2.path.split('/').last
+      ));
+
+      File _fileGambarUbahProduk3 = File(GambarProduk3.path);
+      request.files.add(http.MultipartFile(
+          'product_image[2]',
+          _fileGambarUbahProduk3.readAsBytes().asStream(),
+          _fileGambarUbahProduk3.lengthSync(),
+          filename: _fileGambarUbahProduk3.path.split('/').last
+      ));
+    }
+
+    request.fields['product_id'] = product_id.toString();
+    request.fields['product_name'] = product_name.toString();
+    request.fields['product_description'] = product_description.toString();
+    request.fields['price'] = price.toString();
+    request.fields['heavy'] = heavy.toString();
+    request.fields['kategori'] = kategori.toString();
+    request.fields['stok'] = stok.toString();
+
+    http.StreamedResponse response = await request.send();
+    result.add(response.statusCode);
+    result.add(await response.stream.bytesToString());
+
+    return result;
+  }
+
+
 
 
 }

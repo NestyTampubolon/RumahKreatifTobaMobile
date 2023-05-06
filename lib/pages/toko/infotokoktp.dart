@@ -27,7 +27,6 @@ class _TokoKTPState extends State<TokoKTP> {
 
     Future<void> verifikasiToko() async {
       var userController = Get.find<UserController>().usersList[0];
-      await userController.getUser();
 
       var controller = Get.find<TokoController>();
       controller.verifikasiToko(userController.id).then((status) async {

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../base/show_custom_message.dart';
 import '../data/repository/pengiriman_repo.dart';
 import '../models/response_model.dart';
+import '../routes/route_helper.dart';
 
 class PengirimanController extends GetxController{
   final PengirimanRepo pengirimanRepo;
@@ -21,7 +22,7 @@ class PengirimanController extends GetxController{
   List<String?> get checkedtypePengiriman => _checkedtypePengiriman;
 
 
-  Future<ResponseModel> beliProduk(int? user_id, List cart_id, List merchant_id, List metode_pembelian, List harga_pembelian, String potongan_pembelian,  String alamat_purchase, String courier_code, String service) async {
+  Future<ResponseModel> beliProduk(int? user_id, List cart_id, int merchant_id, int metode_pembelian, int harga_pembelian, String potongan_pembelian,  String alamat_purchase, String courier_code, String service) async {
     _isLoading = true;
     update();
     Response response = await pengirimanRepo.beliProduk(user_id!, cart_id, merchant_id, metode_pembelian, harga_pembelian, potongan_pembelian, alamat_purchase, courier_code, service);
@@ -29,6 +30,7 @@ class PengirimanController extends GetxController{
     if(response.statusCode == 200){
       showCustomSnackBar("Produk berhasil dibeli",
           title: "Berhasil");
+      Get.offNamed(RouteHelper.getMenungguPembayaranPage());
     }else{
       responseModel = ResponseModel(false, response.statusText!);
       showCustomSnackBar(response.statusText!,

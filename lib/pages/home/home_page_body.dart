@@ -13,8 +13,10 @@ import 'package:rumah_kreatif_toba/widgets/price_text.dart';
 import 'package:rumah_kreatif_toba/widgets/small_text.dart';
 import 'package:rumah_kreatif_toba/widgets/tittle_text.dart';
 
+import '../../utils/app_constants.dart';
 import '../../utils/dimensions.dart';
 import '../../widgets/card_kategori.dart';
+import '../../widgets/card_produk.dart';
 import '../../widgets/currency_format.dart';
 import '../kategori/kategori_produk_detail.dart';
 import 'home_page.dart';
@@ -62,6 +64,12 @@ class _HomePageBodyState extends State<HomePageBody> {
     var kategori;
     Future<void> _getProduk(PopularProdukController produkController) async {
       produkController.getKategoriProdukList(kategori);
+    }
+
+    Future<void> _getProdukList(int product_id) async {
+      var controller = Get.find<PopularProdukController>();
+      controller.detailProduk(product_id).then((status) async {
+      });
     }
 
     return Column(
@@ -181,24 +189,24 @@ class _HomePageBodyState extends State<HomePageBody> {
                 text: "Makanan dan Minuman Terfavorit Untukmu",
               ),
             ),
-            GestureDetector(
-              onTap: () {},
-              child: Container(
-                  width: Dimensions.screenWidth / 4,
-                  height: Dimensions.height45,
-                  margin: EdgeInsets.only(right: Dimensions.width20),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(Dimensions.radius30),
-                    color: AppColors.redColor.withOpacity(0.3),
-                  ),
-                  child: Center(
-                    child: BigText(
-                        text: "Lihat Semua",
-                        size: Dimensions.font20 / 1.5,
-                        color: AppColors.redColor,
-                        fontWeight: FontWeight.bold),
-                  )),
-            ),
+            // GestureDetector(
+            //   onTap: () {},
+            //   child: Container(
+            //       width: Dimensions.screenWidth / 4,
+            //       height: Dimensions.height45,
+            //       margin: EdgeInsets.only(right: Dimensions.width20),
+            //       decoration: BoxDecoration(
+            //         borderRadius: BorderRadius.circular(Dimensions.radius30),
+            //         color: AppColors.redColor.withOpacity(0.3),
+            //       ),
+            //       child: Center(
+            //         child: BigText(
+            //             text: "Lihat Semua",
+            //             size: Dimensions.font20 / 1.5,
+            //             color: AppColors.redColor,
+            //             fontWeight: FontWeight.bold),
+            //       )),
+            // ),
           ],
         ),
         Container(
@@ -210,100 +218,17 @@ class _HomePageBodyState extends State<HomePageBody> {
                 bottom: Dimensions.height10),
             child:
                 GetBuilder<PopularProdukController>(builder: (popularProduk) {
+
               return popularProduk.isLoaded
                   ? ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: 10,
                       itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () {
-                            Get.toNamed(RouteHelper.getProdukDetail(
-                                popularProduk
-                                    .popularProdukList[index].productId));
-                          },
-                          child: Container(
-                            width: 150,
-                            height: 300,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(15),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.3),
-                                    spreadRadius: 1,
-                                    blurRadius: 5,
-                                    offset: Offset(0, 2),
-                                  )
-                                ]),
-                            margin: EdgeInsets.only(
-                                left: Dimensions.width10 / 2,
-                                right: Dimensions.width10,
-                                bottom: Dimensions.height20,
-                                top: Dimensions.height10),
-                            child: GestureDetector(
-                              onTap: () {
-                                Get.toNamed(RouteHelper.getProdukDetail(
-                                    popularProduk
-                                        .popularProdukList[index].productId));
-//                        Get.toNamed(RouteHelper.getProdukDetail(index));
-                              },
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  //image section
-                                  Container(
-                                    height: 120,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(
-                                                Dimensions.radius15),
-                                            topRight: Radius.circular(
-                                                Dimensions.radius15)),
-                                        image: DecorationImage(
-                                            fit: BoxFit.fill,
-                                            image: AssetImage(
-                                                "assets/images/coffee.jpg"))),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.all(10.0),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        TittleText(
-                                          text: popularProduk
-                                              .popularProdukList[index]
-                                              .productName
-                                              .toString(),
-                                          size: Dimensions.font16,
-                                        ),
-                                        SmallText(
-                                          text: popularProduk
-                                              .popularProdukList[index]
-                                              .namaMerchant
-                                              .toString(),
-                                        ),
-                                        PriceText(
-                                          text: CurrencyFormat.convertToIdr(
-                                              popularProduk
-                                                  .popularProdukList[index]
-                                                  .price,
-                                              0),
-                                          color: AppColors.redColor,
-                                          size: Dimensions.font16,
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                  //text container
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
+                        var gambarproduk = popularProduk
+                            .imageProdukList
+                            .where((produk) => produk.productId == popularProduk
+                            .produkMakananMinumanList[index].productId);
+                        return CardProduk(product_id : popularProduk.produkMakananMinumanList[index].productId,productImageName : gambarproduk.single.productImageName, productName : popularProduk.produkMakananMinumanList[index].productName, namaMerchant : popularProduk.produkMakananMinumanList[index].namaMerchant, price: popularProduk.produkMakananMinumanList[index].price, );
                       })
                   : CircularProgressIndicator(
                       color: AppColors.redColor,
@@ -322,24 +247,6 @@ class _HomePageBodyState extends State<HomePageBody> {
                 text: "Pakaian Paling Diminati",
               ),
             ),
-            GestureDetector(
-              onTap: () {},
-              child: Container(
-                  width: Dimensions.screenWidth / 4,
-                  height: Dimensions.height45,
-                  margin: EdgeInsets.only(right: Dimensions.width20),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(Dimensions.radius30),
-                    color: AppColors.redColor.withOpacity(0.3),
-                  ),
-                  child: Center(
-                    child: BigText(
-                        text: "Lihat Semua",
-                        size: Dimensions.font20 / 1.5,
-                        color: AppColors.redColor,
-                        fontWeight: FontWeight.bold),
-                  )),
-            ),
           ],
         ),
         Container(
@@ -354,101 +261,53 @@ class _HomePageBodyState extends State<HomePageBody> {
               return popularProduk.isLoaded
                   ? ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      itemCount: 11,
+                      itemCount: 10,
                       itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () {
-                            Get.toNamed(RouteHelper.getProdukDetail(
-                                popularProduk
-                                    .popularProdukList[index].productId));
-                          },
-                          child: Container(
-                            width: 150,
-                            height: 300,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(15),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.3),
-                                    spreadRadius: 1,
-                                    blurRadius: 5,
-                                    offset: Offset(0, 2),
-                                  )
-                                ]),
-                            margin: EdgeInsets.only(
-                                left: Dimensions.width10 / 2,
-                                right: Dimensions.width10,
-                                bottom: Dimensions.height20,
-                                top: Dimensions.height10),
-                            child: GestureDetector(
-                              onTap: () {
-                                Get.toNamed(RouteHelper.getProdukDetail(
-                                    popularProduk
-                                        .popularProdukList[index].productId));
-//                        Get.toNamed(RouteHelper.getProdukDetail(index));
-                              },
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  //image section
-                                  Container(
-                                    height: 120,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(
-                                                Dimensions.radius15),
-                                            topRight: Radius.circular(
-                                                Dimensions.radius15)),
-                                        image: DecorationImage(
-                                            fit: BoxFit.fill,
-                                            image: AssetImage(
-                                                "assets/images/coffee.jpg"))),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.all(10.0),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        TittleText(
-                                          text: popularProduk
-                                              .popularProdukList[index]
-                                              .productName
-                                              .toString(),
-                                          size: Dimensions.font16,
-                                        ),
-                                        SmallText(
-                                          text: popularProduk
-                                              .popularProdukList[index]
-                                              .namaMerchant
-                                              .toString(),
-                                        ),
-                                        PriceText(
-                                          text: CurrencyFormat.convertToIdr(
-                                              popularProduk
-                                                  .popularProdukList[index]
-                                                  .price,
-                                              0),
-                                          color: AppColors.redColor,
-                                          size: Dimensions.font16,
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                  //text container
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
+                        var gambarproduk = popularProduk
+                            .imageProdukList
+                            .where((produk) => produk.productId == popularProduk
+                            .produkPakaianList[index].productId);
+                        return CardProduk(product_id : popularProduk.produkPakaianList[index].productId,productImageName : gambarproduk.single.productImageName, productName : popularProduk.produkPakaianList[index].productName, namaMerchant : popularProduk.produkPakaianList[index].namaMerchant, price: popularProduk.produkPakaianList[index].price, );
                       })
                   : CircularProgressIndicator(
                       color: AppColors.redColor,
                     );
+            })),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              margin: EdgeInsets.only(left: Dimensions.width20),
+              width: Dimensions.screenWidth / 1.8,
+              child: BigText(
+                text: "Pakaian Terbaru",
+              ),
+            ),
+          ],
+        ),
+        Container(
+            height: Dimensions.height45 * 6,
+            margin: EdgeInsets.only(
+                left: Dimensions.width20,
+                right: Dimensions.width20,
+                top: Dimensions.height10,
+                bottom: Dimensions.height10),
+            child:
+            GetBuilder<PopularProdukController>(builder: (popularProduk) {
+              return popularProduk.isLoaded
+                  ? ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 10,
+                  itemBuilder: (context, index) {
+                    var gambarproduk = popularProduk
+                        .imageProdukList
+                        .where((produk) => produk.productId == popularProduk
+                        .produkTerbaruList[index].productId);
+                    return CardProduk(product_id : popularProduk.produkTerbaruList[index].productId,productImageName : gambarproduk.single.productImageName, productName : popularProduk.produkTerbaruList[index].productName, namaMerchant : popularProduk.produkTerbaruList[index].namaMerchant, price: popularProduk.produkTerbaruList[index].price, );
+                  })
+                  : CircularProgressIndicator(
+                color: AppColors.redColor,
+              );
             })),
 
 //         Container(

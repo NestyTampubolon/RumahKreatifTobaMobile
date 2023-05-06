@@ -28,14 +28,13 @@ class PembelianPage extends StatefulWidget {
 }
 
 class _PembelianPageState extends State<PembelianPage> {
-  List<int> _metodePembelian = List<int>.filled(10, 0);
+
   @override
   Widget build(BuildContext context) {
-
     List<int?> _carId = [];
-    List<int?> _merchantId = [];
-    List<int?> _hargaPembelian = [];
-
+    int _metodePembelian = 1;
+    int _hargaPembelian = 0;
+    int _merchantId = 0;
 
     double calculateTotal() {
       var cartController = Get.find<CartController>();
@@ -47,11 +46,9 @@ class _PembelianPageState extends State<PembelianPage> {
 
       double total = 0.0;
       for (final item in _matchedItems) {
-        if (cartController.getCartCheckedStatus(item.productId)) {
-          _hargaPembelian.add(item.price * item.jumlahMasukKeranjang);
-          total += item.price * item.jumlahMasukKeranjang;
-        }
+        total += item.price * item.jumlahMasukKeranjang;
       }
+
       return total;
     }
 
@@ -61,19 +58,18 @@ class _PembelianPageState extends State<PembelianPage> {
       if (_userLoggedIn) {
         var controller = Get.find<PengirimanController>();
         var userController = Get.find<UserController>().usersList[0];
-        await userController.getUser();
 
-        controller
-            .beliProduk(userController.id, _carId, _merchantId,
-            _metodePembelian, _hargaPembelian, "", "", "", "")
-            .then((status) async {
-          if (status.isSuccess) {
-            print("Berhasil");
-          } else {
-            showCustomSnackBar(status.message);
-          }
-          Get.toNamed(RouteHelper.getMenungguPembayaranPage());
-        });
+
+          controller
+              .beliProduk(userController.id, _carId, _merchantId,
+              _metodePembelian, _hargaPembelian, "", "", "", "")
+              .then((status) async {
+            if (status.isSuccess) {
+
+            } else {
+              showCustomSnackBar(status.message);
+            }
+          });
       }
     }
 
@@ -162,7 +158,6 @@ class _PembelianPageState extends State<PembelianPage> {
                     GetBuilder<CartController>(builder: (cartController) {
                       var _keranjangList = cartController.keranjangList;
                       var groupedKeranjangList = <String, List<CartModel>>{};
-                      var groupedsubTotalList = <String, List<CartModel>>{};
                       var _checkedCartIds = cartController.checkedCartIds;
                       var _matchedItems = _keranjangList
                           .where(
@@ -175,11 +170,32 @@ class _PembelianPageState extends State<PembelianPage> {
                         var merchantName = item.namaMerchant!;
                         if (groupedKeranjangList[merchantName] == null) {
                           groupedKeranjangList[merchantName] = [item];
-                          _merchantId.add(item.merchantId);
+                           _merchantId = item.merchantId;
                         } else {
                           groupedKeranjangList[merchantName]!.add(item);
                         }
                       }
+                      int calculatesubTotal(String merchantName) {
+                        var cartController = Get.find<CartController>();
+                        var _keranjangList =
+                            cartController.keranjangList;
+                        var _checkedCartIds =
+                            cartController.checkedCartIds;
+                        var _matchedItems = _keranjangList
+                            .where((item) =>
+                        _checkedCartIds.contains(item.cartId) &&
+                            item.namaMerchant == merchantName)
+                            .toList();
+
+                        double total = 0.0;
+                        for (final item in _matchedItems) {
+                          total +=
+                              item.price * item.jumlahMasukKeranjang;
+                        }
+
+                        return total.toInt();
+                      }
+
                       return ListView.builder(
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: groupedKeranjangList.length,
@@ -190,25 +206,8 @@ class _PembelianPageState extends State<PembelianPage> {
                             var merchantItems =
                             groupedKeranjangList[merchantName]!;
 
-                            double calculatesubTotal(String merchantName) {
-                              var cartController = Get.find<CartController>();
-                              var _keranjangList =
-                                  cartController.keranjangList;
-                              var _checkedCartIds =
-                                  cartController.checkedCartIds;
-                              var _matchedItems = _keranjangList
-                                  .where((item) =>
-                              _checkedCartIds.contains(item.cartId) &&
-                                  item.namaMerchant == merchantName)
-                                  .toList();
+                            _hargaPembelian = calculatesubTotal(merchantName);
 
-                              double total = 0.0;
-                              for (final item in _matchedItems) {
-                                total +=
-                                    item.price * item.jumlahMasukKeranjang;
-                              }
-                              return total;
-                            }
 
                             return Container(
                               margin: EdgeInsets.only(
@@ -443,103 +442,6 @@ class _PembelianPageState extends State<PembelianPage> {
                                                         Divider(
                                                             color: AppColors
                                                                 .buttonBackgroundColor),
-                                                        // GestureDetector(
-                                                        //     onTap: () => {
-                                                        //       setState(() {
-                                                        //         print("_metodePembelian length: ${_metodePembelian.length}");
-                                                        //         print("merchantIndex: $merchantIndex");
-                                                        //         _metodePembelian[
-                                                        //         merchantIndex] = 1;
-                                                        //         pengiriman = "Ambil Ditempat Rp0";
-                                                        //       }),
-                                                        //       print(
-                                                        //           _metodePembelian),
-                                                        //       Navigator.pop(
-                                                        //           context)
-                                                        //     },
-                                                        //     child: Container(
-                                                        //       padding: EdgeInsets.only(
-                                                        //           top: Dimensions
-                                                        //               .height10,
-                                                        //           bottom: Dimensions
-                                                        //               .height10,
-                                                        //           left: Dimensions
-                                                        //               .width20,
-                                                        //           right: Dimensions
-                                                        //               .width20),
-                                                        //       margin: EdgeInsets.only(
-                                                        //           top: Dimensions
-                                                        //               .height10,
-                                                        //           bottom: Dimensions
-                                                        //               .height20),
-                                                        //       decoration: BoxDecoration(
-                                                        //           border: Border.all(
-                                                        //               color: AppColors
-                                                        //                   .redColor),
-                                                        //           borderRadius:
-                                                        //           BorderRadius.circular(
-                                                        //               Dimensions.radius20 /
-                                                        //                   2),
-                                                        //           color: Colors
-                                                        //               .white),
-                                                        //       child: Row(
-                                                        //           children: [
-                                                        //             BigText(
-                                                        //               text:
-                                                        //               "Ambil Ditempat Rp0",
-                                                        //               size: Dimensions
-                                                        //                   .font16,
-                                                        //             ),
-                                                        //           ]),
-                                                        //     )),
-                                                        // GestureDetector(
-                                                        //   onTap: () => {
-                                                        //     setState(() {
-                                                        //       _metodePembelian[
-                                                        //       merchantIndex] = 2;
-                                                        //     }),
-                                                        //     print(
-                                                        //         _metodePembelian),
-                                                        //     Navigator.pop(
-                                                        //         context)
-                                                        //   },
-                                                        //   child: Container(
-                                                        //     padding: EdgeInsets.only(
-                                                        //         top: Dimensions
-                                                        //             .height10,
-                                                        //         bottom: Dimensions
-                                                        //             .height10,
-                                                        //         left: Dimensions
-                                                        //             .width20,
-                                                        //         right: Dimensions
-                                                        //             .width20),
-                                                        //     margin: EdgeInsets.only(
-                                                        //         top: Dimensions
-                                                        //             .height10,
-                                                        //         bottom: Dimensions
-                                                        //             .height20),
-                                                        //     decoration: BoxDecoration(
-                                                        //         border: Border.all(
-                                                        //             color: AppColors
-                                                        //                 .redColor),
-                                                        //         borderRadius:
-                                                        //         BorderRadius
-                                                        //             .circular(
-                                                        //             Dimensions.radius20 /
-                                                        //                 2),
-                                                        //         color: Colors
-                                                        //             .white),
-                                                        //     child:
-                                                        //     Row(children: [
-                                                        //       BigText(
-                                                        //         text:
-                                                        //         "Pesanan Dikirim",
-                                                        //         size: Dimensions
-                                                        //             .font16,
-                                                        //       ),
-                                                        //     ]),
-                                                        //   ),
-                                                        // ),
                                                         Container(
                                                           height: 200,
                                                           padding: EdgeInsets.only(
@@ -562,8 +464,7 @@ class _PembelianPageState extends State<PembelianPage> {
                                                                             PengirimanController>()
                                                                             .setPaymentIndex(
                                                                             1);
-                                                                        _metodePembelian[
-                                                                        merchantIndex] = 1;
+                                                                         _metodePembelian = 1;
                                                                       });
                                                                   print(
                                                                       _metodePembelian);
@@ -602,18 +503,18 @@ class _PembelianPageState extends State<PembelianPage> {
                                                                           fontSize:
                                                                           Dimensions.font20),
                                                                     ),
-                                                                    subtitle:
-                                                                    Text(
-                                                                      "aa",
-                                                                      maxLines:
-                                                                      1,
-                                                                      overflow:
-                                                                      TextOverflow.ellipsis,
-                                                                      style: TextStyle(
-                                                                          color:
-                                                                          Theme.of(context).disabledColor,
-                                                                          fontSize: Dimensions.font16),
-                                                                    ),
+                                                                    // subtitle:
+                                                                    // Text(
+                                                                    //   "aa",
+                                                                    //   maxLines:
+                                                                    //   1,
+                                                                    //   overflow:
+                                                                    //   TextOverflow.ellipsis,
+                                                                    //   style: TextStyle(
+                                                                    //       color:
+                                                                    //       Theme.of(context).disabledColor,
+                                                                    //       fontSize: Dimensions.font16),
+                                                                    // ),
                                                                     trailing: Get.find<PengirimanController>().paymentIndex ==
                                                                         1
                                                                         ? Icon(
@@ -637,8 +538,7 @@ class _PembelianPageState extends State<PembelianPage> {
                                                                             PengirimanController>()
                                                                             .setPaymentIndex(
                                                                             2);
-                                                                        _metodePembelian[
-                                                                        merchantIndex] = 2;
+                                                                        _metodePembelian = 2;
                                                                       });
                                                                   print(
                                                                       _metodePembelian);
@@ -677,18 +577,18 @@ class _PembelianPageState extends State<PembelianPage> {
                                                                           fontSize:
                                                                           Dimensions.font20),
                                                                     ),
-                                                                    subtitle:
-                                                                    Text(
-                                                                      "aa",
-                                                                      maxLines:
-                                                                      1,
-                                                                      overflow:
-                                                                      TextOverflow.ellipsis,
-                                                                      style: TextStyle(
-                                                                          color:
-                                                                          Theme.of(context).disabledColor,
-                                                                          fontSize: Dimensions.font16),
-                                                                    ),
+                                                                    //subtitle:
+                                                                    // Text(
+                                                                    //   "aa",
+                                                                    //   maxLines:
+                                                                    //   1,
+                                                                    //   overflow:
+                                                                    //   TextOverflow.ellipsis,
+                                                                    //   style: TextStyle(
+                                                                    //       color:
+                                                                    //       Theme.of(context).disabledColor,
+                                                                    //       fontSize: Dimensions.font16),
+                                                                    // ),
                                                                     trailing: Get.find<PengirimanController>().paymentIndex ==
                                                                         2
                                                                         ? Icon(
@@ -737,22 +637,6 @@ class _PembelianPageState extends State<PembelianPage> {
                                             size: Dimensions.height15,
                                           ),
                                         ])),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      BigText(
-                                        text: "Subtotal",
-                                        size: Dimensions.font16,
-                                      ),
-                                      PriceText(
-                                        text: CurrencyFormat.convertToIdr(
-                                            calculatesubTotal(merchantName),
-                                            0),
-                                        size: Dimensions.font16,
-                                      ),
-                                    ],
                                   ),
                                 ],
                               ),
@@ -821,11 +705,10 @@ class _PembelianPageState extends State<PembelianPage> {
                         child: GestureDetector(
                             onTap: () {
                               _beliProduk();
-                              Get.offNamed(RouteHelper.getMenungguPembayaranPage());
                             },
                             child: Row(children: [
                               BigText(
-                                text: "Pilih Pembayaran",
+                                text: "Beli Sekarang",
                                 color: Colors.white,
                                 size: Dimensions.height15,
                               ),
