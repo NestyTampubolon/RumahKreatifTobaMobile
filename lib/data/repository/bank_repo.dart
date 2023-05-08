@@ -11,6 +11,10 @@ class BankRepo{
     required this.sharedPreferences,
   });
 
+  Future<Response> getBankList() async {
+    return await apiClient.getData(AppConstants.DAFTAR_BANK_URL);
+  }
+
   Future<Response> tambahRekening(int user_id, String nama_bank, String nomor_rekening, String atas_nama) async {
     return await apiClient.postData(AppConstants.TAMBAH_REKENING_URL, {"user_id": user_id, "nama_bank": nama_bank, "nomor_rekening": nomor_rekening, "atas_nama": atas_nama});
   }

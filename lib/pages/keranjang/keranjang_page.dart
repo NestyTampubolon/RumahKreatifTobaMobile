@@ -107,15 +107,10 @@ class _KeranjangPageState extends State<KeranjangPage> {
       }
     }
 
-    double calculateTotal() {
-      double total = 0.0;
-      final cartController = Get.find<CartController>();
-      for (final item in cartController.keranjangList) {
-        if (cartController.getCartCheckedStatus(item.productId)) {
-          total += item.price * item.jumlahMasukKeranjang;
-        }
-      }
-      return total;
+    Future<void> _getProdukList(int product_id) async {
+      var controller = Get.find<PopularProdukController>();
+      controller.detailProduk(product_id).then((status) async {
+      });
     }
 
     return Scaffold(
@@ -265,9 +260,7 @@ class _KeranjangPageState extends State<KeranjangPage> {
                                                                     item.productId!;
                                                                 if (produkIndex >=
                                                                     0) {
-                                                                  Get.toNamed(RouteHelper
-                                                                      .getProdukDetail(
-                                                                          produkIndex));
+                                                                  _getProdukList(item.productId!);
                                                                 }
                                                               },
                                                               child: Container(
@@ -537,7 +530,7 @@ class _KeranjangPageState extends State<KeranjangPage> {
                                                             cartController
                                                                 .checkedCartIds
                                                                 .add(item
-                                                                    .cartId);
+                                                                    .productId);
                                                           }
                                                         });
                                                         Get.toNamed(RouteHelper

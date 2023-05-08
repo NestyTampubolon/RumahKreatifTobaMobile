@@ -22,6 +22,13 @@ class _DaftarRekeningState extends State<DaftarRekening> {
   @override
   Widget build(BuildContext context) {
     Get.find<BankController>().getRekeningList();
+
+    @override
+    void initState() {
+      Get.find<BankController>().getRekeningList();
+      super.initState();
+    }
+
     Future<void> _hapusRekening(int rekening_id) async {
       var controller = Get.find<BankController>();
       controller.hapusRekening(rekening_id).then((status) async {

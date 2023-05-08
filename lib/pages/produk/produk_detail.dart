@@ -7,6 +7,7 @@ import 'package:rumah_kreatif_toba/controllers/cart_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/popular_produk_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/wishlist_controller.dart';
 import 'package:rumah_kreatif_toba/pages/keranjang/keranjang_page.dart';
+import 'package:rumah_kreatif_toba/pages/pembelian/beli_langsung_page.dart';
 import 'package:rumah_kreatif_toba/routes/route_helper.dart';
 import 'package:rumah_kreatif_toba/utils/colors.dart';
 import 'package:rumah_kreatif_toba/utils/dimensions.dart';
@@ -466,7 +467,9 @@ class _ProdukDetailState extends State<ProdukDetail> {
                           child: GestureDetector(
                               onTap: () {
                                 if (Get.find<AuthController>().userLoggedIn()) {
-                                  _tambahKeranjang(cartController);
+                                  Get.find<CartController>().items.clear();
+                                  Get.find<CartController>().addItem(daftarproduk,1);
+                                  Get.to(BeliLangsungPage());
                                 } else {
                                   Get.toNamed(RouteHelper.getMasukPage());
                                 }

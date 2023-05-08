@@ -41,6 +41,26 @@ class PengirimanController extends GetxController{
     return responseModel;
   }
 
+  Future<ResponseModel> beliLangsung(int? user_id, int product_id, int metode_pembelian, int jumlah_masuk_keranjang, int harga_pembelian, String potongan_pembelian,  String alamat_purchase, String courier_code, String service) async {
+    _isLoading = true;
+    update();
+    Response response = await pengirimanRepo.beliLangsung(user_id!, product_id,  metode_pembelian, jumlah_masuk_keranjang, harga_pembelian, potongan_pembelian, alamat_purchase, courier_code, service);
+    late ResponseModel responseModel;
+    if(response.statusCode == 200){
+      showCustomSnackBar("Produk berhasil dibeli",
+          title: "Berhasil");
+      Get.offNamed(RouteHelper.getMenungguPembayaranPage());
+    }else{
+      responseModel = ResponseModel(false, response.statusText!);
+      showCustomSnackBar(response.statusText!,
+          title: "Berhasil");
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+
+
   void setPaymentIndex(int index){
     _paymentIndex = index;
     update();

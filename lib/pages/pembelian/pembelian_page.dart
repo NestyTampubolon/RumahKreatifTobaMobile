@@ -7,6 +7,7 @@ import 'package:rumah_kreatif_toba/widgets/small_text.dart';
 import '../../base/show_custom_message.dart';
 import '../../controllers/auth_controller.dart';
 import '../../controllers/cart_controller.dart';
+import '../../controllers/popular_produk_controller.dart';
 import '../../controllers/user_controller.dart';
 import '../../models/cart_models.dart';
 import '../../routes/route_helper.dart';
@@ -41,7 +42,7 @@ class _PembelianPageState extends State<PembelianPage> {
       var _keranjangList = cartController.keranjangList;
       var _checkedCartIds = cartController.checkedCartIds;
       var _matchedItems = _keranjangList
-          .where((item) => _checkedCartIds.contains(item.cartId))
+          .where((item) => _checkedCartIds.contains(item.productId))
           .toList();
 
       double total = 0.0;
@@ -73,6 +74,11 @@ class _PembelianPageState extends State<PembelianPage> {
       }
     }
 
+    Future<void> _getProdukList(int product_id) async {
+      var controller = Get.find<PopularProdukController>();
+      controller.detailProduk(product_id).then((status) async {
+      });
+    }
     return Scaffold(
         body: SingleChildScrollView(
           child: Column(
@@ -161,8 +167,12 @@ class _PembelianPageState extends State<PembelianPage> {
                       var _checkedCartIds = cartController.checkedCartIds;
                       var _matchedItems = _keranjangList
                           .where(
-                              (item) => _checkedCartIds.contains(item.cartId))
+                              (item) => _checkedCartIds.contains(item.productId))
                           .toList();
+
+                      if(_matchedItems.isEmpty){
+
+                      }
 
                       // Group items by merchant name
                       for (var item in _matchedItems) {
@@ -175,6 +185,8 @@ class _PembelianPageState extends State<PembelianPage> {
                           groupedKeranjangList[merchantName]!.add(item);
                         }
                       }
+
+
                       int calculatesubTotal(String merchantName) {
                         var cartController = Get.find<CartController>();
                         var _keranjangList =
@@ -183,7 +195,7 @@ class _PembelianPageState extends State<PembelianPage> {
                             cartController.checkedCartIds;
                         var _matchedItems = _keranjangList
                             .where((item) =>
-                        _checkedCartIds.contains(item.cartId) &&
+                        _checkedCartIds.contains(item.productId) &&
                             item.namaMerchant == merchantName)
                             .toList();
 
@@ -278,9 +290,7 @@ class _PembelianPageState extends State<PembelianPage> {
                                                           item.productId!;
                                                           if (produkIndex >=
                                                               0) {
-                                                            Get.toNamed(RouteHelper
-                                                                .getProdukDetail(
-                                                                produkIndex));
+                                                            _getProdukList(item.productId!);
                                                           }
                                                         },
                                                         child: Container(

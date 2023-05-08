@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
     return [
       PersistentBottomNavBarItem(
         icon: Icon(CupertinoIcons.home),
-        title: ("Home"),
+        title: ("Beranda"),
         activeColorPrimary: AppColors.redColor,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
@@ -50,13 +50,13 @@ class _HomePageState extends State<HomePage> {
       ),
       PersistentBottomNavBarItem(
         icon: Icon(CupertinoIcons.heart),
-        title: ("Wishlist"),
+        title: ("Favorit"),
         activeColorPrimary: AppColors.redColor,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
         icon: Icon(CupertinoIcons.profile_circled),
-        title: ("Account"),
+        title: ("Profil"),
         activeColorPrimary: AppColors.redColor,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
@@ -96,7 +96,7 @@ class _HomePageState extends State<HomePage> {
         duration: Duration(milliseconds: 200),
       ),
       navBarStyle:
-          NavBarStyle.style13, // Choose the nav bar style with this property.
+          NavBarStyle.style14, // Choose the nav bar style with this property.
     );
   }
 }

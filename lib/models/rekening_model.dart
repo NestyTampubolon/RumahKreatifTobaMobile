@@ -4,8 +4,8 @@ class Rekening {
   String? namaBank;
   String? nomorRekening;
   String? atasNama;
-  Null? createdAt;
-  Null? updatedAt;
+  String? createdAt;
+  String? updatedAt;
 
   Rekening(
       {this.rekeningId,

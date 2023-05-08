@@ -31,6 +31,7 @@ class AppConstants {
   static const String JUMLAH_KERANJANG_URL = "tambah";
 
   static const String BELI_PRODUK = "pengiriman";
+  static const String BELI_LANGSUNG = "belilangsung";
   static const String PESANAN_URL = "daftar_pembelian";
   static const String MENUNGGU_PEMBAYARAN_URL = "menunggu_pembayaran";
   static const String HAPUS_PESANAN_URL = "hapuspesanan";
@@ -44,6 +45,8 @@ class AppConstants {
 
   static const String VERIFIKASI_TOKO_URL = "verifikasitoko";
   static const String CEK_VERIFIKASI_URL = "cekverifikasi";
+
+  static const String DAFTAR_BANK_URL = "daftarbank";
 
   static const String TAMBAH_REKENING_URL = "postrekening";
   static const String DAFTAR_REKENING_URL = "daftarrekening";

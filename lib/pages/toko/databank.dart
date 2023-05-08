@@ -161,7 +161,7 @@ class _DataBankPageState extends State<DataBankPage> {
               alignment: Alignment.topLeft,
               padding: EdgeInsets.all(10),
               child: SmallText(
-                text: " * Pastikan data yang masukkan benar ",
+                text: " * Pastikan data Anda yang masukkan telah benar ",
                 size: 14,
               ),
             ),

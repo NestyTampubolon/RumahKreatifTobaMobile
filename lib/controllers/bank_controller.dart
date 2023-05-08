@@ -1,6 +1,7 @@
 import 'package:rumah_kreatif_toba/controllers/user_controller.dart';
 import 'package:rumah_kreatif_toba/data/repository/bank_repo.dart';
 import 'package:get/get.dart';
+import 'package:rumah_kreatif_toba/models/bank_model.dart';
 import 'package:rumah_kreatif_toba/models/rekening_model.dart';
 import '../base/show_custom_message.dart';
 import '../models/response_model.dart';
@@ -14,6 +15,25 @@ class BankController extends GetxController{
 
   BankController({required this.bankRepo});
 
+
+  List<dynamic> _daftarBankList=[];
+  List<dynamic> get daftarBankList => _daftarBankList;
+
+  Future<void> getBankList() async{
+    Response response = await bankRepo.getBankList();
+    if(response.statusCode == 200){
+      List<dynamic> responseBody = response.body;
+      _daftarBankList = [];
+      for (dynamic item in responseBody) {
+        Bank bank = Bank.fromJson(item);
+        _daftarBankList.add(bank);
+      }
+      _isLoading = true;
+      update();
+    }else{
+
+    }
+  }
 
   Future<ResponseModel> tambahRekening(int? user_id, String nama_bank, String nomor_rekening, String atas_nama) async {
     _isLoading = true;

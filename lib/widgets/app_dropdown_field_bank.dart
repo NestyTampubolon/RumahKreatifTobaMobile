@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:rumah_kreatif_toba/controllers/bank_controller.dart';
+import 'package:get/get.dart';
 import '../utils/colors.dart';
 import '../utils/dimensions.dart';
 
@@ -58,23 +59,17 @@ class _AppDropdownState extends State<AppDropdownFieldBank> {
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(Dimensions.radius15),
               )),
-          value:
-              widget.controller.text.isNotEmpty ? widget.controller.text : null,
-          onChanged: (String? newValue) {
+          value: widget.controller.text.isNotEmpty ? widget.controller.text : null,
+          onChanged: (dynamic newValue) {
             setState(() {
-              dropdownValue = newValue!;
+              dropdownValue = newValue;
             });
-            widget.controller.text = newValue!;
+            widget.controller.text = newValue;
           },
-          items: <String>[
-            'Bank Nasional Indonesia',
-            'Bank Rakyat Indonesia',
-            'Bank Mandiri',
-            'Bank Central Asia',
-          ].map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
+          items: Get.find<BankController>().daftarBankList.map<DropdownMenuItem<dynamic>>((bank) {
+            return DropdownMenuItem<dynamic>(
+              value: bank.namaBank,
+              child: Text(bank.namaBank!),
             );
           }).toList(),
         ),

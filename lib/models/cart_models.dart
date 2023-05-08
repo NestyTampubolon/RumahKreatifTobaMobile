@@ -1,10 +1,14 @@
+import 'dart:convert';
+
+import 'package:rumah_kreatif_toba/models/produk_models.dart';
+
 class CartModel {
   int? cartId, userId, productId, jumlahMasukKeranjang, merchantId, categoryId,
       price, heavy, isDeleted, isVerified, id;
   String? createdAt, updatedAt, productName, productDescription, namaMerchant, deskripsiToko, kontakToko, fotoMerchant,
       username, email, password;
   Null? emailVerifiedAt, isAdmin, isBanned, rememberToken;
-
+  Produk? produk;
   bool isChecked;
 
   CartModel({
@@ -35,7 +39,8 @@ class CartModel {
     this.isBanned,
     this.rememberToken,
 
-    this.isChecked = false
+    this.isChecked = false,
+    this.produk
   });
 
   factory CartModel.fromJson(Map<String, dynamic> json) => CartModel(
@@ -65,6 +70,7 @@ class CartModel {
     isAdmin: json['is_admin'],
     isBanned: json['is_banned'],
     rememberToken: json['remember_token'],
+    produk : Produk.fromJson(json['produk']),
   );
 
   Map<String, dynamic> toJson() => {

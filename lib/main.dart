@@ -12,6 +12,7 @@ import 'package:rumah_kreatif_toba/pages/produk/produk_detail.dart';
 import 'package:rumah_kreatif_toba/pages/wishlist/wishlist_page.dart';
 import 'package:rumah_kreatif_toba/routes/route_helper.dart';
 import 'controllers/auth_controller.dart';
+import 'controllers/bank_controller.dart';
 import 'controllers/user_controller.dart';
 import 'helper/dependencies.dart' as dep;
 import 'package:animated_splash_screen/animated_splash_screen.dart';
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
     Get.find<PopularProdukController>().getPopularProdukList();
     Get.find<CartController>().getKeranjangList();
     Get.find<WishlistController>().getWishlistList();
+    Get.find<BankController>().getBankList();
 
     return GetBuilder<PopularProdukController>(
       builder: (_) {

@@ -57,6 +57,7 @@ class CartController extends GetxController {
           productName: value.productName,
           price: value.price,
           heavy: value.heavy,
+          produk : produk
         );
       });
 
@@ -64,7 +65,6 @@ class CartController extends GetxController {
         _items.remove(produk.productId);
       }
     } else {
-      // if(jumlahMasukKeranjang > 0){
       print("length of the item is " + _items.length.toString());
       _items.putIfAbsent(produk.productId!, () {
         print("adding item to the cart " +
@@ -82,6 +82,7 @@ class CartController extends GetxController {
           productName: produk.productName,
           price: produk.price,
           heavy: produk.heavy,
+            produk : produk
         );
       });
       //  }
@@ -240,20 +241,29 @@ class CartController extends GetxController {
     return quantity;
   }
 
-  int get totalItems => _totalItems;
+  // int get totalItems => _totalItems;
+  //
+  // set totalItems(int value) {
+  //   _totalItems = value;
+  // }
+  //
+  // int gettotalItems() {
+  //   return _totalItems;
+  // }
 
-  set totalItems(int value) {
-    _totalItems = value;
-  }
-
-  int gettotalItems() {
-    return _totalItems;
-  }
-
-  List<CartModel> get getItems {
-    return _items.entries.map((e) {
+  List<CartModel> get getItems{
+    return  _items.entries.map((e) {
       return e.value;
     }).toList();
+  }
+
+  int get totalItems{
+    var totalQuantity = 0;
+    _items.forEach((key, value) {
+        totalQuantity += value.jumlahMasukKeranjang!;
+
+    });
+    return totalQuantity;
   }
 
   num get totalAmount {
