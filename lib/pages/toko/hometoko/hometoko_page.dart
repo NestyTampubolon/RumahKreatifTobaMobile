@@ -45,7 +45,7 @@ class _HomeTokoPageState extends State<HomeTokoPage> {
     return [
       PersistentBottomNavBarItem(
         icon: Icon(CupertinoIcons.house_alt),
-        title: ("Home"),
+        title: ("Beranda"),
         activeColorPrimary: AppColors.redColor,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
@@ -63,7 +63,7 @@ class _HomeTokoPageState extends State<HomeTokoPage> {
       ),
       PersistentBottomNavBarItem(
         icon: Icon(CupertinoIcons.profile_circled),
-        title: ("Account"),
+        title: ("Profil"),
         activeColorPrimary: AppColors.redColor,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
@@ -103,7 +103,7 @@ class _HomeTokoPageState extends State<HomeTokoPage> {
         duration: Duration(milliseconds: 200),
       ),
       navBarStyle:
-      NavBarStyle.style12, // Choose the nav bar style with this property.
+      NavBarStyle.style3, // Choose the nav bar style with this property.
     );
   }
 }

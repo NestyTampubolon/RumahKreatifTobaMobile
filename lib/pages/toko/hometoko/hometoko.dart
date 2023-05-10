@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:rumah_kreatif_toba/controllers/toko_controller.dart';
 import 'package:rumah_kreatif_toba/widgets/big_text.dart';
 import 'package:rumah_kreatif_toba/widgets/tittle_text.dart';
 
-
+import 'package:get/get.dart';
 import '../../../utils/dimensions.dart';
 
 class HomeToko extends StatelessWidget {
@@ -10,6 +11,7 @@ class HomeToko extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.find<TokoController>().homeToko();
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -93,7 +95,7 @@ class HomeToko extends StatelessWidget {
                         ),
                         Container(
                           child: BigText(
-                            text: "0",
+                            text: "a",
                             size: Dimensions.font16 / 1.5,
                           ),
                         ),
@@ -130,7 +132,7 @@ class HomeToko extends StatelessWidget {
                       children: [
                         Container(
                           child: TittleText(
-                            text: "Pesanan Berhasil",
+                            text: "Pesanan Berhasil [Belum Konfirmasi Pembayaran]",
                             size: Dimensions.font20 / 1.5,
                           ),
                         ),
@@ -176,7 +178,7 @@ class HomeToko extends StatelessWidget {
                       children: [
                         Container(
                           child: TittleText(
-                            text: "Pesanan Dibatalkan",
+                            text: "Pesanan Berhasil [Telah Konfirmasi Pembayaran]",
                             size: Dimensions.font20 / 1.5,
                           ),
                         ),

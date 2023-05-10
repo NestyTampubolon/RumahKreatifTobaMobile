@@ -116,7 +116,8 @@ class Profil extends StatelessWidget {
                                             fit: BoxFit.fill,
                                             image: NetworkImage(
                                               '${AppConstants.BASE_URL_IMAGE}u_file/foto_merchant/${profilToko[0].foto_merchant}',
-                                            )  )),
+                                            )  )
+                                    ),
                                   ),
                                 ],
                               ),

@@ -327,16 +327,13 @@ class _ProdukDetailState extends State<ProdukDetail> {
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.all(
                                     Radius.circular(Dimensions.radius15)),
-                                // image: DecorationImage(
-                                //     fit: BoxFit.cover,
-                                //     image: AssetImage(
-                                //         "assets/images/coffee.jpg"))
+                                image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: NetworkImage(
+                                      '${AppConstants.BASE_URL_IMAGE}u_file/foto_merchant/${daftarproduk.fotoMerchant.toString()}',
+                                    ))
                             ),
-                            child: BigText(
-                              text: daftarproduk.fotoMerchant.toString(),
-                              fontWeight: FontWeight.bold,
-                              size: Dimensions.font26 / 2,
-                            ),
+
                           ),
                           SizedBox(
                             width: Dimensions.width10,
@@ -564,8 +561,10 @@ class _ProdukDetailState extends State<ProdukDetail> {
                 color: index.isEven ? Color(0xFF69c5df) : Color(0xFF9294cc),
                 image: DecorationImage(
                     fit: BoxFit.cover,
-                    image: AssetImage("assets/images/coffee.jpg"))),
-            child: BigText(text: produkList.productImageName.toString(),),
+                    image: NetworkImage(
+                      '${AppConstants.BASE_URL_IMAGE}u_file/product_image/${produkList.productImageName.toString()}',
+                    ))),
+            // child: BigText(text: produkList.productImageName.toString(),),
           )
         ],
       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rumah_kreatif_toba/controllers/popular_produk_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/wishlist_controller.dart';
 
 import '../../base/show_custom_message.dart';
@@ -8,6 +9,7 @@ import '../../controllers/auth_controller.dart';
 import '../../controllers/cart_controller.dart';
 import '../../controllers/user_controller.dart';
 import '../../routes/route_helper.dart';
+import '../../utils/app_constants.dart';
 import '../../utils/colors.dart';
 import '../../utils/dimensions.dart';
 import '../../widgets/app_icon.dart';
@@ -163,6 +165,11 @@ class _WishlistPageState extends State<WishlistPage> {
                   itemCount: wishlistController.wishlistList.length,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
+                    var gambarproduk = Get.find<PopularProdukController>().imageProdukList.where(
+                            (produk) =>
+                        produk.productId ==
+                            wishlistController
+                                .wishlistList[index].productId);
                     return GestureDetector(
                       onTap: () {},
                       child: Container(
@@ -198,7 +205,11 @@ class _WishlistPageState extends State<WishlistPage> {
                                         topRight: Radius.circular(Dimensions.radius15)),
                                     image: DecorationImage(
                                         fit: BoxFit.fill,
-                                        image: AssetImage("assets/images/coffee.jpg"))),
+                                        image: NetworkImage(
+                                          '${AppConstants.BASE_URL_IMAGE}u_file/product_image/${gambarproduk.single.productImageName}',
+                                        ))
+                                ),
+                                // child: SmallText(text: gambarproduk.single.productImageName.toString(),),
                               ),
                               Container(
                                 padding: EdgeInsets.all(10.0),
