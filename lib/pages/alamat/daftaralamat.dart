@@ -88,29 +88,31 @@ class DaftarAlamatPage extends GetView<AlamatController> {
                     //     : Colors.white,
                     child: Padding(
                       padding: EdgeInsets.all(7),
+
                       child: Stack(
                         children: <Widget>[
                           Padding(
                             padding: const EdgeInsets.only(left: 10, top: 5),
-                            child: Column(
-                              children: [
-                                Column(
-                                  children: <Widget>[
-                                    AddressUserId(),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    AddressUser(),
-                                    SizedBox(
-                                      width: 20,
-                                    ),
-                                    DeleteButton(),
-                                    SizedBox(
-                                      width: 20,
-                                    ),
-                                  ],
-                                ),
-                              ],
+                            child: GetBuilder<AlamatController>(
+                              builder: (GetAlamat) {
+                                return GetAlamat.isLoading
+                                    ? ListView.builder(
+                                        itemBuilder: (context, index) {
+                                          AddressUserId();
+                                          AddressUser();
+                                          DeleteButton();
+                                        },
+                                      )
+                                    : Container(
+                                        height:
+                                            50, // set the height of the container to your desired height
+                                        child: Center(
+                                          child: CircularProgressIndicator(
+                                            color: AppColors.redColor,
+                                          ),
+                                        ),
+                                      );
+                              },
                             ),
                           ),
                         ],
