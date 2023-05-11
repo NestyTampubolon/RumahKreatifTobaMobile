@@ -36,4 +36,8 @@ class TokoRepo {
     return await apiClient.postData(AppConstants.TAMBAH_TOKO_URL, {"merchant_id": merchant_id, "nama_merchant":nama_merchant, "deskripsi_toko":deskripsi_toko, "kontak_toko": kontak_toko, "foto_merchant" : foto_merchant});
   }
 
+  Future<Response> homeToko(int user_id) async {
+    return await apiClient.postData(AppConstants.HOME_TOKO_URL, {"user_id": user_id});
+  }
+
 }

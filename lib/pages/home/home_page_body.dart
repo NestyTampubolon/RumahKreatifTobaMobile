@@ -40,16 +40,16 @@ class _HomePageBodyState extends State<HomePageBody> {
   @override
   void initState() {
     super.initState();
-    pageController.addListener(() {
-      setState(() {
-        _currPageValue = pageController.page!;
-      });
-    });
-    pageControllerPopulerProduct.addListener(() {
-      setState(() {
-        _currPageValuePopulerProduct = pageControllerPopulerProduct.page!;
-      });
-    });
+    // pageController.addListener(() {
+    //   setState(() {
+    //     _currPageValue = pageController.page!;
+    //   });
+    // });
+    // pageControllerPopulerProduct.addListener(() {
+    //   setState(() {
+    //     _currPageValuePopulerProduct = pageControllerPopulerProduct.page!;
+    //   });
+    // });
   }
 
   @override

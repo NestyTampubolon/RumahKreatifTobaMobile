@@ -2,17 +2,15 @@ class AppConstants {
   static const String APP_NAME = "Rumah Kreatif Toba";
   static const int APP_VERSION = 1;
 
+  static const String BASE_URL = "http://kreatif.tobakab.go.id/api/";
+
+  static const String BASE_URL_IMAGE = "http://kreatif.tobakab.go.id/asset/";
+
   // static const String BASE_URL =
-  //     "http://kreatif.tobakab.go.id/api/";
+  //     "http://192.168.245.154/tobazonerework/public/api/";
   //
   // static const String BASE_URL_IMAGE =
-  //     "http://kreatif.tobakab.go.id/asset/";
-
-  static const String BASE_URL =
-      "http://172.20.10.4/RumahKreatifBackend/public/api/";
-
-  static const String BASE_URL_IMAGE =
-      "http://172.20.10.4/RumahKreatifBackend/public/asset/";
+  //     "http://192.168.245.154/tobazonerework/public/asset/";
 
   static const String POPULAR_PRODUCT_URL = "produk";
   static const String KATEGORI_PRODUCT_URL = "lihat_produk";
@@ -41,6 +39,7 @@ class AppConstants {
   static const String HAPUS_WISHLIST_URL = "hapuswishlist";
 
   static const String Toko_URL = "toko";
+  static const String HOME_TOKO_URL = "hometoko";
 
   static const String VERIFIKASI_TOKO_URL = "verifikasitoko";
   static const String CEK_VERIFIKASI_URL = "cekverifikasi";
@@ -70,7 +69,6 @@ class AppConstants {
   static const String UPDATE_STATUS_PEMBELIAN_URL = "updatestatuspembelian";
 
   static const String DAFTAR_ALAMAT = "daftaralamat";
-
   static const String TOKEN = "";
   static const String PHONE = "";
   static const String PASSWORD = "";

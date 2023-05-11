@@ -4,7 +4,7 @@ import '../../utils/app_constants.dart';
 import '../api/api_client.dart';
 import 'package:get/get.dart';
 
-class AlamatRepo{
+class AlamatRepo {
   final ApiClient apiClient;
   final SharedPreferences sharedPreferences;
   AlamatRepo({
@@ -13,6 +13,7 @@ class AlamatRepo{
   });
 
   Future<Response> getAlamat(int user_id) async {
-    return await apiClient.postData(AppConstants.DAFTAR_ALAMAT, {"user_id": user_id});
+    return await apiClient
+        .postData(AppConstants.DAFTAR_ALAMAT, {"user_id": user_id});
   }
 }

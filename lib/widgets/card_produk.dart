@@ -5,6 +5,7 @@ import 'package:rumah_kreatif_toba/widgets/price_text.dart';
 import 'package:rumah_kreatif_toba/widgets/small_text.dart';
 import 'package:rumah_kreatif_toba/widgets/tittle_text.dart';
 import '../controllers/popular_produk_controller.dart';
+import '../utils/app_constants.dart';
 import '../utils/colors.dart';
 import '../utils/dimensions.dart';
 import 'big_text.dart';
@@ -28,7 +29,7 @@ class CardProduk extends StatelessWidget {
       });
     }
     return Container(
-      width: Dimensions.width45*4,
+      width: Dimensions.width45*3.5,
       height: Dimensions.width45*9,
       decoration: BoxDecoration(
           color: Colors.white,
@@ -63,10 +64,15 @@ class CardProduk extends StatelessWidget {
                         Dimensions.radius15),
                     topRight: Radius.circular(
                         Dimensions.radius15)),
+                  image: DecorationImage(
+                      fit: BoxFit.fill,
+                      image: NetworkImage(
+                        '${AppConstants.BASE_URL_IMAGE}u_file/product_image/${productImageName}',
+                      ))
               ),
-              child: BigText(
-                text: productImageName,
-              ) ,
+              // child: BigText(
+              //   text: productImageName,
+              // ) ,
             ),
             Container(
               padding: EdgeInsets.all(10.0),
