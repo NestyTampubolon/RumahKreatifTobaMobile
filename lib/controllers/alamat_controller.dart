@@ -74,4 +74,20 @@ class AlamatController extends GetxController {
     update();
     return responseModel;
   }
+
+  Future<ResponseModel> hapusAlamat(int user_address_id) async {
+    _isLoading = true;
+    update();
+    Response response = await alamatRepo.hapusAlamat(user_address_id);
+    late ResponseModel responseModel;
+    if (response.statusCode == 200) {
+      showCustomSnackBar("Alamat berhasil dihapus", title: "Berhasil");
+      getAlamat();
+    } else {
+      responseModel = ResponseModel(false, response.statusText!);
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
 }
