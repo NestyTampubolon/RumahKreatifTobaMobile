@@ -7,7 +7,7 @@ import 'package:rumah_kreatif_toba/pages/home/home_page.dart';
 import 'package:rumah_kreatif_toba/routes/route_helper.dart';
 import 'package:rumah_kreatif_toba/utils/dimensions.dart';
 import 'package:rumah_kreatif_toba/controllers/alamat_controller.dart';
-
+import 'package:rumah_kreatif_toba/models/alamat_model.dart';
 import '../../utils/colors.dart';
 import '../../widgets/app_icon.dart';
 import '../../widgets/big_text.dart';
@@ -92,25 +92,36 @@ class DaftarAlamatPage extends GetView<AlamatController> {
                         children: <Widget>[
                           Padding(
                             padding: const EdgeInsets.only(left: 10, top: 5),
-                            child: Column(
-                              children: [
-                                Column(
-                                  children: <Widget>[
-                                    AddressUserId(),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    AddressUser(),
-                                    SizedBox(
-                                      width: 20,
-                                    ),
-                                    DeleteButton(),
-                                    SizedBox(
-                                      width: 20,
-                                    ),
-                                  ],
-                                ),
-                              ],
+                            child: GetBuilder<AlamatController>(
+                              builder: (AlamatController) {
+                                if (AlamatController.isLoading) {
+                                  return ListView.builder(
+                                    itemCount:
+                                    AlamatController.daftarAlamatList.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      Alamat alamat =
+                                      AlamatController.daftarAlamatList[index];
+                                      return ListTile(
+                                        title: Text(alamat.user_street_address
+                                                ?.toString() ??
+                                            ""),
+                                        subtitle: Text(alamat
+                                                .user_street_address
+                                                ?.toString() ??
+                                            ""),
+                                        trailing: Text(alamat
+                                                .user_street_address
+                                                ?.toString() ??
+                                            ""),
+                                      );
+                                    },
+                                  );
+                                } else {
+                                  return Center(
+                                      child: CircularProgressIndicator());
+                                }
+                              },
                             ),
                           ),
                         ],
@@ -125,80 +136,4 @@ class DaftarAlamatPage extends GetView<AlamatController> {
       ),
     );
   }
-}
-
-Widget AddressUserId() {
-  return Padding(
-    padding: const EdgeInsets.only(left: 15.0),
-    child: Align(
-      alignment: Alignment.centerLeft,
-      child: RichText(
-        text: TextSpan(
-          text: "Alamat 1",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-            fontSize: 20,
-          ),
-        ),
-      ),
-    ),
-  );
-}
-
-Widget AddressUser() {
-  return Padding(
-    padding: const EdgeInsets.only(left: 15.0),
-    child: Align(
-      alignment: Alignment.centerLeft,
-      child: RichText(
-        text: TextSpan(
-          text: "Jalan Sisingamangaraja Balige jkaya jaya jaya",
-          style: TextStyle(
-            color: AppColors.blackColor,
-            fontSize: 18,
-          ),
-        ),
-      ),
-    ),
-  );
-}
-
-Widget DeleteButton() {
-  return Padding(
-    padding: const EdgeInsets.only(
-      left: 15.0,
-      top: 15.0,
-    ),
-    child: Align(
-      alignment: Alignment.centerLeft,
-      child: GestureDetector(
-        onTap: () => {
-          Get.to(
-            () => HomePage(initialIndex: 3),
-          ),
-        },
-        child: Container(
-          width: 306,
-          height: 45,
-          // alignment: Alignment.topCenter,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(
-                color: Colors.white,
-                width: 3,
-              ),
-              color: AppColors.redColor),
-          child: Center(
-            child: BigText(
-              text: "Hapus",
-              fontWeight: FontWeight.bold,
-              size: Dimensions.font20,
-              color: Colors.white,
-            ),
-          ),
-        ),
-      ),
-    ),
-  );
 }

@@ -26,6 +26,7 @@ import '../controllers/user_controller.dart';
 import '../data/repository/bank_repo.dart';
 import '../data/repository/pembelian_repo.dart';
 import '../data/repository/pengiriman_repo.dart';
+import '../data/repository/alamat_repo.dart';
 import '../data/repository/pesanan_repo.dart';
 import '../utils/app_constants.dart';
 
@@ -59,6 +60,8 @@ Future<void> init() async {
           () => CategoriesRepo(apiClient: Get.find()));
   Get.lazyPut(
           () => PembelianRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
+  Get.lazyPut(
+          () => AlamatRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
 
   //controllers
   Get.lazyPut(() => AuthController(authRepo: Get.find()));
@@ -68,8 +71,11 @@ Future<void> init() async {
   Get.lazyPut(() => PengirimanController(pengirimanRepo: Get.find()) , fenix: true);
   Get.put(PengirimanController(pengirimanRepo: Get.find()));
   Get.lazyPut(() => PesananController(pesananRepo: Get.find()));
-  Get.lazyPut(() => AlamatController());
   Get.put(PesananController(pesananRepo: Get.find()));
+
+  Get.lazyPut(() => AlamatController(alamatRepo: Get.find()));
+  Get.put(AlamatController(alamatRepo: Get.find()));
+
   Get.lazyPut(() => WishlistController(wishlistRepo: Get.find()));
   Get.put(WishlistController(wishlistRepo: Get.find()));
   Get.lazyPut(() => TokoController(tokoRepo: Get.find()));

@@ -49,16 +49,15 @@ class CartController extends GetxController {
       _items.update(produk.productId!, (value) {
         totalQuantity = value.jumlahMasukKeranjang! + jumlahMasukKeranjang;
         return CartModel(
-          productId: value.productId,
-          jumlahMasukKeranjang:
-              value.jumlahMasukKeranjang! + jumlahMasukKeranjang,
-          merchantId: value.merchantId,
-          categoryId: value.categoryId,
-          productName: value.productName,
-          price: value.price,
-          heavy: value.heavy,
-          produk : produk
-        );
+            productId: value.productId,
+            jumlahMasukKeranjang:
+                value.jumlahMasukKeranjang! + jumlahMasukKeranjang,
+            merchantId: value.merchantId,
+            categoryId: value.categoryId,
+            productName: value.productName,
+            price: value.price,
+            heavy: value.heavy,
+            produk: produk);
       });
 
       if (totalQuantity <= 0) {
@@ -75,15 +74,14 @@ class CartController extends GetxController {
           print("quantity is " + value.jumlahMasukKeranjang.toString());
         });
         return CartModel(
-          productId: produk.productId,
-          jumlahMasukKeranjang: jumlahMasukKeranjang,
-          merchantId: produk.merchantId,
-          categoryId: produk.categoryId,
-          productName: produk.productName,
-          price: produk.price,
-          heavy: produk.heavy,
-            produk : produk
-        );
+            productId: produk.productId,
+            jumlahMasukKeranjang: jumlahMasukKeranjang,
+            merchantId: produk.merchantId,
+            categoryId: produk.categoryId,
+            productName: produk.productName,
+            price: produk.price,
+            heavy: produk.heavy,
+            produk: produk);
       });
       //  }
     }
@@ -251,17 +249,16 @@ class CartController extends GetxController {
   //   return _totalItems;
   // }
 
-  List<CartModel> get getItems{
-    return  _items.entries.map((e) {
+  List<CartModel> get getItems {
+    return _items.entries.map((e) {
       return e.value;
     }).toList();
   }
 
-  int get totalItems{
+  int get totalItems {
     var totalQuantity = 0;
     _items.forEach((key, value) {
-        totalQuantity += value.jumlahMasukKeranjang!;
-
+      totalQuantity += value.jumlahMasukKeranjang!;
     });
     return totalQuantity;
   }
