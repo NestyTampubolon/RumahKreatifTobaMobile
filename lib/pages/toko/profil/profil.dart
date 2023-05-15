@@ -63,7 +63,7 @@ class Profil extends StatelessWidget {
                           ),
                           child:  Column(
                             children: [
-                              Divider(color: AppColors.buttonBackgroundColor),
+                              // Divider(color: AppColors.buttonBackgroundColor),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
@@ -115,9 +115,10 @@ class Profil extends StatelessWidget {
                                         image: DecorationImage(
                                             fit: BoxFit.fill,
                                             image: NetworkImage(
-                                              '${AppConstants.BASE_URL_IMAGE}u_file/foto_merchant/${profilToko[0].foto_merchant}',
-                                            )  )
+                                              '${AppConstants.BASE_URL_IMAGE}u_file/foto_merchant/${profilToko[0].foto_merchant.toString()}',
+                                            ) )
                                     ),
+                                    child: BigText(text:profilToko[0].foto_merchant.toString()),
                                   ),
                                 ],
                               ),
@@ -160,7 +161,6 @@ class Profil extends StatelessWidget {
                   ),
                 );
               }),
-
             ],
           )
         ],

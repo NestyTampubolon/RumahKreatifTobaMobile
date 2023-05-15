@@ -19,28 +19,49 @@ class Produk {
   int? stock_id;
   int? stok;
   String? productImageName;
+  Null? onVacation;
+  int? merchantAddressId;
+  int? provinceId;
+  String? provinceName;
+  int? cityId;
+  String? cityName;
+  int? subdistrictId;
+  String? subdistrictName;
+  String? merchantStreetAddress;
+  String? countProductPurchases;
 
-  Produk(
-      {required this.productId,
-      required this.merchantId,
-      required this.categoryId,
-      required this.productName,
-      required this.productDescription,
-      required this.price,
-      required this.heavy,
-      required this.isDeleted,
-      required this.createdAt,
-      required this.updatedAt,
-      required this.namaKategori,
-      required this.userId,
-      required this.namaMerchant,
-      required this.deskripsiToko,
-      required this.kontakToko,
-      required this.fotoMerchant,
-      required this.isVerified,
-      required this.stock_id,
-      required this.stok,
-      required this.productImageName});
+  Produk({
+    required this.productId,
+    required this.merchantId,
+    required this.categoryId,
+    required this.productName,
+    required this.productDescription,
+    required this.price,
+    required this.heavy,
+    required this.isDeleted,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.namaKategori,
+    required this.userId,
+    required this.namaMerchant,
+    required this.deskripsiToko,
+    required this.kontakToko,
+    required this.fotoMerchant,
+    required this.isVerified,
+    required this.stock_id,
+    required this.stok,
+    required this.productImageName,
+    required this.onVacation,
+    required this.merchantAddressId,
+    required this.provinceId,
+    required this.provinceName,
+    required this.cityId,
+    required this.cityName,
+    required this.subdistrictId,
+    required this.subdistrictName,
+    required this.merchantStreetAddress,
+    required this.countProductPurchases,
+  });
 
   factory Produk.fromJson(Map<String, dynamic> json) {
     return Produk(
@@ -63,6 +84,16 @@ class Produk {
         isVerified: json['is_verified'],
         stock_id: json['stock_id'],
         stok: json['stok'],
-        productImageName: json['product_image_name']);
+        productImageName: json['product_image_name'],
+        onVacation: json['on_vacation'],
+        merchantAddressId: json['merchant_address_id'],
+        provinceId: json['province_id'],
+        provinceName: json['province_name'],
+        cityId: json['city_id'],
+        cityName: json['city_name'],
+        subdistrictId: json['subdistrict_id'],
+        subdistrictName: json['subdistrict_name'],
+        merchantStreetAddress: json['merchant_street_address'],
+        countProductPurchases : json['count_product_purchases']);
   }
 }

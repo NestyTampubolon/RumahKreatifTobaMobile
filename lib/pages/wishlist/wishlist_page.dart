@@ -217,6 +217,7 @@ class _WishlistPageState extends State<WishlistPage> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+
                                     TittleText(
                                       text: wishlistController.wishlistList[index].productName,
                                       size: Dimensions.font16,

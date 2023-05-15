@@ -17,7 +17,7 @@ import '../routes/route_helper.dart';
 class PopularProdukController extends GetxController{
   final PopularProdukRepo popularProdukRepo;
   PopularProdukController({required this.popularProdukRepo});
-  List<dynamic> _popularProdukList=[];
+  RxList<dynamic> _popularProdukList=[].obs;
   List<dynamic> get popularProdukList => _popularProdukList;
 
   List<dynamic> _produkmakananminumanList=[];
@@ -29,15 +29,19 @@ class PopularProdukController extends GetxController{
   List<dynamic> _produkTerbaruList=[];
   List<dynamic> get produkTerbaruList => _produkTerbaruList;
 
-  List<dynamic> _detailProdukList=[];
+  RxList<dynamic> _detailProdukList=[].obs;
   List<dynamic> get detailProdukList => _detailProdukList;
 
   List<dynamic> _imageProdukList=[];
   List<dynamic> get imageProdukList => _imageProdukList;
 
-  List<dynamic> _kategoriProdukList=[];
+  RxList<dynamic> _kategoriProdukList=[].obs;
   List<dynamic> get kategoriProdukList => _kategoriProdukList;
   late CartController _cart;
+
+  RxBool isLoading = false.obs;
+
+  bool get getLoading => isLoading.value;
 
   bool _isLoaded = false;
   bool get isLoaded => _isLoaded;
@@ -46,7 +50,7 @@ class PopularProdukController extends GetxController{
     Response response = await popularProdukRepo.getPopularProdukList();
     if(response.statusCode == 200){
       List<dynamic> responseBodyproduk = response.body["products"];
-      _popularProdukList = [];
+      _popularProdukList = [].obs;
       for (dynamic item in responseBodyproduk) {
         Produk produk = Produk.fromJson(item);
         _popularProdukList.add(produk);
@@ -82,13 +86,13 @@ class PopularProdukController extends GetxController{
           Produk produk = Produk.fromJson(item);
           _imageProdukList.add(produk);
         }
-
+        _isLoaded = true;
+        isLoading = true.obs;
         responseModel = ResponseModel(true, "successfully");
       } else {
         responseModel = ResponseModel(false, response.statusText!);
       }
 
-      _isLoaded = true;
       update();
     }else{
 
@@ -99,12 +103,13 @@ class PopularProdukController extends GetxController{
     Response response = await popularProdukRepo.getKategoriProdukList(namaKategori);
     if(response.statusCode == 200){
       List<dynamic> responseBody = response.body;
-      _kategoriProdukList = [];
+      _kategoriProdukList = [].obs;
       for (dynamic item in responseBody) {
         Produk produk = Produk.fromJson(item);
         _kategoriProdukList.add(produk);
       }
       _isLoaded = true;
+      isLoading = true.obs;
       update();
     }else{
 
@@ -154,13 +159,12 @@ class PopularProdukController extends GetxController{
     Response response = await popularProdukRepo.detailProduk(product_id);
     late ResponseModel responseModel;
     if (response.statusCode == 200) {
-      List<dynamic> responseBody = response.body;
+      List<dynamic> responseBody= response.body;
       _detailProdukList.clear();
       for (dynamic item in responseBody) {
         Produk produk = Produk.fromJson(item);
         _detailProdukList.add(produk);
       }
-      print("halloo ${product_id}");
       Get.to(ProdukDetail());
       responseModel = ResponseModel(true, "successfully");
     } else {

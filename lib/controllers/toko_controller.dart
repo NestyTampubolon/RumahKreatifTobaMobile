@@ -37,11 +37,9 @@ class TokoController extends GetxController {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  int _jumlahpesanan = 0;
-  int _jumlahpesanantelahbayar = 0;
-  int _jumlahpesananbelumbayar = 0;
+  RxMap<String, int> jumlahPesanan = <String, int>{}.obs;
 
-
+  Map<String, int> get getJumlahPesanan => jumlahPesanan;
 
 
   @override
@@ -73,7 +71,6 @@ class TokoController extends GetxController {
   }
 
   Future<bool> verifikasiToko(int? user_id) async {
-    _isLoading = true;
     update();
     bool success = false;
 
@@ -98,7 +95,7 @@ class TokoController extends GetxController {
     } else {
       print(response);
     }
-
+    _isLoading = true;
     update();
     return success;
   }
@@ -252,59 +249,41 @@ class TokoController extends GetxController {
     return responseModel;
   }
 
-  Future<ResponseModel> profilToko() async {
-    _isLoading = true;
-    update();
+  Future<void> profilToko() async {
     var controller = Get.find<UserController>().usersList[0];
     Response response = await tokoRepo.profilToko(controller.id!);
-    late ResponseModel responseModel;
     if (response.statusCode == 200) {
-      List<dynamic> responseBody = response.body;
-      _profilTokoList = [];
-      for (dynamic item in responseBody) {
-        Toko toko = Toko.fromJson(item);
-        _profilTokoList.add(toko);
-      }
-      update();
+      Map<String, dynamic> responseBody = response.body;
+      print(responseBody);
+      Toko toko = Toko.fromJson(responseBody);
+      _profilTokoList.add(toko);
     } else {
-      responseModel = ResponseModel(false, response.statusText!);
+      // Handle the case when the response status code is not 200
     }
-    _isLoading = false;
+
+    _isLoading = true;
     update();
-    return responseModel;
   }
 
   Future<ResponseModel> homeToko() async {
-    _isLoading = true;
-    update();
     var controller = Get.find<UserController>().usersList[0];
-    Response response = await tokoRepo.profilToko(controller.id!);
+    Response response = await tokoRepo.homeToko(controller.id!);
     late ResponseModel responseModel;
     if (response.statusCode == 200) {
       try {
-        final responseBody = response.body as List<dynamic>;
-        final firstItem = responseBody.first as Map<String, dynamic>;
-        final responseBodyjumlahpesanan = firstItem["jumlah_pesanan_sedang_berlangsung"] as String;
-        final responseBodyjumlahpesananbelumbayar = firstItem["jumlah_pesanan_berhasil_belum_dibayar"] as String;
-        final responseBodyjumlahpesanantelahbayar = firstItem["jumlah_pesanan_berhasil_telah_dibayar"] as String;
 
-        print(responseBodyjumlahpesanan);
-        final jumlah_pesanan_sedang_berlangsung = int.tryParse(responseBodyjumlahpesanan) ?? 0;
-        final jumlah_pesanan_belum_bayar = int.tryParse(responseBodyjumlahpesananbelumbayar) ?? 0;
-        final jumlah_pesanan_telah_bayar = int.tryParse(responseBodyjumlahpesanantelahbayar) ?? 0;
-
-        _jumlahpesanan = jumlah_pesanan_sedang_berlangsung;
-        _jumlahpesananbelumbayar = jumlah_pesanan_belum_bayar;
-        _jumlahpesanantelahbayar = jumlah_pesanan_telah_bayar;
-        update();
+        jumlahPesanan.value = {
+          'jumlah_pesanan_sedang_berlangsung' : response.body["jumlah_pesanan_sedang_berlangsung"],
+          'jumlah_pesanan_berhasil_belum_dibayar' : response.body["jumlah_pesanan_berhasil_belum_dibayar"],
+          'jumlah_pesanan_berhasil_telah_dibayar' : response.body["jumlah_pesanan_berhasil_telah_dibayar"]
+        };
       } catch (e) {
         print("Error parsing response: $e");
       }
     } else {
       responseModel = ResponseModel(false, response.statusText!);
     }
-
-    _isLoading = false;
+    _isLoading = true;
     update();
     return responseModel;
   }

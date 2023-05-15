@@ -11,6 +11,7 @@ import 'package:get/get.dart';
 import '../../../base/show_custom_message.dart';
 import '../../../controllers/auth_controller.dart';
 import '../../../controllers/popular_produk_controller.dart';
+import '../../../utils/app_constants.dart';
 import '../../../utils/dimensions.dart';
 import '../../../widgets/big_text.dart';
 import '../../../widgets/currency_format.dart';
@@ -92,11 +93,17 @@ class _ProdukPageState extends State<ProdukPage> {
               ),
             ),
             GetBuilder<PopularProdukController>(builder: (controller) {
-              return ListView.builder(
+              return controller.isLoaded ?  ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: controller.daftarProdukList.length,
                   shrinkWrap: true,
                   itemBuilder: (_, index) {
+                    var gambarproduk = controller.imageProdukList.where(
+                            (produk) =>
+                        produk.productId ==
+                            controller
+                                .daftarProdukList[index].productId);
+
                     return Container(
                       width: Dimensions.screenWidth / 1.2,
                       padding: EdgeInsets.only(
@@ -133,8 +140,9 @@ class _ProdukPageState extends State<ProdukPage> {
                                 decoration: BoxDecoration(
                                     image: DecorationImage(
                                         fit: BoxFit.cover,
-                                        image: AssetImage(
-                                            "assets/images/coffee.jpg")),
+                                        image: NetworkImage(
+                                          '${AppConstants.BASE_URL_IMAGE}u_file/product_image/${gambarproduk.single.productImageName}',
+                                        )),
                                     borderRadius: BorderRadius.circular(
                                         Dimensions.radius20),
                                     color: Colors.white),
@@ -202,7 +210,15 @@ class _ProdukPageState extends State<ProdukPage> {
                         ],
                       ),
                     );
-                  });
+                  }) : Container(
+                height:
+                50, // set the height of the container to your desired height
+                child: Center(
+                  child: CircularProgressIndicator(
+                    color: AppColors.redColor,
+                  ),
+                ),
+              );
             }),
             SizedBox(
               height: Dimensions.height20,

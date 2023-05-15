@@ -19,6 +19,7 @@ import 'package:grouped_list/grouped_list.dart';
 import '../../base/show_custom_message.dart';
 import '../../controllers/auth_controller.dart';
 import '../../controllers/user_controller.dart';
+import '../../utils/app_constants.dart';
 import '../../widgets/currency_format.dart';
 
 class KeranjangPage extends StatefulWidget {
@@ -132,7 +133,7 @@ class _KeranjangPageState extends State<KeranjangPage> {
                         child: AppIcon(
                           icon: Icons.arrow_back,
                           iconColor: AppColors.redColor,
-                          backgroundColor: Colors.white,
+                          backgroundColor: Colors.white.withOpacity(0.0),
                           iconSize: Dimensions.iconSize24,
                         ),
                       ),
@@ -142,6 +143,7 @@ class _KeranjangPageState extends State<KeranjangPage> {
                       BigText(
                         text: "Keranjang",
                         size: Dimensions.font20,
+                        fontWeight: FontWeight.bold,
                       ),
                     ],
                   ),
@@ -214,6 +216,11 @@ class _KeranjangPageState extends State<KeranjangPage> {
                                             CartModel item =
                                                 merchantItems[index];
 
+                                            var gambarproduk = Get.find<PopularProdukController>().imageProdukList.where(
+                                                    (produk) =>
+                                                produk.productId ==
+                                                    item.productId);
+
                                             return Center(
                                               child: Row(
                                                 children: [
@@ -277,8 +284,9 @@ class _KeranjangPageState extends State<KeranjangPage> {
                                                                     image: DecorationImage(
                                                                         fit: BoxFit
                                                                             .cover,
-                                                                        image: AssetImage(
-                                                                            "assets/images/coffee.jpg")),
+                                                                        image: NetworkImage(
+                                                                          '${AppConstants.BASE_URL_IMAGE}u_file/product_image/${gambarproduk.single.productImageName}',
+                                                                        )),
                                                                     borderRadius:
                                                                         BorderRadius.circular(Dimensions
                                                                             .radius20),
@@ -458,9 +466,9 @@ class _KeranjangPageState extends State<KeranjangPage> {
                                                         right:
                                                             Dimensions.width20),
                                                     decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                            color: AppColors
-                                                                .buttonBackgroundColor),
+                                                        // border: Border.all(
+                                                        //     color: AppColors
+                                                        //         .buttonBackgroundColor),
                                                         borderRadius:
                                                             BorderRadius.circular(
                                                                 Dimensions

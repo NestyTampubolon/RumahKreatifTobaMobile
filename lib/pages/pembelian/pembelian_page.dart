@@ -11,6 +11,7 @@ import '../../controllers/popular_produk_controller.dart';
 import '../../controllers/user_controller.dart';
 import '../../models/cart_models.dart';
 import '../../routes/route_helper.dart';
+import '../../utils/app_constants.dart';
 import '../../utils/colors.dart';
 import '../../utils/dimensions.dart';
 import 'package:get/get.dart';
@@ -256,6 +257,10 @@ class _PembelianPageState extends State<PembelianPage> {
                                       itemCount: merchantItems.length,
                                       itemBuilder: (_, index) {
                                         var item = merchantItems[index];
+                                        var gambarproduk = Get.find<PopularProdukController>().imageProdukList.where(
+                                                (produk) =>
+                                            produk.productId ==
+                                                item.productId);
                                         return Row(
                                           children: [
                                             Container(
@@ -307,8 +312,9 @@ class _PembelianPageState extends State<PembelianPage> {
                                                               image: DecorationImage(
                                                                   fit: BoxFit
                                                                       .cover,
-                                                                  image: AssetImage(
-                                                                      "assets/images/coffee.jpg")),
+                                                                  image: NetworkImage(
+                                                                    '${AppConstants.BASE_URL_IMAGE}u_file/product_image/${gambarproduk.single.productImageName}',
+                                                                  )),
                                                               borderRadius:
                                                               BorderRadius.circular(
                                                                   Dimensions

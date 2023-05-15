@@ -24,6 +24,7 @@ class PasswordTokoPage extends StatefulWidget {
 }
 
 class _PasswordTokoPageState extends State<PasswordTokoPage> {
+
   var PasswordTokoController = TextEditingController();
 
   @override
@@ -34,7 +35,7 @@ class _PasswordTokoPageState extends State<PasswordTokoPage> {
   @override
   Widget build(BuildContext context) {
     var PasswordTokoController = TextEditingController();
-
+    Get.find<TokoController>().profilToko();
 
     Future<void> _tambahRekening() async {
       String password = PasswordTokoController.text.trim();
@@ -56,45 +57,32 @@ class _PasswordTokoPageState extends State<PasswordTokoPage> {
         child: Column(
           children: [
             Container(
-             // decoration: BoxDecoration(color: AppColors.redColor),
               child: Container(
                 margin: EdgeInsets.only(
-                    top: Dimensions.height45, bottom: Dimensions.height15),
+                    top: Dimensions.height30),
                 padding: EdgeInsets.only(
                     left: Dimensions.width20, right: Dimensions.width20),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      children: [
-                        GestureDetector(
-                          onTap: (){
-                            Get.to(
-                                  () => HomePage(initialIndex: 3),
-                            );
-                          },
-                          child: Container(
-                            width: Dimensions.height45,
-                            height: Dimensions.height45,
-                            child: Icon(
-                              Icons.arrow_back,
-                              color: AppColors.redColor,
-                              size: Dimensions.iconSize24,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: 250,
-                          height: 30,
-                          margin: EdgeInsets.only(
-                              left: Dimensions.width10,
-                              right: Dimensions.width10),
-                          child: BigText(
-                            text: "Password Toko",
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(HomePage(initialIndex: 3));
+                      },
+                      child: AppIcon(
+                        icon: Icons.arrow_back,
+                        iconColor: AppColors.redColor,
+                        backgroundColor: Colors.white.withOpacity(0.0),
+                        iconSize: Dimensions.iconSize24,
+                      ),
+                    ),
+                    SizedBox(
+                      width: Dimensions.width20,
+                    ),
+                    Container(
+                      child: BigText(
+                        text: "Password Toko",
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ],
                 ),

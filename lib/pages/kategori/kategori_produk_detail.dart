@@ -139,7 +139,7 @@ class _KategoriProdukDetailState extends State<KategoriProdukDetail> {
                   ? GridView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2, mainAxisExtent: 256),
+                      crossAxisCount: 2, mainAxisExtent: Dimensions.height45*6.5),
                   itemCount: produkKategori.kategoriProdukList.length,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
@@ -148,7 +148,8 @@ class _KategoriProdukDetailState extends State<KategoriProdukDetail> {
                         .where((produk) => produk.productId == produkKategori
                         .kategoriProdukList[index].productId);
                     if (produkKategori.kategoriProdukList[index].namaKategori.toString() == "$kategori") {
-                      return CardProduk(product_id : produkKategori.kategoriProdukList[index].productId,productImageName : gambarproduk.single.productImageName, productName : produkKategori.kategoriProdukList[index].productName, namaMerchant : produkKategori.kategoriProdukList[index].namaMerchant, price: produkKategori.kategoriProdukList[index].price, );
+                      return CardProduk(product_id : produkKategori.kategoriProdukList[index].productId,productImageName : gambarproduk.single.productImageName, productName : produkKategori.kategoriProdukList[index].productName, merchantAddress : produkKategori.kategoriProdukList[index].subdistrictName, price: produkKategori.kategoriProdukList[index].price, countPurchases: produkKategori
+                          .kategoriProdukList[index].countProductPurchases, );
                     } else {
                       return SizedBox.shrink();
                     }
