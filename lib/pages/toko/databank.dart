@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:rumah_kreatif_toba/controllers/bank_controller.dart';
 import 'package:rumah_kreatif_toba/pages/account/account_page.dart';
 import 'package:rumah_kreatif_toba/pages/kategori/kategori_produk_detail.dart';
-import 'package:rumah_kreatif_toba/pages/toko/alamattoko.dart';
+import 'package:rumah_kreatif_toba/pages/toko/AlamatToko/tambah_alamat_toko.dart';
 import 'package:rumah_kreatif_toba/pages/toko/namatoko.dart';
 import 'package:rumah_kreatif_toba/utils/dimensions.dart';
 import 'package:rumah_kreatif_toba/widgets/app_dropdown_field.dart';

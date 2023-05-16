@@ -5,18 +5,17 @@ class AppConstants {
   // static const String BASE_URL =
   //     "http://kreatif.tobakab.go.id/api/";
 
-  static const String BASE_URL_IMAGE =
-      "http://kreatif.tobakab.go.id/asset/";
-
+  // static const String BASE_URL_IMAGE =
+  //     "http://kreatif.tobakab.go.id/asset/";
 
   static const String BASE_URL =
-      "http://192.168.61.154/tobazonerework/public/api/";
-  //
-  // static const String BASE_URL_IMAGE =
-  //     "http://192.168.245.154/tobazonerework/public/asset/";
+      "http://172.20.10.4/RumahKreatifBackend/public/api/";
+
+  static const String BASE_URL_IMAGE =
+      "http://172.20.10.4/RumahKreatifBackend/public/asset/";
 
   // static const String BASE_URL = "http://kreatif.tobakab.go.id/api/";
-
+  //
   // static const String BASE_URL_IMAGE = "http://kreatif.tobakab.go.id/asset/";
 
   static const String POPULAR_PRODUCT_URL = "produk";
@@ -78,6 +77,9 @@ class AppConstants {
   static const String DAFTAR_ALAMAT = "alamatpengguna";
   static const String TAMBAH_ALAMAT = "tambahalamat";
   static const String HAPUS_ALAMAT_URL = "hapusalamat";
+
+  static const String DAFTAR_ALAMAT_TOKO_URL ="alamattoko";
+
   static const String TOKEN = "";
   static const String PHONE = "";
   static const String PASSWORD = "";

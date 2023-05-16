@@ -1,8 +1,10 @@
 import 'package:get/get.dart';
 import 'package:rumah_kreatif_toba/base/show_custom_message.dart';
+import 'package:rumah_kreatif_toba/controllers/toko_controller.dart';
 import 'package:rumah_kreatif_toba/data/repository/alamat_repo.dart';
 import 'package:rumah_kreatif_toba/models/alamat_model.dart';
 import 'package:rumah_kreatif_toba/controllers/user_controller.dart';
+import 'package:rumah_kreatif_toba/models/alamat_toko_model.dart';
 import 'package:rumah_kreatif_toba/pages/alamat/daftaralamat.dart';
 
 import '../models/response_model.dart';
@@ -13,6 +15,7 @@ class AlamatController extends GetxController {
   RxString subAsalId = "0".obs;
 
   final AlamatRepo alamatRepo;
+
   AlamatController({required this.alamatRepo});
 
   bool _isLoading = false;
@@ -20,6 +23,9 @@ class AlamatController extends GetxController {
 
   List<dynamic> _daftarAlamatList = [];
   List<dynamic> get daftarAlamatList => _daftarAlamatList;
+
+  List<dynamic> _daftarAlamatTokoList = [];
+  List<dynamic> get daftarAlamatTokoList => _daftarAlamatTokoList;
 
   Future<void> getAlamat() async {
     var controller = Get.find<UserController>().usersList[0];
@@ -87,5 +93,20 @@ class AlamatController extends GetxController {
     _isLoading = false;
     update();
     return responseModel;
+  }
+
+  Future<void> getAlamatToko() async {
+    var controller = Get.find<TokoController>().tokoList[0];
+    Response response = await alamatRepo.getAlamatToko(controller.id!);
+    if (response.statusCode == 200) {
+      List<dynamic> responseBody = response.body["alamattoko"];
+      _daftarAlamatTokoList = [];
+      for (dynamic item in responseBody) {
+        AlamatToko alamat = AlamatToko.fromJson(item);
+        _daftarAlamatTokoList.add(alamat);
+      }
+      _isLoading = true;
+      update();
+    } else {}
   }
 }

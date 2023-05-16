@@ -42,4 +42,10 @@ class AlamatRepo {
   Future<Response> hapusAlamat(int user_address_id) async {
     return await apiClient.postData(AppConstants.HAPUS_ALAMAT_URL, {"user_address_id": user_address_id});
   }
+
+  Future<Response> getAlamatToko(int merchant_id) async {
+    return await apiClient
+        .postData(AppConstants.DAFTAR_ALAMAT_TOKO_URL, {"merchant_id": merchant_id});
+  }
+
 }

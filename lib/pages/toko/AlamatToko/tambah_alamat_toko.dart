@@ -11,26 +11,13 @@ import 'package:rumah_kreatif_toba/pages/toko/passwordtoko.dart';
 import 'package:rumah_kreatif_toba/utils/dimensions.dart';
 import 'package:rumah_kreatif_toba/controllers/alamat_controller.dart';
 
-import '../../utils/colors.dart';
-import '../../widgets/big_text.dart';
+import '../../../utils/colors.dart';
+import '../../../widgets/big_text.dart';
 
-class AlamatTokoPageState extends GetView<AlamatController> {
-  // var ProvinsiController = TextEditingController();
-  // var KabupatenController = TextEditingController();
-  // var KecamatanController = TextEditingController();
-  // var JalanController = TextEditingController();
-
-  // const Provinsi({
-  //   Key? key,
-  //   required this.tipe,
-  // }) : super(key: key);
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  // }
+class TambahAlamatTokoPage extends GetView<AlamatController> {
 
   @override
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,

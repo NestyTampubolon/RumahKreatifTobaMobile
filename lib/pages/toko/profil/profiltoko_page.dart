@@ -4,6 +4,8 @@ import 'package:rumah_kreatif_toba/controllers/auth_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/toko_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/user_controller.dart';
 import 'package:rumah_kreatif_toba/pages/account/account_widget.dart';
+import 'package:rumah_kreatif_toba/pages/toko/AlamatToko/daftar_alamat_toko.dart';
+import 'package:rumah_kreatif_toba/pages/toko/AlamatToko/tambah_alamat_toko.dart';
 import 'package:rumah_kreatif_toba/pages/toko/profil/profil.dart';
 import 'package:rumah_kreatif_toba/utils/colors.dart';
 import 'package:rumah_kreatif_toba/utils/dimensions.dart';
@@ -102,9 +104,7 @@ class ProfilTokoPage extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       if (Get.find<AuthController>().userLoggedIn()) {
-                        Get.toNamed(
-                          RouteHelper.getDaftarAlamatPage(),
-                        );
+                        Get.to(DaftarAlamatTokoPage());
                       }
                     },
                     child: AccountWidget(
