@@ -39,7 +39,7 @@ class AlamatRepo {
     });
   }
 
-  Future<Response> hapusAlamat(int user_address_id) async {
+  Future<Response> hapusAlamat(int? user_address_id) async {
     return await apiClient.postData(AppConstants.HAPUS_ALAMAT_URL, {"user_address_id": user_address_id});
   }
 }

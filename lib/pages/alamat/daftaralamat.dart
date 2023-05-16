@@ -8,6 +8,7 @@ import 'package:rumah_kreatif_toba/routes/route_helper.dart';
 import 'package:rumah_kreatif_toba/utils/dimensions.dart';
 import 'package:rumah_kreatif_toba/controllers/alamat_controller.dart';
 import 'package:rumah_kreatif_toba/models/alamat_model.dart';
+import '../../base/show_custom_message.dart';
 import '../../utils/colors.dart';
 import '../../widgets/app_icon.dart';
 import '../../widgets/big_text.dart';
@@ -19,6 +20,17 @@ class DaftarAlamatPage extends GetView<AlamatController> {
   @override
   Widget build(BuildContext context) {
     Get.find<AlamatController>().getAlamat();
+
+    Future<void> _hapusAlamat(int? user_address_id) async {
+      var cartController = Get.find<AlamatController>();
+      cartController.hapusAlamat(user_address_id).then((status) {
+        if (status.isSuccess) {
+        } else {
+          showCustomSnackBar(status.message);
+        }
+      });
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -36,7 +48,7 @@ class DaftarAlamatPage extends GetView<AlamatController> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Get.back();
+                          Get.to(HomePage(initialIndex: 3));
                         },
                         child: AppIcon(
                           icon: Icons.arrow_back,
@@ -69,62 +81,116 @@ class DaftarAlamatPage extends GetView<AlamatController> {
                 ],
               ),
             ),
-            Container(
-              padding: EdgeInsets.fromLTRB(10, 30, 10, 10),
-              height: 220,
-              width: double.maxFinite,
-              child: Card(
-                elevation: 5,
-                child: InkWell(
-                  // onTap: () {
-                  //   if (index == _selectedIndex) {
-                  //     _selectedIndex = -1;
-                  //   } else {
-                  //     _selectedIndex = index;
-                  //   }
-                  // },
-                  child: Container(
-                    // color: index == _selectedIndex
-                    //     ? AppColors.redColor
-                    //     : Colors.white,
-                    child: Padding(
-                      padding: EdgeInsets.all(7),
-                      child: Stack(
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10, top: 5),
-                            child: GetBuilder<AlamatController>(
-                              builder: (AlamatController) {
-                                return ListView.builder(
-                                  itemCount:
-                                  AlamatController.daftarAlamatList.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    Alamat alamat =
-                                    AlamatController.daftarAlamatList[index];
-                                    return ListTile(
-                                      title: Text("Alamat ${index + 1}"),
-                                      subtitle: Text(alamat
-                                          .user_street_address
-                                          ?.toString() ??
-                                          ""),
-                                      trailing: Text(alamat
-                                          .user_street_address
-                                          ?.toString() ??
-                                          ""),
-                                    );
-                                  },
-                                );
-                              },
-                            ),
+            GetBuilder<AlamatController>(
+              builder: (AlamatController) {
+                return ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: AlamatController.daftarAlamatList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    Alamat alamat =
+                    AlamatController.daftarAlamatList[index];
+                    return Container(
+                      width: Dimensions.screenWidth,
+                      height: Dimensions.height45 * 2.5,
+                      margin: EdgeInsets.only(
+                          bottom: Dimensions.height10,
+                          top: Dimensions.height10 / 2,
+                          left: Dimensions.width20,
+                          right: Dimensions.width20),
+                      padding: EdgeInsets.all(Dimensions.height20),
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              color: AppColors.buttonBackgroundColor),
+                          borderRadius:
+                          BorderRadius.circular(Dimensions.radius20),
+                          color: Colors.white),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              BigText(text: "Alamat ${index + 1}", fontWeight: FontWeight.bold,),
+                              BigText(text: alamat.user_street_address?.toString() ?? "")
+                            ],
                           ),
+                          GestureDetector(
+                            onTap: () {
+                              _hapusAlamat(alamat.user_address_id);
+                            },
+                            child: AppIcon(
+                                iconSize: Dimensions
+                                    .iconSize16,
+                                iconColor: AppColors
+                                    .redColor,
+                                backgroundColor:
+                                Colors.white,
+                                icon: Icons.delete),
+                          )
                         ],
                       ),
-                    ),
-                  ),
-                ),
-              ),
-            )
+                    );
+                  },
+                );
+              },
+            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     GetBuilder<AlamatController>(
+            //       builder: (AlamatController) {
+            //         return ListView.builder(
+            //           physics: const NeverScrollableScrollPhysics(),
+            //           shrinkWrap: true,
+            //           itemCount: AlamatController.daftarAlamatList.length,
+            //           itemBuilder: (BuildContext context, int index) {
+            //             Alamat alamat =
+            //             AlamatController.daftarAlamatList[index];
+            //             return Container(
+            //               width: Dimensions.screenWidth,
+            //               height: Dimensions.height45 * 2.5,
+            //               margin: EdgeInsets.only(
+            //                   bottom: Dimensions.height10,
+            //                   top: Dimensions.height10 / 2,
+            //                   left: Dimensions.width20,
+            //                   right: Dimensions.width20),
+            //               padding: EdgeInsets.all(Dimensions.height20),
+            //               decoration: BoxDecoration(
+            //                   border: Border.all(
+            //                       color: AppColors.buttonBackgroundColor),
+            //                   borderRadius:
+            //                   BorderRadius.circular(Dimensions.radius20),
+            //                   color: Colors.white),
+            //               child: Column(
+            //                 mainAxisAlignment: MainAxisAlignment.start,
+            //                 crossAxisAlignment: CrossAxisAlignment.start,
+            //                 children: [
+            //                   BigText(text: "Alamat ${index + 1}", fontWeight: FontWeight.bold,),
+            //                   BigText(text: alamat.user_street_address?.toString() ?? "")
+            //                 ],
+            //               ),
+            //             );
+            //           },
+            //         );
+            //       },
+            //     ),
+            //     GestureDetector(
+            //       onTap: () {
+            //       },
+            //       child: AppIcon(
+            //           iconSize: Dimensions
+            //               .iconSize16,
+            //           iconColor: AppColors
+            //               .redColor,
+            //           backgroundColor:
+            //           Colors.white,
+            //           icon: Icons.delete),
+            //     )
+            //   ],
+            // )
+
           ],
         ),
       ),

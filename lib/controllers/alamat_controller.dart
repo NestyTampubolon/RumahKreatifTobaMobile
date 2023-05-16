@@ -9,8 +9,11 @@ import '../models/response_model.dart';
 
 class AlamatController extends GetxController {
   RxString provAsalId = "0".obs;
+  RxString province = "0".obs;
   RxString cityAsalId = "0".obs;
+  RxString city = "0".obs;
   RxString subAsalId = "0".obs;
+  RxString sub= "0".obs;
 
   final AlamatRepo alamatRepo;
   AlamatController({required this.alamatRepo});
@@ -73,9 +76,7 @@ class AlamatController extends GetxController {
     return responseModel;
   }
 
-  Future<ResponseModel> hapusAlamat(int user_address_id) async {
-    _isLoading = true;
-    update();
+  Future<ResponseModel> hapusAlamat(int? user_address_id) async {
     Response response = await alamatRepo.hapusAlamat(user_address_id);
     late ResponseModel responseModel;
     if (response.statusCode == 200) {
@@ -84,7 +85,7 @@ class AlamatController extends GetxController {
     } else {
       responseModel = ResponseModel(false, response.statusText!);
     }
-    _isLoading = false;
+    _isLoading = true;
     update();
     return responseModel;
   }

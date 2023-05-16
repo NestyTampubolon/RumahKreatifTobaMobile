@@ -27,6 +27,7 @@ class TambahAlamatPage extends GetView<AlamatController> {
 
   @override
   Widget build(BuildContext context) {
+    String namaProvinsi;
     Future<void> _tambahAlamat(provAsalId, cityAsalId, subdistrictId) async {
       String provinsi = ProvinsiController.text.trim();
       String kabupaten = KabupatenController.text.trim();
@@ -45,7 +46,7 @@ class TambahAlamatPage extends GetView<AlamatController> {
         var userController = Get.find<UserController>().usersList[0];
         var controller = Get.find<AlamatController>();
         controller.tambahAlamat(userController.id,
-            provinsi, kabupaten, kecamatan, jalan, provAsalId, cityAsalId, subdistrictId )
+            controller.province.value , controller.city.value, controller.sub.value, jalan, provAsalId, cityAsalId, subdistrictId )
             .then((status) async {});
       }
     }
@@ -112,11 +113,17 @@ class TambahAlamatPage extends GetView<AlamatController> {
                             "key": "41df939eff72c9b050a81d89b4be72ba",
                           },
                         );
+
+
                         return Province.fromJsonList(
                             response.data["rajaongkir"]["results"]);
                       },
 
-                      onChanged: (value) => controller.provAsalId.value = value?.provinceId ?? "0",
+                      onChanged: (value) {
+                        controller.provAsalId.value = value?.provinceId ?? "0";
+                        controller.province.value  = value?.province ?? "0";
+                        ;
+                      },
 
                   ),
                   SizedBox(
@@ -150,8 +157,11 @@ class TambahAlamatPage extends GetView<AlamatController> {
                         return City.fromJsonList(
                             response.data["rajaongkir"]["results"]);
                       },
-                      onChanged: (value) =>
-                      controller.cityAsalId.value = value?.cityId ?? "0"),
+                      onChanged: (value) {
+                      controller.cityAsalId.value = value?.cityId ?? "0";
+                      controller.city.value = value?.cityName ?? "0";
+
+                      }),
                   SizedBox(
                     height: 20,
                   ),
@@ -182,8 +192,11 @@ class TambahAlamatPage extends GetView<AlamatController> {
                       return Subdistrict.fromJsonList(
                           response.data["rajaongkir"]["results"]);
                     },
-                    onChanged: (value) =>
-                    controller.subAsalId.value = value?.subdistrictId ?? "0",
+                    onChanged: (value) {
+                      controller.subAsalId.value = value?.subdistrictId ?? "0";
+                      controller.sub.value = value?.subdistrictName ?? "0";
+                    }
+
                   ),
                   SizedBox(
                     height: 20,
