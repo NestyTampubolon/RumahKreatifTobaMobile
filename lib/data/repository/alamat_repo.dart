@@ -48,4 +48,30 @@ class AlamatRepo {
         .postData(AppConstants.DAFTAR_ALAMAT_TOKO_URL, {"merchant_id": merchant_id});
   }
 
+  Future<Response> tambahAlamatToko(
+      int merchant_id,
+      String province_id,
+      String province_name,
+      String city_id,
+      String city_name,
+      String subdistrict_id,
+      String subdistrict_name,
+      String merchant_street_address,
+      ) async {
+    return await apiClient.postData(AppConstants.TAMBAH_ALAMAT_TOKO, {
+      "merchant_id": merchant_id,
+      "province_id": province_id,
+      "province_name": province_name,
+      "city_id": city_id,
+      "city_name": city_name,
+      "subdistrict_id": subdistrict_id,
+      "subdistrict_name": subdistrict_name,
+      "merchant_street_address": merchant_street_address,
+    });
+  }
+
+  Future<Response> hapusAlamatToko(int? merchant_address_id) async {
+    return await apiClient.postData(AppConstants.HAPUS_ALAMAT_URL, {"merchant_address_id": merchant_address_id});
+  }
+
 }

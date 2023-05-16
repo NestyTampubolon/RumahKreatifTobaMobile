@@ -58,7 +58,9 @@ class DaftarAlamatTokoPage extends GetView<AlamatController> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Get.to(TambahAlamatTokoPage());
+                          Get.to(
+                              TambahAlamatToko()
+                          );
                         },
                         child: BigText(
                           text: "Tambah Alamat",
@@ -103,15 +105,15 @@ class DaftarAlamatTokoPage extends GetView<AlamatController> {
                                   AlamatController.daftarAlamatTokoList.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
-                                    AlamatToko alamat =
+                                    AlamatToko alamattoko =
                                     AlamatController.daftarAlamatTokoList[index];
                                     return ListTile(
                                       title: Text("Alamat Toko ${index + 1}"),
-                                      subtitle: Text(alamat
+                                      subtitle: Text(alamattoko
                                           .merchant_street_address
                                           ?.toString() ??
                                           ""),
-                                      trailing: Text(alamat
+                                      trailing: Text(alamattoko
                                           .merchant_street_address
                                           ?.toString() ??
                                           ""),
