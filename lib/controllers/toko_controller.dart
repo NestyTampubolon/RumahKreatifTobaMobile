@@ -277,13 +277,14 @@ class TokoController extends GetxController {
           'jumlah_pesanan_berhasil_belum_dibayar' : response.body["jumlah_pesanan_berhasil_belum_dibayar"],
           'jumlah_pesanan_berhasil_telah_dibayar' : response.body["jumlah_pesanan_berhasil_telah_dibayar"]
         };
+        _isLoading = true;
       } catch (e) {
         print("Error parsing response: $e");
       }
     } else {
       responseModel = ResponseModel(false, response.statusText!);
     }
-    _isLoading = true;
+
     update();
     return responseModel;
   }
