@@ -559,25 +559,27 @@ class _BeliLangsungPageState extends State<BeliLangsungPage> {
                             bottom: Dimensions.height10,
                             left: Dimensions.width20,
                             right: Dimensions.width20),
+                        height: Dimensions.height30*2,
                         decoration: BoxDecoration(
-                            border: Border.all(
-                                color: AppColors.buttonBackgroundColor),
+                            // border: Border.all(
+                            //     color: AppColors.buttonBackgroundColor),
                             borderRadius:
                                 BorderRadius.circular(Dimensions.radius20),
                             color: Colors.white),
-                        child: Row(
+                        child: Column(
                           children: [
-                            SizedBox(
-                              width: Dimensions.width10 / 2,
-                            ),
                             BigText(
-                                text: CurrencyFormat.convertToIdr(
-                                    cartController.totalAmount, 0)),
-                            SizedBox(
-                              width: Dimensions.width10 / 2,
+                                text: "Total Harga",
+                                size: Dimensions
+                                    .height15
+                            ),
+                            PriceText(
+                              text: CurrencyFormat.convertToIdr(
+                                  cartController.totalAmount, 0),
+                              size: Dimensions.font16,
                             ),
                           ],
-                        ),
+                        )
                       ),
                       Container(
                         padding: EdgeInsets.only(
@@ -585,6 +587,10 @@ class _BeliLangsungPageState extends State<BeliLangsungPage> {
                             bottom: Dimensions.height10,
                             left: Dimensions.width20,
                             right: Dimensions.width20),
+                        decoration: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.circular(Dimensions.radius20),
+                            color: AppColors.redColor),
                         child: GestureDetector(
                             onTap: () {
                               _beliLangsung(cartController.getItems[0]!.productId!, cartController.getItems[0].jumlahMasukKeranjang!, cartController.totalAmount.toInt());
@@ -593,12 +599,10 @@ class _BeliLangsungPageState extends State<BeliLangsungPage> {
                               BigText(
                                 text: "Beli Langsung",
                                 color: Colors.white,
+                                  size: Dimensions
+                                      .height15
                               ),
                             ])),
-                        decoration: BoxDecoration(
-                            borderRadius:
-                                BorderRadius.circular(Dimensions.radius20),
-                            color: AppColors.redColor),
                       )
                     ],
                   ),

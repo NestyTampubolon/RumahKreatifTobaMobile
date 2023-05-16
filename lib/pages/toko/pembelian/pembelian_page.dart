@@ -7,7 +7,9 @@ import 'package:rumah_kreatif_toba/pages/toko/pembelian/pembelian_detailpage.dar
 import 'package:rumah_kreatif_toba/utils/colors.dart';
 import '../../../base/show_custom_message.dart';
 import '../../../controllers/pesanan_controller.dart';
+import '../../../controllers/popular_produk_controller.dart';
 import '../../../routes/route_helper.dart';
+import '../../../utils/app_constants.dart';
 import '../../../utils/dimensions.dart';
 import '../../../widgets/app_icon.dart';
 import '../../../widgets/big_text.dart';
@@ -106,6 +108,10 @@ class _DaftarPembelianPageState extends State<DaftarPembelianPage>
                     itemCount: _menungguKonfirmasiList.length,
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
+                      var gambarproduk = Get.find<PopularProdukController>().imageProdukList.where(
+                              (produk) =>
+                          produk.productId ==
+                              _menungguKonfirmasiList[index].productId);
                       return Container(
                         width: Dimensions.screenWidth,
                         height: Dimensions.height45 * 3.5,
@@ -212,8 +218,10 @@ class _DaftarPembelianPageState extends State<DaftarPembelianPage>
                                             decoration: BoxDecoration(
                                                 image: DecorationImage(
                                                     fit: BoxFit.cover,
-                                                    image: AssetImage(
-                                                        "assets/images/coffee.jpg")),
+                                                    image: NetworkImage(
+                                                      '${AppConstants.BASE_URL_IMAGE}u_file/product_image/${gambarproduk.single.productImageName}',
+                                                    )
+                                                ),
                                                 borderRadius:
                                                 BorderRadius.circular(
                                                     Dimensions
@@ -330,6 +338,10 @@ class _DaftarPembelianPageState extends State<DaftarPembelianPage>
                     itemCount: _sudahKonfirmasiList.length,
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
+                      var gambarproduk = Get.find<PopularProdukController>().imageProdukList.where(
+                              (produk) =>
+                          produk.productId ==
+                              _sudahKonfirmasiList[index].productId);
                       return Container(
                         width: Dimensions.screenWidth,
                         height: Dimensions.height45 * 3.5,
@@ -435,8 +447,10 @@ class _DaftarPembelianPageState extends State<DaftarPembelianPage>
                                             decoration: BoxDecoration(
                                                 image: DecorationImage(
                                                     fit: BoxFit.cover,
-                                                    image: AssetImage(
-                                                        "assets/images/coffee.jpg")),
+                                                    image: NetworkImage(
+                                                      '${AppConstants.BASE_URL_IMAGE}u_file/product_image/${gambarproduk.single.productImageName}',
+                                                    )
+                                                ),
                                                 borderRadius:
                                                 BorderRadius.circular(
                                                     Dimensions

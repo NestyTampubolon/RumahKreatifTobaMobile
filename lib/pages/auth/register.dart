@@ -195,8 +195,8 @@ class Register extends StatelessWidget {
                           _registration(_authController);
                         },
                         child: Container(
-                            width: Dimensions.screenWidth / 2,
-                            height: Dimensions.screenHeight / 13,
+                            width: Dimensions.width45*3,
+                            height: Dimensions.height45,
                             decoration: BoxDecoration(
                                 borderRadius:
                                     BorderRadius.circular(Dimensions.radius30),
@@ -206,6 +206,7 @@ class Register extends StatelessWidget {
                                 text: "Daftar",
                                 size: Dimensions.font20,
                                 color: Colors.white,
+                                fontWeight: FontWeight.bold,
                               ),
                             )),
                       ),
@@ -214,12 +215,20 @@ class Register extends StatelessWidget {
                       ),
                       RichText(
                           text: TextSpan(
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () => Get.back(),
-                              text: "Sudah memiliki akun?",
+                              text: "Sudah memiliki Akun? ",
                               style: TextStyle(
                                   color: Colors.grey[500],
-                                  fontSize: Dimensions.font20))),
+                                  fontSize: Dimensions.font16),
+                              children: [
+                                TextSpan(
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () => Get.back(),
+                                    text: "Masuk",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                        fontSize: Dimensions.font16))
+                              ])),
                       SizedBox(
                         height: Dimensions.height15,
                       ),

@@ -61,8 +61,8 @@ class Masuk extends StatelessWidget {
                         },
                         child: AppIcon(
                           icon: Icons.arrow_back,
-                          iconColor: Colors.white,
-                          backgroundColor: AppColors.redColor,
+                          iconColor: AppColors.redColor,
+                          backgroundColor: Colors.white.withOpacity(0.0),
                           iconSize: Dimensions.iconSize24,
                         ),
                       ),
@@ -124,8 +124,8 @@ class Masuk extends StatelessWidget {
                                   _login(authController);
                                 },
                                 child: Container(
-                                    width: Dimensions.screenWidth / 2,
-                                    height: Dimensions.screenHeight / 13,
+                                    width: Dimensions.width45*3,
+                                    height: Dimensions.height45,
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(
                                             Dimensions.radius30),
@@ -135,6 +135,7 @@ class Masuk extends StatelessWidget {
                                         text: "Masuk",
                                         size: Dimensions.font20,
                                         color: Colors.white,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     )),
                               ),

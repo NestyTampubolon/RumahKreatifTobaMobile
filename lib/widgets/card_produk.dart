@@ -15,10 +15,11 @@ class CardProduk extends StatelessWidget {
   final int product_id;
   final String productImageName;
   final String productName;
-  final String namaMerchant;
+  final String merchantAddress;
+  final String? countPurchases;
   final int price;
 
-  const CardProduk({Key? key,required this.product_id, required this.productImageName, required this.productName, required this.namaMerchant, required this.price}) : super(key: key);
+  const CardProduk({Key? key,required this.product_id, required this.productImageName, required this.productName, required this.price, required this.merchantAddress, this.countPurchases}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,7 @@ class CardProduk extends StatelessWidget {
     }
     return Container(
       width: Dimensions.width45*3.5,
-      height: Dimensions.width45*9,
+      height: Dimensions.width45*10,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(15),
@@ -86,15 +87,20 @@ class CardProduk extends StatelessWidget {
                     text: productName,
                     size: Dimensions.font16,
                   ),
-                  SmallText(
-                    text: namaMerchant,
-                  ),
                   PriceText(
                     text: CurrencyFormat.convertToIdr(
                         price,
                         0),
                     color: AppColors.redColor,
                     size: Dimensions.font16,
+                  ),
+                  SmallText(
+                    text: merchantAddress,
+                  ),
+                  Container(
+                    child: countPurchases != null
+                        ? SmallText(text: 'Terjual $countPurchases', color: AppColors.redColor,)
+                        : SizedBox(),
                   ),
                 ],
               ),

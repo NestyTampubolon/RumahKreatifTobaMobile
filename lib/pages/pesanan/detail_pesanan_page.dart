@@ -6,6 +6,7 @@ import '../../controllers/pesanan_controller.dart';
 import '../../controllers/popular_produk_controller.dart';
 import '../../controllers/user_controller.dart';
 import '../../routes/route_helper.dart';
+import '../../utils/app_constants.dart';
 import '../../utils/colors.dart';
 import '../../utils/dimensions.dart';
 
@@ -116,13 +117,6 @@ class _DetailPesananPageState extends State<DetailPesananPage> {
                       ],
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SmallText(text: "Tanggal Pembelian"),
-                      SmallText(text: detailPesanan[0].createdAt.toString())
-                    ],
-                  )
                 ],
               ),
             ),
@@ -171,6 +165,10 @@ class _DetailPesananPageState extends State<DetailPesananPage> {
                         itemCount: pesananController.detailPesananList.length,
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
+                          var gambarproduk = Get.find<PopularProdukController>().imageProdukList.where(
+                                  (produk) =>
+                              produk.productId ==
+                                  pesananController.detailPesananList[index].productId);
                           return Container(
                             width: Dimensions.screenWidth,
                             height: Dimensions.height45 * 3.5,
@@ -219,8 +217,10 @@ class _DetailPesananPageState extends State<DetailPesananPage> {
                                                 decoration: BoxDecoration(
                                                     image: DecorationImage(
                                                         fit: BoxFit.cover,
-                                                        image: AssetImage(
-                                                            "assets/images/coffee.jpg")),
+                                                        image: NetworkImage(
+                                                          '${AppConstants.BASE_URL_IMAGE}u_file/product_image/${gambarproduk.single.productImageName}',
+                                                        )
+                                                    ),
                                                     borderRadius:
                                                     BorderRadius.circular(
                                                         Dimensions

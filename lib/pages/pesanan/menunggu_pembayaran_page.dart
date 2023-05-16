@@ -5,8 +5,10 @@ import 'package:rumah_kreatif_toba/pages/pembayaran/pembayaran_page.dart';
 import '../../base/show_custom_message.dart';
 import '../../controllers/auth_controller.dart';
 import '../../controllers/pesanan_controller.dart';
+import '../../controllers/popular_produk_controller.dart';
 import '../../controllers/user_controller.dart';
 import '../../routes/route_helper.dart';
+import '../../utils/app_constants.dart';
 import '../../utils/colors.dart';
 import '../../utils/dimensions.dart';
 
@@ -90,28 +92,30 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
           children: [
             Container(
               margin: EdgeInsets.only(
-                  top: Dimensions.height30,
-                  left: Dimensions.width20,
-                  right: Dimensions.width20),
+                  top: Dimensions.height30),
+              padding: EdgeInsets.only(
+                  left: Dimensions.width20, right: Dimensions.width20),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Get.toNamed(RouteHelper.getPesananPage());
+                      Get.back();
                     },
                     child: AppIcon(
                       icon: Icons.arrow_back,
                       iconColor: AppColors.redColor,
-                      backgroundColor: Colors.white,
+                      backgroundColor: Colors.white.withOpacity(0.0),
+                      iconSize: Dimensions.iconSize24,
                     ),
                   ),
                   SizedBox(
                     width: Dimensions.width20,
                   ),
-                  BigText(
-                    text: "Menunggu Pembayaran",
-                    size: Dimensions.font20,
+                  Container(
+                    child: BigText(
+                      text: "Menunggu Pembayaran",
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ],
               ),
@@ -124,6 +128,11 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                   itemCount: pesananController.pesananMenungguPembayaranList.length,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
+                    var gambarproduk = Get.find<PopularProdukController>().imageProdukList.where(
+                            (produk) =>
+                        produk.productId ==
+                            pesananController.pesananMenungguPembayaranList[index].productId);
+
                     return Container(
                       width: Dimensions.screenWidth,
                       height: Dimensions.height45 * 3.5,
@@ -247,8 +256,10 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                                           decoration: BoxDecoration(
                                               image: DecorationImage(
                                                   fit: BoxFit.cover,
-                                                  image: AssetImage(
-                                                      "assets/images/coffee.jpg")),
+                                                  image: NetworkImage(
+                                                    '${AppConstants.BASE_URL_IMAGE}u_file/product_image/${gambarproduk.single.productImageName}',
+                                                  )
+                                              ),
                                               borderRadius:
                                               BorderRadius.circular(
                                                   Dimensions

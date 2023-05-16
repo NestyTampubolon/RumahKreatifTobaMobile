@@ -2,15 +2,22 @@ class AppConstants {
   static const String APP_NAME = "Rumah Kreatif Toba";
   static const int APP_VERSION = 1;
 
+  // static const String BASE_URL =
+  //     "http://kreatif.tobakab.go.id/api/";
+
+  static const String BASE_URL_IMAGE =
+      "http://kreatif.tobakab.go.id/asset/";
+
+
+  static const String BASE_URL =
+      "http://192.168.61.154/tobazonerework/public/api/";
+  //
+  // static const String BASE_URL_IMAGE =
+  //     "http://192.168.245.154/tobazonerework/public/asset/";
+
   // static const String BASE_URL = "http://kreatif.tobakab.go.id/api/";
 
   // static const String BASE_URL_IMAGE = "http://kreatif.tobakab.go.id/asset/";
-
-  static const String BASE_URL =
-      "http://172.20.10.4/RumahKreatifBackend/public/api/";
-
-  static const String BASE_URL_IMAGE =
-      "http://172.20.10.4/RumahKreatifBackend/public/asset/";
 
   static const String POPULAR_PRODUCT_URL = "produk";
   static const String KATEGORI_PRODUCT_URL = "lihat_produk";

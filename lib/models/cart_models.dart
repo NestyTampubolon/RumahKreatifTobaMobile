@@ -60,8 +60,8 @@ class CartModel {
     namaMerchant : json['nama_merchant'],
     deskripsiToko : json['deskripsi_toko'],
     kontakToko : json['kontak_toko'],
-  fotoMerchant : json['foto_merchant'],
-  isVerified : json['is_verified'],
+    fotoMerchant : json['foto_merchant'],
+    isVerified : json['is_verified'],
     id: json['id'],
     username: json['username'],
     email: json['email'],
@@ -70,7 +70,7 @@ class CartModel {
     isAdmin: json['is_admin'],
     isBanned: json['is_banned'],
     rememberToken: json['remember_token'],
-    produk : Produk.fromJson(json['produk']),
+    produk : json['produk'] != null ? Produk.fromJson(json['produk']) : null,
   );
 
   Map<String, dynamic> toJson() => {

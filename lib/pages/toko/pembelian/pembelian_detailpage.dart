@@ -5,8 +5,10 @@ import 'package:rumah_kreatif_toba/controllers/pembelian_controller.dart';
 
 import '../../../controllers/auth_controller.dart';
 import '../../../controllers/pesanan_controller.dart';
+import '../../../controllers/popular_produk_controller.dart';
 import '../../../controllers/user_controller.dart';
 import '../../../routes/route_helper.dart';
+import '../../../utils/app_constants.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/dimensions.dart';
 import '../../../widgets/app_icon.dart';
@@ -154,7 +156,7 @@ class _PembelianDetailPageState extends State<PembelianDetailPage> {
                     child: Row(
                       children: [
                         BigText(
-                          text: "Detail Pembayaran",
+                          text: "Detail Pembelian",
                           size: Dimensions.font20,
                           fontWeight: FontWeight.bold,
                         )
@@ -170,6 +172,10 @@ class _PembelianDetailPageState extends State<PembelianDetailPage> {
                         itemCount: controller.detailPembelianList.length,
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
+                          var gambarproduk = Get.find<PopularProdukController>().imageProdukList.where(
+                                  (produk) =>
+                              produk.productId ==
+                                  controller.detailPembelianList[index].productId);
                           return Container(
                             width: Dimensions.screenWidth,
                             height: Dimensions.height45 * 3.5,
@@ -218,8 +224,10 @@ class _PembelianDetailPageState extends State<PembelianDetailPage> {
                                                 decoration: BoxDecoration(
                                                     image: DecorationImage(
                                                         fit: BoxFit.cover,
-                                                        image: AssetImage(
-                                                            "assets/images/coffee.jpg")),
+                                                        image: NetworkImage(
+                                                          '${AppConstants.BASE_URL_IMAGE}u_file/product_image/${gambarproduk.single.productImageName}',
+                                                        )
+                                                    ),
                                                     borderRadius:
                                                     BorderRadius.circular(
                                                         Dimensions
@@ -434,14 +442,11 @@ class _PembelianDetailPageState extends State<PembelianDetailPage> {
               child: Column(
                 children: [
                   Container(
+                    width: Dimensions.screenWidth,
                     margin: EdgeInsets.only(bottom: Dimensions.height10),
-                    child: Row(
-                      children: [
-                        SmallText(
-                          text: "Jika pesanan telah disiapkan. SILAHKAN KONFIRMASI PESANAN.",
-                        )
-                      ],
-                    ),
+                    child: SmallText(
+                      text: "Jika pesanan telah disiapkan. SILAHKAN KONFIRMASI PESANAN.",
+                    )
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

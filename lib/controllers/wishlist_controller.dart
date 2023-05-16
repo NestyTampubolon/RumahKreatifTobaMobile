@@ -15,7 +15,11 @@ class WishlistController extends GetxController{
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  List<dynamic> _wishlistList=[];
+  RxBool isProdukExist = false.obs;
+
+  // bool get getIsProductExist => isPO
+
+  RxList _wishlistList= <dynamic>[].obs;
   List<dynamic> get wishlistList => _wishlistList;
 
   Future<ResponseModel> tambahWishlist(int? user_id, int product_id) async {
@@ -39,7 +43,7 @@ class WishlistController extends GetxController{
     Response response = await wishlistRepo.getWishlistList(controller.id!);
     if(response.statusCode == 200){
       List<dynamic> responseBody = response.body;
-      _wishlistList = [];
+      _wishlistList.value = [];
       for (dynamic item in responseBody) {
         WishlistModel wishlist = WishlistModel.fromJson(item);
         _wishlistList.add(wishlist);

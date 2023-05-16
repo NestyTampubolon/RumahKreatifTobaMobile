@@ -70,7 +70,7 @@ class _SearchPageState extends State<SearchPage> {
                       child: AppIcon(
                         icon: Icons.arrow_back,
                         iconColor: AppColors.redColor,
-                        backgroundColor: Colors.white,
+                        backgroundColor: Colors.white.withOpacity(0.0),
                         iconSize: Dimensions.iconSize24,
                       ),
                     ),
@@ -110,14 +110,14 @@ class _SearchPageState extends State<SearchPage> {
               GridView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2, mainAxisExtent: 256),
+                      crossAxisCount: 2, mainAxisExtent: Dimensions.height45*6.5),
                   itemCount: _list.length,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     var gambarproduk = Get.find<PopularProdukController>()
                         .imageProdukList
                         .where((produk) => produk.productId == _list[index].productId);
-                    return CardProduk(product_id : _list[index].productId,productImageName : gambarproduk.single.productImageName, productName : _list[index].productName, namaMerchant : _list[index].namaMerchant, price: _list[index].price, );
+                    return CardProduk(product_id : _list[index].productId,productImageName : gambarproduk.single.productImageName, productName : _list[index].productName, merchantAddress : _list[index].subdistrictName, price: _list[index].price, countPurchases : _list[index].countProductPurchases );
                   })
             ])));;
   }

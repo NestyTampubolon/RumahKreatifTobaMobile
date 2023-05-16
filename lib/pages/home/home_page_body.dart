@@ -29,6 +29,7 @@ class HomePageBody extends StatefulWidget {
 }
 
 class _HomePageBodyState extends State<HomePageBody> {
+  final PopularProdukController _produkController = Get.find<PopularProdukController>();
   PageController pageController = PageController(viewportFraction: 0.90);
   PageController pageControllerPopulerProduct =
       PageController(viewportFraction: 0.90);
@@ -40,16 +41,7 @@ class _HomePageBodyState extends State<HomePageBody> {
   @override
   void initState() {
     super.initState();
-    // pageController.addListener(() {
-    //   setState(() {
-    //     _currPageValue = pageController.page!;
-    //   });
-    // });
-    // pageControllerPopulerProduct.addListener(() {
-    //   setState(() {
-    //     _currPageValuePopulerProduct = pageControllerPopulerProduct.page!;
-    //   });
-    // });
+
   }
 
   @override
@@ -71,7 +63,7 @@ class _HomePageBodyState extends State<HomePageBody> {
       controller.detailProduk(product_id).then((status) async {});
     }
 
-    return Column(
+    return RefreshIndicator(child: Column(
       children: [
         // Container(
         //   height: Dimensions.pageView,
@@ -133,7 +125,7 @@ class _HomePageBodyState extends State<HomePageBody> {
                       child: GestureDetector(
                         onTap: () {
                           Get.to(
-                            () => HomePage(initialIndex: 1),
+                                () => HomePage(initialIndex: 1),
                           );
                         },
                         child: Column(
@@ -209,7 +201,7 @@ class _HomePageBodyState extends State<HomePageBody> {
           ],
         ),
         Container(
-          height: Dimensions.height45 * 6,
+          height: Dimensions.height45 * 6.5,
           margin: EdgeInsets.only(
               left: Dimensions.width20,
               right: Dimensions.width20,
@@ -217,39 +209,39 @@ class _HomePageBodyState extends State<HomePageBody> {
               bottom: Dimensions.height10),
           child: GetBuilder<PopularProdukController>(
             builder: (popularProduk) {
-              return popularProduk.isLoaded
-                  ? ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 10,
-                      itemBuilder: (context, index) {
-                        var gambarproduk = popularProduk.imageProdukList.where(
-                            (produk) =>
-                                produk.productId ==
-                                popularProduk
-                                    .produkMakananMinumanList[index].productId);
-                        return CardProduk(
-                          product_id: popularProduk
-                              .produkMakananMinumanList[index].productId,
-                          productImageName:
-                              gambarproduk.single.productImageName,
-                          productName: popularProduk
-                              .produkMakananMinumanList[index].productName,
-                          namaMerchant: popularProduk
-                              .produkMakananMinumanList[index].namaMerchant,
-                          price: popularProduk
-                              .produkMakananMinumanList[index].price,
-                        );
-                      },
-                    )
-                  : Container(
-                      height:
-                          50, // set the height of the container to your desired height
-                      child: Center(
-                        child: CircularProgressIndicator(
-                          color: AppColors.redColor,
-                        ),
-                      ),
-                    );
+              return popularProduk.isLoading.value ? ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 10,
+                itemBuilder: (context, index) {
+                  var gambarproduk = popularProduk.imageProdukList.where(
+                          (produk) =>
+                      produk.productId ==
+                          popularProduk
+                              .produkMakananMinumanList[index].productId);
+                  return CardProduk(
+                    product_id: popularProduk
+                        .produkMakananMinumanList[index].productId,
+                    productImageName:
+                    gambarproduk.single.productImageName,
+                    productName: popularProduk
+                        .produkMakananMinumanList[index].productName,
+                    merchantAddress: popularProduk
+                        .produkMakananMinumanList[index].subdistrictName,
+                    price: popularProduk
+                        .produkMakananMinumanList[index].price,
+                    countPurchases: popularProduk
+                        .produkMakananMinumanList[index].countProductPurchases,
+                  );
+                },
+              ) : Container(
+                height:
+                50, // set the height of the container to your desired height
+                child: Center(
+                  child: CircularProgressIndicator(
+                    color: AppColors.redColor,
+                  ),
+                ),
+              );
             },
           ),
         ),
@@ -269,46 +261,49 @@ class _HomePageBodyState extends State<HomePageBody> {
           ],
         ),
         Container(
-            height: Dimensions.height45 * 6,
-            margin: EdgeInsets.only(
-                left: Dimensions.width20,
-                right: Dimensions.width20,
-                top: Dimensions.height10,
-                bottom: Dimensions.height10),
-            child:
-                GetBuilder<PopularProdukController>(builder: (popularProduk) {
-              return popularProduk.isLoaded
-                  ? ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 10,
-                      itemBuilder: (context, index) {
-                        var gambarproduk = popularProduk.imageProdukList.where(
+          height: Dimensions.height45 * 6.5,
+          margin: EdgeInsets.only(
+              left: Dimensions.width20,
+              right: Dimensions.width20,
+              top: Dimensions.height10,
+              bottom: Dimensions.height10),
+          child: GetBuilder<PopularProdukController>(
+            builder: (popularProduk) {
+              return popularProduk.isLoading.value ? ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 10,
+                  itemBuilder: (context, index) {
+                    var gambarproduk = popularProduk.imageProdukList.where(
                             (produk) =>
-                                produk.productId ==
-                                popularProduk
-                                    .produkPakaianList[index].productId);
-                        return CardProduk(
-                          product_id:
-                              popularProduk.produkPakaianList[index].productId,
-                          productImageName:
-                              gambarproduk.single.productImageName,
-                          productName: popularProduk
-                              .produkPakaianList[index].productName,
-                          namaMerchant: popularProduk
-                              .produkPakaianList[index].namaMerchant,
-                          price: popularProduk.produkPakaianList[index].price,
-                        );
-                      })
-                  : Container(
-                      height:
-                          50, // set the height of the container to your desired height
-                      child: Center(
-                        child: CircularProgressIndicator(
-                          color: AppColors.redColor,
-                        ),
-                      ),
+                        produk.productId ==
+                            popularProduk
+                                .produkPakaianList[index].productId);
+                    return CardProduk(
+                      product_id:
+                      popularProduk.produkPakaianList[index].productId,
+                      productImageName:
+                      gambarproduk.single.productImageName,
+                      productName: popularProduk
+                          .produkPakaianList[index].productName,
+                      merchantAddress: popularProduk
+                          .produkPakaianList[index].subdistrictName,
+                      price: popularProduk.produkPakaianList[index].price,
+                      countPurchases: popularProduk
+                          .produkMakananMinumanList[index].countProductPurchases,
                     );
-            })),
+                  }) : Container(
+                height:
+                50, // set the height of the container to your desired height
+                child: Center(
+                  child: CircularProgressIndicator(
+                    color: AppColors.redColor,
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -322,145 +317,49 @@ class _HomePageBodyState extends State<HomePageBody> {
           ],
         ),
         Container(
-            height: Dimensions.height45 * 6,
-            margin: EdgeInsets.only(
-                left: Dimensions.width20,
-                right: Dimensions.width20,
-                top: Dimensions.height10,
-                bottom: Dimensions.height10),
-            child:
-                GetBuilder<PopularProdukController>(builder: (popularProduk) {
-              return popularProduk.isLoaded
-                  ? ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 10,
-                      itemBuilder: (context, index) {
-                        var gambarproduk = popularProduk.imageProdukList.where(
+          height: Dimensions.height45 * 6.5,
+          margin: EdgeInsets.only(
+              left: Dimensions.width20,
+              right: Dimensions.width20,
+              top: Dimensions.height10,
+              bottom: Dimensions.height10),
+          child: GetBuilder<PopularProdukController>(
+            builder: (popularProduk) {
+              return popularProduk.isLoading.value ? ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 10,
+                  itemBuilder: (context, index) {
+                    var gambarproduk = popularProduk.imageProdukList.where(
                             (produk) =>
-                                produk.productId ==
-                                popularProduk
-                                    .produkTerbaruList[index].productId);
-                        return CardProduk(
-                          product_id:
-                              popularProduk.produkTerbaruList[index].productId,
-                          productImageName:
-                              gambarproduk.single.productImageName,
-                          productName: popularProduk
-                              .produkTerbaruList[index].productName,
-                          namaMerchant: popularProduk
-                              .produkTerbaruList[index].namaMerchant,
-                          price: popularProduk.produkTerbaruList[index].price,
-                        );
-                      })
-                  : Container(
-                      height:
-                          50, // set the height of the container to your desired height
-                      child: Center(
-                        child: CircularProgressIndicator(
-                          color: AppColors.redColor,
-                        ),
-                      ),
+                        produk.productId ==
+                            popularProduk
+                                .produkTerbaruList[index].productId);
+                    return CardProduk(
+                      product_id:
+                      popularProduk.produkTerbaruList[index].productId,
+                      productImageName:
+                      gambarproduk.single.productImageName,
+                      productName: popularProduk
+                          .produkTerbaruList[index].productName,
+                      merchantAddress: popularProduk
+                          .produkTerbaruList[index].subdistrictName,
+                      price: popularProduk.produkTerbaruList[index].price,
                     );
-            })),
+                  }) : Container(
+                height:
+                50, // set the height of the container to your desired height
+                child: Center(
+                  child: CircularProgressIndicator(
+                    color: AppColors.redColor,
+                  ),
+                ),
+              );
+            },
+          ),
+        )
 
-//         Container(
-//           margin: EdgeInsets.only(left: Dimensions.width20),
-//           child: Row(
-//             crossAxisAlignment: CrossAxisAlignment.center,
-//             children: [
-//               BigText(text: "Produk Terlaris"),
-//             ],
-//           ),
-//         ),
-//         GetBuilder<PopularProdukController>(builder: (popularProduk) {
-//           return popularProduk.isLoaded
-//               ? GridView.builder(
-//                   physics: const NeverScrollableScrollPhysics(),
-//                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-//                       crossAxisCount: 2, mainAxisExtent: 256),
-//
-//                   itemCount: popularProduk.popularProdukList.length,
-//                   shrinkWrap: true,
-//                   itemBuilder: (context, index) {
-//                     return GestureDetector(
-//                       onTap: () {
-//                         Get.toNamed(RouteHelper.getProdukDetail(
-//                             popularProduk.popularProdukList[index].productId));
-//                       },
-//                       child: Container(
-//                         decoration: BoxDecoration(
-//                             color: Colors.white,
-//                             borderRadius: BorderRadius.circular(15),
-//                             boxShadow: [
-//                               BoxShadow(
-//                                 color: Colors.grey.withOpacity(0.5),
-//                                 spreadRadius: 3,
-//                                 blurRadius: 10,
-//                                 offset: Offset(0, 3),
-//                               )
-//                             ]),
-//                         margin: EdgeInsets.only(
-//                             left: Dimensions.width20,
-//                             right: Dimensions.width20,
-//                             bottom: Dimensions.height10),
-//                         child: GestureDetector(
-//                           onTap: () {
-//                             Get.toNamed(RouteHelper.getProdukDetail(
-//                                 popularProduk
-//                                     .popularProdukList[index].productId));
-// //                        Get.toNamed(RouteHelper.getProdukDetail(index));
-//                           },
-//                           child: Column(
-//                             children: [
-//                               //image section
-//                               Container(
-//                                 width: 180,
-//                                 height: 120,
-//                                 decoration: BoxDecoration(
-//                                     image: DecorationImage(
-//                                         fit: BoxFit.cover,
-//                                         image: AssetImage(
-//                                             "assets/images/coffee.jpg"))),
-//                               ),
-//                               Container(
-//                                 margin: EdgeInsets.only(
-//                                     left: Dimensions.width10,
-//                                     right: Dimensions.width10),
-//                                 child: Column(
-//                                   crossAxisAlignment: CrossAxisAlignment.start,
-//                                   children: [
-//                                     BigText(
-//                                       text: popularProduk
-//                                           .popularProdukList[index].productName.toString(),
-//                                       size: Dimensions.font20,
-//                                     ),
-//                                     SizedBox(
-//                                       height: Dimensions.height10,
-//                                     ),
-//                                     BigText(
-//                                       text: CurrencyFormat.convertToIdr(
-//                                           popularProduk
-//                                               .popularProdukList[index].price,
-//                                           0),
-//                                       color: AppColors.redColor,
-//                                       size: Dimensions.font16,
-//                                     ),
-//                                   ],
-//                                 ),
-//                               )
-//                               //text container
-//                             ],
-//                           ),
-//                         ),
-//                       ),
-//                     );
-//                   })
-//               : CircularProgressIndicator(
-//                   color: AppColors.redColor,
-//                 );
-//         })
       ],
-    );
+    ), onRefresh: () => Get.find<PopularProdukController>().getPopularProdukList());
   }
 
   Widget _buildPageItem(int index) {

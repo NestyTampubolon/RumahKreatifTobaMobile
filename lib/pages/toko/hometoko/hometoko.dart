@@ -4,6 +4,8 @@ import 'package:rumah_kreatif_toba/widgets/big_text.dart';
 import 'package:rumah_kreatif_toba/widgets/tittle_text.dart';
 
 import 'package:get/get.dart';
+import '../../../controllers/auth_controller.dart';
+import '../../../utils/colors.dart';
 import '../../../utils/dimensions.dart';
 
 class HomeToko extends StatelessWidget {
@@ -11,6 +13,9 @@ class HomeToko extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.find<TokoController>().profilToko();
+    bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
+    Get.find<TokoController>().profilToko();
     Get.find<TokoController>().homeToko();
     return Scaffold(
       body: SingleChildScrollView(
@@ -24,7 +29,7 @@ class HomeToko extends StatelessWidget {
                     left: Dimensions.width20, right: Dimensions.width20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
                       width: 30,
@@ -36,16 +41,29 @@ class HomeToko extends StatelessWidget {
                               fit: BoxFit.cover,
                               image: AssetImage("assets/images/logo_rkt.png"))),
                     ),
-                    Container(
-                      width: Dimensions.width45 * 4,
-                      height: 30,
-                      margin: EdgeInsets.only(
-                          left: Dimensions.width10, right: Dimensions.width10),
-                      child: BigText(
-                        text: "Toko Kamu",
-                        size: Dimensions.font20,
-                      ),
-                    ),
+                    Get.find<TokoController>().isLoading
+                        ? Container(
+                            width: Dimensions.screenWidth / 1.5,
+                            height: 30,
+                            margin: EdgeInsets.only(
+                                left: Dimensions.width10,
+                                right: Dimensions.width10),
+                            child: BigText(
+                              text:
+                                  "Toko ${Get.find<TokoController>().profilTokoList[0].nama_merchant.toString()}",
+                              size: Dimensions.font20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )
+                        : Container(
+                            height:
+                                50, // set the height of the container to your desired height
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                color: AppColors.redColor,
+                              ),
+                            ),
+                          )
                   ],
                 ),
               ),
@@ -93,12 +111,27 @@ class HomeToko extends StatelessWidget {
                         SizedBox(
                           height: Dimensions.height10,
                         ),
-                        Container(
-                          child: BigText(
-                            text: "a",
-                            size: Dimensions.font16 / 1.5,
-                          ),
-                        ),
+                        Get.find<TokoController>().isLoading
+                            ? Container(
+                                child: Obx(
+                                  () => BigText(
+                                    text: Get.find<TokoController>()
+                                        .getJumlahPesanan[
+                                            'jumlah_pesanan_sedang_berlangsung']!
+                                        .toString(),
+                                    size: Dimensions.font16 / 1.5,
+                                  ),
+                                ),
+                              )
+                            : Container(
+                                height:
+                                    50, // set the height of the container to your desired height
+                                child: Center(
+                                  child: CircularProgressIndicator(
+                                    color: AppColors.redColor,
+                                  ),
+                                ),
+                              )
                       ],
                     ),
                   ),
@@ -132,19 +165,35 @@ class HomeToko extends StatelessWidget {
                       children: [
                         Container(
                           child: TittleText(
-                            text: "Pesanan Berhasil [Belum Konfirmasi Pembayaran]",
+                            text:
+                                "Pesanan Berhasil [Belum Konfirmasi Pembayaran]",
                             size: Dimensions.font20 / 1.5,
                           ),
                         ),
                         SizedBox(
                           height: Dimensions.height10,
                         ),
-                        Container(
-                          child: BigText(
-                            text: "0",
-                            size: Dimensions.font16 / 1.5,
-                          ),
-                        ),
+                        Get.find<TokoController>().isLoading
+                            ? Container(
+                                child: Obx(
+                                  () => BigText(
+                                    text: Get.find<TokoController>()
+                                        .getJumlahPesanan[
+                                            'jumlah_pesanan_berhasil_belum_dibayar']!
+                                        .toString(),
+                                    size: Dimensions.font16 / 1.5,
+                                  ),
+                                ),
+                              )
+                            : Container(
+                                height:
+                                    50, // set the height of the container to your desired height
+                                child: Center(
+                                  child: CircularProgressIndicator(
+                                    color: AppColors.redColor,
+                                  ),
+                                ),
+                              )
                       ],
                     ),
                   ),
@@ -178,19 +227,35 @@ class HomeToko extends StatelessWidget {
                       children: [
                         Container(
                           child: TittleText(
-                            text: "Pesanan Berhasil [Telah Konfirmasi Pembayaran]",
+                            text:
+                                "Pesanan Berhasil [Telah Konfirmasi Pembayaran]",
                             size: Dimensions.font20 / 1.5,
                           ),
                         ),
                         SizedBox(
                           height: Dimensions.height10,
                         ),
-                        Container(
-                          child: BigText(
-                            text: "0",
-                            size: Dimensions.font16 / 1.5,
-                          ),
-                        ),
+                        Get.find<TokoController>().isLoading
+                            ? Container(
+                                child: Obx(
+                                  () => BigText(
+                                    text: Get.find<TokoController>()
+                                        .getJumlahPesanan[
+                                            'jumlah_pesanan_berhasil_telah_dibayar']!
+                                        .toString(),
+                                    size: Dimensions.font16 / 1.5,
+                                  ),
+                                ),
+                              )
+                            : Container(
+                                height:
+                                    50, // set the height of the container to your desired height
+                                child: Center(
+                                  child: CircularProgressIndicator(
+                                    color: AppColors.redColor,
+                                  ),
+                                ),
+                              ),
                       ],
                     ),
                   ),
