@@ -3,9 +3,12 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rumah_kreatif_toba/base/show_custom_message.dart';
+import 'package:rumah_kreatif_toba/controllers/user_controller.dart';
 import 'package:rumah_kreatif_toba/models/city.dart';
 import 'package:rumah_kreatif_toba/models/province.dart';
 import 'package:rumah_kreatif_toba/models/subdistrict.dart';
+import 'package:rumah_kreatif_toba/pages/alamat/daftaralamat.dart';
 import 'package:rumah_kreatif_toba/pages/home/home_page.dart';
 import 'package:rumah_kreatif_toba/utils/dimensions.dart';
 import 'package:rumah_kreatif_toba/controllers/alamat_controller.dart';
@@ -15,8 +18,38 @@ import '../../widgets/app_icon.dart';
 import '../../widgets/big_text.dart';
 
 class TambahAlamatPage extends GetView<AlamatController> {
+  var ProvinsiController = TextEditingController();
+  var KabupatenController = TextEditingController();
+  var KecamatanController = TextEditingController();
+  var JalanController = TextEditingController();
+
+
+
   @override
   Widget build(BuildContext context) {
+    Future<void> _tambahAlamat(provAsalId, cityAsalId, subdistrictId) async {
+      String provinsi = ProvinsiController.text.trim();
+      String kabupaten = KabupatenController.text.trim();
+      String kecamatan = KecamatanController.text.trim();
+      String jalan = JalanController.text.trim();
+
+      if (controller.provAsalId.value.isEmpty) {
+        showCustomSnackBar("Provinsi masih kosong", title: "Provinsi");
+      } else if (controller.cityAsalId.value.isEmpty) {
+        showCustomSnackBar("kabupaten / Kota masih kosong", title: "Kabupaten / Kota");
+      } else if (controller.subAsalId.value.isEmpty) {
+        showCustomSnackBar("Kecamatan masih kosong", title: "kecamatan");
+      } else if (JalanController == null) {
+        showCustomSnackBar("Jalan masih kosong", title: "Jalan");
+      } else {
+        var userController = Get.find<UserController>().usersList[0];
+        var controller = Get.find<AlamatController>();
+        controller.tambahAlamat(userController.id,
+            provinsi, kabupaten, kecamatan, jalan, provAsalId, cityAsalId, subdistrictId )
+            .then((status) async {});
+      }
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -58,8 +91,8 @@ class TambahAlamatPage extends GetView<AlamatController> {
                   DropdownSearch<Province>(
                       showSearchBox: true,
                       popupItemBuilder: (context, item, isSelected) => ListTile(
-                            title: Text("${item.province}"),
-                          ),
+                        title: Text("${item.province}"),
+                      ),
                       dropdownSearchDecoration: InputDecoration(
                         labelText: "Provinsi",
                         hintText: "Pilih Provinsi",
@@ -82,16 +115,18 @@ class TambahAlamatPage extends GetView<AlamatController> {
                         return Province.fromJsonList(
                             response.data["rajaongkir"]["results"]);
                       },
-                      onChanged: (value) => controller.provAsalId.value =
-                          value?.provinceId ?? "0"),
+
+                      onChanged: (value) => controller.provAsalId.value = value?.provinceId ?? "0",
+
+                  ),
                   SizedBox(
                     height: 20,
                   ),
                   DropdownSearch<City>(
                       showSearchBox: true,
                       popupItemBuilder: (context, item, isSelected) => ListTile(
-                            title: Text("${item.type} ${item.cityName}"),
-                          ),
+                        title: Text("${item.type} ${item.cityName}"),
+                      ),
                       dropdownSearchDecoration: InputDecoration(
                         labelText: "Kabupaten / Kota",
                         hintText: "Pilih Kabupaten / Kota",
@@ -116,7 +151,7 @@ class TambahAlamatPage extends GetView<AlamatController> {
                             response.data["rajaongkir"]["results"]);
                       },
                       onChanged: (value) =>
-                          controller.cityAsalId.value = value?.cityId ?? "0"),
+                      controller.cityAsalId.value = value?.cityId ?? "0"),
                   SizedBox(
                     height: 20,
                   ),
@@ -147,14 +182,14 @@ class TambahAlamatPage extends GetView<AlamatController> {
                       return Subdistrict.fromJsonList(
                           response.data["rajaongkir"]["results"]);
                     },
-                    onChanged: (value) => print(
-                      value?.toJson(),
-                    ),
+                    onChanged: (value) =>
+                    controller.subAsalId.value = value?.subdistrictId ?? "0",
                   ),
                   SizedBox(
                     height: 20,
                   ),
                   TextFormField(
+                    controller: JalanController,
                     decoration: InputDecoration(
                       labelText: "Jalan",
                       hintText: "Masukkan Jalan Alamat",
@@ -172,9 +207,8 @@ class TambahAlamatPage extends GetView<AlamatController> {
             ),
             GestureDetector(
               onTap: () => {
-                Get.to(
-                  () => HomePage(initialIndex: 3),
-                ),
+                _tambahAlamat(controller.provAsalId.value, controller.cityAsalId.value, controller.subAsalId.value),
+
               },
               child: Container(
                 alignment: Alignment.bottomCenter,
