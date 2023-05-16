@@ -14,8 +14,6 @@ class HomeToko extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.find<TokoController>().profilToko();
-    bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
-    Get.find<TokoController>().profilToko();
     Get.find<TokoController>().homeToko();
     return Scaffold(
       body: SingleChildScrollView(
@@ -39,7 +37,7 @@ class HomeToko extends StatelessWidget {
                       decoration: BoxDecoration(
                           image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: AssetImage("assets/images/logo_rkt.png"))),
+                              image: AssetImage("assets/images/Bangga_Buatan_Indonesia_Logo.png"))),
                     ),
                     Get.find<TokoController>().isLoading
                         ? Container(

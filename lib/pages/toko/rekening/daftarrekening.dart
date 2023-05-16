@@ -86,7 +86,7 @@ class _DaftarRekeningState extends State<DaftarRekening> {
               return GridView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2, mainAxisExtent: Dimensions.height45*3),
+                      crossAxisCount: 1, mainAxisExtent: Dimensions.height45*2),
                   itemCount: controller.daftarRekeningList.length,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
@@ -113,44 +113,55 @@ class _DaftarRekeningState extends State<DaftarRekening> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                         Row(
-                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                           children: [
-                           Container(
-                             child: TittleText(
-                               text: "Rekening",
-                               size: Dimensions.font20 / 1.5,
-                             ),
-                           ),
-                             GestureDetector(
-                               onTap: () {
-                                 _hapusRekening(controller.daftarRekeningList[index].rekeningId);
-                               },
-                               child: AppIcon(
-                                   iconSize: Dimensions
-                                       .iconSize16,
-                                   iconColor: AppColors
-                                       .redColor,
-                                   backgroundColor:
-                                   Colors.white,
-                                   icon: Icons.delete),
-                             ),
-                         ],),
-                          SizedBox(
-                            height: Dimensions.height10,
-                          ),
-                          BigText(
-                            text: controller.daftarRekeningList[index].atasNama.toString(),
-                            size: Dimensions.font16 / 1.5,
-                          ),
-                          BigText(
-                            text: controller.daftarRekeningList[index].namaBank.toString(),
-                            size: Dimensions.font16 / 1.5,
-                          ),
-                          BigText(
-                            text: controller.daftarRekeningList[index].nomorRekening.toString(),
-                            size: Dimensions.font16 / 1.5,
-                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Container(
+                                      height: Dimensions.height20,
+                                      width: Dimensions.width45,
+                                      decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                              fit: BoxFit.fill,
+                                              image: AssetImage("assets/images/bank/${controller.daftarRekeningList[index].namaBank}.png")))
+                                  ),
+                                  SizedBox(width: Dimensions.width20,),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      BigText(
+                                        text: controller.daftarRekeningList[index].namaBank.toString(),
+                                        size: Dimensions.font16 / 1.5,
+                                      ),
+                                      BigText(
+                                        text: controller.daftarRekeningList[index].atasNama.toString(),
+                                        size: Dimensions.font16 / 1.5,
+                                      ),
+                                      BigText(
+                                        text: controller.daftarRekeningList[index].nomorRekening.toString(),
+                                        size: Dimensions.font16 / 1.5,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  _hapusRekening(controller.daftarRekeningList[index].rekeningId);
+                                },
+                                child: AppIcon(
+                                    iconSize: Dimensions
+                                        .iconSize16,
+                                    iconColor: AppColors
+                                        .redColor,
+                                    backgroundColor:
+                                    Colors.white,
+                                    icon: Icons.delete),
+                              )
+                            ],
+                          )
                         ],
                       ),
                     );
