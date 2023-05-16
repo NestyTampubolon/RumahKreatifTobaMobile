@@ -19,18 +19,16 @@ class AlamatRepo {
 
   Future<Response> tambahAlamat(
     int user_id,
-    int user_address_id,
-    int province_id,
+    String province_id,
     String province_name,
-    int city_id,
+    String city_id,
     String city_name,
-    int subdistrict_id,
+    String subdistrict_id,
     String subdistrict_name,
     String user_street_address,
   ) async {
     return await apiClient.postData(AppConstants.TAMBAH_ALAMAT, {
       "user_id": user_id,
-      "user_address_id": user_address_id,
       "province_id": province_id,
       "province_name": province_name,
       "city_id": city_id,

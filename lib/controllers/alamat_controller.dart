@@ -10,8 +10,7 @@ import '../models/response_model.dart';
 class AlamatController extends GetxController {
   RxString provAsalId = "0".obs;
   RxString cityAsalId = "0".obs;
-  RxString provTujuanId = "0".obs;
-  RxString cityTujuanId = "0".obs;
+  RxString subAsalId = "0".obs;
 
   final AlamatRepo alamatRepo;
   AlamatController({required this.alamatRepo});
@@ -26,7 +25,7 @@ class AlamatController extends GetxController {
     var controller = Get.find<UserController>().usersList[0];
     Response response = await alamatRepo.getAlamat(controller.id!);
     if (response.statusCode == 200) {
-      List<dynamic> responseBody = response.body["users_address"];
+      List<dynamic> responseBody = response.body["alamat"];
       _daftarAlamatList = [];
       for (dynamic item in responseBody) {
         Alamat alamat = Alamat.fromJson(item);
@@ -39,19 +38,18 @@ class AlamatController extends GetxController {
 
   Future<ResponseModel> tambahAlamat(
       int? user_id,
-      int user_address_id,
-      int province_id,
       String province_name,
-      int city_id,
       String city_name,
-      int subdistrict_id,
       String subdistrict_name,
-      String user_street_address) async {
+      String user_street_address,
+      String province_id,
+      String city_id,
+      String subdistrict_id,
+     ) async {
     _isLoading = true;
     update();
     Response response = await alamatRepo.tambahAlamat(
       user_id!,
-      user_address_id,
       province_id,
       province_name,
       city_id,

@@ -18,6 +18,7 @@ class DaftarAlamatPage extends GetView<AlamatController> {
 
   @override
   Widget build(BuildContext context) {
+    Get.find<AlamatController>().getAlamat();
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -94,33 +95,26 @@ class DaftarAlamatPage extends GetView<AlamatController> {
                             padding: const EdgeInsets.only(left: 10, top: 5),
                             child: GetBuilder<AlamatController>(
                               builder: (AlamatController) {
-                                if (AlamatController.isLoading) {
-                                  return ListView.builder(
-                                    itemCount:
-                                    AlamatController.daftarAlamatList.length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      Alamat alamat =
-                                      AlamatController.daftarAlamatList[index];
-                                      return ListTile(
-                                        title: Text(alamat.user_street_address
-                                                ?.toString() ??
-                                            ""),
-                                        subtitle: Text(alamat
-                                                .user_street_address
-                                                ?.toString() ??
-                                            ""),
-                                        trailing: Text(alamat
-                                                .user_street_address
-                                                ?.toString() ??
-                                            ""),
-                                      );
-                                    },
-                                  );
-                                } else {
-                                  return Center(
-                                      child: CircularProgressIndicator());
-                                }
+                                return ListView.builder(
+                                  itemCount:
+                                  AlamatController.daftarAlamatList.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    Alamat alamat =
+                                    AlamatController.daftarAlamatList[index];
+                                    return ListTile(
+                                      title: Text("Alamat ${index + 1}"),
+                                      subtitle: Text(alamat
+                                          .user_street_address
+                                          ?.toString() ??
+                                          ""),
+                                      trailing: Text(alamat
+                                          .user_street_address
+                                          ?.toString() ??
+                                          ""),
+                                    );
+                                  },
+                                );
                               },
                             ),
                           ),
