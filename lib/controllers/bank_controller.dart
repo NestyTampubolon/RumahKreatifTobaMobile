@@ -3,9 +3,11 @@ import 'package:rumah_kreatif_toba/data/repository/bank_repo.dart';
 import 'package:get/get.dart';
 import 'package:rumah_kreatif_toba/models/bank_model.dart';
 import 'package:rumah_kreatif_toba/models/rekening_model.dart';
+import 'package:rumah_kreatif_toba/pages/toko/rekening/daftarrekening.dart';
 import '../base/show_custom_message.dart';
 import '../models/response_model.dart';
 import '../pages/toko/namatoko.dart';
+import 'package:get/get.dart';
 
 
 class BankController extends GetxController{
@@ -81,8 +83,9 @@ class BankController extends GetxController{
     Response response = await bankRepo.hapusRekening(rekening_id);
     late ResponseModel responseModel;
     if (response.statusCode == 200) {
-      showCustomSnackBar("Produk berhasil dihapus", title: "Berhasil");
+      showCustomSnackBar("Rekening berhasil dihapus", title: "Berhasil");
       getRekeningList();
+      Get.to(DaftarRekening());
     } else {
       responseModel = ResponseModel(false, response.statusText!);
     }
