@@ -92,7 +92,7 @@ class DaftarAlamatPage extends GetView<AlamatController> {
                     AlamatController.daftarAlamatList[index];
                     return Container(
                       width: Dimensions.screenWidth,
-                      height: Dimensions.height45 * 2.5,
+                      height: Dimensions.height45 * 4,
                       margin: EdgeInsets.only(
                           bottom: Dimensions.height10,
                           top: Dimensions.height10 / 2,
@@ -112,9 +112,42 @@ class DaftarAlamatPage extends GetView<AlamatController> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              BigText(text: "Alamat ${index + 1}", fontWeight: FontWeight.bold,),
+                              BigText(text: "Alamat ${index + 1}", fontWeight: FontWeight.bold, ),
                               Container(
-                                margin: EdgeInsets.only(top: 10),
+                                margin: EdgeInsets.only(top: 5),
+                                child: Text(
+                                  alamat.province_name?.toString() ?? "",
+                                  maxLines: 3,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(top: 5),
+                                child: Text(
+                                  alamat.city_name?.toString() ?? "",
+                                  maxLines: 3,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(top: 5),
+                                child: Text(
+                                  alamat.subdistrict_name?.toString() ?? "",
+                                  maxLines: 3,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(top: 5),
                                 child: Text(
                                   alamat.user_street_address?.toString() ?? "",
                                   maxLines: 3,
