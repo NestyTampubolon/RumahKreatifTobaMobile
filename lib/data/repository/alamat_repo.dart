@@ -71,7 +71,7 @@ class AlamatRepo {
   }
 
   Future<Response> hapusAlamatToko(int? merchant_address_id) async {
-    return await apiClient.postData(AppConstants.HAPUS_ALAMAT_URL, {"merchant_address_id": merchant_address_id});
+    return await apiClient.postData(AppConstants.HAPUS_ALAMAT_TOKO_URL, {"merchant_address_id": merchant_address_id});
   }
 
 }

@@ -153,7 +153,7 @@ class AlamatController extends GetxController {
     late ResponseModel responseModel;
     if (response.statusCode == 200) {
       showCustomSnackBar("Alamat toko berhasil dihapus", title: "Berhasil");
-      getAlamat();
+      getAlamatToko();
     } else {
       responseModel = ResponseModel(false, response.statusText!);
     }

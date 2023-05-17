@@ -11,6 +11,7 @@ import 'package:get/get.dart';
 import '../../../base/show_custom_message.dart';
 import '../../../controllers/toko_controller.dart';
 import '../../../controllers/user_controller.dart';
+import '../../../utils/app_constants.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/dimensions.dart';
 import '../../../widgets/app_dropdown_field_kategori.dart';
@@ -207,8 +208,9 @@ class UbahProdukPage extends StatelessWidget {
                             Dimensions.radius15),
                         image: DecorationImage(
                             fit: BoxFit.fill,
-                            image: AssetImage(
-                                "assets/images/coffee.jpg") )),
+                            image: NetworkImage(
+                              '${AppConstants.BASE_URL_IMAGE}u_file/product_image/${detailProduk[0].productImageName.toString()}',
+                            ) )),
                   ),
                   Container(
                     width: Dimensions.width45*1.5,
@@ -227,8 +229,9 @@ class UbahProdukPage extends StatelessWidget {
                             Dimensions.radius15),
                         image: DecorationImage(
                             fit: BoxFit.fill,
-                            image: AssetImage(
-                                "assets/images/coffee.jpg") )),
+                            image: NetworkImage(
+                              '${AppConstants.BASE_URL_IMAGE}u_file/product_image/${detailProduk[1].productImageName.toString()}',
+                            ) )),
                   ),
                   Container(
                     width: Dimensions.width45*1.5,
@@ -247,8 +250,9 @@ class UbahProdukPage extends StatelessWidget {
                             Dimensions.radius15),
                         image: DecorationImage(
                             fit: BoxFit.fill,
-                            image: AssetImage(
-                                "assets/images/coffee.jpg") )),
+                            image: NetworkImage(
+                              '${AppConstants.BASE_URL_IMAGE}u_file/product_image/${detailProduk[2].productImageName.toString()}',
+                            ) )),
                   ),
                 ],
               ),

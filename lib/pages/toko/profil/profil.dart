@@ -48,6 +48,7 @@ class Profil extends StatelessWidget {
                     BigText(
                       text: "Profil Toko",
                       size: Dimensions.font20,
+                      fontWeight: FontWeight.bold,
                     ),
                   ],
                 ),
