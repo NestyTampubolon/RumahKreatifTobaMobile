@@ -5,18 +5,11 @@ class AppConstants {
   // static const String BASE_URL =
   //     "http://kreatif.tobakab.go.id/api/";
 
-  // static const String BASE_URL_IMAGE =
-  //     "http://kreatif.tobakab.go.id/asset/";
+  static const String BASE_URL_IMAGE =
+      "http://kreatif.tobakab.go.id/asset/";
 
   static const String BASE_URL =
-      "http://172.20.10.4/RumahKreatifBackend/public/api/";
-
-  static const String BASE_URL_IMAGE =
-      "http://172.20.10.4/RumahKreatifBackend/public/asset/";
-
-  // static const String BASE_URL = "http://kreatif.tobakab.go.id/api/";
-  //
-  // static const String BASE_URL_IMAGE = "http://kreatif.tobakab.go.id/asset/";
+      "http://192.168.61.154/tobazonerework/public/api/";
 
   static const String POPULAR_PRODUCT_URL = "produk";
   static const String KATEGORI_PRODUCT_URL = "lihat_produk";

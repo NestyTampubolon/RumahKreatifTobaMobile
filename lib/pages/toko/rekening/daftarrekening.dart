@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rumah_kreatif_toba/controllers/bank_controller.dart';
 import 'package:rumah_kreatif_toba/main.dart';
+import 'package:rumah_kreatif_toba/pages/toko/rekening/rekening_detail.dart';
 
 import '../../../utils/colors.dart';
 import '../../../utils/dimensions.dart';
@@ -90,79 +91,92 @@ class _DaftarRekeningState extends State<DaftarRekening> {
                   itemCount: controller.daftarRekeningList.length,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    return Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(15),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 3,
-                              blurRadius: 10,
-                              offset: Offset(0, 3),
-                            )
-                          ]),
-                      margin: EdgeInsets.only(
-                          left: Dimensions.width20,
-                          right: Dimensions.width20,
-                          top: Dimensions.height10),
-                      padding: EdgeInsets.only(
+                    return GestureDetector(
+                      onTap: (){
+                        Get.to(RekeningDetail(rekeningid: controller.daftarRekeningList[index].rekeningId,));
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(15),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 3,
+                                blurRadius: 10,
+                                offset: Offset(0, 3),
+                              )
+                            ]),
+                        margin: EdgeInsets.only(
+                            left: Dimensions.width20,
+                            right: Dimensions.width20,
+                            top: Dimensions.height10),
+                        padding: EdgeInsets.only(
                           left: Dimensions.width20,
                           right: Dimensions.width20,),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  Container(
-                                      height: Dimensions.height20,
-                                      width: Dimensions.width45,
-                                      decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                              fit: BoxFit.fill,
-                                              image: AssetImage("assets/images/bank/${controller.daftarRekeningList[index].namaBank}.png")))
-                                  ),
-                                  SizedBox(width: Dimensions.width20,),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      BigText(
-                                        text: controller.daftarRekeningList[index].namaBank.toString(),
-                                        size: Dimensions.font16 / 1.5,
-                                      ),
-                                      BigText(
-                                        text: controller.daftarRekeningList[index].atasNama.toString(),
-                                        size: Dimensions.font16 / 1.5,
-                                      ),
-                                      BigText(
-                                        text: controller.daftarRekeningList[index].nomorRekening.toString(),
-                                        size: Dimensions.font16 / 1.5,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  _hapusRekening(controller.daftarRekeningList[index].rekeningId);
-                                },
-                                child: AppIcon(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Container(
+                                        height: Dimensions.height20,
+                                        width: Dimensions.width45,
+                                        decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                                fit: BoxFit.fill,
+                                                image: AssetImage("assets/images/bank/${controller.daftarRekeningList[index].namaBank}.png")))
+                                    ),
+                                    SizedBox(width: Dimensions.width20,),
+                                    Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        BigText(
+                                          text: controller.daftarRekeningList[index].namaBank.toString(),
+                                          size: Dimensions.font16 / 1.5,
+                                        ),
+                                        BigText(
+                                          text: controller.daftarRekeningList[index].atasNama.toString(),
+                                          size: Dimensions.font16 / 1.5,
+                                        ),
+                                        BigText(
+                                          text: controller.daftarRekeningList[index].nomorRekening.toString(),
+                                          size: Dimensions.font16 / 1.5,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                // GestureDetector(
+                                //   onTap: () {
+                                //     _hapusRekening(controller.daftarRekeningList[index].rekeningId);
+                                //   },
+                                //   child: AppIcon(
+                                //       iconSize: Dimensions
+                                //           .iconSize16,
+                                //       iconColor: AppColors
+                                //           .redColor,
+                                //       backgroundColor:
+                                //       Colors.white,
+                                //       icon: Icons.delete),
+                                // )
+                                AppIcon(
                                     iconSize: Dimensions
-                                        .iconSize16,
+                                        .iconSize24,
                                     iconColor: AppColors
                                         .redColor,
                                     backgroundColor:
                                     Colors.white,
-                                    icon: Icons.delete),
-                              )
-                            ],
-                          )
-                        ],
+                                    icon: Icons.chevron_right_outlined),
+                              ],
+                            )
+                          ],
+                        ),
                       ),
                     );
                   }
