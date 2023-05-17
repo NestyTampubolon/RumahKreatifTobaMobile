@@ -113,7 +113,17 @@ class DaftarAlamatPage extends GetView<AlamatController> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               BigText(text: "Alamat ${index + 1}", fontWeight: FontWeight.bold,),
-                              BigText(text: alamat.user_street_address?.toString() ?? "")
+                              Container(
+                                margin: EdgeInsets.only(top: 10),
+                                child: Text(
+                                  alamat.user_street_address?.toString() ?? "",
+                                  maxLines: 3,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                           GestureDetector(

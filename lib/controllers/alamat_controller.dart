@@ -6,6 +6,7 @@ import 'package:rumah_kreatif_toba/models/alamat_model.dart';
 import 'package:rumah_kreatif_toba/controllers/user_controller.dart';
 import 'package:rumah_kreatif_toba/models/alamat_toko_model.dart';
 import 'package:rumah_kreatif_toba/pages/alamat/daftaralamat.dart';
+import 'package:rumah_kreatif_toba/pages/toko/AlamatToko/daftar_alamat_toko.dart';
 
 import '../models/response_model.dart';
 
@@ -97,8 +98,8 @@ class AlamatController extends GetxController {
   }
 
   Future<void> getAlamatToko() async {
-    var controller = Get.find<TokoController>().tokoList[0];
-    Response response = await alamatRepo.getAlamatToko(controller.id!);
+    var controller = Get.find<TokoController>().profilTokoList[0];
+    Response response = await alamatRepo.getAlamatToko(controller.merchant_id!);
     if (response.statusCode == 200) {
       List<dynamic> responseBody = response.body["alamattoko"];
       _daftarAlamatTokoList = [];
@@ -109,5 +110,55 @@ class AlamatController extends GetxController {
       _isLoading = true;
       update();
     } else {}
+  }
+
+  Future<ResponseModel> tambahAlamatToko(
+      int? merchant_id,
+      String province_name,
+      String city_name,
+      String subdistrict_name,
+      String user_street_address,
+      String province_id,
+      String city_id,
+      String subdistrict_id,
+      ) async {
+    _isLoading = true;
+    update();
+    Response response = await alamatRepo.tambahAlamatToko(
+      merchant_id!,
+      province_id,
+      province_name,
+      city_id,
+      city_name,
+      subdistrict_id,
+      subdistrict_name,
+      user_street_address,
+    );
+    late ResponseModel responseModel;
+    if (response.statusCode == 200) {
+      showCustomSnackBar("Berhasil menambah alamat toko", title: "Berhasil");
+      Get.to(
+            () => DaftarAlamatTokoPage()
+      );
+      getAlamatToko();
+    } else {
+      responseModel = ResponseModel(false, response.statusText!);
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+  Future<ResponseModel> hapusAlamatToko(int? merchant_address_id) async {
+    Response response = await alamatRepo.hapusAlamatToko(merchant_address_id);
+    late ResponseModel responseModel;
+    if (response.statusCode == 200) {
+      showCustomSnackBar("Alamat toko berhasil dihapus", title: "Berhasil");
+      getAlamat();
+    } else {
+      responseModel = ResponseModel(false, response.statusText!);
+    }
+    _isLoading = true;
+    update();
+    return responseModel;
   }
 }
