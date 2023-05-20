@@ -179,61 +179,6 @@ class DaftarAlamatPage extends GetView<AlamatController> {
                 );
               },
             ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //   children: [
-            //     GetBuilder<AlamatController>(
-            //       builder: (AlamatController) {
-            //         return ListView.builder(
-            //           physics: const NeverScrollableScrollPhysics(),
-            //           shrinkWrap: true,
-            //           itemCount: AlamatController.daftarAlamatList.length,
-            //           itemBuilder: (BuildContext context, int index) {
-            //             Alamat alamat =
-            //             AlamatController.daftarAlamatList[index];
-            //             return Container(
-            //               width: Dimensions.screenWidth,
-            //               height: Dimensions.height45 * 2.5,
-            //               margin: EdgeInsets.only(
-            //                   bottom: Dimensions.height10,
-            //                   top: Dimensions.height10 / 2,
-            //                   left: Dimensions.width20,
-            //                   right: Dimensions.width20),
-            //               padding: EdgeInsets.all(Dimensions.height20),
-            //               decoration: BoxDecoration(
-            //                   border: Border.all(
-            //                       color: AppColors.buttonBackgroundColor),
-            //                   borderRadius:
-            //                   BorderRadius.circular(Dimensions.radius20),
-            //                   color: Colors.white),
-            //               child: Column(
-            //                 mainAxisAlignment: MainAxisAlignment.start,
-            //                 crossAxisAlignment: CrossAxisAlignment.start,
-            //                 children: [
-            //                   BigText(text: "Alamat ${index + 1}", fontWeight: FontWeight.bold,),
-            //                   BigText(text: alamat.user_street_address?.toString() ?? "")
-            //                 ],
-            //               ),
-            //             );
-            //           },
-            //         );
-            //       },
-            //     ),
-            //     GestureDetector(
-            //       onTap: () {
-            //       },
-            //       child: AppIcon(
-            //           iconSize: Dimensions
-            //               .iconSize16,
-            //           iconColor: AppColors
-            //               .redColor,
-            //           backgroundColor:
-            //           Colors.white,
-            //           icon: Icons.delete),
-            //     )
-            //   ],
-            // )
-
           ],
         ),
       ),

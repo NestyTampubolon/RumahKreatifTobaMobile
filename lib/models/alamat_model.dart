@@ -25,6 +25,7 @@ class Alamat {
     is_deleted = json['is_deleted'];
   }
 
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['user_address_id'] = this.user_address_id;
