@@ -2,10 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rumah_kreatif_toba/controllers/alamat_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/pengiriman_controller.dart';
-import 'package:rumah_kreatif_toba/models/response_model.dart';
-import 'package:rumah_kreatif_toba/widgets/payment_option_button.dart';
 import 'package:rumah_kreatif_toba/widgets/small_text.dart';
-
 import '../../base/show_custom_message.dart';
 import '../../controllers/auth_controller.dart';
 import '../../controllers/cart_controller.dart';
@@ -18,12 +15,10 @@ import '../../utils/app_constants.dart';
 import '../../utils/colors.dart';
 import '../../utils/dimensions.dart';
 import 'package:get/get.dart';
-
 import '../../widgets/app_icon.dart';
 import '../../widgets/big_text.dart';
 import '../../widgets/currency_format.dart';
 import '../../widgets/price_text.dart';
-import 'package:get/get.dart';
 
 class PembelianPage extends StatefulWidget {
   const PembelianPage({Key? key}) : super(key: key);
@@ -78,6 +73,8 @@ class _PembelianPageState extends State<PembelianPage> {
       var controller = Get.find<PopularProdukController>();
       controller.detailProduk(product_id).then((status) async {});
     }
+
+    Get.find<AlamatController>().getAlamatUser();
 
     return Scaffold(
         body: SingleChildScrollView(
@@ -294,19 +291,7 @@ class _PembelianPageState extends State<PembelianPage> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        alamat.user_address_id?.toString() ??
-                                            "",
-                                      ),
-                                      Text(
-                                        alamat.province_name?.toString() ?? "",
-                                      ),
-                                      Text(
-                                        alamat.city_name?.toString() ?? "",
-                                      ),
-                                      Text(
-                                        alamat.user_street_address
-                                                ?.toString() ??
-                                            "",
+                                        "${alamat.user_street_address?.toString() ?? ""}, ${alamat.city_name?.toString() ?? ""}, ${alamat.province_name?.toString() ?? ""}"
                                       ),
                                     ],
                                   ),
@@ -466,7 +451,8 @@ class _PembelianPageState extends State<PembelianPage> {
                                                                           image:
                                                                               NetworkImage(
                                                                             '${AppConstants.BASE_URL_IMAGE}u_file/product_image/${gambarproduk.single.productImageName}',
-                                                                          )),
+                                                                          ),
+                                                                      ),
                                                                   borderRadius:
                                                                       BorderRadius.circular(
                                                                           Dimensions
@@ -527,7 +513,8 @@ class _PembelianPageState extends State<PembelianPage> {
                                             )
                                           ],
                                         );
-                                      }),
+                                      },
+                                  ),
                                   Divider(
                                       color: AppColors.buttonBackgroundColor),
                                   Container(
@@ -566,7 +553,9 @@ class _PembelianPageState extends State<PembelianPage> {
                                                             topRight:
                                                                 Radius.circular(
                                                                     Dimensions
-                                                                        .radius20))),
+                                                                        .radius20),
+                                                        ),
+                                                    ),
                                                     padding: EdgeInsets.only(
                                                         top:
                                                             Dimensions.height30,
@@ -676,18 +665,6 @@ class _PembelianPageState extends State<PembelianPage> {
                                                                           fontSize:
                                                                               Dimensions.font20),
                                                                     ),
-                                                                    // subtitle:
-                                                                    // Text(
-                                                                    //   "aa",
-                                                                    //   maxLines:
-                                                                    //   1,
-                                                                    //   overflow:
-                                                                    //   TextOverflow.ellipsis,
-                                                                    //   style: TextStyle(
-                                                                    //       color:
-                                                                    //       Theme.of(context).disabledColor,
-                                                                    //       fontSize: Dimensions.font16),
-                                                                    // ),
                                                                     trailing: Get.find<PengirimanController>().paymentIndex ==
                                                                             1
                                                                         ? Icon(
@@ -709,7 +686,7 @@ class _PembelianPageState extends State<PembelianPage> {
                                                                             PengirimanController>()
                                                                         .setTypePengiriman(
                                                                             merchantIndex,
-                                                                            "Pesanan Dikirim");
+                                                                            "Pesanan Dikirim + Ongkir : 2k ");
                                                                     Get.find<
                                                                             PengirimanController>()
                                                                         .setPaymentIndex(
@@ -756,18 +733,6 @@ class _PembelianPageState extends State<PembelianPage> {
                                                                           fontSize:
                                                                               Dimensions.font20),
                                                                     ),
-                                                                    //subtitle:
-                                                                    // Text(
-                                                                    //   "aa",
-                                                                    //   maxLines:
-                                                                    //   1,
-                                                                    //   overflow:
-                                                                    //   TextOverflow.ellipsis,
-                                                                    //   style: TextStyle(
-                                                                    //       color:
-                                                                    //       Theme.of(context).disabledColor,
-                                                                    //       fontSize: Dimensions.font16),
-                                                                    // ),
                                                                     trailing: Get.find<PengirimanController>().paymentIndex ==
                                                                             2
                                                                         ? Icon(
@@ -779,20 +744,6 @@ class _PembelianPageState extends State<PembelianPage> {
                                                                   ),
                                                                 ),
                                                               ),
-                                                              // GestureDetector(
-                                                              //   onTap: () => {
-                                                              //     setState(
-                                                              //             () {
-                                                              //               Get.find<PengirimanController>().typePengiriman;
-                                                              //   _metodePembelian[
-                                                              //   merchantIndex] = 2;
-                                                              //         }),
-                                                              //     print(_metodePembelian),
-                                                              //   Navigator.pop(
-                                                              //   context)
-                                                              //   },
-                                                              //   child: PaymentOptionButton(icon: Icons.money, title: "Pesanan Dikirim", subTitle: "subTitle", index: 2)
-                                                              // ),
                                                             ],
                                                           ),
                                                         )
@@ -901,6 +852,7 @@ class _PembelianPageState extends State<PembelianPage> {
               ],
             );
           },
-        ));
+        ),
+    );
   }
 }

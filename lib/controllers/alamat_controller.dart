@@ -168,8 +168,8 @@ class AlamatController extends GetxController {
   }
 
   Future<void> getAlamatUser() async {
-    var controller = Get.find<UserController>().usersList[0];
-    Response response = await alamatRepo.getAlamatUser(controller.id!);
+    var controller = Get.find<AlamatController>().daftarAlamatList[0];
+    Response response = await alamatRepo.getAlamatUser(controller.user_address_id!);
     if (response.statusCode == 200) {
       List<dynamic> responseBody = response.body["alamat"];
       _daftarAlamatUserList = [];
