@@ -442,7 +442,7 @@ class _DetailPesananPageState extends State<DetailPesananPage> {
                       PriceText(
                         text: CurrencyFormat
                             .convertToIdr(
-                            detailPesanan[0].hargaPembelian,
+                            detailPesanan[0].hargaPembelian + detailPesanan[0].ongkir,
                             0),
                         size: Dimensions.font16,
                       ),

@@ -8,8 +8,8 @@ import '../../widgets/app_icon.dart';
 import '../../widgets/big_text.dart';
 import '../../widgets/card_produk.dart';
 
-class ProdukUnggulanPage extends StatelessWidget {
-  const ProdukUnggulanPage({Key? key}) : super(key: key);
+class ProdukTerbaruPage extends StatelessWidget {
+  const ProdukTerbaruPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +40,8 @@ class ProdukUnggulanPage extends StatelessWidget {
                       width: Dimensions.width20,
                     ),
                     Container(
-                      width: Dimensions.screenWidth/1.7,
                       child: BigText(
-                        text: "Makanan dan Minuman Terfavorit Untukmu",
+                        text: "Produk Terbaru",
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -56,15 +55,14 @@ class ProdukUnggulanPage extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2, mainAxisExtent: Dimensions.height45*6.5),
-                  itemCount: controller.produkMakananMinumanList.length,
+                  itemCount: controller.produkTerbaruList.length,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     var gambarproduk = controller
                         .imageProdukList
                         .where((produk) => produk.productId == controller
-                        .produkMakananMinumanList[index].productId);
-                    print(controller.produkMakananMinumanList.length);
-                    return CardProduk(product_id : controller.produkMakananMinumanList[index].productId,productImageName : gambarproduk.single.productImageName, productName : controller.produkMakananMinumanList[index].productName, merchantAddress : controller.produkMakananMinumanList[index].subdistrictName, price: controller.produkMakananMinumanList[index].price, countPurchases: controller.produkMakananMinumanList[index].countProductPurchases, );
+                        .produkTerbaruList[index].productId);
+                    return CardProduk(product_id : controller.produkTerbaruList[index].productId,productImageName : gambarproduk.single.productImageName, productName : controller.produkTerbaruList[index].productName, merchantAddress : controller.produkTerbaruList[index].subdistrictName, price: controller.produkTerbaruList[index].price);
                   }
               )
                   : CircularProgressIndicator(

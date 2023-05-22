@@ -72,23 +72,15 @@ class ProfilPage extends StatelessWidget {
                               children: [
                                 Row(
                                   children: [
-                                    BigText(text: "Informasi Akun "),
-                                    // Container(
-                                    //   width: Dimensions.height45,
-                                    //   height: Dimensions.height45,
-                                    //   child: Icon(
-                                    //     Icons.info_outline,
-                                    //     color: AppColors.redColor,
-                                    //     size: Dimensions.iconSize24,
-                                    //   ),
-                                    // ),
-                                    SizedBox(height: Dimensions.height10,)
+                                    BigText(text: "Informasi Akun"),
                                   ],
                                 ),
+                                Divider(color: AppColors.buttonBackgroundColor,thickness: 2.0,),
+                                SizedBox(height: Dimensions.height10,),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    BigText(text: "Username" , color: AppColors.signColor, size: Dimensions.font16,),
+                                    BigText(text: "Username" , color: AppColors.labelColor, size: Dimensions.font16,),
                                     BigText(text: userController.usersList[0].username, size: Dimensions.font16,),
                                   ],
                                 ),
@@ -98,7 +90,7 @@ class ProfilPage extends StatelessWidget {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    BigText(text: "Email", color: AppColors.signColor, size: Dimensions.font16),
+                                    BigText(text: "Email", color: AppColors.labelColor, size: Dimensions.font16),
                                     BigText(text: userController.usersList[0].email, size: Dimensions.font16 ),
                                   ],
                                 ),
@@ -108,7 +100,7 @@ class ProfilPage extends StatelessWidget {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    BigText(text: "Password", color: AppColors.signColor, size: Dimensions.font16),
+                                    BigText(text: "Password", color: AppColors.labelColor, size: Dimensions.font16),
                                     Container(
                                       width: Dimensions.width20*3,
                                       padding: EdgeInsets.only(
@@ -151,27 +143,18 @@ class ProfilPage extends StatelessWidget {
                             ),
                             child:  Column(
                               children: [
-                                Divider(color: AppColors.buttonBackgroundColor),
                                 Row(
                                   children: [
                                     BigText(text: "Biodata Diri "),
-                                    SizedBox(height: Dimensions.height10,)
-                                    // Container(
-                                    //   width: Dimensions.height45,
-                                    //   height: Dimensions.height45,
-                                    //   child: Icon(
-                                    //     Icons.info_outline,
-                                    //     color: AppColors.redColor,
-                                    //     size: Dimensions.iconSize24,
-                                    //   ),
-                                    // ),
                                   ],
                                 ),
+                                Divider(color: AppColors.buttonBackgroundColor,thickness: 2.0,),
+                                SizedBox(height: Dimensions.height10,),
 
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    BigText(text: "Nama" , color: AppColors.signColor, size: Dimensions.font16),
+                                    BigText(text: "Nama" , color: AppColors.labelColor, size: Dimensions.font16),
                                     BigText(text: userController.usersList[0].name , size: Dimensions.font16),
                                   ],
                                 ),
@@ -181,7 +164,7 @@ class ProfilPage extends StatelessWidget {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    BigText(text: "Tanggal Lahir", color: AppColors.signColor, size: Dimensions.font16),
+                                    BigText(text: "Tanggal Lahir", color: AppColors.labelColor, size: Dimensions.font16),
                                     BigText(text: birthdayValue, size: Dimensions.font16 ),
                                   ],
                                 ),
@@ -191,7 +174,7 @@ class ProfilPage extends StatelessWidget {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    BigText(text: "Jenis Kelamin", color: AppColors.signColor, size: Dimensions.font16),
+                                    BigText(text: "Jenis Kelamin", color: AppColors.labelColor, size: Dimensions.font16),
                                     BigText(text: userController.usersList[0].gender, size: Dimensions.font16 ),
                                   ],
                                 ),
@@ -201,7 +184,7 @@ class ProfilPage extends StatelessWidget {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    BigText(text: "No. HP", color: AppColors.signColor, size: Dimensions.font16),
+                                    BigText(text: "No. HP", color: AppColors.labelColor, size: Dimensions.font16),
                                     BigText(text: userController.usersList[0].noHp, size: Dimensions.font16 ),
                                   ],
                                 ),
@@ -209,7 +192,7 @@ class ProfilPage extends StatelessWidget {
                                   height: Dimensions.height20,
                                 ),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     Container(
                                       width: Dimensions.width20*3,

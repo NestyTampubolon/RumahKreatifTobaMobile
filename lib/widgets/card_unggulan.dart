@@ -1,23 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:rumah_kreatif_toba/pages/home/pakaian_diminati_page.dart';
+import 'package:rumah_kreatif_toba/pages/home/produk_terbaru_page.dart';
+import 'package:rumah_kreatif_toba/pages/home/produk_unggulan_page.dart';
 import 'package:rumah_kreatif_toba/utils/dimensions.dart';
 import 'package:get/get.dart';
 import '../controllers/popular_produk_controller.dart';
 import '../pages/kategori/kategori_produk_detail.dart';
+import '../routes/route_helper.dart';
 import '../utils/colors.dart';
 import 'big_text.dart';
 
-class CardKategori extends StatelessWidget {
+class CardUnggulan extends StatelessWidget {
   final String kategori;
 
-  CardKategori({
+
+  CardUnggulan({
     Key? key,
     required this.kategori,
   }) : super(key: key);
-
-  Future<void> _getProduk(PopularProdukController produkController) async {
-    produkController.getKategoriProdukList(kategori);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +40,13 @@ class CardKategori extends StatelessWidget {
         ),
         child: GestureDetector(
           onTap: () {
-            Get.to(KategoriProdukDetail(), arguments: kategori);
-            _getProduk(_produkController);
+              if(kategori == 'Makanan dan Minuman'){
+                Get.to(ProdukUnggulanPage());
+              }else if(kategori == 'Pakaian Diminati'){
+                Get.to(PakaianDiminatiPage());
+              }else if(kategori == 'Produk Terbaru'){
+                Get.to(ProdukTerbaruPage());
+              }
           },
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -59,7 +65,7 @@ class CardKategori extends StatelessWidget {
                   image: DecorationImage(
                       fit: BoxFit.fill,
                       image:
-                          AssetImage("assets/images/kategori/${kategori}.png")),
+                          AssetImage("assets/images/unggulan/${kategori}.png")),
                 ),
               ),
               Container(

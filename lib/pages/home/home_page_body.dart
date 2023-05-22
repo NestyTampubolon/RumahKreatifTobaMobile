@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rumah_kreatif_toba/controllers/popular_produk_controller.dart';
 import 'package:rumah_kreatif_toba/models/produk_models.dart';
+import 'package:rumah_kreatif_toba/pages/home/pakaian_diminati_page.dart';
+import 'package:rumah_kreatif_toba/pages/home/produk_terbaru_page.dart';
 import 'package:rumah_kreatif_toba/pages/home/produk_unggulan_page.dart';
 import 'package:rumah_kreatif_toba/pages/produk/produk_populer_detail.dart';
 import 'package:rumah_kreatif_toba/pages/produk/produk_detail.dart';
@@ -184,7 +186,7 @@ class _HomePageBodyState extends State<HomePageBody> {
             ),
             GestureDetector(
               onTap: () {
-                Get.to(ProdukUnggulanPage(jenisProduk : "produkMakananMinumanList"));
+                Get.to(ProdukUnggulanPage());
               },
               child: Container(
                   width: Dimensions.screenWidth / 4,
@@ -265,7 +267,7 @@ class _HomePageBodyState extends State<HomePageBody> {
             ),
             GestureDetector(
               onTap: () {
-                Get.to(ProdukUnggulanPage(jenisProduk: "produkPakaianList",));
+                Get.to(PakaianDiminatiPage());
               },
               child: Container(
                   width: Dimensions.screenWidth / 4,
@@ -342,7 +344,7 @@ class _HomePageBodyState extends State<HomePageBody> {
             ),
             GestureDetector(
               onTap: () {
-                Get.to(ProdukUnggulanPage(jenisProduk: "produkTerbaruList",));
+                Get.to(ProdukTerbaruPage());
               },
               child: Container(
                   width: Dimensions.screenWidth / 4,

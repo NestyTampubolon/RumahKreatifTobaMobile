@@ -229,7 +229,6 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                               MainAxisAlignment.spaceBetween,
                               children: [
                                 Container(
-
                                   child: Row(
                                     children: [
                                       GestureDetector(

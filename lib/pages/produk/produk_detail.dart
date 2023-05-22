@@ -188,20 +188,18 @@ class _ProdukDetailState extends State<ProdukDetail> {
                                           child: AppIcon(
                                             icon: Icons.circle,
                                             size: 20,
-                                            iconColor: Colors.transparent,
-                                            backgroundColor:
-                                                AppColors.notification,
+                                            iconColor: AppColors.notification_success,
                                           ))
                                       : Container(),
                                   controller.keranjangList.length >= 1
                                       ? Positioned(
-                                          right: 3,
+                                          right: 6,
                                           top: 3,
                                           child: BigText(
                                             text: controller
                                                 .keranjangList.length
                                                 .toString(),
-                                            size: 12,
+                                            size: 10,
                                             color: Colors.white,
                                           ),
                                         )
@@ -262,31 +260,22 @@ class _ProdukDetailState extends State<ProdukDetail> {
                           GestureDetector(
                             onTap: () {
                               if (Get.find<AuthController>().userLoggedIn()) {
-                                // //widget.productId
-                                // setState(() {
-                                //   isProdukExist = !isProdukExist;
-                                // });
-
-                                if (isProdukExist = true) {
-                                  isGetProdukExist.isProdukExist.value = true;
-                                  _hapusWishlist(
-                                      produkList[0].productId.toInt());
-                                  print("barang ada");
-                                } else {
-                                  isGetProdukExist.isProdukExist.value = false;
+                                if (isProdukExist) {
+                                  Get.find<WishlistController>().setTypeWishlist(daftarproduk.productId, false);
+                                  _hapusWishlist(produkList[0].productId.toInt());
+                                  isProdukExist = false;
+                                } else if (!isProdukExist) {
+                                  Get.find<WishlistController>().setTypeWishlist(daftarproduk.productId, true);
                                   _tambahWishlist();
-                                  print("barang tidak ada");
+                                  isProdukExist = true;
                                 }
                               } else {
                                 Get.toNamed(RouteHelper.getMasukPage());
                               }
                             },
-                            child: Obx(() => Icon(
-                                  CupertinoIcons.heart,
-                                  color: isGetProdukExist.isProdukExist.value
-                                      ? Colors.pink
-                                      : null,
-                                )),
+                            child: Obx(() =>  Get.find<WishlistController>().getcheckedtypeWishlist[daftarproduk.productId] ?? false ? Icon(Icons.favorite, color: Colors.pink,) : Icon(
+                              CupertinoIcons.heart
+                            )),
                           )
                         ],
                       )),

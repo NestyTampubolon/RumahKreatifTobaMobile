@@ -17,7 +17,10 @@ class WishlistController extends GetxController{
 
   RxBool isProdukExist = false.obs;
 
-  // bool get getIsProductExist => isPO
+
+  RxMap<int, bool> checkedtypeWishlist = <int, bool>{}.obs;
+
+  Map<int, bool> get getcheckedtypeWishlist => checkedtypeWishlist;
 
   RxList _wishlistList= <dynamic>[].obs;
   List<dynamic> get wishlistList => _wishlistList;
@@ -72,4 +75,13 @@ class WishlistController extends GetxController{
     return responseModel;
   }
 
+  // void setTypeWishlist(int index,bool title) {
+  //   checkedtypePengiriman.value = {index :title };
+  //   update();
+  // }
+
+  void setTypeWishlist(int index, bool title) {
+    checkedtypeWishlist[index] = title;
+    update();
+  }
 }
