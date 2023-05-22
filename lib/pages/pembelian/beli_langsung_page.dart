@@ -33,7 +33,7 @@ class _BeliLangsungPageState extends State<BeliLangsungPage> {
         var userController = Get.find<UserController>().usersList[0];
 
         controller
-            .beliLangsung(userController.id, productId, Get.find<PengirimanController>().paymentIndex,
+            .beliLangsung(userController.id, productId, Get.find<PengirimanController>().paymentIndex.value,
             jumlahMasukKeranjang, hargapembelian, "", "", "", "")
             .then((status) async {
           if (status.isSuccess) {

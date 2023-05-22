@@ -50,7 +50,17 @@ class TambahProdukPage extends StatelessWidget {
         showCustomSnackBar("Berat masih kosong", title: "Berat");
       } else if (kategori.isEmpty) {
         showCustomSnackBar("Kategori masih kosong", title: "Kategori");
+      } else if (Get.find<ProdukController>().pickedFileGambarProduk1 == null) {
+        showCustomSnackBar("Gambar 1 masih kosong", title: "Gambar");
+      } else if (Get.find<ProdukController>().pickedFileGambarProduk2 == null) {
+        showCustomSnackBar("Gambar 2 masih kosong", title: "Gambar");
+      } else if (Get.find<ProdukController>().pickedFileGambarProduk3 == null) {
+        showCustomSnackBar("Gambar 3 masih kosong", title: "Gambar");
       } else {
+        int harga = int.parse(HargaController.text.trim());
+        int berat = int.parse(BeratController.text.trim());
+        int stok = int.parse(StokController.text.trim());
+
         var userController = Get.find<UserController>().usersList[0];
         var controller = Get.find<ProdukController>();
         controller
@@ -73,7 +83,9 @@ class TambahProdukPage extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Get.to(HomeTokoPage(initialIndex: 1)); // Pass the initial index to the HomeTokoPage constructor
+                    Get.to(HomeTokoPage(
+                        initialIndex:
+                            1)); // Pass the initial index to the HomeTokoPage constructor
                   },
                   child: AppIcon(
                     icon: Icons.arrow_back,
@@ -209,8 +221,8 @@ class TambahProdukPage extends StatelessWidget {
                             bottom: Dimensions.height20),
                         decoration: BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.circular(
-                                Dimensions.radius20),
+                            borderRadius:
+                                BorderRadius.circular(Dimensions.radius20),
                             boxShadow: [
                               BoxShadow(
                                   blurRadius: 10,
@@ -226,25 +238,22 @@ class TambahProdukPage extends StatelessWidget {
                     ),
                     controller.pickedFileGambarProduk1 != null
                         ? Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: Image.file(
-                          //to show image, you type like this.
-                          File(controller
-                              .pickedFileGambarProduk1!.path),
-                          fit: BoxFit.cover,
-                          width: Dimensions.width45*2,
-                          height: Dimensions.height45*2,
-                        ),
-                      ),
-                    )
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Image.file(
+                                //to show image, you type like this.
+                                File(controller.pickedFileGambarProduk1!.path),
+                                fit: BoxFit.cover,
+                                width: Dimensions.width45 * 2,
+                                height: Dimensions.height45 * 2,
+                              ),
+                            ),
+                          )
                         : Text(
-                      "Tidak Ada Gambar",
-                      style: TextStyle(
-                          fontSize: Dimensions.font16 / 2),
-                    ),
+                            "Tidak Ada Gambar",
+                            style: TextStyle(fontSize: Dimensions.font16 / 2),
+                          ),
                   ],
                 );
               }),
@@ -267,8 +276,8 @@ class TambahProdukPage extends StatelessWidget {
                             bottom: Dimensions.height20),
                         decoration: BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.circular(
-                                Dimensions.radius20),
+                            borderRadius:
+                                BorderRadius.circular(Dimensions.radius20),
                             boxShadow: [
                               BoxShadow(
                                   blurRadius: 10,
@@ -284,25 +293,22 @@ class TambahProdukPage extends StatelessWidget {
                     ),
                     controller.pickedFileGambarProduk2 != null
                         ? Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: Image.file(
-                          //to show image, you type like this.
-                          File(controller
-                              .pickedFileGambarProduk2!.path),
-                          fit: BoxFit.cover,
-                          width: Dimensions.width45*2,
-                          height: Dimensions.height45*2,
-                        ),
-                      ),
-                    )
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Image.file(
+                                //to show image, you type like this.
+                                File(controller.pickedFileGambarProduk2!.path),
+                                fit: BoxFit.cover,
+                                width: Dimensions.width45 * 2,
+                                height: Dimensions.height45 * 2,
+                              ),
+                            ),
+                          )
                         : Text(
-                      "Tidak Ada Gambar",
-                      style: TextStyle(
-                          fontSize: Dimensions.font16 / 2),
-                    ),
+                            "Tidak Ada Gambar",
+                            style: TextStyle(fontSize: Dimensions.font16 / 2),
+                          ),
                   ],
                 );
               }),
@@ -325,8 +331,8 @@ class TambahProdukPage extends StatelessWidget {
                             bottom: Dimensions.height20),
                         decoration: BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.circular(
-                                Dimensions.radius20),
+                            borderRadius:
+                                BorderRadius.circular(Dimensions.radius20),
                             boxShadow: [
                               BoxShadow(
                                   blurRadius: 10,
@@ -342,29 +348,25 @@ class TambahProdukPage extends StatelessWidget {
                     ),
                     controller.pickedFileGambarProduk3 != null
                         ? Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: Image.file(
-                          //to show image, you type like this.
-                          File(controller
-                              .pickedFileGambarProduk3!.path),
-                          fit: BoxFit.cover,
-                          width: Dimensions.width45*2,
-                          height: Dimensions.height45*2,
-                        ),
-                      ),
-                    )
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Image.file(
+                                //to show image, you type like this.
+                                File(controller.pickedFileGambarProduk3!.path),
+                                fit: BoxFit.cover,
+                                width: Dimensions.width45 * 2,
+                                height: Dimensions.height45 * 2,
+                              ),
+                            ),
+                          )
                         : Text(
-                      "Tidak Ada Gambar",
-                      style: TextStyle(
-                          fontSize: Dimensions.font16 / 2),
-                    ),
+                            "Tidak Ada Gambar",
+                            style: TextStyle(fontSize: Dimensions.font16 / 2),
+                          ),
                   ],
                 );
               }),
-
             ],
           ),
 
@@ -412,7 +414,7 @@ class TambahProdukPage extends StatelessWidget {
           ),
 
           Center(
-            child:  GestureDetector(
+            child: GestureDetector(
                 onTap: () {
                   _tambahProduk();
                 },
@@ -421,17 +423,16 @@ class TambahProdukPage extends StatelessWidget {
                     height: Dimensions.height45,
                     margin: EdgeInsets.only(bottom: Dimensions.height10),
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(Dimensions.radius30),
+                        borderRadius:
+                            BorderRadius.circular(Dimensions.radius30),
                         color: AppColors.redColor),
                     child: Center(
-                      child:BigText(
+                      child: BigText(
                         text: "Tambah",
                         size: Dimensions.font20,
                         color: Colors.white,
-                      ) ,
-                    )
-                )
-            ),
+                      ),
+                    ))),
           )
         ],
       ),

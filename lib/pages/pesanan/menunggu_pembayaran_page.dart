@@ -238,9 +238,7 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                                           pesananController.pesananMenungguPembayaranList[index]
                                               .productId!;
                                           if (produkIndex >= 0) {
-                                            Get.toNamed(RouteHelper
-                                                .getProdukDetail(
-                                                produkIndex));
+                                            Get.find<PopularProdukController>().detailProduk(produkIndex);
                                           }
                                         },
                                         child: Container(

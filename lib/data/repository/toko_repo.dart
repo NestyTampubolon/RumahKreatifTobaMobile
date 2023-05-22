@@ -33,7 +33,7 @@ class TokoRepo {
   }
 
   Future<Response> ubahToko(int merchant_id, String nama_merchant, String deskripsi_toko, String kontak_toko, String foto_merchant) async {
-    return await apiClient.postData(AppConstants.TAMBAH_TOKO_URL, {"merchant_id": merchant_id, "nama_merchant":nama_merchant, "deskripsi_toko":deskripsi_toko, "kontak_toko": kontak_toko, "foto_merchant" : foto_merchant});
+    return await apiClient.postData(AppConstants.UBAH_TOKO_URL, {"merchant_id": merchant_id, "nama_merchant":nama_merchant, "deskripsi_toko":deskripsi_toko, "kontak_toko": kontak_toko, "foto_merchant" : foto_merchant});
   }
 
   Future<Response> homeToko(int user_id) async {

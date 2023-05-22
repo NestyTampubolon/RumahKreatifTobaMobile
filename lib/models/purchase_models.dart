@@ -7,9 +7,9 @@ class PurchaseModel {
   int? hargaPembelian;
   int? potonganPembelian;
   String? statusPembelian;
-  Null? noResi;
-  Null? courierCode;
-  Null? service;
+  String? noResi;
+  String? courierCode;
+  String? service;
   int? ongkir;
   int? isCancelled;
   String? createdAt;

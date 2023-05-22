@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import '../../../controllers/auth_controller.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/dimensions.dart';
+import 'hometoko_page.dart';
 
 class HomeToko extends StatelessWidget {
   const HomeToko({Key? key}) : super(key: key);
@@ -30,8 +31,17 @@ class HomeToko extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      width: 30,
-                      height: 30,
+                        width: Dimensions.width15*2,
+                      height: Dimensions.height30,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image:
+                              AssetImage("assets/images/logo_rkt.png"))),
+                    ),
+                    Container(
+                      width: Dimensions.width15*2,
+                      height: Dimensions.height30,
                       margin: EdgeInsets.only(
                           left: Dimensions.width10, right: Dimensions.width10),
                       decoration: BoxDecoration(
@@ -41,7 +51,7 @@ class HomeToko extends StatelessWidget {
                     ),
                     Get.find<TokoController>().isLoading
                         ? Container(
-                            width: Dimensions.screenWidth / 1.5,
+                            width: Dimensions.screenWidth / 1.8,
                             height: 30,
                             margin: EdgeInsets.only(
                                 left: Dimensions.width10,
@@ -55,7 +65,10 @@ class HomeToko extends StatelessWidget {
                           )
                         : Container(
                             height:
-                                50, // set the height of the container to your desired height
+                                20,
+                      width: 20,
+
+                      // set the height of the container to your desired height
                             child: Center(
                               child: CircularProgressIndicator(
                                 color: AppColors.redColor,
@@ -66,200 +79,248 @@ class HomeToko extends StatelessWidget {
                 ),
               ),
             ),
-            GridView.count(
-              physics: const NeverScrollableScrollPhysics(),
-              crossAxisCount: 2,
-              mainAxisSpacing: Dimensions.height10,
-              shrinkWrap: true,
-              childAspectRatio: 2 / 1,
-              children: <Widget>[
-                GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(15),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 3,
-                            blurRadius: 10,
-                            offset: Offset(0, 3),
+            Container(
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.3),
+                      spreadRadius: 1,
+                      blurRadius: 5,
+                      offset: Offset(0, 2),
+                    )
+                  ]),
+              margin: EdgeInsets.only(
+                  top: Dimensions.height20
+              ),
+
+              padding: EdgeInsets.only(
+                  top: Dimensions.height30,
+                  left: Dimensions.width20,
+                  right: Dimensions.width20,
+                  bottom: Dimensions.height30),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                          child: BigText(
+                            text: "PENJUALAN",
+                            size: Dimensions.font20,
+                            fontWeight: FontWeight.bold,
                           )
-                        ]),
-                    margin: EdgeInsets.only(
-                        left: Dimensions.width20,
-                        right: Dimensions.width20,
-                        top: Dimensions.height10),
-                    padding: EdgeInsets.only(
-                        left: Dimensions.width20,
-                        right: Dimensions.width20,
-                        bottom: Dimensions.height10,
-                        top: Dimensions.height10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          child: TittleText(
-                            text: "Pesanan Sedang Berlangsung",
+                      ),
+                      // GestureDetector(
+                      //   onTap: () {
+                      //     Get.to(() => HomeTokoPage(initialIndex: 2));
+                      //   },
+                      //   child:  BigText(
+                      //     text: "Lihat Riwayat",
+                      //     size: Dimensions.font16,
+                      //     fontWeight: FontWeight.bold,
+                      //     color: AppColors.notification_success,
+                      //   )
+                      // )
+                    ],
+                  ),
+                  Divider(color: AppColors.buttonBackgroundColor),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        child: TittleText(
+                          text: "Pesanan Sedang Berlangsung",
+                          size: Dimensions.font20 / 1.5,
+                        ),
+                      ),
+                      Get.find<TokoController>().isLoading
+                          ? Container(
+                        child: Obx(
+                              () => BigText(
+                            text: Get.find<TokoController>()
+                                .getJumlahPesanan[
+                            'jumlah_pesanan_sedang_berlangsung']!
+                                .toString(),
                             size: Dimensions.font20 / 1.5,
                           ),
                         ),
-                        SizedBox(
-                          height: Dimensions.height10,
+                      )
+                          : Container(
+                        height:
+                        20,
+                        width: 20,// set the height of the container to your desired height
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            color: AppColors.redColor,
+                          ),
                         ),
-                        Get.find<TokoController>().isLoading
-                            ? Container(
-                                child: Obx(
-                                  () => BigText(
-                                    text: Get.find<TokoController>()
-                                        .getJumlahPesanan[
-                                            'jumlah_pesanan_sedang_berlangsung']!
-                                        .toString(),
-                                    size: Dimensions.font16 / 1.5,
-                                  ),
-                                ),
-                              )
-                            : Container(
-                                height:
-                                    50, // set the height of the container to your desired height
-                                child: Center(
-                                  child: CircularProgressIndicator(
-                                    color: AppColors.redColor,
-                                  ),
-                                ),
-                              )
+                      )
+
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        child: TittleText(
+                          text:
+                          "Pesanan Berhasil [Belum Konfirmasi Pembayaran]",
+                          size: Dimensions.font20 / 1.5,
+                        ),
+                      ),
+                      Get.find<TokoController>().isLoading
+                          ? Container(
+                        child: Obx(
+                              () => BigText(
+                            text: Get.find<TokoController>()
+                                .getJumlahPesanan[
+                            'jumlah_pesanan_berhasil_belum_dibayar']!
+                                .toString(),
+                            size: Dimensions.font20 / 1.5,
+                          ),
+                        ),
+                      )
+                          : Container(
+                        height:
+                        20,
+                        width: 20,
+                        // set the height of the container to your desired height
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            color: AppColors.redColor,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        child: TittleText(
+                          text:
+                          "Pesanan Berhasil [Telah Konfirmasi Pembayaran]",
+                          size: Dimensions.font20 / 1.5,
+                        ),
+                      ),
+                      Get.find<TokoController>().isLoading
+                          ? Container(
+                        child: Obx(
+                              () => BigText(
+                            text: Get.find<TokoController>()
+                                .getJumlahPesanan[
+                            'jumlah_pesanan_berhasil_telah_dibayar']!
+                                .toString(),
+                            size: Dimensions.font20 / 1.5,
+                          ),
+                        ),
+                      )
+                          : Container(
+                        height:
+                        20,
+                        width: 20,
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            color: AppColors.redColor,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.3),
+                      spreadRadius: 1,
+                      blurRadius: 5,
+                      offset: Offset(0, 2),
+                    )
+                  ]),
+              margin: EdgeInsets.only(
+                  top: Dimensions.height20
+              ),
+
+              padding: EdgeInsets.only(
+                  top: Dimensions.height30,
+                  left: Dimensions.width20,
+                  right: Dimensions.width20,
+                  bottom: Dimensions.height30),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        child: BigText(
+                          text: "PRODUK",
+                          size: Dimensions.font20,
+                          fontWeight: FontWeight.bold,
+                        )
+                      ),
+                      // GestureDetector(
+                      //   onTap: () {
+                      //     Get.to(HomeTokoPage(initialIndex: 3)); // Pass the initial index to the HomeTokoPage constructor
+                      //   },
+                      //   child: Container(
+                      //     child: BigText(
+                      //       text: "Tambah Produk",
+                      //       size: Dimensions.font16,
+                      //       fontWeight: FontWeight.bold,
+                      //       color: AppColors.notification_success,
+                      //     ),
+                      //   ),
+                      // )
+                    ],
+                  ),
+
+                  Divider(color: AppColors.buttonBackgroundColor),
+                  Container(
+                    margin: EdgeInsets.only(bottom: Dimensions.height10),
+                    child: Row(
+                      children: [
+                        BigText(
+                          text: "Daftar Produkmu",
+                          size: Dimensions.font16,
+                        )
                       ],
                     ),
                   ),
-                ),
-                GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(15),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 3,
-                            blurRadius: 10,
-                            offset: Offset(0, 3),
-                          )
-                        ]),
-                    margin: EdgeInsets.only(
-                        left: Dimensions.width20,
-                        right: Dimensions.width20,
-                        top: Dimensions.height10),
-                    padding: EdgeInsets.only(
-                        left: Dimensions.width20,
-                        right: Dimensions.width20,
-                        bottom: Dimensions.height10,
-                        top: Dimensions.height10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          child: TittleText(
-                            text:
-                                "Pesanan Berhasil [Belum Konfirmasi Pembayaran]",
-                            size: Dimensions.font20 / 1.5,
-                          ),
-                        ),
-                        SizedBox(
-                          height: Dimensions.height10,
-                        ),
-                        Get.find<TokoController>().isLoading
-                            ? Container(
-                                child: Obx(
-                                  () => BigText(
-                                    text: Get.find<TokoController>()
-                                        .getJumlahPesanan[
-                                            'jumlah_pesanan_berhasil_belum_dibayar']!
-                                        .toString(),
-                                    size: Dimensions.font16 / 1.5,
-                                  ),
-                                ),
-                              )
-                            : Container(
-                                height:
-                                    50, // set the height of the container to your desired height
-                                child: Center(
-                                  child: CircularProgressIndicator(
-                                    color: AppColors.redColor,
-                                  ),
-                                ),
-                              )
-                      ],
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(15),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 3,
-                            blurRadius: 10,
-                            offset: Offset(0, 3),
-                          )
-                        ]),
-                    margin: EdgeInsets.only(
-                        left: Dimensions.width20,
-                        right: Dimensions.width20,
-                        top: Dimensions.height10),
-                    padding: EdgeInsets.only(
-                        left: Dimensions.width20,
-                        right: Dimensions.width20,
-                        bottom: Dimensions.height10,
-                        top: Dimensions.height10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          child: TittleText(
-                            text:
-                                "Pesanan Berhasil [Telah Konfirmasi Pembayaran]",
-                            size: Dimensions.font20 / 1.5,
-                          ),
-                        ),
-                        SizedBox(
-                          height: Dimensions.height10,
-                        ),
-                        Get.find<TokoController>().isLoading
-                            ? Container(
-                                child: Obx(
-                                  () => BigText(
-                                    text: Get.find<TokoController>()
-                                        .getJumlahPesanan[
-                                            'jumlah_pesanan_berhasil_telah_dibayar']!
-                                        .toString(),
-                                    size: Dimensions.font16 / 1.5,
-                                  ),
-                                ),
-                              )
-                            : Container(
-                                height:
-                                    50, // set the height of the container to your desired height
-                                child: Center(
-                                  child: CircularProgressIndicator(
-                                    color: AppColors.redColor,
-                                  ),
-                                ),
+                  Get.find<TokoController>().isLoading
+                      ? Container(
+                    child: Obx(
+                          () => Row(
+                            children: [
+                              BigText(
+                                text: '${Get.find<TokoController>()
+                                    .getJumlahPesanan[
+                                'jumlah_produk']!
+                                    .toString()} produk',
+                                size: Dimensions.font20 / 1.5,
                               ),
-                      ],
+                            ],
+                          )
                     ),
-                  ),
-                )
-              ],
-            )
+                  )
+                      : Container(
+                    height:
+                    20,
+                    width: 20,// set the height of the container to your desired height
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        color: AppColors.redColor,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+
           ],
         ),
       ),

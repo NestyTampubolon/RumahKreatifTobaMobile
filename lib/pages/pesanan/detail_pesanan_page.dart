@@ -57,8 +57,8 @@ class _DetailPesananPageState extends State<DetailPesananPage> {
                     },
                     child: AppIcon(
                       icon: Icons.arrow_back,
-                      iconColor: Colors.white,
-                      backgroundColor: AppColors.redColor,
+                      iconColor: AppColors.redColor,
+                      backgroundColor: Colors.white.withOpacity(0.0),
                       iconSize: Dimensions.iconSize24,
                     ),
                   ),
@@ -68,6 +68,7 @@ class _DetailPesananPageState extends State<DetailPesananPage> {
                   BigText(
                     text: "Detail Pesanan",
                     size: Dimensions.font20,
+                    fontWeight: FontWeight.bold,
                   ),
                 ],
               ),
@@ -303,37 +304,37 @@ class _DetailPesananPageState extends State<DetailPesananPage> {
                                           ],
                                         ),
                                       ),
-                                      GestureDetector(
-                                        onTap: () {
-                                          var produkIndex = pesananController
-                                              .detailPesananList[index]
-                                              .productId!;
-                                          if (produkIndex >= 0) {
-                                            Get.toNamed(
-                                                RouteHelper.getProdukDetail(
-                                                    produkIndex));
-                                          }
-                                        },
-                                        child: Container(
-                                          padding: EdgeInsets.only(
-                                              top: Dimensions.height10 / 2,
-                                              bottom: Dimensions.height10 / 2,
-                                              left: Dimensions.height10,
-                                              right: Dimensions.height10),
-                                          decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  color: AppColors.redColor),
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      Dimensions.radius20 / 2),
-                                              color: Colors.white),
-                                          child: BigText(
-                                            text: "Beli Lagi",
-                                            size: Dimensions.iconSize16,
-                                            color: AppColors.redColor,
-                                          ),
-                                        ),
-                                      )
+                                      // GestureDetector(
+                                      //   onTap: () {
+                                      //     var produkIndex = pesananController
+                                      //         .detailPesananList[index]
+                                      //         .productId!;
+                                      //     if (produkIndex >= 0) {
+                                      //       Get.toNamed(
+                                      //           RouteHelper.getProdukDetail(
+                                      //               produkIndex));
+                                      //     }
+                                      //   },
+                                      //   child: Container(
+                                      //     padding: EdgeInsets.only(
+                                      //         top: Dimensions.height10 / 2,
+                                      //         bottom: Dimensions.height10 / 2,
+                                      //         left: Dimensions.height10,
+                                      //         right: Dimensions.height10),
+                                      //     decoration: BoxDecoration(
+                                      //         border: Border.all(
+                                      //             color: AppColors.redColor),
+                                      //         borderRadius:
+                                      //             BorderRadius.circular(
+                                      //                 Dimensions.radius20 / 2),
+                                      //         color: Colors.white),
+                                      //     child: BigText(
+                                      //       text: "Beli Lagi",
+                                      //       size: Dimensions.iconSize16,
+                                      //       color: AppColors.redColor,
+                                      //     ),
+                                      //   ),
+                                      // )
                                     ],
                                   ),
                                 ),

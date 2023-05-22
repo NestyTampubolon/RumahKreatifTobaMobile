@@ -65,8 +65,6 @@ class _PembelianDetailPageState extends State<PembelianDetailPage> {
                     },
                     child: AppIcon(
                       icon: Icons.arrow_back,
-                      iconColor: Colors.white,
-                      backgroundColor: AppColors.redColor,
                       iconSize: Dimensions.iconSize24,
                     ),
                   ),
@@ -74,8 +72,9 @@ class _PembelianDetailPageState extends State<PembelianDetailPage> {
                     width: Dimensions.width20,
                   ),
                   BigText(
-                    text: "Detail Pesanan",
+                    text: "Detail Pembelian",
                     size: Dimensions.font20,
+                    fontWeight: FontWeight.bold,
                   ),
                 ],
               ),
@@ -119,7 +118,7 @@ class _PembelianDetailPageState extends State<PembelianDetailPage> {
                     child: Row(
                       children: [
                         BigText(
-                          text: detailPembelian[0].kodePembelian.toString(),
+                          text: detailPembelian[0].kodePembelian != null ? detailPembelian[0].kodePembelian.toString() : 'N/A',
                           size: Dimensions.font16,
                         )
                       ],
@@ -293,12 +292,14 @@ class _PembelianDetailPageState extends State<PembelianDetailPage> {
                                           SmallText(
                                               text: "Total Harga"),
                                           PriceText(
-                                            text: CurrencyFormat
+                                            text:  controller
+                                                .detailPembelianList[index]
+                                                .hargaPembelianProduk != null ? CurrencyFormat
                                                 .convertToIdr(
                                                 controller
                                                     .detailPembelianList[index]
                                                     .hargaPembelianProduk,
-                                                0),
+                                                0) : 'N/A',
                                             size: Dimensions.font16,
                                           ),
                                         ],
@@ -367,10 +368,10 @@ class _PembelianDetailPageState extends State<PembelianDetailPage> {
                         child: Row(
                           children: [
                             PriceText(
-                              text: CurrencyFormat
+                              text: detailPembelian[0].hargaPembelian != null ? CurrencyFormat
                                   .convertToIdr(
-                                  detailPembelian[0].hargaPembelian,
-                                  0),
+                                   detailPembelian[0].hargaPembelian ,
+                                  0): 'N/A',
                               size: Dimensions.font16,
                             ),
                           ],
@@ -407,10 +408,11 @@ class _PembelianDetailPageState extends State<PembelianDetailPage> {
                         fontWeight: FontWeight.bold,
                       ),
                       PriceText(
-                        text: CurrencyFormat
+                        text: detailPembelian[0].hargaPembelian != null ?
+                        CurrencyFormat
                             .convertToIdr(
-                            detailPembelian[0].hargaPembelian,
-                            0),
+                             detailPembelian[0].hargaPembelian ,
+                            0) : 'N/A',
                         size: Dimensions.font16,
                       ),
                     ],

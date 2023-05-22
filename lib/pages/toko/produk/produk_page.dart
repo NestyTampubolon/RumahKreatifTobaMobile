@@ -59,173 +59,173 @@ class _ProdukPageState extends State<ProdukPage> {
       }
     }
 
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              child: Container(
-                margin: EdgeInsets.only(
-                    top: Dimensions.height30, bottom: Dimensions.height10),
-                padding: EdgeInsets.only(
-                    left: Dimensions.width20, right: Dimensions.width20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      child: BigText(
-                        text: "Daftar Produk",
-                        fontWeight: FontWeight.bold,
-                      ),
+    return RefreshIndicator(child: SingleChildScrollView(
+      child: Column(
+        children: [
+          Container(
+            child: Container(
+              margin: EdgeInsets.only(
+                  top: Dimensions.height30, bottom: Dimensions.height10),
+              padding: EdgeInsets.only(
+                  left: Dimensions.width20, right: Dimensions.width20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    child: BigText(
+                      text: "Daftar Produk",
+                      fontWeight: FontWeight.bold,
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        _kategorilist();
-                      },
-                      child: Container(
-                          child: Icon(
-                        Icons.add,
-                        color: AppColors.redColor,
-                      )),
-                    )
-                  ],
-                ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      _kategorilist();
+                    },
+                    child: Container(
+                        child: Icon(
+                          Icons.add,
+                          color: AppColors.redColor,
+                        )),
+                  )
+                ],
               ),
             ),
-            GetBuilder<PopularProdukController>(builder: (controller) {
-              return controller.isLoaded ?  ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: controller.daftarProdukList.length,
-                  shrinkWrap: true,
-                  itemBuilder: (_, index) {
-                    var gambarproduk = controller.imageProdukList.where(
-                            (produk) =>
-                        produk.productId ==
-                            controller
-                                .daftarProdukList[index].productId);
+          ),
+          GetBuilder<PopularProdukController>(builder: (controller) {
+            return controller.isLoaded ?  ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: controller.daftarProdukList.length,
+                shrinkWrap: true,
+                itemBuilder: (_, index) {
+                  var gambarproduk = controller.imageProdukList.where(
+                          (produk) =>
+                      produk.productId ==
+                          controller
+                              .daftarProdukList[index].productId);
 
-                    return Container(
-                      width: Dimensions.screenWidth / 1.2,
-                      padding: EdgeInsets.only(
+                  return Container(
+                    width: Dimensions.screenWidth / 1.2,
+                    padding: EdgeInsets.only(
+                      left: Dimensions.width20,
+                      right: Dimensions.width20,
+                      bottom: Dimensions.height10,
+                    ),
+                    margin: EdgeInsets.only(
                         left: Dimensions.width20,
                         right: Dimensions.width20,
-                        bottom: Dimensions.height10,
-                      ),
-                      margin: EdgeInsets.only(
-                          left: Dimensions.width20,
-                          right: Dimensions.width20,
-                          bottom: Dimensions.height10),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(15),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.3),
-                              spreadRadius: 1,
-                              blurRadius: 5,
-                              offset: Offset(0, 2),
-                            )
-                          ]),
-                      child: Column(
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                width: Dimensions.height20 * 4,
-                                height: Dimensions.height20 * 4,
-                                margin: EdgeInsets.only(
-                                    top: Dimensions.height10,
-                                    right: Dimensions.width10),
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        fit: BoxFit.cover,
-                                        image: NetworkImage(
-                                          '${AppConstants.BASE_URL_IMAGE}u_file/product_image/${gambarproduk.single.productImageName}',
-                                        )),
-                                    borderRadius: BorderRadius.circular(
-                                        Dimensions.radius20),
-                                    color: Colors.white),
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    width: Dimensions.width45 * 4.7,
-                                    child: BigText(
-                                      text: controller
-                                          .daftarProdukList[index].productName
-                                          .toString(),
-                                      size: Dimensions.font20,
-                                    ),
-                                  ),
-                                  PriceText(
-                                    text: CurrencyFormat.convertToIdr(
-                                        controller
-                                            .daftarProdukList[index].price,
-                                        0),
-                                    color: AppColors.redColor,
-                                    size: Dimensions.font16,
-                                  ),
-                                  SmallText(
-                                      text:
-                                          "Stok : ${controller.daftarProdukList[index].stok.toString()}")
-                                ],
-                              ),
-                              PopupMenuButton(
-                                itemBuilder: (BuildContext context) {
-                                  return [
-                                    PopupMenuItem(
-                                      child: TextButton(
-                                        onPressed: () {
-                                          _detailProdukList(controller
-                                              .daftarProdukList[index]
-                                              .productId);
-                                        },
-                                        child: Text( 'Ubah'),
-                                      ),
-                                    ),
-                                    PopupMenuItem(
-                                      child: TextButton(
-                                        onPressed: () {
-                                          _hapusProduk(controller
-                                              .daftarProdukList[index]
-                                              .productId);
-                                        },
-                                        child: Text('Hapus'),
-                                      ),
-                                    ),
-                                  ];
-                                },
-                                offset: Offset(0,
-                                    30), // set the offset to show the menu in front of the icon
-                                child: GestureDetector(
-                                  child: Container(
-                                    child: Icon(Icons.more_vert_outlined),
+                        bottom: Dimensions.height10),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(15),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.3),
+                            spreadRadius: 1,
+                            blurRadius: 5,
+                            offset: Offset(0, 2),
+                          )
+                        ]),
+                    child: Column(
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: Dimensions.height20 * 4,
+                              height: Dimensions.height20 * 4,
+                              margin: EdgeInsets.only(
+                                  top: Dimensions.height10,
+                                  right: Dimensions.width10),
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: NetworkImage(
+                                        '${AppConstants.BASE_URL_IMAGE}u_file/product_image/${gambarproduk?.single.productImageName}',
+                                      )),
+                                  borderRadius: BorderRadius.circular(
+                                      Dimensions.radius20),
+                                  color: Colors.white),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: Dimensions.width45 * 4.7,
+                                  child: BigText(
+                                    text: controller
+                                        .daftarProdukList[index].productName
+                                        .toString(),
+                                    size: Dimensions.font20,
                                   ),
                                 ),
+                                PriceText(
+                                  text: CurrencyFormat.convertToIdr(
+                                      controller
+                                          .daftarProdukList[index].price,
+                                      0),
+                                  color: AppColors.redColor,
+                                  size: Dimensions.font16,
+                                ),
+                                SmallText(
+                                    text:
+                                    "Stok : ${controller.daftarProdukList[index].stok.toString()}")
+                              ],
+                            ),
+                            PopupMenuButton(
+                              itemBuilder: (BuildContext context) {
+                                return [
+                                  PopupMenuItem(
+                                    child: TextButton(
+                                      onPressed: () {
+                                        _detailProdukList(controller
+                                            .daftarProdukList[index]
+                                            .productId);
+                                      },
+                                      child: Text( 'Ubah'),
+                                    ),
+                                  ),
+                                  PopupMenuItem(
+                                    child: TextButton(
+                                      onPressed: () {
+                                        _hapusProduk(controller
+                                            .daftarProdukList[index]
+                                            .productId);
+                                      },
+                                      child: Text('Hapus'),
+                                    ),
+                                  ),
+                                ];
+                              },
+                              offset: Offset(0,
+                                  30), // set the offset to show the menu in front of the icon
+                              child: GestureDetector(
+                                child: Container(
+                                  child: Icon(Icons.more_vert_outlined),
+                                ),
                               ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    );
-                  }) : Container(
-                height:
-                50, // set the height of the container to your desired height
-                child: Center(
-                  child: CircularProgressIndicator(
-                    color: AppColors.redColor,
-                  ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  );
+                }) : Container(
+              height:
+              50, // set the height of the container to your desired height
+              child: Center(
+                child: CircularProgressIndicator(
+                  color: AppColors.redColor,
                 ),
-              );
-            }),
-            SizedBox(
-              height: Dimensions.height20,
-            )
-          ],
-        ),
+              ),
+            );
+          }),
+          SizedBox(
+            height: Dimensions.height20,
+          )
+        ],
       ),
-    );
+    ),
+        onRefresh: () => Get.find<PopularProdukController>().getProdukList());
+
   }
 }

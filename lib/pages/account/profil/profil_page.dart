@@ -70,19 +70,19 @@ class ProfilPage extends StatelessWidget {
                             ),
                             child:  Column(
                               children: [
-                                Divider(color: AppColors.buttonBackgroundColor),
                                 Row(
                                   children: [
                                     BigText(text: "Informasi Akun "),
-                                    Container(
-                                      width: Dimensions.height45,
-                                      height: Dimensions.height45,
-                                      child: Icon(
-                                        Icons.info_outline,
-                                        color: AppColors.redColor,
-                                        size: Dimensions.iconSize24,
-                                      ),
-                                    ),
+                                    // Container(
+                                    //   width: Dimensions.height45,
+                                    //   height: Dimensions.height45,
+                                    //   child: Icon(
+                                    //     Icons.info_outline,
+                                    //     color: AppColors.redColor,
+                                    //     size: Dimensions.iconSize24,
+                                    //   ),
+                                    // ),
+                                    SizedBox(height: Dimensions.height10,)
                                   ],
                                 ),
                                 Row(
@@ -155,15 +155,16 @@ class ProfilPage extends StatelessWidget {
                                 Row(
                                   children: [
                                     BigText(text: "Biodata Diri "),
-                                    Container(
-                                      width: Dimensions.height45,
-                                      height: Dimensions.height45,
-                                      child: Icon(
-                                        Icons.info_outline,
-                                        color: AppColors.redColor,
-                                        size: Dimensions.iconSize24,
-                                      ),
-                                    ),
+                                    SizedBox(height: Dimensions.height10,)
+                                    // Container(
+                                    //   width: Dimensions.height45,
+                                    //   height: Dimensions.height45,
+                                    //   child: Icon(
+                                    //     Icons.info_outline,
+                                    //     color: AppColors.redColor,
+                                    //     size: Dimensions.iconSize24,
+                                    //   ),
+                                    // ),
                                   ],
                                 ),
 

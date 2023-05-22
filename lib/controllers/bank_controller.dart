@@ -45,9 +45,11 @@ class BankController extends GetxController{
     if(response.statusCode == 200){
       showCustomSnackBar("Berhasil menambah rekening",
           title: "Berhasil");
-      Get.to(
-            () => NamaToko(),
-      );
+      if (response.body == 1) {
+        Get.to(NamaToko());
+      } else if (response.body == 2) {
+        Get.to(DaftarRekening());
+      }
       getRekeningList();
     }else{
       responseModel = ResponseModel(false, response.statusText!);

@@ -71,30 +71,36 @@ class AccountPage extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            AppIcon(
-                              icon: Icons.person,
-                              backgroundColor: AppColors.redColor,
-                              iconColor: Colors.white,
-                              iconSize: 65,
-                              size: Dimensions.height15 * 8,
-                            ),
-                            SizedBox(
-                              height: Dimensions.height20,
-                            ),
-                            Container(
-                              child: Column(
-                                children: [
-                                  BigText(
-                                      text: userController.usersList[0].username
-                                          .toString()),
-                                  SmallText(
-                                      text: userController.usersList[0].email
-                                          .toString()),
-                                  SmallText(
-                                      text: userController.usersList[0].noHp
-                                          .toString())
-                                ],
-                              ),
+                            Row(
+                              children: [
+                                Container(
+                                  width: Dimensions.width45*1.5,
+                                  height: Dimensions.height45*1.5,
+                                  margin: EdgeInsets.only(
+                                      left: Dimensions.width20, right: Dimensions.width20),
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: AssetImage("assets/images/ikon/profile.png"))),
+                                ),
+                                Container(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      BigText(
+                                          text: userController.usersList[0].username
+                                              .toString()),
+                                      SmallText(
+                                          text: userController.usersList[0].email
+                                              .toString()),
+                                      SmallText(
+                                          text: userController.usersList[0].noHp
+                                              .toString())
+                                    ],
+                                  ),
+                                ),
+
+                              ],
                             ),
                             SizedBox(
                               height: Dimensions.height20,

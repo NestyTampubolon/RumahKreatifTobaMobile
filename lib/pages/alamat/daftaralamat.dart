@@ -60,6 +60,7 @@ class DaftarAlamatPage extends GetView<AlamatController> {
                       BigText(
                         text: "Daftar Alamat",
                         size: Dimensions.font20,
+                        fontWeight: FontWeight.bold,
                       ),
                     ],
                   ),
@@ -69,12 +70,11 @@ class DaftarAlamatPage extends GetView<AlamatController> {
                         onTap: () {
                           Get.toNamed(RouteHelper.getTambahAlamatPage());
                         },
-                        child: BigText(
-                          text: "Tambah Alamat",
-                          size: Dimensions.font20,
-                          color: AppColors.redColor,
-                          textAlign: TextAlign.end,
-                        ),
+                        child: Container(
+                            child: Icon(
+                              Icons.add,
+                              color: AppColors.redColor,
+                            )),
                       ),
                     ],
                   ),

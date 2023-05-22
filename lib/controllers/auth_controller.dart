@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:rumah_kreatif_toba/data/repository/auth_repo.dart';
 import 'package:rumah_kreatif_toba/models/response_model.dart';
 
+import '../base/show_custom_message.dart';
 import '../models/users_models.dart';
 
 class AuthController extends GetxController implements GetxService {
@@ -26,26 +27,26 @@ class AuthController extends GetxController implements GetxService {
     } else {
       responseModel = ResponseModel(false, response.statusText!);
     }
-    _isLoading = false;
+    _isLoading = true;
     update();
     return responseModel;
   }
 
   Future<ResponseModel> login(String username, String password) async {
-    _isLoading = true;
-    update();
     Response response = await authRepo.login(username, password);
     late ResponseModel responseModel;
     if (response.statusCode == 200) {
       if (response.body["token"] != null) {
         authRepo.saveUserToken(response.body["token"]);
         print(response.body["token"]);
+      }else{
+        showCustomSnackBar(response.body["message"], title: "Gagal");
       }
       responseModel = ResponseModel(true, response.body["token"]);
     } else {
       responseModel = ResponseModel(false, response.statusText!);
     }
-    _isLoading = false;
+    _isLoading = true;
     update();
     return responseModel;
   }

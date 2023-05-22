@@ -19,6 +19,7 @@ import 'package:get/get.dart';
 import '../../widgets/app_icon.dart';
 import '../../widgets/big_text.dart';
 import '../../widgets/currency_format.dart';
+import '../../widgets/pengiriman_option_button.dart';
 import '../../widgets/price_text.dart';
 import 'package:get/get.dart';
 
@@ -30,7 +31,6 @@ class PembelianPage extends StatefulWidget {
 }
 
 class _PembelianPageState extends State<PembelianPage> {
-
   @override
   Widget build(BuildContext context) {
     List<int?> _carId = [];
@@ -54,32 +54,30 @@ class _PembelianPageState extends State<PembelianPage> {
       return total;
     }
 
-
     Future<void> _beliProduk() async {
       bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
       if (_userLoggedIn) {
         var controller = Get.find<PengirimanController>();
         var userController = Get.find<UserController>().usersList[0];
 
-
-          controller
-              .beliProduk(userController.id, _carId, _merchantId,
-              _metodePembelian, _hargaPembelian, "", "", "", "")
-              .then((status) async {
-            if (status.isSuccess) {
-
-            } else {
-              showCustomSnackBar(status.message);
-            }
-          });
+        controller
+            .beliProduk(userController.id, _carId, _merchantId,
+                _metodePembelian, _hargaPembelian, "", "", "", "")
+            .then((status) async {
+          if (status.isSuccess) {
+          } else {
+            showCustomSnackBar(status.message);
+          }
+        });
       }
     }
 
     Future<void> _getProdukList(int product_id) async {
       var controller = Get.find<PopularProdukController>();
-      controller.detailProduk(product_id).then((status) async {
-      });
+      controller.detailProduk(product_id).then((status) async {});
     }
+
+    bool isContainerVisible = false;
     return Scaffold(
         body: SingleChildScrollView(
           child: Column(
@@ -94,7 +92,7 @@ class _PembelianPageState extends State<PembelianPage> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Get.toNamed(RouteHelper.getKeranjangPage());
+                        Get.offNamed(RouteHelper.getKeranjangPage());
                       },
                       child: AppIcon(
                         icon: Icons.arrow_back,
@@ -167,13 +165,11 @@ class _PembelianPageState extends State<PembelianPage> {
                       var groupedKeranjangList = <String, List<CartModel>>{};
                       var _checkedCartIds = cartController.checkedCartIds;
                       var _matchedItems = _keranjangList
-                          .where(
-                              (item) => _checkedCartIds.contains(item.productId))
+                          .where((item) =>
+                              _checkedCartIds.contains(item.productId))
                           .toList();
 
-                      if(_matchedItems.isEmpty){
-
-                      }
+                      if (_matchedItems.isEmpty) {}
 
                       // Group items by merchant name
                       for (var item in _matchedItems) {
@@ -181,29 +177,25 @@ class _PembelianPageState extends State<PembelianPage> {
                         var merchantName = item.namaMerchant!;
                         if (groupedKeranjangList[merchantName] == null) {
                           groupedKeranjangList[merchantName] = [item];
-                           _merchantId = item.merchantId;
+                          _merchantId = item.merchantId;
                         } else {
                           groupedKeranjangList[merchantName]!.add(item);
                         }
                       }
 
-
                       int calculatesubTotal(String merchantName) {
                         var cartController = Get.find<CartController>();
-                        var _keranjangList =
-                            cartController.keranjangList;
-                        var _checkedCartIds =
-                            cartController.checkedCartIds;
+                        var _keranjangList = cartController.keranjangList;
+                        var _checkedCartIds = cartController.checkedCartIds;
                         var _matchedItems = _keranjangList
                             .where((item) =>
-                        _checkedCartIds.contains(item.productId) &&
-                            item.namaMerchant == merchantName)
+                                _checkedCartIds.contains(item.productId) &&
+                                item.namaMerchant == merchantName)
                             .toList();
 
                         double total = 0.0;
                         for (final item in _matchedItems) {
-                          total +=
-                              item.price * item.jumlahMasukKeranjang;
+                          total += item.price * item.jumlahMasukKeranjang;
                         }
 
                         return total.toInt();
@@ -213,27 +205,26 @@ class _PembelianPageState extends State<PembelianPage> {
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: groupedKeranjangList.length,
                           shrinkWrap: true,
-                          itemBuilder: (_, merchantIndex)  {
+                          itemBuilder: (_, merchantIndex) {
                             var merchantName = groupedKeranjangList.keys
                                 .elementAt(merchantIndex);
                             var merchantItems =
-                            groupedKeranjangList[merchantName]!;
+                                groupedKeranjangList[merchantName]!;
 
                             _hargaPembelian = calculatesubTotal(merchantName);
-
 
                             return Container(
                               margin: EdgeInsets.only(
                                   bottom: Dimensions.height10,
                                   top: Dimensions.height10 / 2,
-                                  left: Dimensions.width10/2,
-                                  right: Dimensions.width10/2),
+                                  left: Dimensions.width10 / 2,
+                                  right: Dimensions.width10 / 2),
                               padding: EdgeInsets.all(Dimensions.height10),
                               decoration: BoxDecoration(
                                   border: Border.all(
                                       color: AppColors.buttonBackgroundColor),
-                                  borderRadius:
-                                  BorderRadius.circular(Dimensions.radius20),
+                                  borderRadius: BorderRadius.circular(
+                                      Dimensions.radius20),
                                   color: Colors.white),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -257,22 +248,22 @@ class _PembelianPageState extends State<PembelianPage> {
                                       itemCount: merchantItems.length,
                                       itemBuilder: (_, index) {
                                         var item = merchantItems[index];
-                                        var gambarproduk = Get.find<PopularProdukController>().imageProdukList.where(
-                                                (produk) =>
-                                            produk.productId ==
-                                                item.productId);
+                                        var gambarproduk =
+                                            Get.find<PopularProdukController>()
+                                                .imageProdukList
+                                                .where((produk) =>
+                                                    produk.productId ==
+                                                    item.productId);
                                         return Row(
                                           children: [
                                             Container(
-                                              width: Dimensions.screenWidth /
-                                                  1.35,
-                                              height:
-                                              Dimensions.height45 * 2.5,
+                                              width:
+                                                  Dimensions.screenWidth / 1.35,
+                                              height: Dimensions.height45 * 2.5,
                                               margin: EdgeInsets.only(
                                                   bottom:
-                                                  Dimensions.height10 / 2,
-                                                  top: Dimensions.height10 /
-                                                      2),
+                                                      Dimensions.height10 / 2,
+                                                  top: Dimensions.height10 / 2),
                                               padding: EdgeInsets.only(
                                                   left: Dimensions.width10,
                                                   right: Dimensions.width10),
@@ -281,9 +272,8 @@ class _PembelianPageState extends State<PembelianPage> {
                                                       color: AppColors
                                                           .buttonBackgroundColor),
                                                   borderRadius:
-                                                  BorderRadius.circular(
-                                                      Dimensions
-                                                          .radius20),
+                                                      BorderRadius.circular(
+                                                          Dimensions.radius20),
                                                   color: Colors.white),
                                               child: Column(
                                                 children: [
@@ -292,35 +282,39 @@ class _PembelianPageState extends State<PembelianPage> {
                                                       GestureDetector(
                                                         onTap: () {
                                                           var produkIndex =
-                                                          item.productId!;
+                                                              item.productId!;
                                                           if (produkIndex >=
                                                               0) {
-                                                            _getProdukList(item.productId!);
+                                                            _getProdukList(item
+                                                                .productId!);
                                                           }
                                                         },
                                                         child: Container(
                                                           width: Dimensions
-                                                              .height20 *
+                                                                  .height20 *
                                                               4,
                                                           height: Dimensions
-                                                              .height20 *
+                                                                  .height20 *
                                                               4,
                                                           margin: EdgeInsets.only(
                                                               top: Dimensions
                                                                   .height10),
-                                                          decoration: BoxDecoration(
-                                                              image: DecorationImage(
-                                                                  fit: BoxFit
-                                                                      .cover,
-                                                                  image: NetworkImage(
-                                                                    '${AppConstants.BASE_URL_IMAGE}u_file/product_image/${gambarproduk.single.productImageName}',
-                                                                  )),
-                                                              borderRadius:
-                                                              BorderRadius.circular(
-                                                                  Dimensions
-                                                                      .radius20),
-                                                              color: Colors
-                                                                  .white),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                                  image:
+                                                                      DecorationImage(
+                                                                          fit: BoxFit
+                                                                              .cover,
+                                                                          image:
+                                                                              NetworkImage(
+                                                                            '${AppConstants.BASE_URL_IMAGE}u_file/product_image/${gambarproduk.single.productImageName}',
+                                                                          )),
+                                                                  borderRadius:
+                                                                      BorderRadius.circular(
+                                                                          Dimensions
+                                                                              .radius20),
+                                                                  color: Colors
+                                                                      .white),
                                                         ),
                                                       ),
                                                       SizedBox(
@@ -329,38 +323,38 @@ class _PembelianPageState extends State<PembelianPage> {
                                                       ExcludeFocus(
                                                         child: Container(
                                                           height: Dimensions
-                                                              .height20 *
+                                                                  .height20 *
                                                               5,
                                                           width: Dimensions
-                                                              .width45 *
+                                                                  .width45 *
                                                               3,
                                                           child: Column(
                                                             crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
+                                                                CrossAxisAlignment
+                                                                    .start,
                                                             mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceEvenly,
+                                                                MainAxisAlignment
+                                                                    .spaceEvenly,
                                                             children: [
                                                               BigText(
                                                                 text: item
                                                                     .productName!,
                                                                 size: Dimensions
-                                                                    .font26 /
+                                                                        .font26 /
                                                                     1.5,
                                                               ),
                                                               Row(
                                                                 children: [
                                                                   SmallText(
                                                                       text:
-                                                                      "${item.jumlahMasukKeranjang} barang"),
+                                                                          "${item.jumlahMasukKeranjang} barang"),
                                                                 ],
                                                               ),
                                                               PriceText(
                                                                 text: CurrencyFormat
                                                                     .convertToIdr(
-                                                                    item.price,
-                                                                    0),
+                                                                        item.price,
+                                                                        0),
                                                                 size: Dimensions
                                                                     .font16,
                                                               ),
@@ -397,51 +391,53 @@ class _PembelianPageState extends State<PembelianPage> {
                                         onTap: () {
                                           showModalBottomSheet(
                                               backgroundColor:
-                                              Colors.transparent,
+                                                  Colors.transparent,
                                               context: context,
                                               builder: (context) {
                                                 return SingleChildScrollView(
                                                   child: Container(
-                                                    width: Dimensions
-                                                        .screenWidth,
+                                                    width:
+                                                        Dimensions.screenWidth,
+                                                    height: Dimensions.screenHeight/2,
                                                     decoration: BoxDecoration(
                                                         color: Colors.white,
                                                         borderRadius: BorderRadius.only(
-                                                            topLeft: Radius
-                                                                .circular(
-                                                                Dimensions
-                                                                    .radius20),
-                                                            topRight: Radius
-                                                                .circular(
-                                                                Dimensions
-                                                                    .radius20))),
+                                                            topLeft:
+                                                                Radius.circular(
+                                                                    Dimensions
+                                                                        .radius20),
+                                                            topRight:
+                                                                Radius.circular(
+                                                                    Dimensions
+                                                                        .radius20))),
                                                     padding: EdgeInsets.only(
-                                                        top: Dimensions
-                                                            .height30,
-                                                        left: Dimensions
-                                                            .width20,
-                                                        right: Dimensions
-                                                            .width20),
+                                                        top:
+                                                            Dimensions.height30,
+                                                        left:
+                                                            Dimensions.width20,
+                                                        right:
+                                                            Dimensions.width20),
                                                     child: Column(
                                                       children: [
                                                         Row(children: [
                                                           GestureDetector(
-                                                            onTap:(){
+                                                            onTap: () {
                                                               Navigator.pop(
                                                                   context);
                                                             },
                                                             child: AppIcon(
-                                                              icon: CupertinoIcons
-                                                                  .xmark,
+                                                              icon:
+                                                                  CupertinoIcons
+                                                                      .xmark,
                                                               size: Dimensions
                                                                   .iconSize24,
                                                               iconColor:
-                                                              AppColors
-                                                                  .redColor,
+                                                                  AppColors
+                                                                      .redColor,
                                                               backgroundColor:
-                                                              Colors.white
-                                                                  .withOpacity(
-                                                                  0.0),
+                                                                  Colors.white
+                                                                      .withOpacity(
+                                                                          0.0),
                                                             ),
                                                           ),
                                                           SizedBox(
@@ -450,7 +446,7 @@ class _PembelianPageState extends State<PembelianPage> {
                                                           ),
                                                           BigText(
                                                             text:
-                                                            "Pilih Pengiriman",
+                                                                "Pilih Pengiriman",
                                                             size: Dimensions
                                                                 .font26,
                                                           ),
@@ -469,165 +465,40 @@ class _PembelianPageState extends State<PembelianPage> {
                                                                   .height20),
                                                           child: Column(
                                                             children: [
-                                                              InkWell(
-                                                                onTap: () {
-                                                                  setState(
-                                                                          () {
-                                                                        Get.find<PengirimanController>().setTypePengiriman(
-                                                                            merchantIndex,
-                                                                            "Ambil Ditempat Rp0");
-                                                                        Get.find<
-                                                                            PengirimanController>()
-                                                                            .setPaymentIndex(
-                                                                            1);
-                                                                         _metodePembelian = 1;
-                                                                      });
-                                                                  print(
-                                                                      _metodePembelian);
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                },
-                                                                child:
-                                                                Container(
-                                                                  decoration: BoxDecoration(
-                                                                      borderRadius:
-                                                                      BorderRadius.circular(Dimensions.radius20 / 4),
-                                                                      color: Theme.of(context).cardColor,
-                                                                      boxShadow: [
-                                                                        BoxShadow(
-                                                                            color: Colors.grey[200]!,
-                                                                            blurRadius: 5,
-                                                                            spreadRadius: 1)
-                                                                      ]),
-                                                                  child:
-                                                                  ListTile(
-                                                                    leading:
-                                                                    Icon(
-                                                                      Icons
-                                                                          .money,
-                                                                      size:
-                                                                      40,
-                                                                      color: Get.find<PengirimanController>().paymentIndex ==
-                                                                          1
-                                                                          ? AppColors.redColor
-                                                                          : Theme.of(context).disabledColor,
-                                                                    ),
-                                                                    title:
-                                                                    Text(
-                                                                      "Ambil Ditempat Rp0",
-                                                                      style: TextStyle(
-                                                                          fontSize:
-                                                                          Dimensions.font20),
-                                                                    ),
-                                                                    // subtitle:
-                                                                    // Text(
-                                                                    //   "aa",
-                                                                    //   maxLines:
-                                                                    //   1,
-                                                                    //   overflow:
-                                                                    //   TextOverflow.ellipsis,
-                                                                    //   style: TextStyle(
-                                                                    //       color:
-                                                                    //       Theme.of(context).disabledColor,
-                                                                    //       fontSize: Dimensions.font16),
-                                                                    // ),
-                                                                    trailing: Get.find<PengirimanController>().paymentIndex ==
-                                                                        1
-                                                                        ? Icon(
-                                                                        Icons.check_circle,
-                                                                        color: Theme.of(context).primaryColor)
-                                                                        : null,
-                                                                  ),
-                                                                ),
-                                                              ),
+                                                              PengirimanOptionButton(
+                                                                  icon: Icons
+                                                                      .money,
+                                                                  title:
+                                                                      'Ambil Ditempat Rp0',
+                                                                  index: 1,
+                                                                  purchaseIndex:
+                                                                      merchantIndex),
                                                               SizedBox(
                                                                   height: Dimensions
                                                                       .height10),
-                                                              InkWell(
-                                                                onTap: () {
-                                                                  setState(
-                                                                          () {
-                                                                        Get.find<PengirimanController>().setTypePengiriman(
-                                                                            merchantIndex,
-                                                                            "Pesanan Dikirim");
-                                                                        Get.find<
-                                                                            PengirimanController>()
-                                                                            .setPaymentIndex(
-                                                                            2);
-                                                                        _metodePembelian = 2;
-                                                                      });
-                                                                  print(
-                                                                      _metodePembelian);
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                },
-                                                                child:
-                                                                Container(
-                                                                  decoration: BoxDecoration(
-                                                                      borderRadius:
-                                                                      BorderRadius.circular(Dimensions.radius20 / 4),
-                                                                      color: Theme.of(context).cardColor,
-                                                                      boxShadow: [
-                                                                        BoxShadow(
-                                                                            color: Colors.grey[200]!,
-                                                                            blurRadius: 5,
-                                                                            spreadRadius: 1)
-                                                                      ]),
-                                                                  child:
-                                                                  ListTile(
-                                                                    leading:
-                                                                    Icon(
-                                                                      Icons
-                                                                          .money,
-                                                                      size:
-                                                                      40,
-                                                                      color: Get.find<PengirimanController>().paymentIndex ==
-                                                                          2
-                                                                          ? AppColors.redColor
-                                                                          : Theme.of(context).disabledColor,
+                                                              PengirimanOptionButton(
+                                                                  icon: Icons
+                                                                      .money,
+                                                                  title:
+                                                                      'Pesanan Dikirim',
+                                                                  index: 2,
+                                                                  purchaseIndex:
+                                                                      merchantIndex),
+                                                              Obx(
+                                                                    () => Get.find<PengirimanController>().paymentIndex.value == 2
+                                                                    ? Visibility(
+                                                                  visible: true, // Set visibility to true when index is 2
+                                                                  child: Container(
+                                                                    child: BigText(
+                                                                      text: "A",
                                                                     ),
-                                                                    title:
-                                                                    Text(
-                                                                      "Pesanan Dikirim",
-                                                                      style: TextStyle(
-                                                                          fontSize:
-                                                                          Dimensions.font20),
-                                                                    ),
-                                                                    //subtitle:
-                                                                    // Text(
-                                                                    //   "aa",
-                                                                    //   maxLines:
-                                                                    //   1,
-                                                                    //   overflow:
-                                                                    //   TextOverflow.ellipsis,
-                                                                    //   style: TextStyle(
-                                                                    //       color:
-                                                                    //       Theme.of(context).disabledColor,
-                                                                    //       fontSize: Dimensions.font16),
-                                                                    // ),
-                                                                    trailing: Get.find<PengirimanController>().paymentIndex ==
-                                                                        2
-                                                                        ? Icon(
-                                                                        Icons.check_circle,
-                                                                        color: Theme.of(context).primaryColor)
-                                                                        : null,
                                                                   ),
+                                                                )
+                                                                    : Visibility(
+                                                                  visible: false, // Set visibility to false when index is not 2
+                                                                  child: Container(),
                                                                 ),
                                                               ),
-                                                              // GestureDetector(
-                                                              //   onTap: () => {
-                                                              //     setState(
-                                                              //             () {
-                                                              //               Get.find<PengirimanController>().typePengiriman;
-                                                              //   _metodePembelian[
-                                                              //   merchantIndex] = 2;
-                                                              //         }),
-                                                              //     print(_metodePembelian),
-                                                              //   Navigator.pop(
-                                                              //   context)
-                                                              //   },
-                                                              //   child: PaymentOptionButton(icon: Icons.money, title: "Pesanan Dikirim", subTitle: "subTitle", index: 2)
-                                                              // ),
                                                             ],
                                                           ),
                                                         )
@@ -642,16 +513,15 @@ class _PembelianPageState extends State<PembelianPage> {
                                             icon: Icons.note,
                                             iconColor: AppColors.redColor,
                                             backgroundColor:
-                                            Colors.white.withOpacity(0.0),
+                                                Colors.white.withOpacity(0.0),
                                           ),
-                                          BigText(
-                                            text: Get.find<
-                                                PengirimanController>()
-                                                .checkedtypePengiriman[
-                                            merchantIndex]
-                                                .toString(),
-                                            size: Dimensions.height15,
-                                          ),
+                                          Obx(() => BigText(
+                                                text: Get.find<
+                                                        PengirimanController>()
+                                                    .checkedtypePengiriman
+                                                    .value,
+                                                size: Dimensions.height15,
+                                              )),
                                         ])),
                                   ),
                                 ],

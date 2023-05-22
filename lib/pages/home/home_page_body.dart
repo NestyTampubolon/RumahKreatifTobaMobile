@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rumah_kreatif_toba/controllers/popular_produk_controller.dart';
 import 'package:rumah_kreatif_toba/models/produk_models.dart';
+import 'package:rumah_kreatif_toba/pages/home/produk_unggulan_page.dart';
 import 'package:rumah_kreatif_toba/pages/produk/produk_populer_detail.dart';
 import 'package:rumah_kreatif_toba/pages/produk/produk_detail.dart';
 import 'package:rumah_kreatif_toba/routes/route_helper.dart';
@@ -178,26 +179,29 @@ class _HomePageBodyState extends State<HomePageBody> {
               width: Dimensions.screenWidth / 1.8,
               child: BigText(
                 text: "Makanan dan Minuman Terfavorit Untukmu",
+                fontWeight: FontWeight.bold,
               ),
             ),
-            // GestureDetector(
-            //   onTap: () {},
-            //   child: Container(
-            //       width: Dimensions.screenWidth / 4,
-            //       height: Dimensions.height45,
-            //       margin: EdgeInsets.only(right: Dimensions.width20),
-            //       decoration: BoxDecoration(
-            //         borderRadius: BorderRadius.circular(Dimensions.radius30),
-            //         color: AppColors.redColor.withOpacity(0.3),
-            //       ),
-            //       child: Center(
-            //         child: BigText(
-            //             text: "Lihat Semua",
-            //             size: Dimensions.font20 / 1.5,
-            //             color: AppColors.redColor,
-            //             fontWeight: FontWeight.bold),
-            //       )),
-            // ),
+            GestureDetector(
+              onTap: () {
+                Get.to(ProdukUnggulanPage(jenisProduk : "produkMakananMinumanList"));
+              },
+              child: Container(
+                  width: Dimensions.screenWidth / 4,
+                  height: Dimensions.height45,
+                  margin: EdgeInsets.only(right: Dimensions.width20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(Dimensions.radius30),
+                    color: AppColors.redColor.withOpacity(0.3),
+                  ),
+                  child: Center(
+                    child: BigText(
+                        text: "Lihat Semua",
+                        size: Dimensions.font20 / 1.5,
+                        color: AppColors.redColor,
+                        fontWeight: FontWeight.bold),
+                  )),
+            ),
           ],
         ),
         Container(
@@ -256,7 +260,28 @@ class _HomePageBodyState extends State<HomePageBody> {
               width: Dimensions.screenWidth / 1.8,
               child: BigText(
                 text: "Pakaian Paling Diminati",
+                fontWeight: FontWeight.bold,
               ),
+            ),
+            GestureDetector(
+              onTap: () {
+                Get.to(ProdukUnggulanPage(jenisProduk: "produkPakaianList",));
+              },
+              child: Container(
+                  width: Dimensions.screenWidth / 4,
+                  height: Dimensions.height45,
+                  margin: EdgeInsets.only(right: Dimensions.width20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(Dimensions.radius30),
+                    color: AppColors.redColor.withOpacity(0.3),
+                  ),
+                  child: Center(
+                    child: BigText(
+                        text: "Lihat Semua",
+                        size: Dimensions.font20 / 1.5,
+                        color: AppColors.redColor,
+                        fontWeight: FontWeight.bold),
+                  )),
             ),
           ],
         ),
@@ -311,8 +336,29 @@ class _HomePageBodyState extends State<HomePageBody> {
               margin: EdgeInsets.only(left: Dimensions.width20),
               width: Dimensions.screenWidth / 1.8,
               child: BigText(
-                text: "Pakaian Terbaru",
+                text: "Produk Terbaru",
+                fontWeight: FontWeight.bold,
               ),
+            ),
+            GestureDetector(
+              onTap: () {
+                Get.to(ProdukUnggulanPage(jenisProduk: "produkTerbaruList",));
+              },
+              child: Container(
+                  width: Dimensions.screenWidth / 4,
+                  height: Dimensions.height45,
+                  margin: EdgeInsets.only(right: Dimensions.width20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(Dimensions.radius30),
+                    color: AppColors.redColor.withOpacity(0.3),
+                  ),
+                  child: Center(
+                    child: BigText(
+                        text: "Lihat Semua",
+                        size: Dimensions.font20 / 1.5,
+                        color: AppColors.redColor,
+                        fontWeight: FontWeight.bold),
+                  )),
             ),
           ],
         ),

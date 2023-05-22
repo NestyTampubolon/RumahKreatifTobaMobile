@@ -123,8 +123,6 @@ class _PembayaranPageState extends State<PembayaranPage> {
                       },
                       child: AppIcon(
                         icon: Icons.arrow_back,
-                        iconColor: Colors.white,
-                        backgroundColor: AppColors.redColor,
                         iconSize: Dimensions.iconSize24,
                       ),
                     ),
@@ -134,6 +132,7 @@ class _PembayaranPageState extends State<PembayaranPage> {
                     BigText(
                       text: "Pembayaran",
                       size: Dimensions.font20,
+                      fontWeight: FontWeight.bold,
                     ),
                   ],
                 ),
@@ -173,7 +172,7 @@ class _PembayaranPageState extends State<PembayaranPage> {
                           size: Dimensions.font20,
                           fontWeight: FontWeight.bold,
                         ),
-                        SmallText(text: detailPesanan[0].createdAt.toString())
+                        // SmallText(text: detailPesanan[0].createdAt.toString())
                       ],
                     ),
                     Divider(color: AppColors.buttonBackgroundColor),
@@ -249,7 +248,7 @@ class _PembayaranPageState extends State<PembayaranPage> {
                         ),
                         PriceText(
                           text: CurrencyFormat.convertToIdr(
-                              detailPesanan[0].hargaPembelian, 0),
+                              detailPesanan[0].hargaPembelian + detailPesanan[0].ongkir, 0),
                           size: Dimensions.font16,
                         ),
                       ],
@@ -362,7 +361,7 @@ class _PembayaranPageState extends State<PembayaranPage> {
                 ),
               )
                   : Text(
-                "No Image",
+                "Tidak ada gambar",
                 style: TextStyle(fontSize: 20),
               )
             ],

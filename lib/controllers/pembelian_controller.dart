@@ -43,8 +43,8 @@ class PembelianController extends GetxController {
     } else {}
   }
 
-  Future<ResponseModel> detailPembelian(String kode_pembelian) async {
-    Response response = await pembelianRepo.detailPembelian(kode_pembelian);
+  Future<ResponseModel> detailPembelian(int purchase_id) async {
+    Response response = await pembelianRepo.detailPembelian(purchase_id);
     late ResponseModel responseModel;
     if (response.statusCode == 200) {
       List<dynamic> responseBody = response.body;

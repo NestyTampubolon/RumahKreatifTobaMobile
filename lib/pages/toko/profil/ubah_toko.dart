@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rumah_kreatif_toba/pages/toko/namatoko.dart';
+import '../../../base/show_custom_message.dart';
 import '../../../controllers/toko_controller.dart';
 import '../../../controllers/user_controller.dart';
 import '../../../utils/app_constants.dart';
@@ -11,6 +12,7 @@ import '../../../widgets/app_date_field.dart';
 import '../../../widgets/app_icon.dart';
 import '../../../widgets/big_text.dart';
 import '../../../widgets/input_text_field.dart';
+import 'dart:io';
 
 class UbahTokoPage extends StatefulWidget {
   const UbahTokoPage({Key? key}) : super(key: key);
@@ -26,6 +28,26 @@ class _UbahTokoPageState extends State<UbahTokoPage> {
     final NamaTokoController = TextEditingController(text: profilToko[0].nama_merchant);
     final DeskripsiTokoController = TextEditingController(text:profilToko[0].deskripsi_toko);
     var KontakTokoController = TextEditingController(text : profilToko[0].kontak_toko);
+
+    Future<void> _ubahToko() async {
+      String namatoko = NamaTokoController.text.trim();
+      String deskripsi = DeskripsiTokoController.text.trim();
+      String kontak = KontakTokoController.text.trim();
+
+      if (namatoko.isEmpty) {
+        showCustomSnackBar("Nama toko masih kosong", title: "Nama");
+      } else if (deskripsi.isEmpty) {
+        showCustomSnackBar("Deskripsi masih kosong", title: "Deskripsi");
+      } else if (kontak == null) {
+        showCustomSnackBar("Kontak masih kosong", title: "Harga");
+      } else {
+        var controller = Get.find<TokoController>();
+        var userController = Get.find<UserController>().usersList[0];
+        controller
+            .ubahToko(Get.find<TokoController>().profilTokoList[0].merchant_id, namatoko, deskripsi, kontak)
+            .then((status) async {});
+      }
+    }
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -149,29 +171,59 @@ class _UbahTokoPageState extends State<UbahTokoPage> {
                                 '${AppConstants.BASE_URL_IMAGE}u_file/foto_merchant/${profilToko[0].foto_merchant}',
                               )  )),
                     ),
-                      Container(
-                        margin: EdgeInsets.only(
-                            left: Dimensions.width20,
-                            right: Dimensions.width20,
-                            bottom: Dimensions.height20),
-                        padding: EdgeInsets.only(
-                            left: Dimensions.width20,
-                            right: Dimensions.width20,
-                            top: Dimensions.height20,
-                            bottom: Dimensions.height20),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(
-                                Dimensions.radius20),
-                            boxShadow: [
-                              BoxShadow(
-                                  blurRadius: 10,
-                                  spreadRadius: 7,
-                                  offset: Offset(1, 1),
-                                  color: Colors.grey.withOpacity(0.2))
-                            ]),
-                        child: BigText(text:"Ubah Foto", color: AppColors.redColor,size: Dimensions.font26/2,)
-                      )
+
+                      GetBuilder<TokoController>(builder: (controller) {
+                        return Column(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                controller.pickImageUbahFotoMerchant();
+                              },
+                              child:  Container(
+                                  margin: EdgeInsets.only(
+                                      left: Dimensions.width20,
+                                      right: Dimensions.width20,
+                                      bottom: Dimensions.height20),
+                                  padding: EdgeInsets.only(
+                                      left: Dimensions.width20,
+                                      right: Dimensions.width20,
+                                      top: Dimensions.height20,
+                                      bottom: Dimensions.height20),
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(
+                                          Dimensions.radius20),
+                                      boxShadow: [
+                                        BoxShadow(
+                                            blurRadius: 10,
+                                            spreadRadius: 7,
+                                            offset: Offset(1, 1),
+                                            color: Colors.grey.withOpacity(0.2))
+                                      ]),
+                                  child: BigText(text:"Ubah Foto", color: AppColors.redColor,size: Dimensions.font26/2,)
+                              ),
+                            ),
+                            controller.pickedFileUbahFotoMerchant != null
+                                ? Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 20),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: Image.file(
+                                  //to show image, you type like this.
+                                  File(controller.pickedFileUbahFotoMerchant!.path),
+                                  fit: BoxFit.cover,
+                                  width: Dimensions.width45 * 2,
+                                  height: Dimensions.height45 * 2,
+                                ),
+                              ),
+                            )
+                                : Text(
+                              "Tidak Ada Gambar",
+                              style: TextStyle(fontSize: Dimensions.font16 / 2),
+                            ),
+                          ],
+                        );
+                      }),
                     ],
                   ),
                   SizedBox(
@@ -179,6 +231,7 @@ class _UbahTokoPageState extends State<UbahTokoPage> {
                   ),
                   GestureDetector(
                     onTap: (){
+                      _ubahToko();
                     },
                     child: Center(
                       child: Container(

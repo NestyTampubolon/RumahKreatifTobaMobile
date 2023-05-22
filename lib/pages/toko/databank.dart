@@ -98,6 +98,7 @@ class _DataBankPageState extends State<DataBankPage> {
                     BigText(
                       text: "Masukkan Info Bank",
                       size: Dimensions.font20,
+                      fontWeight: FontWeight.bold,
                     ),
                   ],
                 ),

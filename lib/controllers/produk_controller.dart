@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
+import 'package:rumah_kreatif_toba/controllers/popular_produk_controller.dart';
 import 'dart:io';
 import '../base/show_custom_message.dart';
 import 'package:image_picker/image_picker.dart';
@@ -8,6 +9,7 @@ import 'package:http/http.dart' as http;
 import '../data/repository/produk_repo.dart';
 import '../pages/toko/hometoko/hometoko.dart';
 import '../pages/toko/hometoko/hometoko_page.dart';
+import '../pages/toko/produk/produk_page.dart';
 import '../routes/route_helper.dart';
 
 import '../utils/app_constants.dart';
@@ -283,55 +285,7 @@ class ProdukController extends GetxController {
     update();
   }
 
-  Future<bool> ubahProduk(int? product_id, String product_name, String product_description, int price, int heavy, String kategori, int stok) async {
-    _isLoaded = true;
-    update();
-    bool success = false;
-
-    // Send the request
-    List<http.StreamedResponse>? response = (await uploadUbahProduk(
-        product_id,
-        product_name,
-        product_description,
-        price,
-        heavy,
-        kategori,
-        stok,
-        _pickedFileGambarUbahProduk1,
-        _pickedFileGambarUbahProduk2,
-        _pickedFileGambarUbahProduk3
-    )).cast<StreamedResponse>();
-
-
-    dynamic decodedData;
-
-    for (StreamedResponse resp in response) {
-      if (resp.statusCode == 200) {
-        success = true;
-        decodedData = jsonDecode(await resp.stream.bytesToString());
-        if (decodedData is Map) {
-          Map map = decodedData;
-          // Your code here
-          String message = map["message"] ?? "";
-          print(message);
-          _imagePathGambarUbahProduk1 = message;
-        } else {
-          // Handle error
-          print('Error: Response was not a map');
-        }
-        break; // Exit the loop after the first successful response
-      }
-    }
-
-    if (!success) {
-      print('Error: Response status code was not 200');
-    }
-
-    update();
-    return success;
-  }
-
-  Future<List<dynamic>> uploadUbahProduk(
+  Future<http.StreamedResponse> uploadUbahProduk(
       int? product_id,
       String product_name,
       String product_description,
@@ -341,57 +295,96 @@ class ProdukController extends GetxController {
       int stok,
       PickedFile? GambarProduk1,
       PickedFile? GambarProduk2,
-      PickedFile? GambarProduk3
+      PickedFile? GambarProduk3,
       ) async {
-    List<dynamic> result = [];
-
     http.MultipartRequest request = http.MultipartRequest(
-        'POST',
-        Uri.parse(AppConstants.BASE_URL + AppConstants.UBAH_PRODUK_URL)
+      'POST',
+      Uri.parse(AppConstants.BASE_URL + AppConstants.UBAH_PRODUK_URL),
     );
 
-    if (GetPlatform.isMobile && GambarProduk1 != null && GambarProduk2 != null && GambarProduk3 != null ) {
-      File _fileGambarUbahProduk1 = File(GambarProduk1.path);
-      request.files.add(http.MultipartFile(
-          'product_image[0]',
-          _fileGambarUbahProduk1.readAsBytes().asStream(),
-          _fileGambarUbahProduk1.lengthSync(),
-          filename: _fileGambarUbahProduk1.path.split('/').last
-      ));
+    final productImages = [
+      GambarProduk1,
+      GambarProduk2,
+      GambarProduk3,
+    ];
 
-      File _fileGambarUbahProduk2 = File(GambarProduk2.path);
-      request.files.add(http.MultipartFile(
-          'product_image[1]',
-          _fileGambarUbahProduk2.readAsBytes().asStream(),
-          _fileGambarUbahProduk2.lengthSync(),
-          filename: _fileGambarUbahProduk2.path.split('/').last
-      ));
+    for (int i = 0; i < productImages.length; i++) {
+      final pickedFile = productImages[i];
+      final detailProduk = Get.find<PopularProdukController>().detailProdukList[i];
 
-      File _fileGambarUbahProduk3 = File(GambarProduk3.path);
-      request.files.add(http.MultipartFile(
-          'product_image[2]',
-          _fileGambarUbahProduk3.readAsBytes().asStream(),
-          _fileGambarUbahProduk3.lengthSync(),
-          filename: _fileGambarUbahProduk3.path.split('/').last
-      ));
+      if (GetPlatform.isMobile && pickedFile != null) {
+        final file = File(pickedFile.path);
+        request.files.add(
+          await http.MultipartFile.fromPath(
+            'product_image[$i]',
+            file.path,
+            filename: file.path.split('/').last,
+          ),
+        );
+      } else {
+        request.fields['product_image[$i]'] = detailProduk.productImageName.toString();
+      }
     }
 
     request.fields['product_id'] = product_id.toString();
-    request.fields['product_name'] = product_name.toString();
-    request.fields['product_description'] = product_description.toString();
+    request.fields['product_name'] = product_name;
+    request.fields['product_description'] = product_description;
     request.fields['price'] = price.toString();
     request.fields['heavy'] = heavy.toString();
-    request.fields['kategori'] = kategori.toString();
+    request.fields['kategori_produk_id'] = kategori;
     request.fields['stok'] = stok.toString();
 
-    http.StreamedResponse response = await request.send();
-    result.add(response.statusCode);
-    result.add(await response.stream.bytesToString());
-
-    return result;
+    final response = await request.send();
+    Get.to(HomeTokoPage(initialIndex: 1));
+    return response;
   }
 
 
+  Future<bool> ubahProduk(
+      int? product_id,
+      String product_name,
+      String product_description,
+      int price,
+      int heavy,
+      String kategori,
+      int stok,
+      ) async {
+    bool success = false;
 
+    // Send the request
+    http.StreamedResponse response = await uploadUbahProduk(
+      product_id,
+      product_name,
+      product_description,
+      price,
+      heavy,
+      kategori,
+      stok,
+      _pickedFileGambarUbahProduk1,
+      _pickedFileGambarUbahProduk2,
+      _pickedFileGambarUbahProduk3,
+    );
+
+    if (response.statusCode == 200) {
+      dynamic decodedData = jsonDecode(await response.stream.bytesToString());
+      if (decodedData is Map<String, dynamic>) {
+        Map<String, dynamic> map = decodedData;
+        String message = map["message"] ?? "";
+        print(message);
+        _imagePathGambarUbahProduk1 = message;
+      } else {
+        // Handle error: Response data was not a map
+        print('Error: Response data was not a map');
+      }
+      success = true;
+    } else {
+      // Handle error: Non-200 response status code
+
+      print('Error: Response status code was not 200');
+    }
+
+    update();
+    return success;
+  }
 
 }

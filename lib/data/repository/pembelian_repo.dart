@@ -13,8 +13,8 @@ class PembelianRepo{
     return await apiClient.postData(AppConstants.DAFTAR_PEMBELIAN_URL, {"user_id": user_id });
   }
 
-  Future<Response> detailPembelian(String kode_pembelian) async {
-    return await apiClient.postData(AppConstants.DETAIL_PEMBELIAN_URL, {"kode_pembelian": kode_pembelian });
+  Future<Response> detailPembelian(int purchase_id) async {
+    return await apiClient.postData(AppConstants.DETAIL_PEMBELIAN_URL, {"purchase_id": purchase_id });
   }
 
   Future<Response> updateStatusPembelian(int purchase_id) async {

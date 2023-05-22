@@ -9,8 +9,10 @@ class PengirimanController extends GetxController{
   final PengirimanRepo pengirimanRepo;
   PengirimanController({required this.pengirimanRepo});
 
-  int _paymentIndex = 0;
-  int get paymentIndex => _paymentIndex;
+  // int _paymentIndex = 0;
+  // int get paymentIndex => _paymentIndex;
+
+  RxInt paymentIndex = RxInt(0);
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -18,8 +20,7 @@ class PengirimanController extends GetxController{
   String _typePengiriman = "Pilih Pengiriman";
   String get typePengiriman => _typePengiriman;
 
-  List<String?> _checkedtypePengiriman = List.generate(10, (_) => "Pilih Pengiriman");
-  List<String?> get checkedtypePengiriman => _checkedtypePengiriman;
+  RxString checkedtypePengiriman = RxString("Pilih Pengiriman");
 
 
   Future<ResponseModel> beliProduk(int? user_id, List cart_id, int merchant_id, int metode_pembelian, int harga_pembelian, String potongan_pembelian,  String alamat_purchase, String courier_code, String service) async {
@@ -62,14 +63,15 @@ class PengirimanController extends GetxController{
 
 
   void setPaymentIndex(int index){
-    _paymentIndex = index;
+    paymentIndex.value = index;
     update();
   }
 
-  void setTypePengiriman(int index, String title){
-    _checkedtypePengiriman[index] = title;
-      update();
+  void setTypePengiriman(String title) {
+    checkedtypePengiriman.value = title;
+    update();
   }
+
 
 
 

@@ -14,6 +14,7 @@ import 'package:rumah_kreatif_toba/widgets/big_text.dart';
 import 'package:get/get.dart';
 
 import '../../../routes/route_helper.dart';
+import '../../../utils/app_constants.dart';
 import '../../../widgets/small_text.dart';
 import '../rekening/daftarrekening.dart';
 
@@ -53,26 +54,39 @@ class ProfilTokoPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  AppIcon(
-                    icon: Icons.person,
-                    backgroundColor: AppColors.redColor,
-                    iconColor: Colors.white,
-                    iconSize: 65,
-                    size: Dimensions.height15 * 8,
-                  ),
                   SizedBox(
                     height: Dimensions.height20,
                   ),
-                  Container(
-                    child: Column(
-                      children: [
-                        BigText(
-                            text: tokoController.profilTokoList[0].nama_merchant.toString()),
-                        SmallText(
-                            text: tokoController.profilTokoList[0].kontak_toko.toString()),
-                      ],
-                    ),
+                  Row(
+                    children: [
+                      Container(
+                        width: Dimensions.width45*2,
+                        height: Dimensions.height45*2,
+                        margin: EdgeInsets.only(
+                            left: Dimensions.width20, right: Dimensions.width10),
+                        decoration: BoxDecoration(
+                            borderRadius:
+                            BorderRadius.circular(Dimensions.radius20),
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: NetworkImage(
+                                  '${AppConstants.BASE_URL_IMAGE}u_file/foto_merchant/${tokoController.profilTokoList[0].foto_merchant.toString()}',
+                                ))),
+                      ),
+                      Container(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            BigText(
+                                text: tokoController.profilTokoList[0].nama_merchant.toString()),
+                            SmallText(
+                                text: tokoController.profilTokoList[0].kontak_toko.toString()),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
+
                   SizedBox(
                     height: Dimensions.height20,
                   ),

@@ -41,11 +41,11 @@ class _DaftarPembelianPageState extends State<DaftarPembelianPage>
   @override
   Widget build(BuildContext context) {
     Get.find<PembelianController>().getPembelianList();
-    Future<void> _detailPembelianList(String kode_pembelian) async {
+    Future<void> _detailPembelianList(int purchase_id) async {
       bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
       if (_userLoggedIn) {
         var controller = Get.find<PembelianController>();
-        controller.detailPembelian(kode_pembelian).then((status) async {
+        controller.detailPembelian(purchase_id).then((status) async {
           if (status.isSuccess) {
             Get.to(PembelianDetailPage());
           } else {
@@ -284,10 +284,12 @@ class _DaftarPembelianPageState extends State<DaftarPembelianPage>
                                           children: [
                                             SmallText(text: "Total Belanja"),
                                             PriceText(
-                                              text: CurrencyFormat.convertToIdr(
-                                                  _menungguKonfirmasiList[index]
-                                                      .hargaPembelian,
-                                                  0),
+                                              text: _menungguKonfirmasiList[index].hargaPembelian != null
+                                                  ? CurrencyFormat.convertToIdr(
+                                                _menungguKonfirmasiList[index].hargaPembelian,
+                                                0,
+                                              )
+                                                  : 'N/A',
                                               size: Dimensions.font16,
                                             ),
                                           ],
@@ -297,8 +299,7 @@ class _DaftarPembelianPageState extends State<DaftarPembelianPage>
                                   ),
                                   GestureDetector(
                                     onTap: () {
-                                      _detailPembelianList(_menungguKonfirmasiList[index].kodePembelian
-                                          .toString());
+                                      _detailPembelianList(_menungguKonfirmasiList[index].purchaseId);
                                     },
                                     child: Container(
                                       padding: EdgeInsets.only(
@@ -513,10 +514,12 @@ class _DaftarPembelianPageState extends State<DaftarPembelianPage>
                                           children: [
                                             SmallText(text: "Total Belanja"),
                                             PriceText(
-                                              text: CurrencyFormat.convertToIdr(
-                                                  _sudahKonfirmasiList[index]
-                                                      .hargaPembelian,
-                                                  0),
+                                              text: _sudahKonfirmasiList[index].hargaPembelian != null
+                                                  ? CurrencyFormat.convertToIdr(
+                                                _sudahKonfirmasiList[index].hargaPembelian,
+                                                0,
+                                              )
+                                                  : 'N/A',
                                               size: Dimensions.font16,
                                             ),
                                           ],
@@ -526,8 +529,7 @@ class _DaftarPembelianPageState extends State<DaftarPembelianPage>
                                   ),
                                   GestureDetector(
                                     onTap: () {
-                                      _detailPembelianList(_sudahKonfirmasiList[index].kodePembelian
-                                          .toString());
+                                      _detailPembelianList(_sudahKonfirmasiList[index].purchaseId);
                                     },
                                     child: Container(
                                       padding: EdgeInsets.only(

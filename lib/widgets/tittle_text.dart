@@ -19,7 +19,7 @@ class TittleText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      maxLines: 3,
+      maxLines: 2,
       overflow: overFlow,
       style: TextStyle(
           fontFamily: 'Montserrat',

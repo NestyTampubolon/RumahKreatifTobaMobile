@@ -66,62 +66,89 @@ class Profil extends StatelessWidget {
                             children: [
                               // Divider(color: AppColors.buttonBackgroundColor),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  BigText(text: "Nama Toko" , color: AppColors.signColor, size: Dimensions.font16),
-                                  BigText(text: profilToko[0].nama_merchant.toString(), size: Dimensions.font16),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      BigText(text: "Nama Toko", size: Dimensions.font16, color: AppColors.labelColor,),
+                                      BigText(text: profilToko[0].nama_merchant.toString(), size: Dimensions.font16, fontWeight: FontWeight.bold,),
+                                    ],
+                                  ),
                                 ],
                               ),
+
                               SizedBox(
                                 height: Dimensions.height20,
                               ),
-                              Column(
+                              Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  BigText(text: "Deskripsi Toko", color: AppColors.signColor, size: Dimensions.font16),
-                                  Container(
-                                    margin: EdgeInsets.only(
-                                        left: Dimensions.width20, right: Dimensions.width20),
-                                    child: SingleChildScrollView(
-                                      child: ExpandableTextWidget(
-                                          text: profilToko[0].deskripsi_toko.toString()),
-                                    ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      BigText(text: "Deskripsi Toko", size: Dimensions.font16, color: AppColors.labelColor,),
+                                      Container(
+                                        margin: EdgeInsets.only(
+                                            right: Dimensions.width20),
+                                        child: SingleChildScrollView(
+                                          child: ExpandableTextWidget(
+                                              text: profilToko[0].deskripsi_toko.toString()),
+                                        ),
+                                      ),
+                                    ],
                                   ),
+                                ],
+                              ),
+
+                              SizedBox(
+                                height: Dimensions.height20,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      BigText(text: "Kontak Toko", size: Dimensions.font16, color: AppColors.labelColor,),
+                                      BigText(text: profilToko[0].kontak_toko.toString(), size: Dimensions.font16, fontWeight: FontWeight.bold, ),
+                                    ],
+                                  )
                                 ],
                               ),
                               SizedBox(
                                 height: Dimensions.height20,
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  BigText(text: "Kontak Toko", color: AppColors.signColor, size: Dimensions.font16),
-                                  BigText(text: profilToko[0].kontak_toko.toString(), size: Dimensions.font16 ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      BigText(text: "Gambar Toko",size: Dimensions.font16, color: AppColors.labelColor,),
+                                      SizedBox(
+                                        height: Dimensions.height10,
+                                      ),
+                                      Container(
+                                        height: Dimensions.height45*3,
+                                        width: Dimensions.width45*3,
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.all(Radius.circular(Dimensions.radius15)),
+                                            image: DecorationImage(
+                                                fit: BoxFit.fill,
+                                                image: NetworkImage(
+                                                  '${AppConstants.BASE_URL_IMAGE}u_file/foto_merchant/${profilToko[0].foto_merchant.toString()}',
+                                                ) )
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ],
                               ),
                               SizedBox(
                                 height: Dimensions.height20,
-                              ),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  BigText(text: "Gambar Toko", color: AppColors.signColor, size: Dimensions.font16),
-                                  Container(
-                                    height: Dimensions.height45*3,
-                                    width: Dimensions.width45*3,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.all(Radius.circular(Dimensions.radius15)),
-                                        image: DecorationImage(
-                                            fit: BoxFit.fill,
-                                            image: NetworkImage(
-                                              '${AppConstants.BASE_URL_IMAGE}u_file/foto_merchant/${profilToko[0].foto_merchant.toString()}',
-                                            ) )
-                                    ),
-                                    child: BigText(text:profilToko[0].foto_merchant.toString()),
-                                  ),
-                                ],
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,

@@ -60,13 +60,13 @@ class DaftarAlamatTokoPage extends GetView<AlamatController> {
                         ),
                       ),
                       BigText(
-                        text: "Daftar Alamat Toko",
+                        text: "Alamat Toko",
                         size: Dimensions.font20,
                         fontWeight: FontWeight.bold,
                       ),
                     ],
                   ),
-                  Get.find<AlamatController>().daftarAlamatTokoList.isNotEmpty ?
+                  Get.find<AlamatController>().daftarAlamatTokoList.isEmpty ?
                   Row(
                     children: [
                       GestureDetector(

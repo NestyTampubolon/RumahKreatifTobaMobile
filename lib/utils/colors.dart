@@ -9,4 +9,5 @@ class AppColors {
   static final Color notification = const Color(0xFF40C4F5);
   static final Color border = const Color(0xFFC7C3C3);
   static final Color notification_success = const Color(0xFF66B843);
+  static final Color labelColor = const Color(0xFF7B8FA1);
 }
