@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:rumah_kreatif_toba/base/show_custom_message.dart';
 import 'package:rumah_kreatif_toba/controllers/toko_controller.dart';
@@ -30,6 +32,9 @@ class AlamatController extends GetxController {
 
   List<dynamic> _daftarAlamatTokoList = [];
   List<dynamic> get daftarAlamatTokoList => _daftarAlamatTokoList;
+
+  List<dynamic> _daftarAlamatUserList = [];
+  List<dynamic> get daftarAlamatUserList => _daftarAlamatUserList;
 
   Future<void> getAlamat() async {
     var controller = Get.find<UserController>().usersList[0];
@@ -161,4 +166,21 @@ class AlamatController extends GetxController {
     update();
     return responseModel;
   }
+
+  Future<void> getAlamatUser() async {
+    var controller = Get.find<AlamatController>().daftarAlamatList[0];
+    Response response = await alamatRepo.getAlamatUser(controller.user_address_id!);
+    if (response.statusCode == 200) {
+      List<dynamic> responseBody = response.body["alamat"];
+      _daftarAlamatUserList = [];
+      for (dynamic item in responseBody) {
+        Alamat alamat = Alamat.fromJson(item);
+        _daftarAlamatUserList.add(alamat);
+      }
+      _isLoading = true;
+      update();
+    } else {}
+  }
+
+
 }

@@ -1,5 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../models/alamat_model.dart';
 import '../../utils/app_constants.dart';
 import '../api/api_client.dart';
 import 'package:get/get.dart';
@@ -74,4 +75,8 @@ class AlamatRepo {
     return await apiClient.postData(AppConstants.HAPUS_ALAMAT_TOKO_URL, {"merchant_address_id": merchant_address_id});
   }
 
+  Future<Response> getAlamatUser(int user_address_id) async {
+    return await apiClient
+        .postData(AppConstants.DAFTAR_ALAMAT_USER, {"user_address_id": user_address_id});
+  }
 }

@@ -62,7 +62,7 @@ class _PembelianPageState extends State<PembelianPage> {
 
         controller
             .beliProduk(userController.id, _carId, _merchantId,
-                _metodePembelian, _hargaPembelian, "", "", "", "")
+            _metodePembelian, _hargaPembelian, "", "", "", "")
             .then((status) async {
           if (status.isSuccess) {
           } else {
@@ -166,7 +166,7 @@ class _PembelianPageState extends State<PembelianPage> {
                       var _checkedCartIds = cartController.checkedCartIds;
                       var _matchedItems = _keranjangList
                           .where((item) =>
-                              _checkedCartIds.contains(item.productId))
+                          _checkedCartIds.contains(item.productId))
                           .toList();
 
                       if (_matchedItems.isEmpty) {}
@@ -189,8 +189,8 @@ class _PembelianPageState extends State<PembelianPage> {
                         var _checkedCartIds = cartController.checkedCartIds;
                         var _matchedItems = _keranjangList
                             .where((item) =>
-                                _checkedCartIds.contains(item.productId) &&
-                                item.namaMerchant == merchantName)
+                        _checkedCartIds.contains(item.productId) &&
+                            item.namaMerchant == merchantName)
                             .toList();
 
                         double total = 0.0;
@@ -209,7 +209,7 @@ class _PembelianPageState extends State<PembelianPage> {
                             var merchantName = groupedKeranjangList.keys
                                 .elementAt(merchantIndex);
                             var merchantItems =
-                                groupedKeranjangList[merchantName]!;
+                            groupedKeranjangList[merchantName]!;
 
                             _hargaPembelian = calculatesubTotal(merchantName);
 
@@ -249,20 +249,20 @@ class _PembelianPageState extends State<PembelianPage> {
                                       itemBuilder: (_, index) {
                                         var item = merchantItems[index];
                                         var gambarproduk =
-                                            Get.find<PopularProdukController>()
-                                                .imageProdukList
-                                                .where((produk) =>
-                                                    produk.productId ==
-                                                    item.productId);
+                                        Get.find<PopularProdukController>()
+                                            .imageProdukList
+                                            .where((produk) =>
+                                        produk.productId ==
+                                            item.productId);
                                         return Row(
                                           children: [
                                             Container(
                                               width:
-                                                  Dimensions.screenWidth / 1.35,
+                                              Dimensions.screenWidth / 1.35,
                                               height: Dimensions.height45 * 2.5,
                                               margin: EdgeInsets.only(
                                                   bottom:
-                                                      Dimensions.height10 / 2,
+                                                  Dimensions.height10 / 2,
                                                   top: Dimensions.height10 / 2),
                                               padding: EdgeInsets.only(
                                                   left: Dimensions.width10,
@@ -272,8 +272,8 @@ class _PembelianPageState extends State<PembelianPage> {
                                                       color: AppColors
                                                           .buttonBackgroundColor),
                                                   borderRadius:
-                                                      BorderRadius.circular(
-                                                          Dimensions.radius20),
+                                                  BorderRadius.circular(
+                                                      Dimensions.radius20),
                                                   color: Colors.white),
                                               child: Column(
                                                 children: [
@@ -282,7 +282,7 @@ class _PembelianPageState extends State<PembelianPage> {
                                                       GestureDetector(
                                                         onTap: () {
                                                           var produkIndex =
-                                                              item.productId!;
+                                                          item.productId!;
                                                           if (produkIndex >=
                                                               0) {
                                                             _getProdukList(item
@@ -291,30 +291,30 @@ class _PembelianPageState extends State<PembelianPage> {
                                                         },
                                                         child: Container(
                                                           width: Dimensions
-                                                                  .height20 *
+                                                              .height20 *
                                                               4,
                                                           height: Dimensions
-                                                                  .height20 *
+                                                              .height20 *
                                                               4,
                                                           margin: EdgeInsets.only(
                                                               top: Dimensions
                                                                   .height10),
                                                           decoration:
-                                                              BoxDecoration(
+                                                          BoxDecoration(
+                                                              image:
+                                                              DecorationImage(
+                                                                  fit: BoxFit
+                                                                      .cover,
                                                                   image:
-                                                                      DecorationImage(
-                                                                          fit: BoxFit
-                                                                              .cover,
-                                                                          image:
-                                                                              NetworkImage(
-                                                                            '${AppConstants.BASE_URL_IMAGE}u_file/product_image/${gambarproduk.single.productImageName}',
-                                                                          )),
-                                                                  borderRadius:
-                                                                      BorderRadius.circular(
-                                                                          Dimensions
-                                                                              .radius20),
-                                                                  color: Colors
-                                                                      .white),
+                                                                  NetworkImage(
+                                                                    '${AppConstants.BASE_URL_IMAGE}u_file/product_image/${gambarproduk.single.productImageName}',
+                                                                  )),
+                                                              borderRadius:
+                                                              BorderRadius.circular(
+                                                                  Dimensions
+                                                                      .radius20),
+                                                              color: Colors
+                                                                  .white),
                                                         ),
                                                       ),
                                                       SizedBox(
@@ -323,38 +323,38 @@ class _PembelianPageState extends State<PembelianPage> {
                                                       ExcludeFocus(
                                                         child: Container(
                                                           height: Dimensions
-                                                                  .height20 *
+                                                              .height20 *
                                                               5,
                                                           width: Dimensions
-                                                                  .width45 *
+                                                              .width45 *
                                                               3,
                                                           child: Column(
                                                             crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
+                                                            CrossAxisAlignment
+                                                                .start,
                                                             mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceEvenly,
+                                                            MainAxisAlignment
+                                                                .spaceEvenly,
                                                             children: [
                                                               BigText(
                                                                 text: item
                                                                     .productName!,
                                                                 size: Dimensions
-                                                                        .font26 /
+                                                                    .font26 /
                                                                     1.5,
                                                               ),
                                                               Row(
                                                                 children: [
                                                                   SmallText(
                                                                       text:
-                                                                          "${item.jumlahMasukKeranjang} barang"),
+                                                                      "${item.jumlahMasukKeranjang} barang"),
                                                                 ],
                                                               ),
                                                               PriceText(
                                                                 text: CurrencyFormat
                                                                     .convertToIdr(
-                                                                        item.price,
-                                                                        0),
+                                                                    item.price,
+                                                                    0),
                                                                 size: Dimensions
                                                                     .font16,
                                                               ),
@@ -391,32 +391,32 @@ class _PembelianPageState extends State<PembelianPage> {
                                         onTap: () {
                                           showModalBottomSheet(
                                               backgroundColor:
-                                                  Colors.transparent,
+                                              Colors.transparent,
                                               context: context,
                                               builder: (context) {
                                                 return SingleChildScrollView(
                                                   child: Container(
                                                     width:
-                                                        Dimensions.screenWidth,
+                                                    Dimensions.screenWidth,
                                                     height: Dimensions.screenHeight/2,
                                                     decoration: BoxDecoration(
                                                         color: Colors.white,
                                                         borderRadius: BorderRadius.only(
                                                             topLeft:
-                                                                Radius.circular(
-                                                                    Dimensions
-                                                                        .radius20),
+                                                            Radius.circular(
+                                                                Dimensions
+                                                                    .radius20),
                                                             topRight:
-                                                                Radius.circular(
-                                                                    Dimensions
-                                                                        .radius20))),
+                                                            Radius.circular(
+                                                                Dimensions
+                                                                    .radius20))),
                                                     padding: EdgeInsets.only(
                                                         top:
-                                                            Dimensions.height30,
+                                                        Dimensions.height30,
                                                         left:
-                                                            Dimensions.width20,
+                                                        Dimensions.width20,
                                                         right:
-                                                            Dimensions.width20),
+                                                        Dimensions.width20),
                                                     child: Column(
                                                       children: [
                                                         Row(children: [
@@ -427,17 +427,17 @@ class _PembelianPageState extends State<PembelianPage> {
                                                             },
                                                             child: AppIcon(
                                                               icon:
-                                                                  CupertinoIcons
-                                                                      .xmark,
+                                                              CupertinoIcons
+                                                                  .xmark,
                                                               size: Dimensions
                                                                   .iconSize24,
                                                               iconColor:
-                                                                  AppColors
-                                                                      .redColor,
+                                                              AppColors
+                                                                  .redColor,
                                                               backgroundColor:
-                                                                  Colors.white
-                                                                      .withOpacity(
-                                                                          0.0),
+                                                              Colors.white
+                                                                  .withOpacity(
+                                                                  0.0),
                                                             ),
                                                           ),
                                                           SizedBox(
@@ -446,7 +446,7 @@ class _PembelianPageState extends State<PembelianPage> {
                                                           ),
                                                           BigText(
                                                             text:
-                                                                "Pilih Pengiriman",
+                                                            "Pilih Pengiriman",
                                                             size: Dimensions
                                                                 .font26,
                                                           ),
@@ -469,10 +469,10 @@ class _PembelianPageState extends State<PembelianPage> {
                                                                   icon: Icons
                                                                       .money,
                                                                   title:
-                                                                      'Ambil Ditempat Rp0',
+                                                                  'Ambil Ditempat Rp0',
                                                                   index: 1,
                                                                   purchaseIndex:
-                                                                      merchantIndex),
+                                                                  merchantIndex),
                                                               SizedBox(
                                                                   height: Dimensions
                                                                       .height10),
@@ -480,10 +480,10 @@ class _PembelianPageState extends State<PembelianPage> {
                                                                   icon: Icons
                                                                       .money,
                                                                   title:
-                                                                      'Pesanan Dikirim',
+                                                                  'Pesanan Dikirim',
                                                                   index: 2,
                                                                   purchaseIndex:
-                                                                      merchantIndex),
+                                                                  merchantIndex),
                                                               Obx(
                                                                     () => Get.find<PengirimanController>().paymentIndex.value == 2
                                                                     ? Visibility(
@@ -513,15 +513,15 @@ class _PembelianPageState extends State<PembelianPage> {
                                             icon: Icons.note,
                                             iconColor: AppColors.redColor,
                                             backgroundColor:
-                                                Colors.white.withOpacity(0.0),
+                                            Colors.white.withOpacity(0.0),
                                           ),
                                           Obx(() => BigText(
-                                                text: Get.find<
-                                                        PengirimanController>()
-                                                    .checkedtypePengiriman
-                                                    .value,
-                                                size: Dimensions.height15,
-                                              )),
+                                            text: Get.find<
+                                                PengirimanController>()
+                                                .checkedtypePengiriman
+                                                .value,
+                                            size: Dimensions.height15,
+                                          )),
                                         ])),
                                   ),
                                 ],
@@ -560,7 +560,7 @@ class _PembelianPageState extends State<PembelianPage> {
                             border: Border.all(
                                 color: AppColors.buttonBackgroundColor),
                             borderRadius:
-                                BorderRadius.circular(Dimensions.radius20),
+                            BorderRadius.circular(Dimensions.radius20),
                             color: Colors.white),
                         child: Row(
                           children: [
@@ -586,7 +586,7 @@ class _PembelianPageState extends State<PembelianPage> {
                             right: Dimensions.width20),
                         decoration: BoxDecoration(
                             borderRadius:
-                                BorderRadius.circular(Dimensions.radius20),
+                            BorderRadius.circular(Dimensions.radius20),
                             color: AppColors.redColor),
                         child: GestureDetector(
                             onTap: () {
