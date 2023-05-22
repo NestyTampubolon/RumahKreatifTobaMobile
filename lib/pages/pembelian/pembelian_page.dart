@@ -1,3 +1,4 @@
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rumah_kreatif_toba/controllers/pengiriman_controller.dart';
@@ -5,10 +6,12 @@ import 'package:rumah_kreatif_toba/widgets/payment_option_button.dart';
 import 'package:rumah_kreatif_toba/widgets/small_text.dart';
 
 import '../../base/show_custom_message.dart';
+import '../../controllers/alamat_controller.dart';
 import '../../controllers/auth_controller.dart';
 import '../../controllers/cart_controller.dart';
 import '../../controllers/popular_produk_controller.dart';
 import '../../controllers/user_controller.dart';
+import '../../models/alamat_model.dart';
 import '../../models/cart_models.dart';
 import '../../routes/route_helper.dart';
 import '../../utils/app_constants.dart';
@@ -62,7 +65,7 @@ class _PembelianPageState extends State<PembelianPage> {
 
         controller
             .beliProduk(userController.id, _carId, _merchantId,
-            _metodePembelian, _hargaPembelian, "", "", "", "")
+                _metodePembelian, _hargaPembelian, "", "", "", "")
             .then((status) async {
           if (status.isSuccess) {
           } else {
@@ -76,6 +79,8 @@ class _PembelianPageState extends State<PembelianPage> {
       var controller = Get.find<PopularProdukController>();
       controller.detailProduk(product_id).then((status) async {});
     }
+
+    Get.find<AlamatController>().getAlamatUser();
 
     bool isContainerVisible = false;
     return Scaffold(
@@ -126,38 +131,195 @@ class _PembelianPageState extends State<PembelianPage> {
                           size: Dimensions.font16,
                           fontWeight: FontWeight.bold,
                         ),
-                        BigText(
-                          text: "Pilih Alamat Lain",
-                          size: Dimensions.font16,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.notification_success,
-                        )
+                        GestureDetector(
+                          onTap: () {
+                            showModalBottomSheet(
+                                backgroundColor: Colors.transparent,
+                                context: context,
+                                builder: (context) {
+                                  return SingleChildScrollView(
+                                    child: Container(
+                                      width: Dimensions.screenWidth,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                              Dimensions.radius20 / 4),
+                                          color: Theme.of(context).cardColor,
+                                          boxShadow: [
+                                            BoxShadow(
+                                                color: Colors.grey[200]!,
+                                                blurRadius: 5,
+                                                spreadRadius: 1)
+                                          ]),
+                                      padding: EdgeInsets.only(
+                                          top: Dimensions.height30,
+                                          left: Dimensions.width20,
+                                          right: Dimensions.width20),
+                                      child: Column(
+                                        children: [
+                                          Row(children: [
+                                            GestureDetector(
+                                              onTap: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: AppIcon(
+                                                icon: CupertinoIcons.xmark,
+                                                size: Dimensions.iconSize24,
+                                                iconColor: AppColors.redColor,
+                                                backgroundColor: Colors.white
+                                                    .withOpacity(0.0),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: Dimensions.width20,
+                                            ),
+                                            BigText(
+                                              text: "Pilih Alamat",
+                                              size: Dimensions.font26,
+                                            ),
+                                          ]),
+                                          Divider(
+                                              color: AppColors
+                                                  .buttonBackgroundColor),
+                                          GetBuilder<AlamatController>(
+                                              builder: (AlamatController) {
+                                            return ListView.builder(
+                                              physics:
+                                                  const NeverScrollableScrollPhysics(),
+                                              shrinkWrap: true,
+                                              itemCount: AlamatController
+                                                  .daftarAlamatList.length,
+                                              itemBuilder:
+                                                  (BuildContext context,
+                                                      int index) {
+                                                Alamat alamat = AlamatController
+                                                    .daftarAlamatList[index];
+                                                return Container(
+                                                  height: 100,
+                                                  padding: EdgeInsets.only(
+                                                      left: Dimensions.width20,
+                                                      right: Dimensions.width20,
+                                                      top: Dimensions.height20),
+                                                  child: Column(
+                                                    children: [
+                                                      InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            //tombol
+                                                          });
+                                                          print(alamat
+                                                              .user_address_id);
+                                                          Navigator.pop(
+                                                              context);
+                                                        },
+                                                        child: Container(
+                                                          decoration: BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          Dimensions.radius20 /
+                                                                              4),
+                                                              color: Theme.of(context).cardColor,
+                                                              boxShadow: [
+                                                                BoxShadow(
+                                                                    color: Colors
+                                                                            .grey[
+                                                                        200]!,
+                                                                    blurRadius:
+                                                                        5,
+                                                                    spreadRadius:
+                                                                        1)
+                                                              ]),
+                                                          child: ListTile(
+                                                              dense: true,
+                                                              title: Text(
+                                                                "Alamat ${index + 1}",
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        Dimensions
+                                                                            .font20,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                              subtitle: Text(
+                                                                  "${alamat.user_street_address?.toString() ?? ""}, ${alamat.city_name?.toString() ?? ""}, ${alamat.province_name?.toString() ?? ""} ",
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        Dimensions
+                                                                            .font16,
+                                                                  )),
+                                                              trailing: Icon(
+                                                                  CupertinoIcons
+                                                                      .circle)),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          }),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                });
+                          },
+                          child: Row(
+                            children: [
+                              BigText(
+                                text: "Pilih Alamat Lain",
+                                size: Dimensions.font16,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.notification_success,
+                              )
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                     SizedBox(
                       height: Dimensions.height10,
                     ),
                     Divider(color: AppColors.buttonBackgroundColor),
-                    Container(
-                      margin: EdgeInsets.only(left: Dimensions.width10),
-                      child: Row(
-                        children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              BigText(
-                                text: "Kampus",
-                                size: Dimensions.font16,
-                                fontWeight: FontWeight.bold,
+                    GetBuilder<AlamatController>(
+                      builder: (AlamatController) {
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount:
+                              AlamatController.daftarAlamatUserList.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            Alamat alamat =
+                                AlamatController.daftarAlamatUserList[index];
+                            return Container(
+                              child: Row(
+                                children: [
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "${alamat.user_street_address?.toString() ?? ""}, ${alamat.city_name?.toString() ?? ""}",
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                        ),
+                                      ),
+                                      Text(
+                                        "${alamat.province_name?.toString() ?? ""}",
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ],
                               ),
-                              SmallText(text: "Jiso Kim"),
-                              SmallText(text: "Institut Teknologi Del")
-                            ],
-                          ),
-                          SizedBox()
-                        ],
-                      ),
+                            );
+                          },
+                        );
+                      },
                     ),
                     Divider(color: AppColors.buttonBackgroundColor),
                     GetBuilder<CartController>(builder: (cartController) {
@@ -166,7 +328,7 @@ class _PembelianPageState extends State<PembelianPage> {
                       var _checkedCartIds = cartController.checkedCartIds;
                       var _matchedItems = _keranjangList
                           .where((item) =>
-                          _checkedCartIds.contains(item.productId))
+                              _checkedCartIds.contains(item.productId))
                           .toList();
 
                       if (_matchedItems.isEmpty) {}
@@ -189,8 +351,8 @@ class _PembelianPageState extends State<PembelianPage> {
                         var _checkedCartIds = cartController.checkedCartIds;
                         var _matchedItems = _keranjangList
                             .where((item) =>
-                        _checkedCartIds.contains(item.productId) &&
-                            item.namaMerchant == merchantName)
+                                _checkedCartIds.contains(item.productId) &&
+                                item.namaMerchant == merchantName)
                             .toList();
 
                         double total = 0.0;
@@ -209,7 +371,7 @@ class _PembelianPageState extends State<PembelianPage> {
                             var merchantName = groupedKeranjangList.keys
                                 .elementAt(merchantIndex);
                             var merchantItems =
-                            groupedKeranjangList[merchantName]!;
+                                groupedKeranjangList[merchantName]!;
 
                             _hargaPembelian = calculatesubTotal(merchantName);
 
@@ -249,20 +411,20 @@ class _PembelianPageState extends State<PembelianPage> {
                                       itemBuilder: (_, index) {
                                         var item = merchantItems[index];
                                         var gambarproduk =
-                                        Get.find<PopularProdukController>()
-                                            .imageProdukList
-                                            .where((produk) =>
-                                        produk.productId ==
-                                            item.productId);
+                                            Get.find<PopularProdukController>()
+                                                .imageProdukList
+                                                .where((produk) =>
+                                                    produk.productId ==
+                                                    item.productId);
                                         return Row(
                                           children: [
                                             Container(
                                               width:
-                                              Dimensions.screenWidth / 1.35,
+                                                  Dimensions.screenWidth / 1.35,
                                               height: Dimensions.height45 * 2.5,
                                               margin: EdgeInsets.only(
                                                   bottom:
-                                                  Dimensions.height10 / 2,
+                                                      Dimensions.height10 / 2,
                                                   top: Dimensions.height10 / 2),
                                               padding: EdgeInsets.only(
                                                   left: Dimensions.width10,
@@ -272,8 +434,8 @@ class _PembelianPageState extends State<PembelianPage> {
                                                       color: AppColors
                                                           .buttonBackgroundColor),
                                                   borderRadius:
-                                                  BorderRadius.circular(
-                                                      Dimensions.radius20),
+                                                      BorderRadius.circular(
+                                                          Dimensions.radius20),
                                                   color: Colors.white),
                                               child: Column(
                                                 children: [
@@ -282,7 +444,7 @@ class _PembelianPageState extends State<PembelianPage> {
                                                       GestureDetector(
                                                         onTap: () {
                                                           var produkIndex =
-                                                          item.productId!;
+                                                              item.productId!;
                                                           if (produkIndex >=
                                                               0) {
                                                             _getProdukList(item
@@ -291,30 +453,30 @@ class _PembelianPageState extends State<PembelianPage> {
                                                         },
                                                         child: Container(
                                                           width: Dimensions
-                                                              .height20 *
+                                                                  .height20 *
                                                               4,
                                                           height: Dimensions
-                                                              .height20 *
+                                                                  .height20 *
                                                               4,
                                                           margin: EdgeInsets.only(
                                                               top: Dimensions
                                                                   .height10),
                                                           decoration:
-                                                          BoxDecoration(
-                                                              image:
-                                                              DecorationImage(
-                                                                  fit: BoxFit
-                                                                      .cover,
+                                                              BoxDecoration(
                                                                   image:
-                                                                  NetworkImage(
-                                                                    '${AppConstants.BASE_URL_IMAGE}u_file/product_image/${gambarproduk.single.productImageName}',
-                                                                  )),
-                                                              borderRadius:
-                                                              BorderRadius.circular(
-                                                                  Dimensions
-                                                                      .radius20),
-                                                              color: Colors
-                                                                  .white),
+                                                                      DecorationImage(
+                                                                          fit: BoxFit
+                                                                              .cover,
+                                                                          image:
+                                                                              NetworkImage(
+                                                                            '${AppConstants.BASE_URL_IMAGE}u_file/product_image/${gambarproduk.single.productImageName}',
+                                                                          )),
+                                                                  borderRadius:
+                                                                      BorderRadius.circular(
+                                                                          Dimensions
+                                                                              .radius20),
+                                                                  color: Colors
+                                                                      .white),
                                                         ),
                                                       ),
                                                       SizedBox(
@@ -323,38 +485,45 @@ class _PembelianPageState extends State<PembelianPage> {
                                                       ExcludeFocus(
                                                         child: Container(
                                                           height: Dimensions
-                                                              .height20 *
+                                                                  .height20 *
                                                               5,
                                                           width: Dimensions
-                                                              .width45 *
+                                                                  .width45 *
                                                               3,
                                                           child: Column(
                                                             crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
+                                                                CrossAxisAlignment
+                                                                    .start,
                                                             mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceEvenly,
+                                                                MainAxisAlignment
+                                                                    .spaceEvenly,
                                                             children: [
                                                               BigText(
                                                                 text: item
                                                                     .productName!,
                                                                 size: Dimensions
-                                                                    .font26 /
+                                                                        .font26 /
                                                                     1.5,
                                                               ),
                                                               Row(
                                                                 children: [
                                                                   SmallText(
                                                                       text:
-                                                                      "${item.jumlahMasukKeranjang} barang"),
+                                                                          "${item.jumlahMasukKeranjang} barang"),
+                                                                ],
+                                                              ),
+                                                              Row(
+                                                                children: [
+                                                                  SmallText(
+                                                                      text:
+                                                                      "Berat : ${item.heavy} gr"),
                                                                 ],
                                                               ),
                                                               PriceText(
                                                                 text: CurrencyFormat
                                                                     .convertToIdr(
-                                                                    item.price,
-                                                                    0),
+                                                                        item.price,
+                                                                        0),
                                                                 size: Dimensions
                                                                     .font16,
                                                               ),
@@ -391,32 +560,34 @@ class _PembelianPageState extends State<PembelianPage> {
                                         onTap: () {
                                           showModalBottomSheet(
                                               backgroundColor:
-                                              Colors.transparent,
+                                                  Colors.transparent,
                                               context: context,
                                               builder: (context) {
                                                 return SingleChildScrollView(
                                                   child: Container(
                                                     width:
-                                                    Dimensions.screenWidth,
-                                                    height: Dimensions.screenHeight/2,
+                                                        Dimensions.screenWidth,
+                                                    height: Dimensions
+                                                            .screenHeight /
+                                                        2,
                                                     decoration: BoxDecoration(
                                                         color: Colors.white,
                                                         borderRadius: BorderRadius.only(
                                                             topLeft:
-                                                            Radius.circular(
-                                                                Dimensions
-                                                                    .radius20),
+                                                                Radius.circular(
+                                                                    Dimensions
+                                                                        .radius20),
                                                             topRight:
-                                                            Radius.circular(
-                                                                Dimensions
-                                                                    .radius20))),
+                                                                Radius.circular(
+                                                                    Dimensions
+                                                                        .radius20))),
                                                     padding: EdgeInsets.only(
                                                         top:
-                                                        Dimensions.height30,
+                                                            Dimensions.height30,
                                                         left:
-                                                        Dimensions.width20,
+                                                            Dimensions.width20,
                                                         right:
-                                                        Dimensions.width20),
+                                                            Dimensions.width20),
                                                     child: Column(
                                                       children: [
                                                         Row(children: [
@@ -427,17 +598,17 @@ class _PembelianPageState extends State<PembelianPage> {
                                                             },
                                                             child: AppIcon(
                                                               icon:
-                                                              CupertinoIcons
-                                                                  .xmark,
+                                                                  CupertinoIcons
+                                                                      .xmark,
                                                               size: Dimensions
                                                                   .iconSize24,
                                                               iconColor:
-                                                              AppColors
-                                                                  .redColor,
+                                                                  AppColors
+                                                                      .redColor,
                                                               backgroundColor:
-                                                              Colors.white
-                                                                  .withOpacity(
-                                                                  0.0),
+                                                                  Colors.white
+                                                                      .withOpacity(
+                                                                          0.0),
                                                             ),
                                                           ),
                                                           SizedBox(
@@ -446,7 +617,7 @@ class _PembelianPageState extends State<PembelianPage> {
                                                           ),
                                                           BigText(
                                                             text:
-                                                            "Pilih Pengiriman",
+                                                                "Pilih Pengiriman",
                                                             size: Dimensions
                                                                 .font26,
                                                           ),
@@ -469,10 +640,10 @@ class _PembelianPageState extends State<PembelianPage> {
                                                                   icon: Icons
                                                                       .money,
                                                                   title:
-                                                                  'Ambil Ditempat Rp0',
+                                                                      'Ambil Ditempat Rp0',
                                                                   index: 1,
                                                                   purchaseIndex:
-                                                                  merchantIndex),
+                                                                      merchantIndex),
                                                               SizedBox(
                                                                   height: Dimensions
                                                                       .height10),
@@ -480,24 +651,59 @@ class _PembelianPageState extends State<PembelianPage> {
                                                                   icon: Icons
                                                                       .money,
                                                                   title:
-                                                                  'Pesanan Dikirim',
+                                                                      'Pesanan Dikirim',
                                                                   index: 2,
                                                                   purchaseIndex:
-                                                                  merchantIndex),
+                                                                      merchantIndex),
                                                               Obx(
-                                                                    () => Get.find<PengirimanController>().paymentIndex.value == 2
+                                                                () => Get.find<PengirimanController>()
+                                                                            .paymentIndex
+                                                                            .value ==
+                                                                        2
                                                                     ? Visibility(
-                                                                  visible: true, // Set visibility to true when index is 2
-                                                                  child: Container(
-                                                                    child: BigText(
-                                                                      text: "A",
-                                                                    ),
-                                                                  ),
-                                                                )
+                                                                        visible:
+                                                                            true, // Set visibility to true when index is 2
+                                                                        child:
+                                                                        DropdownSearch<Map<String, dynamic>>(
+                                                                          mode: Mode.MENU,
+                                                                          showClearButton: true,
+                                                                          label: "Tipe Kurir",
+                                                                          hint : "Pilih tipe pengiriman...",
+                                                                          showSearchBox: true,
+                                                                          items: [
+                                                                            {
+                                                                              "code" : "jne",
+                                                                              "name" : "PT Tiki Jalur Nugraha Ekakurir (JNE)"
+                                                                            },
+                                                                            {
+                                                                              "code" : "pos",
+                                                                              "name" : "Perusahaan Opsional Surat (POS Indonesia)"
+                                                                            },
+                                                                            {
+                                                                              "code" : "tiki",
+                                                                              "name" : "Titipan Kilat (TIKI)"
+                                                                            }
+                                                                          ],
+                                                                          dropdownSearchDecoration: InputDecoration(labelText: "Pengiriman"),
+                                                                          onChanged:(value) => print(value),
+                                                                          itemAsString: (item) => "${item?['name']}",
+                                                                          popupItemBuilder: (context, item, isSelected) =>
+                                                                              Container(
+                                                                                padding: EdgeInsets.all(20),
+                                                                                child: Text("${item['name']}",
+                                                                                  style: TextStyle(
+                                                                                    fontSize: 18,
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                        ),
+                                                                      )
                                                                     : Visibility(
-                                                                  visible: false, // Set visibility to false when index is not 2
-                                                                  child: Container(),
-                                                                ),
+                                                                        visible:
+                                                                            false, // Set visibility to false when index is not 2
+                                                                        child:
+                                                                            Container(),
+                                                                      ),
                                                               ),
                                                             ],
                                                           ),
@@ -513,15 +719,15 @@ class _PembelianPageState extends State<PembelianPage> {
                                             icon: Icons.note,
                                             iconColor: AppColors.redColor,
                                             backgroundColor:
-                                            Colors.white.withOpacity(0.0),
+                                                Colors.white.withOpacity(0.0),
                                           ),
                                           Obx(() => BigText(
-                                            text: Get.find<
-                                                PengirimanController>()
-                                                .checkedtypePengiriman
-                                                .value,
-                                            size: Dimensions.height15,
-                                          )),
+                                                text: Get.find<
+                                                        PengirimanController>()
+                                                    .checkedtypePengiriman
+                                                    .value,
+                                                size: Dimensions.height15,
+                                              )),
                                         ])),
                                   ),
                                 ],
@@ -560,7 +766,7 @@ class _PembelianPageState extends State<PembelianPage> {
                             border: Border.all(
                                 color: AppColors.buttonBackgroundColor),
                             borderRadius:
-                            BorderRadius.circular(Dimensions.radius20),
+                                BorderRadius.circular(Dimensions.radius20),
                             color: Colors.white),
                         child: Row(
                           children: [
@@ -586,7 +792,7 @@ class _PembelianPageState extends State<PembelianPage> {
                             right: Dimensions.width20),
                         decoration: BoxDecoration(
                             borderRadius:
-                            BorderRadius.circular(Dimensions.radius20),
+                                BorderRadius.circular(Dimensions.radius20),
                             color: AppColors.redColor),
                         child: GestureDetector(
                             onTap: () {
