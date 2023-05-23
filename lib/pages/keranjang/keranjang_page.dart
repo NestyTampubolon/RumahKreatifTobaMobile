@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:rumah_kreatif_toba/controllers/cart_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/popular_produk_controller.dart';
 import 'package:rumah_kreatif_toba/models/cart_models.dart';
+import 'package:rumah_kreatif_toba/pages/pembelian/pembelian_page.dart';
 import 'package:rumah_kreatif_toba/routes/route_helper.dart';
 import 'package:rumah_kreatif_toba/utils/colors.dart';
 import 'package:rumah_kreatif_toba/utils/dimensions.dart';
@@ -540,8 +541,9 @@ class _KeranjangPageState extends State<KeranjangPage> {
                                                                     .productId);
                                                           }
                                                         });
-                                                        Get.toNamed(RouteHelper
-                                                            .getPembelianPage());
+                                                        Get.to(
+                                                          PembelianPageState(),
+                                                        );
                                                       },
                                                       child: Row(children: [
                                                         BigText(

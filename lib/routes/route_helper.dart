@@ -95,7 +95,7 @@ class RouteHelper {
           return Masuk();
         },
         transition: Transition.fade),
-    GetPage(name: pembelian, page: () => PembelianPage()),
+    GetPage(name: pembelian, page: () => PembelianPageState()),
     GetPage(name: pembayaran, page: () => PembayaranPage()),
     GetPage(name: pesanan, page: () => PesananPage()),
     GetPage(name: menungguPembayaran, page: () => MenungguPembayaranPage()),

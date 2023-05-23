@@ -26,14 +26,7 @@ import '../../widgets/pengiriman_option_button.dart';
 import '../../widgets/price_text.dart';
 import 'package:get/get.dart';
 
-class PembelianPage extends StatefulWidget {
-  const PembelianPage({Key? key}) : super(key: key);
-
-  @override
-  State<PembelianPage> createState() => _PembelianPageState();
-}
-
-class _PembelianPageState extends State<PembelianPage> {
+class PembelianPageState extends GetView<AlamatController> {
   @override
   Widget build(BuildContext context) {
     List<int?> _carId = [];
@@ -83,33 +76,6 @@ class _PembelianPageState extends State<PembelianPage> {
     Get.find<AlamatController>().getAlamatUser();
 
     bool isContainerVisible = false;
-    var hiddenButton = true.obs;
-    var kurir = "".obs;
-
-    void ongkosKirim() async{
-      Uri url = Uri.parse("https://pro.rajaongkir.com/api/cost");
-      try{
-        final response = await http.post(
-          url,
-          body: {
-            "origin" : "501",
-            "originType" : "city",
-            "destination" : "574",
-            "destinationType":"subdistrict",
-            "weight" : "1700",
-            "courier" : "jne",
-          },
-          headers: {
-            "key" : "41df939eff72c9b050a81d89b4be72ba",
-            "content-type" : "application/x-www-form-urlencoded"
-          },
-        );
-
-        print(response.body);
-      }catch(err){
-        print(err);
-      }
-    }
 
     return Scaffold(
         body: SingleChildScrollView(
@@ -231,9 +197,6 @@ class _PembelianPageState extends State<PembelianPage> {
                                                     children: [
                                                       InkWell(
                                                         onTap: () {
-                                                          setState(() {
-                                                            //tombol
-                                                          });
                                                           print(alamat
                                                               .user_address_id);
                                                           Navigator.pop(
@@ -717,12 +680,12 @@ class _PembelianPageState extends State<PembelianPage> {
                                                                                   dropdownSearchDecoration: InputDecoration(labelText: "Pengiriman"),
                                                                                   onChanged:(value){
                                                                                     if(value != null){
-                                                                                      kurir.value = value['code'];
-                                                                                      hiddenButton.value = false;
-                                                                                      print(kurir.value);
+                                                                                      controller.kurir.value = value['code'];
+                                                                                      controller.showButton();
+                                                                                      print(controller.kurir.value);
                                                                                     }else{
-                                                                                      hiddenButton.value = true;
-                                                                                      kurir.value = "";
+                                                                                      controller.hiddenButton.value = true;
+                                                                                      controller.kurir.value = "";
                                                                                     }
                                                                                   },
                                                                                   itemAsString: (item) => "${item?['name']}",
@@ -737,10 +700,10 @@ class _PembelianPageState extends State<PembelianPage> {
                                                                                       ),
                                                                                 ),
                                                                                 Obx(
-                                                                                        () => hiddenButton.isTrue
+                                                                                        () => controller.hiddenButton.isTrue
                                                                                             ? SizedBox()
                                                                                             : ElevatedButton(
-                                                                                          onPressed: () => ongkosKirim(),
+                                                                                          onPressed: () => print("dah"),
                                                                                               child: Text("Ongkir"),
                                                                                 ),
                                                                                 )

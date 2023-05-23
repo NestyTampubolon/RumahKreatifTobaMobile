@@ -29,11 +29,11 @@ class TambahAlamatToko extends GetView<AlamatController> {
     Future<void> _tambahAlamat(provAsalId, cityAsalId, subdistrictId) async {
       String jalan = JalanController.text.trim();
 
-      if (controller.provAsalId.value.isEmpty) {
+      if (controller.provTujuanId.value.isEmpty) {
         showCustomSnackBar("Provinsi masih kosong", title: "Provinsi");
-      } else if (controller.cityAsalId.value.isEmpty) {
+      } else if (controller.cityTujuanId.value.isEmpty) {
         showCustomSnackBar("kabupaten / Kota masih kosong", title: "Kabupaten / Kota");
-      } else if (controller.subAsalId.value.isEmpty) {
+      } else if (controller.subTujuanId.value.isEmpty) {
         showCustomSnackBar("Kecamatan masih kosong", title: "kecamatan");
       } else if (JalanController == null) {
         showCustomSnackBar("Jalan masih kosong", title: "Jalan");
@@ -115,7 +115,7 @@ class TambahAlamatToko extends GetView<AlamatController> {
                     },
 
                     onChanged: (value) {
-                      controller.provAsalId.value = value?.provinceId ?? "0";
+                      controller.provTujuanId.value = value?.provinceId ?? "0";
                       controller.province.value  = value?.province ?? "0";
                       ;
                     },
@@ -144,7 +144,7 @@ class TambahAlamatToko extends GetView<AlamatController> {
                       ),
                       onFind: (text) async {
                         var response = await Dio().get(
-                          "https://pro.rajaongkir.com/api/city?province=${controller.provAsalId}",
+                          "https://pro.rajaongkir.com/api/city?province=${controller.provTujuanId}",
                           queryParameters: {
                             "key": "41df939eff72c9b050a81d89b4be72ba",
                           },
@@ -153,7 +153,7 @@ class TambahAlamatToko extends GetView<AlamatController> {
                             response.data["rajaongkir"]["results"]);
                       },
                       onChanged: (value) {
-                        controller.cityAsalId.value = value?.cityId ?? "0";
+                        controller.cityTujuanId.value = value?.cityId ?? "0";
                         controller.city.value = value?.cityName ?? "0";
 
                       }),
@@ -179,7 +179,7 @@ class TambahAlamatToko extends GetView<AlamatController> {
                       ),
                       onFind: (text) async {
                         var response = await Dio().get(
-                          "https://pro.rajaongkir.com/api/subdistrict?city=${controller.cityAsalId}",
+                          "https://pro.rajaongkir.com/api/subdistrict?city=${controller.cityTujuanId}",
                           queryParameters: {
                             "key": "41df939eff72c9b050a81d89b4be72ba",
                           },
@@ -188,7 +188,7 @@ class TambahAlamatToko extends GetView<AlamatController> {
                             response.data["rajaongkir"]["results"]);
                       },
                       onChanged: (value) {
-                        controller.subAsalId.value = value?.subdistrictId ?? "0";
+                        controller.subTujuanId.value = value?.subdistrictId ?? "0";
                         controller.sub.value = value?.subdistrictName ?? "0";
                       }
 
@@ -215,7 +215,7 @@ class TambahAlamatToko extends GetView<AlamatController> {
             ),
             GestureDetector(
               onTap: () => {
-                _tambahAlamat(controller.provAsalId.value, controller.cityAsalId.value, controller.subAsalId.value),
+                _tambahAlamat(controller.provTujuanId.value, controller.cityTujuanId.value, controller.subTujuanId.value),
 
               },
               child: Container(
