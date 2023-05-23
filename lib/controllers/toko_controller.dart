@@ -330,9 +330,10 @@ class TokoController extends GetxController {
     late ResponseModel responseModel;
     if (response.statusCode == 200) {
       if (response.body == 200) {
-        showCustomSnackBar("Berhasil Masuk", title: "Berhasil");
          profilToko();
         Get.to(HomeTokoPage(initialIndex: 0));
+      }else{
+        showCustomSnackBar(response.body["message"], title: "Gagal");
       }
     } else {
       responseModel = ResponseModel(false, response.statusText!);

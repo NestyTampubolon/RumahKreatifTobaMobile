@@ -6,6 +6,9 @@ import 'package:rumah_kreatif_toba/pages/alamat/tambahalamat.dart';
 import 'package:rumah_kreatif_toba/pages/auth/masuk.dart';
 import 'package:rumah_kreatif_toba/pages/home/home_page.dart';
 import 'package:rumah_kreatif_toba/pages/home/main_home_page.dart';
+import 'package:rumah_kreatif_toba/pages/home/pakaian_diminati_page.dart';
+import 'package:rumah_kreatif_toba/pages/home/produk_terbaru_page.dart';
+import 'package:rumah_kreatif_toba/pages/home/produk_unggulan_page.dart';
 import 'package:rumah_kreatif_toba/pages/kategori/kategori_produk.dart';
 import 'package:rumah_kreatif_toba/pages/kategori/kategori_produk_detail.dart';
 import 'package:rumah_kreatif_toba/pages/keranjang/keranjang_page.dart';
@@ -46,6 +49,10 @@ class RouteHelper {
 
   static const String daftaralamat_toko = "/daftar_alamat_toko";
 
+  static const String makananminumanfavorit = "/makananminumanfavorit";
+  static const String pakaiandiminati = "/pakaiandiminati";
+  static const String produkterbaru = "/produkterbaru";
+
 
   static String getSplashPage() => '$splashPage';
   static String getInitial() => '$initial';
@@ -69,6 +76,9 @@ class RouteHelper {
 
   static String getDaftarAlamatTokoPage() => '$daftaralamat_toko';
 
+  static String getMakananMinumanFavoritPage() => '$makananminumanfavorit';
+  static String getPakaianDiminatiPage() => '$pakaiandiminati';
+  static String getProdukTerbaruPage() => '$produkterbaru';
 
   static List<GetPage> routes = [
     GetPage(name: splashPage, page: () => SplashScreen()),
@@ -113,5 +123,9 @@ class RouteHelper {
     GetPage(name: bank, page: () => DataBankPage()),
     GetPage(name: daftaralamat, page: () => DaftarAlamatPage()),
     GetPage(name: tambahalamat, page: () => TambahAlamatPage()),
+
+    GetPage(name: makananminumanfavorit, page: () => ProdukUnggulanPage()),
+    GetPage(name: pakaiandiminati, page: () => PakaianDiminatiPage()),
+    GetPage(name: produkterbaru, page: () => ProdukTerbaruPage()),
   ];
 }

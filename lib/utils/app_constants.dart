@@ -11,6 +11,7 @@ class AppConstants {
   static const String BASE_URL =
       "http://172.20.10.4/RumahKreatifBackend/public/api/";
 
+
   static const String POPULAR_PRODUCT_URL = "produk";
   static const String KATEGORI_PRODUCT_URL = "lihat_produk";
 
