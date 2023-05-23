@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:rumah_kreatif_toba/controllers/pengiriman_controller.dart';
 import 'package:rumah_kreatif_toba/widgets/payment_option_button.dart';
 import 'package:rumah_kreatif_toba/widgets/small_text.dart';
-
+import 'package:http/http.dart' as http;
 import '../../base/show_custom_message.dart';
 import '../../controllers/alamat_controller.dart';
 import '../../controllers/auth_controller.dart';
@@ -83,6 +83,34 @@ class _PembelianPageState extends State<PembelianPage> {
     Get.find<AlamatController>().getAlamatUser();
 
     bool isContainerVisible = false;
+    var hiddenButton = true.obs;
+    var kurir = "".obs;
+
+    void ongkosKirim() async{
+      Uri url = Uri.parse("https://pro.rajaongkir.com/api/cost");
+      try{
+        final response = await http.post(
+          url,
+          body: {
+            "origin" : "501",
+            "originType" : "city",
+            "destination" : "574",
+            "destinationType":"subdistrict",
+            "weight" : "1700",
+            "courier" : "jne",
+          },
+          headers: {
+            "key" : "41df939eff72c9b050a81d89b4be72ba",
+            "content-type" : "application/x-www-form-urlencoded"
+          },
+        );
+
+        print(response.body);
+      }catch(err){
+        print(err);
+      }
+    }
+
     return Scaffold(
         body: SingleChildScrollView(
           child: Column(
@@ -664,40 +692,63 @@ class _PembelianPageState extends State<PembelianPage> {
                                                                         visible:
                                                                             true, // Set visibility to true when index is 2
                                                                         child:
-                                                                        DropdownSearch<Map<String, dynamic>>(
-                                                                          mode: Mode.MENU,
-                                                                          showClearButton: true,
-                                                                          label: "Tipe Kurir",
-                                                                          hint : "Pilih tipe pengiriman...",
-                                                                          showSearchBox: true,
-                                                                          items: [
-                                                                            {
-                                                                              "code" : "jne",
-                                                                              "name" : "PT Tiki Jalur Nugraha Ekakurir (JNE)"
-                                                                            },
-                                                                            {
-                                                                              "code" : "pos",
-                                                                              "name" : "Perusahaan Opsional Surat (POS Indonesia)"
-                                                                            },
-                                                                            {
-                                                                              "code" : "tiki",
-                                                                              "name" : "Titipan Kilat (TIKI)"
-                                                                            }
-                                                                          ],
-                                                                          dropdownSearchDecoration: InputDecoration(labelText: "Pengiriman"),
-                                                                          onChanged:(value) => print(value),
-                                                                          itemAsString: (item) => "${item?['name']}",
-                                                                          popupItemBuilder: (context, item, isSelected) =>
-                                                                              Container(
-                                                                                padding: EdgeInsets.all(20),
-                                                                                child: Text("${item['name']}",
-                                                                                  style: TextStyle(
-                                                                                    fontSize: 18,
-                                                                                  ),
+                                                                            Column(
+                                                                              children: [
+                                                                                DropdownSearch<Map<String, dynamic>>(
+                                                                                  mode: Mode.MENU,
+                                                                                  showClearButton: true,
+                                                                                  label: "Tipe Kurir",
+                                                                                  hint : "Pilih tipe pengiriman...",
+                                                                                  showSearchBox: true,
+                                                                                  items: [
+                                                                                    {
+                                                                                      "code" : "jne",
+                                                                                      "name" : "Tiki Jalur Nugraha Ekakurir (JNE)"
+                                                                                    },
+                                                                                    {
+                                                                                      "code" : "pos",
+                                                                                      "name" : "Perusahaan Opsional Surat (POS Indonesia)"
+                                                                                    },
+                                                                                    {
+                                                                                      "code" : "tiki",
+                                                                                      "name" : "Titipan Kilat (TIKI)"
+                                                                                    }
+                                                                                  ],
+                                                                                  dropdownSearchDecoration: InputDecoration(labelText: "Pengiriman"),
+                                                                                  onChanged:(value){
+                                                                                    if(value != null){
+                                                                                      kurir.value = value['code'];
+                                                                                      hiddenButton.value = false;
+                                                                                      print(kurir.value);
+                                                                                    }else{
+                                                                                      hiddenButton.value = true;
+                                                                                      kurir.value = "";
+                                                                                    }
+                                                                                  },
+                                                                                  itemAsString: (item) => "${item?['name']}",
+                                                                                  popupItemBuilder: (context, item, isSelected) =>
+                                                                                      Container(
+                                                                                        padding: EdgeInsets.all(20),
+                                                                                        child: Text("${item['name']}",
+                                                                                          style: TextStyle(
+                                                                                            fontSize: 18,
+                                                                                          ),
+                                                                                        ),
+                                                                                      ),
                                                                                 ),
-                                                                              ),
-                                                                        ),
-                                                                      )
+                                                                                Obx(
+                                                                                        () => hiddenButton.isTrue
+                                                                                            ? SizedBox()
+                                                                                            : ElevatedButton(
+                                                                                          onPressed: () => ongkosKirim(),
+                                                                                              child: Text("Ongkir"),
+                                                                                ),
+                                                                                )
+
+
+                                                                              ],
+                                                                            ),
+                                                                        )
                                                                     : Visibility(
                                                                         visible:
                                                                             false, // Set visibility to false when index is not 2
