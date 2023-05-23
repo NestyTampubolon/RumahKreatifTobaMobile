@@ -67,8 +67,8 @@ class AlamatController extends GetxController {
           "content-type" : "application/x-www-form-urlencoded"
         },
       );
-
-      print(response.body);
+      var data = jsonDecode(response.body) as Map<String, dynamic>;
+      print(data);
     }catch(err){
       Get.defaultDialog(
         title :  "",

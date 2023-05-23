@@ -702,13 +702,12 @@ class PembelianPageState extends GetView<AlamatController> {
                                                                                 Obx(
                                                                                         () => controller.hiddenButton.isTrue
                                                                                             ? SizedBox()
-                                                                                            : ElevatedButton(
-                                                                                          onPressed: () => print("dah"),
-                                                                                              child: Text("Ongkir"),
-                                                                                ),
+                                                                                            : ElevatedButton(onPressed: ()=> print("hai") ,
+                                                                                            child: Text(
+                                                                                              "Ongkir"
+                                                                                            ),
+                                                                                        )
                                                                                 )
-
-
                                                                               ],
                                                                             ),
                                                                         )
