@@ -5,9 +5,10 @@ import 'package:rumah_kreatif_toba/data/repository/wishlist_repo.dart';
 import 'package:rumah_kreatif_toba/models/wishlist_models.dart';
 
 import '../base/show_custom_message.dart';
+import '../base/snackbar_message.dart';
 import '../models/response_model.dart';
 import '../utils/app_constants.dart';
-
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 class WishlistController extends GetxController{
   final WishlistRepo wishlistRepo;
   WishlistController({required this.wishlistRepo});
@@ -31,8 +32,7 @@ class WishlistController extends GetxController{
     Response response = await wishlistRepo.tambahWishlist(user_id!, product_id);
     late ResponseModel responseModel;
     if(response.statusCode == 200){
-      showCustomSnackBar(response.body["message"],
-          title: "Berhasil");
+      AwesomeSnackbarButton("Berhasil",response.body["message"],ContentType.success);
     }else{
       responseModel = ResponseModel(false, response.statusText!);
     }
@@ -64,8 +64,7 @@ class WishlistController extends GetxController{
     Response response = await wishlistRepo.hapusWishlist(wishlist_id);
     late ResponseModel responseModel;
     if(response.statusCode == 200){
-      showCustomSnackBar("Wishlist berhasil dihapus",
-          title: "Berhasil");
+      AwesomeSnackbarButton("Berhasil","Wishlist berhasil dihapus",ContentType.success);
       getWishlistList();
     }else{
       responseModel = ResponseModel(false, response.statusText!);

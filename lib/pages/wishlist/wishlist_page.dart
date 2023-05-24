@@ -5,6 +5,7 @@ import 'package:rumah_kreatif_toba/controllers/popular_produk_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/wishlist_controller.dart';
 
 import '../../base/show_custom_message.dart';
+import '../../base/snackbar_message.dart';
 import '../../controllers/auth_controller.dart';
 import '../../controllers/cart_controller.dart';
 import '../../controllers/user_controller.dart';
@@ -19,7 +20,7 @@ import '../../widgets/price_text.dart';
 import '../../widgets/small_text.dart';
 import '../../widgets/tittle_text.dart';
 import '../account/main_account_page.dart';
-import '../search/search_page.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 class WishlistPage extends StatefulWidget {
   const WishlistPage({Key? key}) : super(key: key);
@@ -54,10 +55,9 @@ class _WishlistPageState extends State<WishlistPage> {
             1)
             .then((status) {
           if (status.isSuccess) {
-            showCustomSnackBar("Produk berhasil ditambahkan ke keranjang",
-              title: "Berhasil", );
+            AwesomeSnackbarButton("Berhasil","Produk berhasil ditambahkan ke keranjang",ContentType.success);
           } else {
-            showCustomSnackBar(status.message);
+            AwesomeSnackbarButton("Gagal",status.message,ContentType.failure);
           }
         });
         cartController.getKeranjangList();
@@ -74,10 +74,9 @@ class _WishlistPageState extends State<WishlistPage> {
             .hapusWishlist(wishlist_id)
             .then((status) {
           if (status.isSuccess) {
-            showCustomSnackBar("Produk berhasil dihapus",
-              title: "Berhasil", );
+            AwesomeSnackbarButton("Berhasil","Produk berhasil dihapus",ContentType.success);
           } else {
-            showCustomSnackBar(status.message);
+            AwesomeSnackbarButton("Gagal",status.message,ContentType.failure);
           }
         });
         cartController.getWishlistList();
@@ -98,7 +97,7 @@ class _WishlistPageState extends State<WishlistPage> {
                 children: [
                   Container(
                     child: BigText(
-                      text: "Wishlist",
+                      text: "Favorit",
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -129,18 +128,17 @@ class _WishlistPageState extends State<WishlistPage> {
                                       child: AppIcon(
                                         icon: Icons.circle,
                                         size: 20,
-                                        iconColor: Colors.transparent,
-                                        backgroundColor: AppColors.notification,
+                                        iconColor: AppColors.notification_success,
                                       ))
                                   : Container(),
                               controller.keranjangList.length >= 1
                                   ? Positioned(
-                                      right: 3,
+                                      right: 6,
                                       top: 3,
                                       child: BigText(
                                         text: controller.keranjangList.length
                                             .toString(),
-                                        size: 12,
+                                        size: 10,
                                         color: Colors.white,
                                       ),
                                     )

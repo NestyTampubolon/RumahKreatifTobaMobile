@@ -14,9 +14,10 @@ import 'package:rumah_kreatif_toba/utils/dimensions.dart';
 import 'package:rumah_kreatif_toba/widgets/app_icon.dart';
 import 'package:rumah_kreatif_toba/widgets/expandable_text_widget.dart';
 import 'package:rumah_kreatif_toba/widgets/price_text.dart';
-import 'package:rumah_kreatif_toba/widgets/tittle_text.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 import '../../base/show_custom_message.dart';
+import '../../base/snackbar_message.dart';
 import '../../controllers/auth_controller.dart';
 import '../../controllers/user_controller.dart';
 import '../../models/produk_models.dart';
@@ -84,12 +85,9 @@ class _ProdukDetailState extends State<ProdukDetail> {
             .tambahKeranjang(controller.id, produkList[0].productId.toInt(), 1)
             .then((status) {
           if (status.isSuccess) {
-            showCustomSnackBar(
-              "Produk berhasil ditambahkan ke keranjang",
-              title: "Berhasil",
-            );
+            AwesomeSnackbarButton("Berhasil","Produk berhasil ditambahkan ke keranjang",ContentType.success);
           } else {
-            showCustomSnackBar(status.message);
+            AwesomeSnackbarButton("Gagal",status.message,ContentType.failure);
           }
         });
         cartController.getKeranjangList();
@@ -107,7 +105,7 @@ class _ProdukDetailState extends State<ProdukDetail> {
             .then((status) {
           if (status.isSuccess) {
           } else {
-            showCustomSnackBar(status.message);
+            AwesomeSnackbarButton("Gagal",status.message,ContentType.failure);
           }
         });
         wishlistController.getWishlistList();
@@ -122,13 +120,10 @@ class _ProdukDetailState extends State<ProdukDetail> {
         var cartController = Get.find<WishlistController>();
         cartController.hapusWishlist(wishlist_id).then((status) {
           if (status.isSuccess) {
-            showCustomSnackBar(
-              "Produk berhasil dihapus",
-              title: "Berhasil",
-            );
+            AwesomeSnackbarButton("Berhasil","Produk berhasil dihapus",ContentType.success);
             isGetProdukExist.isProdukExist.value = false;
           } else {
-            showCustomSnackBar(status.message);
+            AwesomeSnackbarButton("Gagal",status.message,ContentType.failure);
           }
         });
         cartController.getWishlistList();

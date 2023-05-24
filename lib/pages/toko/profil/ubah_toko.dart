@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rumah_kreatif_toba/pages/toko/namatoko.dart';
 import '../../../base/show_custom_message.dart';
+import '../../../base/snackbar_message.dart';
 import '../../../controllers/toko_controller.dart';
 import '../../../controllers/user_controller.dart';
 import '../../../utils/app_constants.dart';
@@ -13,7 +14,7 @@ import '../../../widgets/app_icon.dart';
 import '../../../widgets/big_text.dart';
 import '../../../widgets/input_text_field.dart';
 import 'dart:io';
-
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 class UbahTokoPage extends StatefulWidget {
   const UbahTokoPage({Key? key}) : super(key: key);
 
@@ -35,11 +36,11 @@ class _UbahTokoPageState extends State<UbahTokoPage> {
       String kontak = KontakTokoController.text.trim();
 
       if (namatoko.isEmpty) {
-        showCustomSnackBar("Nama toko masih kosong", title: "Nama");
+        AwesomeSnackbarButton("Warning","Nama toko masih kosong",ContentType.warning);
       } else if (deskripsi.isEmpty) {
-        showCustomSnackBar("Deskripsi masih kosong", title: "Deskripsi");
+        AwesomeSnackbarButton("Warning","Deskripsi masih kosong",ContentType.warning);
       } else if (kontak == null) {
-        showCustomSnackBar("Kontak masih kosong", title: "Harga");
+        AwesomeSnackbarButton("Warning","Kontak masih kosong",ContentType.warning);
       } else {
         var controller = Get.find<TokoController>();
         var userController = Get.find<UserController>().usersList[0];

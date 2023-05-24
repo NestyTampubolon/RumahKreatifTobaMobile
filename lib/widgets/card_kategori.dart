@@ -30,7 +30,7 @@ class CardKategori extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.3),
+              color: Colors.grey.withOpacity(0.4),
               spreadRadius: 1,
               blurRadius: 5,
               offset: Offset(0, 2),

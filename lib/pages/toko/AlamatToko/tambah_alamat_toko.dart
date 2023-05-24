@@ -14,10 +14,11 @@ import 'package:rumah_kreatif_toba/pages/home/home_page.dart';
 import 'package:rumah_kreatif_toba/utils/dimensions.dart';
 import 'package:rumah_kreatif_toba/controllers/alamat_controller.dart';
 
+import '../../../base/snackbar_message.dart';
 import '../../../utils/colors.dart';
 import '../../../widgets/app_icon.dart';
 import '../../../widgets/big_text.dart';
-
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 class TambahAlamatToko extends GetView<AlamatController> {
   var ProvinsiController = TextEditingController();
   var KabupatenController = TextEditingController();
@@ -30,13 +31,13 @@ class TambahAlamatToko extends GetView<AlamatController> {
       String jalan = JalanController.text.trim();
 
       if (controller.provAsalId.value.isEmpty) {
-        showCustomSnackBar("Provinsi masih kosong", title: "Provinsi");
+        AwesomeSnackbarButton("Warning","Provinsi masih kosong",ContentType.warning);
       } else if (controller.cityAsalId.value.isEmpty) {
-        showCustomSnackBar("kabupaten / Kota masih kosong", title: "Kabupaten / Kota");
+        AwesomeSnackbarButton("Warning","Kabupaten / Kota masih kosong",ContentType.warning);
       } else if (controller.subAsalId.value.isEmpty) {
-        showCustomSnackBar("Kecamatan masih kosong", title: "kecamatan");
+        AwesomeSnackbarButton("Warning","Kecamatan masih kosong",ContentType.warning);
       } else if (JalanController == null) {
-        showCustomSnackBar("Jalan masih kosong", title: "Jalan");
+        AwesomeSnackbarButton("Warning","Jalan masih kosong",ContentType.warning);
       } else {
         var merchantController = Get.find<TokoController>().profilTokoList[0];
         var controller = Get.find<AlamatController>();

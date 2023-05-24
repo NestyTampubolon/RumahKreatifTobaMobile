@@ -3,10 +3,10 @@ import 'package:get/get.dart';
 import 'package:rumah_kreatif_toba/controllers/cart_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/user_controller.dart';
 import 'package:rumah_kreatif_toba/models/produk_models.dart';
-import 'package:rumah_kreatif_toba/utils/colors.dart';
-import 'dart:convert';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 import '../base/show_custom_message.dart';
+import '../base/snackbar_message.dart';
 import '../data/repository/produk_repo.dart';
 import '../models/cart_models.dart';
 import '../models/response_model.dart';
@@ -142,8 +142,7 @@ class PopularProdukController extends GetxController{
     Response response = await popularProdukRepo.hapusProduk(product_id);
     late ResponseModel responseModel;
     if(response.statusCode == 200){
-      showCustomSnackBar("Produk berhasil dihapus",
-          title: "Berhasil");
+      AwesomeSnackbarButton("Berhasil","Produk berhasil dihapus",ContentType.success);
       getProdukList();
     }else{
       responseModel = ResponseModel(false, response.statusText!);

@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rumah_kreatif_toba/widgets/app_text_field_password.dart';
 import '../../../base/show_custom_message.dart';
+import '../../../base/snackbar_message.dart';
 import '../../../controllers/user_controller.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/dimensions.dart';
 import '../../../widgets/app_icon.dart';
 import '../../../widgets/big_text.dart';
 import '../../../widgets/input_text_field.dart';
-
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 class UbahPasswordPage extends StatefulWidget {
   const UbahPasswordPage({Key? key}) : super(key: key);
 
@@ -28,9 +29,9 @@ class _UbahPasswordPageState extends State<UbahPasswordPage> {
       String passwordBaru = PasswordBaruController.text.trim();
 
       if (password.isEmpty) {
-        showCustomSnackBar("Password masih kosong", title: "Password");
+        AwesomeSnackbarButton("Warning","Password masih kosong",ContentType.warning);
       } else if (passwordBaru.isEmpty) {
-        showCustomSnackBar("Password baru masih kosong", title: "Password Baru");
+        AwesomeSnackbarButton("Warning","Password baru masih kosong",ContentType.warning);
       } else{
         var controller = Get.find<UserController>();
         var userController = Get.find<UserController>().usersList[0];

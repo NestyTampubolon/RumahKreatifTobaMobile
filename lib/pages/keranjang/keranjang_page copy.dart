@@ -17,10 +17,11 @@ import 'package:rumah_kreatif_toba/widgets/small_text.dart';
 import 'package:grouped_list/grouped_list.dart';
 
 import '../../base/show_custom_message.dart';
+import '../../base/snackbar_message.dart';
 import '../../controllers/auth_controller.dart';
 import '../../controllers/user_controller.dart';
 import '../../widgets/currency_format.dart';
-
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 class KeranjangPageCopy extends StatefulWidget {
   const KeranjangPageCopy({Key? key}) : super(key: key);
 
@@ -66,11 +67,10 @@ class _KeranjangPageCopyState extends State<KeranjangPageCopy> {
         var controller = Get.find<CartController>();
         controller.hapusKeranjang(cart_id).then((status) async {
           if (status.isSuccess) {
-            showCustomSnackBar("Produk berhasil ditambahkan ke keranjang",
-                title: "Berhasil");
+            AwesomeSnackbarButton("Berhasil","Produk berhasil ditambahkan ke keranjang",ContentType.success);
             await controller.getKeranjangList();
           } else {
-            showCustomSnackBar(status.message);
+            AwesomeSnackbarButton("Gagal",status.message,ContentType.failure);
           }
         });
         controller.getKeranjangList();
@@ -85,7 +85,7 @@ class _KeranjangPageCopyState extends State<KeranjangPageCopy> {
           if (status.isSuccess) {
             await controller.getKeranjangList();
           } else {
-            showCustomSnackBar(status.message);
+            AwesomeSnackbarButton("Gagal",status.message,ContentType.failure);
           }
         });
         controller.getKeranjangList();
@@ -100,7 +100,7 @@ class _KeranjangPageCopyState extends State<KeranjangPageCopy> {
           if (status.isSuccess) {
             await controller.getKeranjangList();
           } else {
-            showCustomSnackBar(status.message);
+            AwesomeSnackbarButton("Gagal",status.message,ContentType.failure);
           }
         });
         controller.getKeranjangList();

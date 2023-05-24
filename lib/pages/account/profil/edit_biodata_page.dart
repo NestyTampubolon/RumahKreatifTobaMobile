@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rumah_kreatif_toba/controllers/user_controller.dart';
 import '../../../base/show_custom_message.dart';
+import '../../../base/snackbar_message.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/dimensions.dart';
 import '../../../widgets/app_date_field.dart';
@@ -10,7 +11,7 @@ import '../../../widgets/app_dropdown_field.dart';
 import '../../../widgets/app_icon.dart';
 import '../../../widgets/big_text.dart';
 import '../../../widgets/input_text_field.dart';
-
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 class EditBiodataPage extends StatefulWidget {
   const EditBiodataPage({Key? key}) : super(key: key);
 
@@ -35,14 +36,13 @@ class _EditBiodataPageState extends State<EditBiodataPage> {
       String birthday = tanggalLahirController.text.toString();
 
       if (name.isEmpty) {
-        showCustomSnackBar("Nama masih kosong", title: "Nama");
+        AwesomeSnackbarButton("Warning","Nama masih kosong",ContentType.warning);
       } else if (noHp.isEmpty) {
-        showCustomSnackBar("Nomor handphone masih kosong", title: "Nomor Handphone");
+        AwesomeSnackbarButton("Warning","Nomor handphone masih kosong",ContentType.warning);
       } else if (gender.isEmpty) {
-        showCustomSnackBar("Jenis kelamin masih kosong", title: "Jenis Kelamin");
+        AwesomeSnackbarButton("Warning","Jenis kelamin masih kosong",ContentType.warning);
       } else if (birthday.isEmpty) {
-        showCustomSnackBar("Tanggal lahir Password masih kosong",
-            title: "Tanggal Lahir ");
+        AwesomeSnackbarButton("Warning","Tanggal lahir Password masih kosong",ContentType.warning);
       }else{
         var controller = Get.find<UserController>();
         var userController = Get.find<UserController>().usersList[0];
@@ -52,7 +52,7 @@ class _EditBiodataPageState extends State<EditBiodataPage> {
           if (status.isSuccess) {
             print("Berhasil");
           } else {
-            showCustomSnackBar(status.message);
+            AwesomeSnackbarButton("Gagal",status.message,ContentType.failure);
           }
         });
       }

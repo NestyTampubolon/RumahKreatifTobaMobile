@@ -6,6 +6,7 @@ import 'package:rumah_kreatif_toba/controllers/pembelian_controller.dart';
 import 'package:rumah_kreatif_toba/pages/toko/pembelian/pembelian_detailpage.dart';
 import 'package:rumah_kreatif_toba/utils/colors.dart';
 import '../../../base/show_custom_message.dart';
+import '../../../base/snackbar_message.dart';
 import '../../../controllers/pesanan_controller.dart';
 import '../../../controllers/popular_produk_controller.dart';
 import '../../../routes/route_helper.dart';
@@ -16,7 +17,7 @@ import '../../../widgets/big_text.dart';
 import '../../../widgets/currency_format.dart';
 import '../../../widgets/price_text.dart';
 import '../../../widgets/small_text.dart';
-
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 class DaftarPembelianPage extends StatefulWidget {
   const DaftarPembelianPage({Key? key}) : super(key: key);
 
@@ -49,7 +50,7 @@ class _DaftarPembelianPageState extends State<DaftarPembelianPage>
           if (status.isSuccess) {
             Get.to(PembelianDetailPage());
           } else {
-            showCustomSnackBar(status.message);
+            AwesomeSnackbarButton("Gagal",status.message,ContentType.failure);
           }
         });
       }

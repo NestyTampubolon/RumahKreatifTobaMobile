@@ -16,6 +16,7 @@ import 'package:rumah_kreatif_toba/widgets/big_text.dart';
 import 'package:rumah_kreatif_toba/widgets/monserrat_text.dart';
 import 'package:rumah_kreatif_toba/widgets/small_text.dart';
 import '../../base/show_custom_message.dart';
+import '../../base/snackbar_message.dart';
 import '../../controllers/toko_controller.dart';
 import '../../controllers/user_controller.dart';
 import '../../routes/route_helper.dart';
@@ -23,7 +24,7 @@ import '../../utils/colors.dart';
 import '../../widgets/app_dropdown_field_bank.dart';
 import '../../widgets/app_icon.dart';
 import '../home/home_page.dart';
-
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 class DataBankPage extends StatefulWidget {
   const DataBankPage({Key? key}) : super(key: key);
 
@@ -50,11 +51,11 @@ class _DataBankPageState extends State<DataBankPage> {
       String atasnama = PemilikBankController.text.trim();
 
       if (namabank.isEmpty) {
-        showCustomSnackBar("Nama bank masih kosong", title: "Nama");
+        AwesomeSnackbarButton("Warning","Nama bank masih kosong",ContentType.warning);
       } else if (norekening.isEmpty) {
-        showCustomSnackBar("No rekening masih kosong", title: "No Rekening");
+        AwesomeSnackbarButton("Warning","Nomor rekening masih kosong",ContentType.warning);
       } else if (atasnama.isEmpty) {
-        showCustomSnackBar("Atas nama masih kosong", title: "Atas Nama");
+        AwesomeSnackbarButton("Warning","Atas nama masih kosong",ContentType.warning);
       } else {
         var userController = Get.find<UserController>().usersList[0];
 

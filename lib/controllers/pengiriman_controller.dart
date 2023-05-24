@@ -1,9 +1,11 @@
 import 'package:get/get.dart';
 
 import '../base/show_custom_message.dart';
+import '../base/snackbar_message.dart';
 import '../data/repository/pengiriman_repo.dart';
 import '../models/response_model.dart';
 import '../routes/route_helper.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 class PengirimanController extends GetxController{
   final PengirimanRepo pengirimanRepo;
@@ -29,13 +31,12 @@ class PengirimanController extends GetxController{
     Response response = await pengirimanRepo.beliProduk(user_id!, cart_id, merchant_id, metode_pembelian, harga_pembelian, potongan_pembelian, alamat_purchase, courier_code, service);
     late ResponseModel responseModel;
     if(response.statusCode == 200){
-      showCustomSnackBar("Produk berhasil dibeli",
-          title: "Berhasil");
+      AwesomeSnackbarButton("Berhasil","Produk berhasil dibeli",ContentType.success);
+
       Get.offNamed(RouteHelper.getMenungguPembayaranPage());
     }else{
       responseModel = ResponseModel(false, response.statusText!);
-      showCustomSnackBar(response.statusText!,
-          title: "Berhasil");
+      AwesomeSnackbarButton("Gagal",response.statusText!,ContentType.failure);
     }
     _isLoading = false;
     update();
@@ -48,13 +49,11 @@ class PengirimanController extends GetxController{
     Response response = await pengirimanRepo.beliLangsung(user_id!, product_id,  metode_pembelian, jumlah_masuk_keranjang, harga_pembelian, potongan_pembelian, alamat_purchase, courier_code, service);
     late ResponseModel responseModel;
     if(response.statusCode == 200){
-      showCustomSnackBar("Produk berhasil dibeli",
-          title: "Berhasil");
+      AwesomeSnackbarButton("Berhasil","Produk berhasil dibeli",ContentType.success);
       Get.offNamed(RouteHelper.getMenungguPembayaranPage());
     }else{
       responseModel = ResponseModel(false, response.statusText!);
-      showCustomSnackBar(response.statusText!,
-          title: "Berhasil");
+
     }
     _isLoading = false;
     update();

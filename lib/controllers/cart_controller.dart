@@ -4,12 +4,14 @@ import 'package:get/get.dart';
 import 'package:rumah_kreatif_toba/controllers/user_controller.dart';
 
 import '../base/show_custom_message.dart';
+import '../base/snackbar_message.dart';
 import '../data/repository/cart_repo.dart';
 import '../models/cart_models.dart';
 import '../models/produk_models.dart';
 
 import '../models/response_model.dart';
 import 'auth_controller.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 class CartController extends GetxController {
   final CartRepo cartRepo;
@@ -97,8 +99,7 @@ class CartController extends GetxController {
     late ResponseModel responseModel;
     if (response.statusCode == 200) {
       _totalItems = response.body;
-      showCustomSnackBar("Produk berhasil ditambahkan ke keranjang",
-          title: "Berhasil");
+      AwesomeSnackbarButton("Berhasil","Produk berhasil ditambahkan ke keranjang",ContentType.success);
     } else {
       responseModel = ResponseModel(false, response.statusText!);
     }
@@ -143,7 +144,7 @@ class CartController extends GetxController {
     Response response = await cartRepo.hapusKeranjang(cart_id);
     late ResponseModel responseModel;
     if (response.statusCode == 200) {
-      showCustomSnackBar("Produk berhasil dihapus", title: "Berhasil");
+      AwesomeSnackbarButton("Berhasil","Produk berhasil dihapus",ContentType.success);
       getKeranjangList();
     } else {
       responseModel = ResponseModel(false, response.statusText!);
@@ -175,7 +176,7 @@ class CartController extends GetxController {
     late ResponseModel responseModel;
     if (response.statusCode == 200) {
       if (response.body == 1) {
-        showCustomSnackBar("Stok produk telah habis", title: "Gagal");
+        AwesomeSnackbarButton("Gagal","Stok produk telah habis",ContentType.failure);
       }
       getKeranjangList();
     } else {

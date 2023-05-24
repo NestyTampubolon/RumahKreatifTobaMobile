@@ -6,12 +6,13 @@ import 'dart:io';
 import '../base/show_custom_message.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
+import '../base/snackbar_message.dart';
 import '../data/repository/produk_repo.dart';
 import '../pages/toko/hometoko/hometoko.dart';
 import '../pages/toko/hometoko/hometoko_page.dart';
 import '../pages/toko/produk/produk_page.dart';
 import '../routes/route_helper.dart';
-
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import '../utils/app_constants.dart';
 
 
@@ -96,9 +97,7 @@ class ProdukController extends GetxController {
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
       Get.offNamed(RouteHelper.getMenungguVerifikasiTokoPage());
-      showCustomSnackBar(
-          "Pendaftaran toko berhasil, tunggu toko Anda diverifikasi",
-          title: "Berhasil");
+      AwesomeSnackbarButton("Berhasil","Pendaftaran toko berhasil, tunggu toko Anda diverifikasi",ContentType.success);
       print("Uploaded!");
     }
     responses.add(response);
@@ -233,9 +232,7 @@ class ProdukController extends GetxController {
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
       Get.to(HomeTokoPage(initialIndex: 1));
-      showCustomSnackBar(
-          "Tambah produk berhasil",
-          title: "Berhasil");
+      AwesomeSnackbarButton("Berhasil","Tambah produk berhasil",ContentType.success);
       print("Uploaded!");
 
     }

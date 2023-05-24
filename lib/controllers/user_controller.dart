@@ -2,9 +2,11 @@ import 'package:get/get.dart';
 import 'package:rumah_kreatif_toba/controllers/auth_controller.dart';
 import 'package:rumah_kreatif_toba/models/response_model.dart';
 import '../base/show_custom_message.dart';
+import '../base/snackbar_message.dart';
 import '../data/repository/user_repo.dart';
 import '../models/users_models.dart';
 import '../pages/account/profil/profil_page.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 class UserController extends GetxController implements GetxService {
   final UserRepo userRepo;
@@ -51,8 +53,7 @@ class UserController extends GetxController implements GetxService {
     Response response = await userRepo.ubahProfil(user_id!, name, no_hp, birthday, gender);
     late ResponseModel responseModel;
     if(response.statusCode == 200){
-      showCustomSnackBar("Berhasil mengubah profil",
-          title: "Berhasil");
+      AwesomeSnackbarButton("Berhasil","Berhasil mengubah profil",ContentType.success);
       Get.to(ProfilPage());
       getUser();
     }else{
@@ -69,8 +70,7 @@ class UserController extends GetxController implements GetxService {
     Response response = await userRepo.ubahPassword(user_id!, password, password_baru);
     late ResponseModel responseModel;
     if(response.statusCode == 200){
-      showCustomSnackBar("Berhasil mengubah password",
-          title: "Berhasil");
+      AwesomeSnackbarButton("Berhasil","Berhasil mengubah password",ContentType.success);
       Get.to(ProfilPage());
       getUser();
     }else{

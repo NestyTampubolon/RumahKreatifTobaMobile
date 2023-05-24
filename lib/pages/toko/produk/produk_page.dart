@@ -9,13 +9,14 @@ import 'package:rumah_kreatif_toba/widgets/small_text.dart';
 import 'package:rumah_kreatif_toba/widgets/tittle_text.dart';
 import 'package:get/get.dart';
 import '../../../base/show_custom_message.dart';
+import '../../../base/snackbar_message.dart';
 import '../../../controllers/auth_controller.dart';
 import '../../../controllers/popular_produk_controller.dart';
 import '../../../utils/app_constants.dart';
 import '../../../utils/dimensions.dart';
 import '../../../widgets/big_text.dart';
 import '../../../widgets/currency_format.dart';
-
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 class ProdukPage extends StatefulWidget {
   const ProdukPage({Key? key}) : super(key: key);
 
@@ -40,7 +41,7 @@ class _ProdukPageState extends State<ProdukPage> {
       cartController.hapusProduk(product_id).then((status) {
         if (status.isSuccess) {
         } else {
-          showCustomSnackBar(status.message);
+          AwesomeSnackbarButton("Gagal",status.message,ContentType.failure);
         }
       });
     }
@@ -53,7 +54,7 @@ class _ProdukPageState extends State<ProdukPage> {
           if (status.isSuccess) {
             Get.to(UbahProdukPage());
           } else {
-            showCustomSnackBar(status.message);
+            AwesomeSnackbarButton("Gagal",status.message,ContentType.failure);
           }
         });
       }

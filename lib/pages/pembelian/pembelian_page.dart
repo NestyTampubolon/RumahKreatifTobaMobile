@@ -6,6 +6,7 @@ import 'package:rumah_kreatif_toba/widgets/payment_option_button.dart';
 import 'package:rumah_kreatif_toba/widgets/small_text.dart';
 
 import '../../base/show_custom_message.dart';
+import '../../base/snackbar_message.dart';
 import '../../controllers/alamat_controller.dart';
 import '../../controllers/auth_controller.dart';
 import '../../controllers/cart_controller.dart';
@@ -25,7 +26,7 @@ import '../../widgets/currency_format.dart';
 import '../../widgets/pengiriman_option_button.dart';
 import '../../widgets/price_text.dart';
 import 'package:get/get.dart';
-
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 class PembelianPage extends StatefulWidget {
   const PembelianPage({Key? key}) : super(key: key);
 
@@ -69,7 +70,7 @@ class _PembelianPageState extends State<PembelianPage> {
             .then((status) async {
           if (status.isSuccess) {
           } else {
-            showCustomSnackBar(status.message);
+            AwesomeSnackbarButton("Gagal",status.message,ContentType.failure);
           }
         });
       }

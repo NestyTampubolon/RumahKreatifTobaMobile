@@ -10,7 +10,9 @@ import 'package:rumah_kreatif_toba/models/alamat_toko_model.dart';
 import 'package:rumah_kreatif_toba/pages/alamat/daftaralamat.dart';
 import 'package:rumah_kreatif_toba/pages/toko/AlamatToko/daftar_alamat_toko.dart';
 
+import '../base/snackbar_message.dart';
 import '../models/response_model.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 class AlamatController extends GetxController {
   RxString provAsalId = "0".obs;
@@ -75,7 +77,7 @@ class AlamatController extends GetxController {
     );
     late ResponseModel responseModel;
     if (response.statusCode == 200) {
-      showCustomSnackBar("Berhasil menambah alamat", title: "Berhasil");
+      AwesomeSnackbarButton("Berhasil","Berhasil menambah alamat",ContentType.success);
       Get.to(
         () => DaftarAlamatPage(),
       );
@@ -92,7 +94,7 @@ class AlamatController extends GetxController {
     Response response = await alamatRepo.hapusAlamat(user_address_id);
     late ResponseModel responseModel;
     if (response.statusCode == 200) {
-      showCustomSnackBar("Alamat berhasil dihapus", title: "Berhasil");
+      AwesomeSnackbarButton("Berhasil","Alamat berhasil dihapus",ContentType.success);
       getAlamat();
     } else {
       responseModel = ResponseModel(false, response.statusText!);
@@ -141,7 +143,7 @@ class AlamatController extends GetxController {
     );
     late ResponseModel responseModel;
     if (response.statusCode == 200) {
-      showCustomSnackBar("Berhasil menambah alamat toko", title: "Berhasil");
+      AwesomeSnackbarButton("Berhasil","Berhasil menambah alamat toko",ContentType.success);
       Get.to(
             () => DaftarAlamatTokoPage()
       );
@@ -157,7 +159,7 @@ class AlamatController extends GetxController {
     Response response = await alamatRepo.hapusAlamatToko(merchant_address_id);
     late ResponseModel responseModel;
     if (response.statusCode == 200) {
-      showCustomSnackBar("Alamat toko berhasil dihapus", title: "Berhasil");
+      AwesomeSnackbarButton("Berhasil","Alamat toko berhasil dihapus",ContentType.success);
       getAlamatToko();
     } else {
       responseModel = ResponseModel(false, response.statusText!);

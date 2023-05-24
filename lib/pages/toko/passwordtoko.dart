@@ -8,6 +8,7 @@ import 'package:rumah_kreatif_toba/utils/dimensions.dart';
 import 'package:rumah_kreatif_toba/widgets/big_text.dart';
 import 'package:rumah_kreatif_toba/widgets/small_text.dart';
 import '../../base/show_custom_message.dart';
+import '../../base/snackbar_message.dart';
 import '../../controllers/bank_controller.dart';
 import '../../controllers/categories_controller.dart';
 import '../../controllers/user_controller.dart';
@@ -15,7 +16,7 @@ import '../../utils/colors.dart';
 import '../../widgets/app_icon.dart';
 import '../../widgets/app_text_field_password.dart';
 import '../home/home_page.dart';
-
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 class PasswordTokoPage extends StatefulWidget {
   const PasswordTokoPage({Key? key}) : super(key: key);
 
@@ -41,7 +42,7 @@ class _PasswordTokoPageState extends State<PasswordTokoPage> {
       String password = PasswordTokoController.text.trim();
 
       if(password.isEmpty){
-        showCustomSnackBar("Password masih kosong", title: "Password");
+        AwesomeSnackbarButton("Warning","Password masih kosong",ContentType.warning);
       }else{
         var userController = Get.find<UserController>().usersList[0];
 

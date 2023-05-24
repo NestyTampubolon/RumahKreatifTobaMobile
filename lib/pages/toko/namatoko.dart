@@ -7,6 +7,7 @@ import 'package:rumah_kreatif_toba/widgets/app_text_field.dart';
 import 'package:rumah_kreatif_toba/widgets/big_text.dart';
 import 'dart:io';
 import '../../base/show_custom_message.dart';
+import '../../base/snackbar_message.dart';
 import '../../controllers/toko_controller.dart';
 import '../../controllers/user_controller.dart';
 import '../../routes/route_helper.dart';
@@ -14,7 +15,7 @@ import '../../utils/colors.dart';
 import '../../widgets/app_icon.dart';
 import '../../widgets/small_text.dart';
 import '../home/home_page.dart';
-
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 class NamaToko extends StatefulWidget {
   const NamaToko({Key? key}) : super(key: key);
 
@@ -37,11 +38,11 @@ class _NamaTokoState extends State<NamaToko> {
 
 
       if(namatoko.isEmpty){
-        showCustomSnackBar("Nama toko masih kosong", title: "Nama Toko");
+        AwesomeSnackbarButton("Warning","Nama toko masih kosong",ContentType.warning);
       }else if(deskripsitoko.isEmpty){
-        showCustomSnackBar("Deskripsi toko masih kosong", title: "Deskripsi Toko");
+        AwesomeSnackbarButton("Warning","Deskripsi toko masih kosong",ContentType.warning);
       }else if(kontaktoko.isEmpty){
-        showCustomSnackBar("Kontak toko masih kosong", title: "Kontak Toko");
+        AwesomeSnackbarButton("Warning","Kontak toko masih kosong",ContentType.warning);
       }else{
         var userController = Get.find<UserController>().usersList[0];
 

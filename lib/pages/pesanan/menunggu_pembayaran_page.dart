@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:rumah_kreatif_toba/pages/pembayaran/pembayaran_page.dart';
 
 import '../../base/show_custom_message.dart';
+import '../../base/snackbar_message.dart';
 import '../../controllers/auth_controller.dart';
 import '../../controllers/pesanan_controller.dart';
 import '../../controllers/popular_produk_controller.dart';
@@ -20,7 +21,7 @@ import '../../widgets/currency_format.dart';
 import '../../widgets/price_text.dart';
 import '../../widgets/small_text.dart';
 import 'detail_pesanan_page.dart';
-
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 class MenungguPembayaranPage extends StatefulWidget {
   const MenungguPembayaranPage({Key? key}) : super(key: key);
@@ -51,7 +52,7 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
           if (status.isSuccess) {
             Get.to(PembayaranPage());
           } else {
-            showCustomSnackBar(status.message);
+            AwesomeSnackbarButton("Gagal",status.message,ContentType.failure);
           }
         });
       }
@@ -65,7 +66,7 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
           if (status.isSuccess) {
             Get.to(DetailPesananPage());
           } else {
-            showCustomSnackBar(status.message);
+            AwesomeSnackbarButton("Gagal",status.message,ContentType.failure);
           }
         });
       }
@@ -79,7 +80,7 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
           if (status.isSuccess) {
             await controller.getPesananMenungguBayaranList();
           } else {
-            showCustomSnackBar(status.message);
+            AwesomeSnackbarButton("Gagal",status.message,ContentType.failure);
           }
         });
         controller.getPesananMenungguBayaranList();

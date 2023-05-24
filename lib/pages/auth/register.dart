@@ -8,6 +8,7 @@ import 'package:rumah_kreatif_toba/utils/colors.dart';
 import 'package:rumah_kreatif_toba/widgets/big_text.dart';
 import 'package:get/get.dart';
 import '../../base/show_custom_message.dart';
+import '../../base/snackbar_message.dart';
 import '../../utils/dimensions.dart';
 import '../../widgets/app_date_field.dart';
 import '../../widgets/app_dropdown_field.dart';
@@ -15,7 +16,7 @@ import '../../widgets/app_text_field.dart';
 import 'package:intl/intl.dart';
 
 import '../../widgets/app_text_field_password.dart';
-
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 class Register extends StatelessWidget {
   const Register({Key? key}) : super(key: key);
 
@@ -54,30 +55,25 @@ class Register extends StatelessWidget {
       }
 
       if (name.isEmpty) {
-        showCustomSnackBar("Nama masih kosong", title: "Nama");
+        AwesomeSnackbarButton("Warning","Nama masih kosong",ContentType.warning);
       } else if (username.isEmpty) {
-        showCustomSnackBar("Username masih kosong", title: "Username");
+        AwesomeSnackbarButton("Warning","Username masih kosong",ContentType.warning);
       } else if (password.isEmpty) {
-        showCustomSnackBar("Password masih kosong", title: "Password");
+        AwesomeSnackbarButton("Warning","Password masih kosong",ContentType.warning);
       } else if (konfirmasiPassword.isEmpty) {
-        showCustomSnackBar("Konfirmasi Password masih kosong",
-            title: "Password");
+        AwesomeSnackbarButton("Warning","Konfirmasi Password masih kosong",ContentType.warning);
       } else if (email.isEmpty) {
-        showCustomSnackBar("Email masih kosong", title: "Email");
+        AwesomeSnackbarButton("Warning","Email masih kosong",ContentType.warning);
       } else if (!GetUtils.isEmail(email)) {
-        showCustomSnackBar("Email tidak sesuai", title: "Invalid Email");
+        AwesomeSnackbarButton("Warning","Email tidak sesuai",ContentType.warning);
       } else if (no_hp.isEmpty) {
-        showCustomSnackBar("Nomor Telepon masih kosong",
-            title: "Nomor Telepon");
+        AwesomeSnackbarButton("Warning","Nomor Telepon masih kosong",ContentType.warning);
       } else if (gender == null) {
-        showCustomSnackBar("Jenis Kelamin masih kosong",
-            title: "Jenis Kelamin");
+        AwesomeSnackbarButton("Warning","Jenis Kelamin masih kosong",ContentType.warning);
       } else if (birthdayValue == null) {
-        showCustomSnackBar("Tanggal Lahir masih kosong",
-            title: "Tanggal Lahir");
+        AwesomeSnackbarButton("Warning","Tanggal Lahir masih kosong",ContentType.warning);
       } else if (konfirmasiPassword != password) {
-        showCustomSnackBar("Password tidak sama dengan Konfirmasi Password",
-            title: "Konfirmasi Password");
+        AwesomeSnackbarButton("Warning","Password tidak sama dengan Konfirmasi Password",ContentType.warning);
       } else {
         Users users = Users(
             name: name,
@@ -89,14 +85,10 @@ class Register extends StatelessWidget {
             gender: gender);
         authController.registrasi(users).then((status) {
           if (status.isSuccess) {
-            print("Sukses registrasi");
-            Get.snackbar("Registrasi", "Akun sudah berhasil di daftar silahkan kembali masuk dengan username dan passsword Anda!",
-                backgroundColor: AppColors.redColor,
-                colorText: Colors.white
-            );
+            AwesomeSnackbarButton("Berhasil","Akun sudah berhasil di daftar silahkan kembali masuk dengan username dan passsword Anda!",ContentType.success);
             Get.offNamed(RouteHelper.getInitial());
           } else {
-            showCustomSnackBar(status.message);
+            AwesomeSnackbarButton("Gagal",status.message,ContentType.failure);
           }
         });
       }
