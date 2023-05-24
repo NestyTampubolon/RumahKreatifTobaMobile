@@ -50,32 +50,6 @@ class AlamatController extends GetxController {
     }
   }
 
-  void ongkosKirim() async{
-    showButton();
-    Uri url = Uri.parse("https://pro.rajaongkir.com/api/cost");
-    try{
-      final response = await http.post(
-        url,
-        body: {
-          "origin" : "${cityTujuanId}",
-          "destination" : "${cityAsalId}",
-          "weight" : "1700",
-          "courier" : "${kurir}",
-        },
-        headers: {
-          "key" : "41df939eff72c9b050a81d89b4be72ba",
-          "content-type" : "application/x-www-form-urlencoded"
-        },
-      );
-      var data = jsonDecode(response.body) as Map<String, dynamic>;
-      print(data);
-    }catch(err){
-      Get.defaultDialog(
-        title :  "",
-      );
-    }
-  }
-
   Future<void> getAlamat() async {
     var controller = Get.find<UserController>().usersList[0];
     Response response = await alamatRepo.getAlamat(controller.id!);
