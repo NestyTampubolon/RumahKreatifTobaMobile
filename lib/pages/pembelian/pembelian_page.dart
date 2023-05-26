@@ -79,19 +79,19 @@ class PembelianPageState extends GetView<AlamatController> {
 
     bool isContainerVisible = false;
 
-    void ongkosKirim() async{
+    void ongkosKirim(address_id, destination_id, weight, kurir) async{
       controller.showButton();
       Uri url = Uri.parse("https://pro.rajaongkir.com/api/cost");
       try{
         final response = await http.post(
           url,
           body: {
-            "origin" : "501",
+            "origin" : "${address_id}",
             "originType" : "city",
-            "destination" : "574",
+            "destination" : "${destination_id}",
             "destinationType" : "subdistrict",
-            "weight" : "1700",
-            "courier" : "jne",
+            "weight" : "${weight}",
+            "courier" : "${kurir}",
           },
           headers: {
             "key" : "41df939eff72c9b050a81d89b4be72ba",
@@ -734,7 +734,7 @@ class PembelianPageState extends GetView<AlamatController> {
                                                                               ? SizedBox()
                                                                               : GestureDetector(
                                                                             onTap: () {
-                                                                              ongkosKirim();
+                                                                              ongkosKirim(controller.cityAsalId, controller.cityTujuanId, controller.berat, controller.kurir);
                                                                             },
                                                                             child: AppIcon(
                                                                               icon: Icons.shopping_bag_outlined,

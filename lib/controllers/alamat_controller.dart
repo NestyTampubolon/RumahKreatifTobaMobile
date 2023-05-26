@@ -24,6 +24,7 @@ class AlamatController extends GetxController {
   RxString subTujuanId = "0".obs;
 
   var hiddenButton = true.obs;
+  var berat = "".obs;
   var kurir = "".obs;
 
   final AlamatRepo alamatRepo;
