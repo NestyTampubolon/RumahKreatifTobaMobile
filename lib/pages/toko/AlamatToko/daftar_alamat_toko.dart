@@ -150,8 +150,7 @@ class DaftarAlamatTokoPage extends GetView<AlamatController> {
                   shrinkWrap: true,
                   itemCount: AlamatController.daftarAlamatTokoList.length,
                   itemBuilder: (BuildContext context, int index) {
-                    AlamatToko alamattoko =
-                    AlamatController.daftarAlamatTokoList[index];
+                    AlamatToko alamattoko = AlamatController.daftarAlamatTokoList[index];
                     return Container(
                       width: Dimensions.screenWidth,
                       height: Dimensions.height45 * 5,

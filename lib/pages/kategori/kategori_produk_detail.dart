@@ -139,7 +139,7 @@ class _KategoriProdukDetailState extends State<KategoriProdukDetail> {
                   ? GridView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2, mainAxisExtent: Dimensions.height45*6.5),
+                      crossAxisCount: 2, mainAxisExtent: Dimensions.height45*6),
                   itemCount: produkKategori.kategoriProdukList.length,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {

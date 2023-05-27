@@ -448,33 +448,33 @@ class _ProdukDetailState extends State<ProdukDetail> {
                         //     ],
                         //   ),
                         // ),
-                        Container(
-                          padding: EdgeInsets.only(
-                              top: Dimensions.height10 / 2,
-                              bottom: Dimensions.height10 / 2,
-                              left: Dimensions.width10,
-                              right: Dimensions.width10),
-                          decoration: BoxDecoration(
-                              border: Border.all(color: AppColors.redColor),
-                              borderRadius: BorderRadius.circular(
-                                  Dimensions.radius20 / 2),
-                              color: Colors.white),
-                          child: GestureDetector(
-                            onTap: () {
-                              if (Get.find<AuthController>().userLoggedIn()) {
-                                _tambahKeranjang(cartController);
-                              } else {
-                                Get.toNamed(RouteHelper.getMasukPage());
-                              }
-                            },
-                            child: AppIcon(
-                              icon: Icons.message,
-                              iconSize: Dimensions.iconSize24,
-                              iconColor: AppColors.redColor,
-                              backgroundColor: Colors.white.withOpacity(0.0),
-                            ),
-                          ),
-                        ),
+                        // Container(
+                        //   padding: EdgeInsets.only(
+                        //       top: Dimensions.height10 / 2,
+                        //       bottom: Dimensions.height10 / 2,
+                        //       left: Dimensions.width10,
+                        //       right: Dimensions.width10),
+                        //   decoration: BoxDecoration(
+                        //       border: Border.all(color: AppColors.redColor),
+                        //       borderRadius: BorderRadius.circular(
+                        //           Dimensions.radius20 / 2),
+                        //       color: Colors.white),
+                        //   child: GestureDetector(
+                        //     onTap: () {
+                        //       if (Get.find<AuthController>().userLoggedIn()) {
+                        //         _tambahKeranjang(cartController);
+                        //       } else {
+                        //         Get.toNamed(RouteHelper.getMasukPage());
+                        //       }
+                        //     },
+                        //     child: AppIcon(
+                        //       icon: Icons.message,
+                        //       iconSize: Dimensions.iconSize24,
+                        //       iconColor: AppColors.redColor,
+                        //       backgroundColor: Colors.white.withOpacity(0.0),
+                        //     ),
+                        //   ),
+                        // ),
                         Container(
                           padding: EdgeInsets.only(
                               top: Dimensions.height20 / 1.1,

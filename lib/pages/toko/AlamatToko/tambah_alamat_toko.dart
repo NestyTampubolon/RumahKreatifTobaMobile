@@ -116,7 +116,7 @@ class TambahAlamatToko extends GetView<AlamatController> {
                     },
 
                     onChanged: (value) {
-                      controller.provAsalId.value = value?.provinceId ?? "0";
+                      controller.provTujuanId.value = value?.provinceId ?? "0";
                       controller.province.value  = value?.province ?? "0";
                       ;
                     },
@@ -145,7 +145,7 @@ class TambahAlamatToko extends GetView<AlamatController> {
                       ),
                       onFind: (text) async {
                         var response = await Dio().get(
-                          "https://pro.rajaongkir.com/api/city?province=${controller.provAsalId}",
+                          "https://pro.rajaongkir.com/api/city?province=${controller.provTujuanId}",
                           queryParameters: {
                             "key": "41df939eff72c9b050a81d89b4be72ba",
                           },
@@ -154,7 +154,7 @@ class TambahAlamatToko extends GetView<AlamatController> {
                             response.data["rajaongkir"]["results"]);
                       },
                       onChanged: (value) {
-                        controller.cityAsalId.value = value?.cityId ?? "0";
+                        controller.cityTujuanId.value = value?.cityId ?? "0";
                         controller.city.value = value?.cityName ?? "0";
 
                       }),
@@ -180,7 +180,7 @@ class TambahAlamatToko extends GetView<AlamatController> {
                       ),
                       onFind: (text) async {
                         var response = await Dio().get(
-                          "https://pro.rajaongkir.com/api/subdistrict?city=${controller.cityAsalId}",
+                          "https://pro.rajaongkir.com/api/subdistrict?city=${controller.cityTujuanId}",
                           queryParameters: {
                             "key": "41df939eff72c9b050a81d89b4be72ba",
                           },
@@ -189,7 +189,7 @@ class TambahAlamatToko extends GetView<AlamatController> {
                             response.data["rajaongkir"]["results"]);
                       },
                       onChanged: (value) {
-                        controller.subAsalId.value = value?.subdistrictId ?? "0";
+                        controller.subTujuanId.value = value?.subdistrictId ?? "0";
                         controller.sub.value = value?.subdistrictName ?? "0";
                       }
 
@@ -216,7 +216,7 @@ class TambahAlamatToko extends GetView<AlamatController> {
             ),
             GestureDetector(
               onTap: () => {
-                _tambahAlamat(controller.provAsalId.value, controller.cityAsalId.value, controller.subAsalId.value),
+                _tambahAlamat(controller.provTujuanId.value, controller.cityTujuanId.value, controller.subTujuanId.value),
 
               },
               child: Container(

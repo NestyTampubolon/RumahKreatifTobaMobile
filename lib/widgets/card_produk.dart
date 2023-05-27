@@ -31,7 +31,7 @@ class CardProduk extends StatelessWidget {
     }
     return Container(
       width: Dimensions.width45*3.5,
-      height: Dimensions.width45*10,
+      height: Dimensions.height45*9,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(15),

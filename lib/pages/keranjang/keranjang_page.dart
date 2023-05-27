@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:rumah_kreatif_toba/controllers/cart_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/popular_produk_controller.dart';
 import 'package:rumah_kreatif_toba/models/cart_models.dart';
+import 'package:rumah_kreatif_toba/pages/pembelian/pembelian_page.dart';
 import 'package:rumah_kreatif_toba/routes/route_helper.dart';
 import 'package:rumah_kreatif_toba/utils/colors.dart';
 import 'package:rumah_kreatif_toba/utils/dimensions.dart';
@@ -251,7 +252,7 @@ class _KeranjangPageState extends State<KeranjangPage> {
                                                         borderRadius:
                                                             BorderRadius.circular(
                                                                 Dimensions
-                                                                    .radius20),
+                                                                    .radius20/4),
                                                         color: Colors.white),
                                                     child: Column(
                                                       children: [
@@ -442,8 +443,6 @@ class _KeranjangPageState extends State<KeranjangPage> {
                                           Container(
                                             height: Dimensions.height45 * 2,
                                             padding: EdgeInsets.only(
-                                                top: Dimensions.height10,
-                                                bottom: Dimensions.height10,
                                                 left: Dimensions.width20,
                                                 right: Dimensions.width20),
                                             child: Row(
@@ -453,10 +452,6 @@ class _KeranjangPageState extends State<KeranjangPage> {
                                               children: [
                                                 Container(
                                                     padding: EdgeInsets.only(
-                                                        top:
-                                                            Dimensions.height10,
-                                                        bottom:
-                                                            Dimensions.height10,
                                                         left:
                                                             Dimensions.width20,
                                                         right:
@@ -468,8 +463,7 @@ class _KeranjangPageState extends State<KeranjangPage> {
                                                         borderRadius:
                                                             BorderRadius.circular(
                                                                 Dimensions
-                                                                    .radius20),
-                                                        color: Colors.white),
+                                                                    .radius20),),
                                                     child: Column(
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
@@ -520,7 +514,7 @@ class _KeranjangPageState extends State<KeranjangPage> {
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               Dimensions
-                                                                  .radius20),
+                                                                  .radius20/4),
                                                       color:
                                                           AppColors.redColor),
                                                   child: GestureDetector(
@@ -537,8 +531,9 @@ class _KeranjangPageState extends State<KeranjangPage> {
                                                                     .productId);
                                                           }
                                                         });
-                                                        Get.toNamed(RouteHelper
-                                                            .getPembelianPage());
+                                                        Get.to(
+                                                          PembelianPageState(),
+                                                        );
                                                       },
                                                       child: Row(children: [
                                                         BigText(
@@ -553,7 +548,8 @@ class _KeranjangPageState extends State<KeranjangPage> {
                                             ),
                                           ),
                                         ],
-                                      )
+                                      ),
+                                      Divider(color: AppColors.buttonBackgroundColor,thickness: 2.0,),
                                     ],
                                   ),
                                 );

@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:rumah_kreatif_toba/base/show_custom_message.dart';
 import 'package:rumah_kreatif_toba/controllers/toko_controller.dart';
@@ -21,6 +21,12 @@ class AlamatController extends GetxController {
   RxString city = "0".obs;
   RxString subAsalId = "0".obs;
   RxString sub= "0".obs;
+  RxString cityTujuanId = "0".obs;
+  RxString provTujuanId = "0".obs;
+  RxString subTujuanId = "0".obs;
+
+  var hiddenButton = true.obs;
+  var kurir = "".obs;
 
   final AlamatRepo alamatRepo;
 
@@ -37,6 +43,40 @@ class AlamatController extends GetxController {
 
   List<dynamic> _daftarAlamatUserList = [];
   List<dynamic> get daftarAlamatUserList => _daftarAlamatUserList;
+
+  void showButton(){
+    if(kurir != ""){
+      hiddenButton.value = false;
+    }else{
+      hiddenButton.value = true;
+    }
+  }
+
+  void ongkosKirim() async{
+    showButton();
+    Uri url = Uri.parse("https://pro.rajaongkir.com/api/cost");
+    try{
+      final response = await http.post(
+        url,
+        body: {
+          "origin" : "${cityTujuanId}",
+          "destination" : "${cityAsalId}",
+          "weight" : "1700",
+          "courier" : "${kurir}",
+        },
+        headers: {
+          "key" : "41df939eff72c9b050a81d89b4be72ba",
+          "content-type" : "application/x-www-form-urlencoded"
+        },
+      );
+      var data = jsonDecode(response.body) as Map<String, dynamic>;
+      print(data);
+    }catch(err){
+      Get.defaultDialog(
+        title :  "",
+      );
+    }
+  }
 
   Future<void> getAlamat() async {
     var controller = Get.find<UserController>().usersList[0];

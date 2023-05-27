@@ -207,7 +207,7 @@ class _HomePageBodyState extends State<HomePageBody> {
           ],
         ),
         Container(
-          height: Dimensions.height45 * 6.5,
+          height: Dimensions.height45 * 6,
           margin: EdgeInsets.only(
               left: Dimensions.width20,
               right: Dimensions.width20,
@@ -288,7 +288,7 @@ class _HomePageBodyState extends State<HomePageBody> {
           ],
         ),
         Container(
-          height: Dimensions.height45 * 6.5,
+          height: Dimensions.height45 * 6,
           margin: EdgeInsets.only(
               left: Dimensions.width20,
               right: Dimensions.width20,
@@ -365,7 +365,7 @@ class _HomePageBodyState extends State<HomePageBody> {
           ],
         ),
         Container(
-          height: Dimensions.height45 * 6.5,
+          height: Dimensions.height45 * 6,
           margin: EdgeInsets.only(
               left: Dimensions.width20,
               right: Dimensions.width20,

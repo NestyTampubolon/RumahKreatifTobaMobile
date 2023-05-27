@@ -64,7 +64,7 @@ class WishlistController extends GetxController{
     Response response = await wishlistRepo.hapusWishlist(wishlist_id);
     late ResponseModel responseModel;
     if(response.statusCode == 200){
-      AwesomeSnackbarButton("Berhasil","Wishlist berhasil dihapus",ContentType.success);
+      AwesomeSnackbarButton("Berhasil","Produk berhasil dihapus",ContentType.success);
       getWishlistList();
     }else{
       responseModel = ResponseModel(false, response.statusText!);
