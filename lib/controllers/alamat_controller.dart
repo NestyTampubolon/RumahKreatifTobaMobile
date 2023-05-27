@@ -24,7 +24,7 @@ class AlamatController extends GetxController {
   RxString cityTujuanId = "0".obs;
   RxString provTujuanId = "0".obs;
   RxString subTujuanId = "0".obs;
-
+  RxInt berat = 0.obs;
   var hiddenButton = true.obs;
   var kurir = "".obs;
 
@@ -49,32 +49,6 @@ class AlamatController extends GetxController {
       hiddenButton.value = false;
     }else{
       hiddenButton.value = true;
-    }
-  }
-
-  void ongkosKirim() async{
-    showButton();
-    Uri url = Uri.parse("https://pro.rajaongkir.com/api/cost");
-    try{
-      final response = await http.post(
-        url,
-        body: {
-          "origin" : "${cityTujuanId}",
-          "destination" : "${cityAsalId}",
-          "weight" : "1700",
-          "courier" : "${kurir}",
-        },
-        headers: {
-          "key" : "41df939eff72c9b050a81d89b4be72ba",
-          "content-type" : "application/x-www-form-urlencoded"
-        },
-      );
-      var data = jsonDecode(response.body) as Map<String, dynamic>;
-      print(data);
-    }catch(err){
-      Get.defaultDialog(
-        title :  "",
-      );
     }
   }
 
