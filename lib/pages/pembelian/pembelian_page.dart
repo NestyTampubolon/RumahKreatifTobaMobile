@@ -78,20 +78,19 @@ class PembelianPageState extends GetView<AlamatController> {
     Get.find<AlamatController>().getAlamatUser();
 
     bool isContainerVisible = false;
-
-    void ongkosKirim(address_id, destination_id, weight, kurir) async{
+    void ongkosKirim(address_id, destination_id, berat, kurir) async{
       controller.showButton();
       Uri url = Uri.parse("https://pro.rajaongkir.com/api/cost");
       try{
         final response = await http.post(
           url,
           body: {
-            "origin" : "${address_id}",
+            "origin" : "${controller.cityTujuanId}",
             "originType" : "city",
-            "destination" : "${destination_id}",
+            "destination" : "${controller.subAsalId}",
             "destinationType" : "subdistrict",
-            "weight" : "${weight}",
-            "courier" : "${kurir}",
+            "weight" : "${controller.berat}",
+            "courier" : "${controller.kurir}",
           },
           headers: {
             "key" : "41df939eff72c9b050a81d89b4be72ba",
@@ -431,6 +430,7 @@ class PembelianPageState extends GetView<AlamatController> {
                                       itemCount: merchantItems.length,
                                       itemBuilder: (_, index) {
                                         var item = merchantItems[index];
+                                        controller.berat.value = item.heavy ?? 0;
                                         var gambarproduk =
                                             Get.find<PopularProdukController>()
                                                 .imageProdukList
@@ -600,7 +600,9 @@ class PembelianPageState extends GetView<AlamatController> {
                                                             topRight:
                                                                 Radius.circular(
                                                                     Dimensions
-                                                                        .radius20))),
+                                                                        .radius20),
+                                                        ),
+                                                    ),
                                                     padding: EdgeInsets.only(
                                                         top:
                                                             Dimensions.height30,
