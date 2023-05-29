@@ -9,6 +9,7 @@ import 'package:rumah_kreatif_toba/pages/toko/produk/produk_page.dart';
 import 'package:rumah_kreatif_toba/widgets/small_text.dart';
 import 'package:get/get.dart';
 import '../../../base/show_custom_message.dart';
+import '../../../base/snackbar_message.dart';
 import '../../../controllers/toko_controller.dart';
 import '../../../controllers/user_controller.dart';
 import '../../../utils/app_constants.dart';
@@ -19,7 +20,7 @@ import '../../../widgets/app_icon.dart';
 import '../../../widgets/big_text.dart';
 import '../../../widgets/input_text_field.dart';
 import 'dart:io';
-
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 class UbahProdukPage extends StatelessWidget {
   const UbahProdukPage({Key? key}) : super(key: key);
 
@@ -42,17 +43,17 @@ class UbahProdukPage extends StatelessWidget {
       String kategori = KategoriController.text.trim();
 
       if (namaproduk.isEmpty) {
-        showCustomSnackBar("Nama produk masih kosong", title: "Nama");
+        AwesomeSnackbarButton("Warning","Nama produk masih kosong",ContentType.warning);
       } else if (deskripsi.isEmpty) {
-        showCustomSnackBar("Deskripsi masih kosong", title: "Deskripsi");
+        AwesomeSnackbarButton("Warning","Deskripsi masih kosong",ContentType.warning);
       } else if (harga == null) {
-        showCustomSnackBar("Harga masih kosong", title: "Harga");
+        AwesomeSnackbarButton("Warning","Harga masih kosong",ContentType.warning);
       } else if (stok == null) {
-        showCustomSnackBar("Stok masih kosong", title: "Stok");
+        AwesomeSnackbarButton("Warning","Stok masih kosong",ContentType.warning);
       } else if (berat == null) {
-        showCustomSnackBar("Berat masih kosong", title: "Berat");
+        AwesomeSnackbarButton("Warning","Berat masih kosong",ContentType.warning);
       } else if (kategori.isEmpty) {
-        showCustomSnackBar("Kategori masih kosong", title: "Kategori");
+        AwesomeSnackbarButton("Warning","Kategori masih kosong",ContentType.warning);
       } else {
         var controller = Get.find<ProdukController>();
         controller

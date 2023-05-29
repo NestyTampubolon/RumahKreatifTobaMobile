@@ -14,9 +14,10 @@ import 'package:rumah_kreatif_toba/utils/dimensions.dart';
 import 'package:rumah_kreatif_toba/widgets/app_icon.dart';
 import 'package:rumah_kreatif_toba/widgets/expandable_text_widget.dart';
 import 'package:rumah_kreatif_toba/widgets/price_text.dart';
-import 'package:rumah_kreatif_toba/widgets/tittle_text.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 import '../../base/show_custom_message.dart';
+import '../../base/snackbar_message.dart';
 import '../../controllers/auth_controller.dart';
 import '../../controllers/user_controller.dart';
 import '../../models/produk_models.dart';
@@ -84,12 +85,9 @@ class _ProdukDetailState extends State<ProdukDetail> {
             .tambahKeranjang(controller.id, produkList[0].productId.toInt(), 1)
             .then((status) {
           if (status.isSuccess) {
-            showCustomSnackBar(
-              "Produk berhasil ditambahkan ke keranjang",
-              title: "Berhasil",
-            );
+            AwesomeSnackbarButton("Berhasil","Produk berhasil ditambahkan ke keranjang",ContentType.success);
           } else {
-            showCustomSnackBar(status.message);
+            AwesomeSnackbarButton("Gagal",status.message,ContentType.failure);
           }
         });
         cartController.getKeranjangList();
@@ -107,7 +105,7 @@ class _ProdukDetailState extends State<ProdukDetail> {
             .then((status) {
           if (status.isSuccess) {
           } else {
-            showCustomSnackBar(status.message);
+            AwesomeSnackbarButton("Gagal",status.message,ContentType.failure);
           }
         });
         wishlistController.getWishlistList();
@@ -122,13 +120,10 @@ class _ProdukDetailState extends State<ProdukDetail> {
         var cartController = Get.find<WishlistController>();
         cartController.hapusWishlist(wishlist_id).then((status) {
           if (status.isSuccess) {
-            showCustomSnackBar(
-              "Produk berhasil dihapus",
-              title: "Berhasil",
-            );
+            AwesomeSnackbarButton("Berhasil","Produk berhasil dihapus",ContentType.success);
             isGetProdukExist.isProdukExist.value = false;
           } else {
-            showCustomSnackBar(status.message);
+            AwesomeSnackbarButton("Gagal",status.message,ContentType.failure);
           }
         });
         cartController.getWishlistList();
@@ -453,33 +448,33 @@ class _ProdukDetailState extends State<ProdukDetail> {
                         //     ],
                         //   ),
                         // ),
-                        Container(
-                          padding: EdgeInsets.only(
-                              top: Dimensions.height10 / 2,
-                              bottom: Dimensions.height10 / 2,
-                              left: Dimensions.width10,
-                              right: Dimensions.width10),
-                          decoration: BoxDecoration(
-                              border: Border.all(color: AppColors.redColor),
-                              borderRadius: BorderRadius.circular(
-                                  Dimensions.radius20 / 2),
-                              color: Colors.white),
-                          child: GestureDetector(
-                            onTap: () {
-                              if (Get.find<AuthController>().userLoggedIn()) {
-                                _tambahKeranjang(cartController);
-                              } else {
-                                Get.toNamed(RouteHelper.getMasukPage());
-                              }
-                            },
-                            child: AppIcon(
-                              icon: Icons.message,
-                              iconSize: Dimensions.iconSize24,
-                              iconColor: AppColors.redColor,
-                              backgroundColor: Colors.white.withOpacity(0.0),
-                            ),
-                          ),
-                        ),
+                        // Container(
+                        //   padding: EdgeInsets.only(
+                        //       top: Dimensions.height10 / 2,
+                        //       bottom: Dimensions.height10 / 2,
+                        //       left: Dimensions.width10,
+                        //       right: Dimensions.width10),
+                        //   decoration: BoxDecoration(
+                        //       border: Border.all(color: AppColors.redColor),
+                        //       borderRadius: BorderRadius.circular(
+                        //           Dimensions.radius20 / 2),
+                        //       color: Colors.white),
+                        //   child: GestureDetector(
+                        //     onTap: () {
+                        //       if (Get.find<AuthController>().userLoggedIn()) {
+                        //         _tambahKeranjang(cartController);
+                        //       } else {
+                        //         Get.toNamed(RouteHelper.getMasukPage());
+                        //       }
+                        //     },
+                        //     child: AppIcon(
+                        //       icon: Icons.message,
+                        //       iconSize: Dimensions.iconSize24,
+                        //       iconColor: AppColors.redColor,
+                        //       backgroundColor: Colors.white.withOpacity(0.0),
+                        //     ),
+                        //   ),
+                        // ),
                         Container(
                           padding: EdgeInsets.only(
                               top: Dimensions.height20 / 1.1,

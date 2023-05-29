@@ -1,9 +1,10 @@
 import 'package:get/get.dart';
 import 'package:rumah_kreatif_toba/data/repository/auth_repo.dart';
 import 'package:rumah_kreatif_toba/models/response_model.dart';
-
 import '../base/show_custom_message.dart';
+import '../base/snackbar_message.dart';
 import '../models/users_models.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 class AuthController extends GetxController implements GetxService {
   final AuthRepo authRepo;
@@ -38,15 +39,13 @@ class AuthController extends GetxController implements GetxService {
     if (response.statusCode == 200) {
       if (response.body["token"] != null) {
         authRepo.saveUserToken(response.body["token"]);
-        print(response.body["token"]);
+        responseModel = ResponseModel(true, response.body["token"]);
       }else{
-        showCustomSnackBar(response.body["message"], title: "Gagal");
+        AwesomeSnackbarButton("Gagal",response.body["message"],ContentType.failure);
       }
-      responseModel = ResponseModel(true, response.body["token"]);
-    } else {
+      } else {
       responseModel = ResponseModel(false, response.statusText!);
     }
-    _isLoading = true;
     update();
     return responseModel;
   }

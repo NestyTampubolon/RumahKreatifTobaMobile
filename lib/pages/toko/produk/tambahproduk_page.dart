@@ -8,6 +8,7 @@ import 'package:rumah_kreatif_toba/pages/toko/produk/produk_page.dart';
 import 'package:rumah_kreatif_toba/widgets/small_text.dart';
 import 'package:get/get.dart';
 import '../../../base/show_custom_message.dart';
+import '../../../base/snackbar_message.dart';
 import '../../../controllers/toko_controller.dart';
 import '../../../controllers/user_controller.dart';
 import '../../../utils/colors.dart';
@@ -17,7 +18,7 @@ import '../../../widgets/app_icon.dart';
 import '../../../widgets/big_text.dart';
 import '../../../widgets/input_text_field.dart';
 import 'dart:io';
-
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 class TambahProdukPage extends StatelessWidget {
   const TambahProdukPage({Key? key}) : super(key: key);
 
@@ -39,23 +40,23 @@ class TambahProdukPage extends StatelessWidget {
       String kategori = KategoriController.text.trim();
 
       if (namaproduk.isEmpty) {
-        showCustomSnackBar("Nama produk masih kosong", title: "Nama");
+        AwesomeSnackbarButton("Warning","Nama produk masih kosong",ContentType.warning);
       } else if (deskripsi.isEmpty) {
-        showCustomSnackBar("Deskripsi masih kosong", title: "Deskripsi");
+        AwesomeSnackbarButton("Warning","Deskripsi masih kosong",ContentType.warning);
       } else if (harga == null) {
-        showCustomSnackBar("Harga masih kosong", title: "Harga");
+        AwesomeSnackbarButton("Warning","Harga masih kosong",ContentType.warning);
       } else if (stok == null) {
-        showCustomSnackBar("Stok masih kosong", title: "Stok");
+        AwesomeSnackbarButton("Warning","Stok masih kosong",ContentType.warning);
       } else if (berat == null) {
-        showCustomSnackBar("Berat masih kosong", title: "Berat");
+        AwesomeSnackbarButton("Warning","Berat masih kosong",ContentType.warning);
       } else if (kategori.isEmpty) {
-        showCustomSnackBar("Kategori masih kosong", title: "Kategori");
+        AwesomeSnackbarButton("Warning","Kategori masih kosong",ContentType.warning);
       } else if (Get.find<ProdukController>().pickedFileGambarProduk1 == null) {
-        showCustomSnackBar("Gambar 1 masih kosong", title: "Gambar");
+        AwesomeSnackbarButton("Warning","Gambar 1 masih kosong",ContentType.warning);
       } else if (Get.find<ProdukController>().pickedFileGambarProduk2 == null) {
-        showCustomSnackBar("Gambar 2 masih kosong", title: "Gambar");
+        AwesomeSnackbarButton("Warning","Gambar 2 masih kosong",ContentType.warning);
       } else if (Get.find<ProdukController>().pickedFileGambarProduk3 == null) {
-        showCustomSnackBar("Gambar 3 masih kosong", title: "Gambar");
+        AwesomeSnackbarButton("Warning","Gambar 3 masih kosong",ContentType.warning);
       } else {
         int harga = int.parse(HargaController.text.trim());
         int berat = int.parse(BeratController.text.trim());

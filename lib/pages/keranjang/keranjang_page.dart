@@ -15,8 +15,9 @@ import 'package:rumah_kreatif_toba/widgets/big_text.dart';
 import 'package:rumah_kreatif_toba/widgets/price_text.dart';
 import 'package:rumah_kreatif_toba/widgets/small_text.dart';
 import 'package:grouped_list/grouped_list.dart';
-
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import '../../base/show_custom_message.dart';
+import '../../base/snackbar_message.dart';
 import '../../controllers/auth_controller.dart';
 import '../../controllers/user_controller.dart';
 import '../../utils/app_constants.dart';
@@ -53,9 +54,6 @@ class _KeranjangPageState extends State<KeranjangPage> {
   Widget build(BuildContext context) {
     bool _cekKeranjang = Get.find<CartController>().keranjangList.isEmpty;
 
-    bool _shouldRefreshList = false;
-    var cartcontroller = Get.find<CartController>();
-
     bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
     if (_userLoggedIn) {
       Get.find<UserController>().getUser();
@@ -67,11 +65,10 @@ class _KeranjangPageState extends State<KeranjangPage> {
         var controller = Get.find<CartController>();
         controller.hapusKeranjang(cart_id).then((status) async {
           if (status.isSuccess) {
-            showCustomSnackBar("Produk berhasil ditambahkan ke keranjang",
-                title: "Berhasil");
+            AwesomeSnackbarButton("Berhasil","Produk berhasil ditambahkan ke keranjang",ContentType.success);
             await controller.getKeranjangList();
           } else {
-            showCustomSnackBar(status.message);
+            AwesomeSnackbarButton("Gagal",status.message,ContentType.failure);
           }
         });
         controller.getKeranjangList();
@@ -86,7 +83,7 @@ class _KeranjangPageState extends State<KeranjangPage> {
           if (status.isSuccess) {
             await controller.getKeranjangList();
           } else {
-            showCustomSnackBar(status.message);
+            AwesomeSnackbarButton("Gagal",status.message,ContentType.failure);
           }
         });
         controller.getKeranjangList();
@@ -101,7 +98,7 @@ class _KeranjangPageState extends State<KeranjangPage> {
           if (status.isSuccess) {
             await controller.getKeranjangList();
           } else {
-            showCustomSnackBar(status.message);
+            AwesomeSnackbarButton("Gagal",status.message,ContentType.failure);
           }
         });
         controller.getKeranjangList();
@@ -255,7 +252,7 @@ class _KeranjangPageState extends State<KeranjangPage> {
                                                         borderRadius:
                                                             BorderRadius.circular(
                                                                 Dimensions
-                                                                    .radius20),
+                                                                    .radius20/4),
                                                         color: Colors.white),
                                                     child: Column(
                                                       children: [
@@ -446,8 +443,6 @@ class _KeranjangPageState extends State<KeranjangPage> {
                                           Container(
                                             height: Dimensions.height45 * 2,
                                             padding: EdgeInsets.only(
-                                                top: Dimensions.height10,
-                                                bottom: Dimensions.height10,
                                                 left: Dimensions.width20,
                                                 right: Dimensions.width20),
                                             child: Row(
@@ -457,10 +452,6 @@ class _KeranjangPageState extends State<KeranjangPage> {
                                               children: [
                                                 Container(
                                                     padding: EdgeInsets.only(
-                                                        top:
-                                                            Dimensions.height10,
-                                                        bottom:
-                                                            Dimensions.height10,
                                                         left:
                                                             Dimensions.width20,
                                                         right:
@@ -472,8 +463,7 @@ class _KeranjangPageState extends State<KeranjangPage> {
                                                         borderRadius:
                                                             BorderRadius.circular(
                                                                 Dimensions
-                                                                    .radius20),
-                                                        color: Colors.white),
+                                                                    .radius20),),
                                                     child: Column(
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
@@ -524,7 +514,7 @@ class _KeranjangPageState extends State<KeranjangPage> {
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               Dimensions
-                                                                  .radius20),
+                                                                  .radius20/4),
                                                       color:
                                                           AppColors.redColor),
                                                   child: GestureDetector(
@@ -558,7 +548,8 @@ class _KeranjangPageState extends State<KeranjangPage> {
                                             ),
                                           ),
                                         ],
-                                      )
+                                      ),
+                                      Divider(color: AppColors.buttonBackgroundColor,thickness: 2.0,),
                                     ],
                                   ),
                                 );

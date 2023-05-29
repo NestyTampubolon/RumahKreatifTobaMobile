@@ -64,17 +64,16 @@ class KategoriProduk extends StatelessWidget {
                                         child: AppIcon(
                                           icon: Icons.circle,
                                           size: 20,
-                                          iconColor: Colors.transparent,
-                                          backgroundColor: AppColors.notification,
+                                          iconColor: AppColors.notification_success,
                                         ))
                                         : Container(),
                                     controller.keranjangList.length >= 1
                                         ? Positioned(
-                                      right: 3,
+                                      right: 6,
                                       top: 3,
                                       child: BigText(
                                         text: controller.keranjangList.length.toString(),
-                                        size: 12,
+                                        size: 10,
                                         color: Colors.white,
                                       ),
                                     )

@@ -8,9 +8,10 @@ import 'package:rumah_kreatif_toba/models/purchase_models.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 import '../base/show_custom_message.dart';
+import '../base/snackbar_message.dart';
 import '../models/response_model.dart';
 import 'package:get/get.dart';
-
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import '../pages/pesanan/pesanan_page.dart';
 import '../utils/app_constants.dart';
 
@@ -185,8 +186,7 @@ class PesananController extends GetxController {
     Response response = await pesananRepo.hapusPesanan(kode_pembelian);
     late ResponseModel responseModel;
     if(response.statusCode == 200){
-      showCustomSnackBar("Pesanan berhasil dihapus",
-          title: "Berhasil");
+      AwesomeSnackbarButton("Berhasil","Pesanan berhasil dihapus",ContentType.success);
       getPesananMenungguBayaranList();
     }else{
       responseModel = ResponseModel(false, response.statusText!);

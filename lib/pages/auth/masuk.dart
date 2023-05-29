@@ -8,12 +8,13 @@ import 'package:rumah_kreatif_toba/widgets/big_text.dart';
 import 'package:get/get.dart';
 import '../../base/custom_loader.dart';
 import '../../base/show_custom_message.dart';
+import '../../base/snackbar_message.dart';
 import '../../controllers/auth_controller.dart';
 import '../../utils/dimensions.dart';
 import '../../widgets/app_icon.dart';
 import '../../widgets/app_text_field.dart';
 import '../../widgets/app_text_field_password.dart';
-
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 class Masuk extends StatelessWidget {
   const Masuk({Key? key}) : super(key: key);
 
@@ -27,15 +28,15 @@ class Masuk extends StatelessWidget {
       String password = passwordController.text.trim();
 
       if (username.isEmpty) {
-        showCustomSnackBar("Username masih kosong", title: "Username");
+        AwesomeSnackbarButton("Warning","Username masih kosong",ContentType.warning);
       } else if (password.isEmpty) {
-        showCustomSnackBar("Password masih kosong", title: "Password");
+        AwesomeSnackbarButton("Warning","Password masih kosong",ContentType.warning);
       } else {
         authController.login(username, password).then((status) {
           if (status.isSuccess) {
             Get.toNamed(RouteHelper.getInitial());
           } else {
-            showCustomSnackBar(status.message);
+            AwesomeSnackbarButton("Gagal",status.message,ContentType.failure);
           }
         });
       }

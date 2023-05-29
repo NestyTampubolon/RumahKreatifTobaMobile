@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:rumah_kreatif_toba/pages/pesanan/detail_pesanan_page.dart';
 
 import '../../base/show_custom_message.dart';
+import '../../base/snackbar_message.dart';
 import '../../controllers/auth_controller.dart';
 import '../../controllers/pesanan_controller.dart';
 import '../../controllers/popular_produk_controller.dart';
@@ -21,7 +22,7 @@ import '../../widgets/price_text.dart';
 import '../../widgets/small_text.dart';
 import '../../widgets/tittle_text.dart';
 import '../home/home_page.dart';
-
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 class PesananPage extends StatefulWidget {
   const PesananPage({Key? key}) : super(key: key);
 
@@ -49,7 +50,7 @@ class _PesananPageState extends State<PesananPage> {
           if (status.isSuccess) {
             Get.to(DetailPesananPage());
           } else {
-            showCustomSnackBar(status.message);
+            AwesomeSnackbarButton("Gagal",status.message,ContentType.failure);
           }
         });
       }

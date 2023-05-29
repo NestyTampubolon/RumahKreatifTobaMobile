@@ -5,9 +5,11 @@ import 'package:rumah_kreatif_toba/models/bank_model.dart';
 import 'package:rumah_kreatif_toba/models/rekening_model.dart';
 import 'package:rumah_kreatif_toba/pages/toko/rekening/daftarrekening.dart';
 import '../base/show_custom_message.dart';
+import '../base/snackbar_message.dart';
 import '../models/response_model.dart';
 import '../pages/toko/namatoko.dart';
 import 'package:get/get.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 
 class BankController extends GetxController{
@@ -43,8 +45,7 @@ class BankController extends GetxController{
     Response response = await bankRepo.tambahRekening(user_id!, nama_bank, nomor_rekening, atas_nama);
     late ResponseModel responseModel;
     if(response.statusCode == 200){
-      showCustomSnackBar("Berhasil menambah rekening",
-          title: "Berhasil");
+      AwesomeSnackbarButton("Berhasil","Berhasil menambah rekening",ContentType.success);
       if (response.body == 1) {
         Get.to(NamaToko());
       } else if (response.body == 2) {
@@ -85,7 +86,7 @@ class BankController extends GetxController{
     Response response = await bankRepo.hapusRekening(rekening_id);
     late ResponseModel responseModel;
     if (response.statusCode == 200) {
-      showCustomSnackBar("Rekening berhasil dihapus", title: "Berhasil");
+      AwesomeSnackbarButton("Berhasil","Rekening berhasil dihapus",ContentType.success);
       getRekeningList();
       Get.to(DaftarRekening());
     } else {

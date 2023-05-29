@@ -11,10 +11,11 @@ import 'package:rumah_kreatif_toba/utils/dimensions.dart';
 import 'package:rumah_kreatif_toba/controllers/alamat_controller.dart';
 import 'package:rumah_kreatif_toba/models/alamat_model.dart';
 import '../../../base/show_custom_message.dart';
+import '../../../base/snackbar_message.dart';
 import '../../../utils/colors.dart';
 import '../../../widgets/app_icon.dart';
 import '../../../widgets/big_text.dart';
-
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 class DaftarAlamatTokoPage extends GetView<AlamatController> {
   int index = 0;
   int _selectedIndex = -1;
@@ -28,7 +29,7 @@ class DaftarAlamatTokoPage extends GetView<AlamatController> {
       cartController.hapusAlamatToko(merchant_address_id).then((status) {
         if (status.isSuccess) {
         } else {
-          showCustomSnackBar(status.message);
+          AwesomeSnackbarButton("Gagal",status.message,ContentType.failure);
         }
       });
     }

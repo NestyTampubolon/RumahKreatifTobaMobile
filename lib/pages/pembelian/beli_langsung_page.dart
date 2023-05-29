@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../base/show_custom_message.dart';
+import '../../base/snackbar_message.dart';
 import '../../controllers/auth_controller.dart';
 import '../../controllers/cart_controller.dart';
 import '../../controllers/pengiriman_controller.dart';
@@ -12,7 +13,7 @@ import '../../widgets/app_icon.dart';
 import '../../widgets/big_text.dart';
 import '../../widgets/currency_format.dart';
 import '../../widgets/price_text.dart';
-
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 class BeliLangsungPage extends StatefulWidget {
   const BeliLangsungPage({Key? key}) : super(key: key);
 
@@ -39,7 +40,7 @@ class _BeliLangsungPageState extends State<BeliLangsungPage> {
           if (status.isSuccess) {
 
           } else {
-            showCustomSnackBar(status.message);
+            AwesomeSnackbarButton("Gagal",status.message,ContentType.failure);
           }
         });
       }

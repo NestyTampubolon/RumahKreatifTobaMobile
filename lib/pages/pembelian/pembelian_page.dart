@@ -60,7 +60,7 @@ class PembelianPageState extends GetView<AlamatController> {
 
         controller
             .beliProduk(userController.id, _carId, _merchantId,
-                _metodePembelian, _hargaPembelian, "", "", "", "")
+            _metodePembelian, _hargaPembelian, "", "", "", "")
             .then((status) async {
           if (status.isSuccess) {
           } else {
@@ -240,52 +240,57 @@ class PembelianPageState extends GetView<AlamatController> {
                                                   .buttonBackgroundColor),
                                           GetBuilder<AlamatController>(
                                               builder: (AlamatController) {
-                                            return ListView.builder(
-                                              physics:
+                                                return ListView.builder(
+                                                  physics:
                                                   const NeverScrollableScrollPhysics(),
-                                              shrinkWrap: true,
-                                              itemCount: AlamatController
-                                                  .daftarAlamatList.length,
-                                              itemBuilder:
-                                                  (BuildContext context,
+                                                  shrinkWrap: true,
+                                                  itemCount: AlamatController
+                                                      .daftarAlamatList.length,
+                                                  itemBuilder:
+                                                      (BuildContext context,
                                                       int index) {
-                                                Alamat alamat = AlamatController
-                                                    .daftarAlamatList[index];
-                                                return Container(
-                                                  height: 100,
-                                                  padding: EdgeInsets.only(
-                                                      left: Dimensions.width20,
-                                                      right: Dimensions.width20,
-                                                      top: Dimensions.height20),
-                                                  child: Column(
-                                                    children: [
-                                                      InkWell(
-                                                        onTap: () {
-                                                          print(alamat
-                                                              .user_address_id);
-                                                          Navigator.pop(
-                                                              context);
-                                                        },
-                                                        child: Container(
-                                                          decoration: BoxDecoration(
-                                                              borderRadius:
+                                                    Alamat alamat = AlamatController
+                                                        .daftarAlamatList[index];
+                                                    return Container(
+                                                      height: 100,
+                                                      padding: EdgeInsets.only(
+                                                          left: Dimensions.width20,
+                                                          right: Dimensions.width20,
+                                                          top: Dimensions.height20),
+                                                      child: Column(
+                                                        children: [
+                                                          InkWell(
+                                                            onTap: () {
+                                                              print(alamat
+                                                                  .user_address_id);
+                                                              Navigator.pop(
+                                                                  context);
+                                                            },
+                                                            child: Container(
+                                                              decoration: BoxDecoration(
+                                                                  borderRadius:
                                                                   BorderRadius
                                                                       .circular(
-                                                                          Dimensions.radius20 /
-                                                                              4),
-                                                              color: Theme.of(context).cardColor,
-                                                              boxShadow: [
-                                                                BoxShadow(
-                                                                    color: Colors
+                                                                      Dimensions.radius20 /
+                                                                          4),
+                                                                  color: Theme.of(context).cardColor,
+                                                                  boxShadow: [
+                                                                    BoxShadow(
+                                                                        color: Colors
                                                                             .grey[
                                                                         200]!,
-                                                                    blurRadius:
+                                                                        blurRadius:
                                                                         5,
-                                                                    spreadRadius:
+                                                                        spreadRadius:
                                                                         1)
+<<<<<<< HEAD
                                                               ]),
                                                           child: Obx(() =>
                                                               ListTile(
+=======
+                                                                  ]),
+                                                              child: ListTile(
+>>>>>>> 6ab8a84fe51f2c4e17e7254146c49c1772673e42
                                                                   dense: true,
                                                                   title: Text(
                                                                     "Alamat ${index + 1}",
@@ -307,15 +312,20 @@ class PembelianPageState extends GetView<AlamatController> {
                                                                       )),
                                                                   trailing: Icon(
                                                                       CupertinoIcons
+<<<<<<< HEAD
                                                                           .circle)),)
                                                         ),
+=======
+                                                                          .circle)),
+                                                            ),
+                                                          ),
+                                                        ],
+>>>>>>> 6ab8a84fe51f2c4e17e7254146c49c1772673e42
                                                       ),
-                                                    ],
-                                                  ),
+                                                    );
+                                                  },
                                                 );
-                                              },
-                                            );
-                                          }),
+                                              }),
                                         ],
                                       ),
                                     ),
@@ -344,17 +354,17 @@ class PembelianPageState extends GetView<AlamatController> {
                         return ListView.builder(
                           shrinkWrap: true,
                           itemCount:
-                              AlamatController.daftarAlamatUserList.length,
+                          AlamatController.daftarAlamatUserList.length,
                           itemBuilder: (BuildContext context, int index) {
                             Alamat alamat =
-                                AlamatController.daftarAlamatUserList[index];
+                            AlamatController.daftarAlamatUserList[index];
                             return Container(
                               child: Row(
                                 children: [
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         "${alamat.user_street_address?.toString() ?? ""}, ${alamat.city_name?.toString() ?? ""}",
@@ -384,7 +394,7 @@ class PembelianPageState extends GetView<AlamatController> {
                       var _checkedCartIds = cartController.checkedCartIds;
                       var _matchedItems = _keranjangList
                           .where((item) =>
-                              _checkedCartIds.contains(item.productId))
+                          _checkedCartIds.contains(item.productId))
                           .toList();
 
                       if (_matchedItems.isEmpty) {}
@@ -407,8 +417,8 @@ class PembelianPageState extends GetView<AlamatController> {
                         var _checkedCartIds = cartController.checkedCartIds;
                         var _matchedItems = _keranjangList
                             .where((item) =>
-                                _checkedCartIds.contains(item.productId) &&
-                                item.namaMerchant == merchantName)
+                        _checkedCartIds.contains(item.productId) &&
+                            item.namaMerchant == merchantName)
                             .toList();
 
                         double total = 0.0;
@@ -427,7 +437,7 @@ class PembelianPageState extends GetView<AlamatController> {
                             var merchantName = groupedKeranjangList.keys
                                 .elementAt(merchantIndex);
                             var merchantItems =
-                                groupedKeranjangList[merchantName]!;
+                            groupedKeranjangList[merchantName]!;
 
                             _hargaPembelian = calculatesubTotal(merchantName);
 
@@ -468,20 +478,20 @@ class PembelianPageState extends GetView<AlamatController> {
                                         var item = merchantItems[index];
                                         controller.berat.value = item.heavy ?? 0;
                                         var gambarproduk =
-                                            Get.find<PopularProdukController>()
-                                                .imageProdukList
-                                                .where((produk) =>
-                                                    produk.productId ==
-                                                    item.productId);
+                                        Get.find<PopularProdukController>()
+                                            .imageProdukList
+                                            .where((produk) =>
+                                        produk.productId ==
+                                            item.productId);
                                         return Row(
                                           children: [
                                             Container(
                                               width:
-                                                  Dimensions.screenWidth / 1.35,
+                                              Dimensions.screenWidth / 1.35,
                                               height: Dimensions.height45 * 2.5,
                                               margin: EdgeInsets.only(
                                                   bottom:
-                                                      Dimensions.height10 / 2,
+                                                  Dimensions.height10 / 2,
                                                   top: Dimensions.height10 / 2),
                                               padding: EdgeInsets.only(
                                                   left: Dimensions.width10,
@@ -491,8 +501,8 @@ class PembelianPageState extends GetView<AlamatController> {
                                                       color: AppColors
                                                           .buttonBackgroundColor),
                                                   borderRadius:
-                                                      BorderRadius.circular(
-                                                          Dimensions.radius20),
+                                                  BorderRadius.circular(
+                                                      Dimensions.radius20),
                                                   color: Colors.white),
                                               child: Column(
                                                 children: [
@@ -501,7 +511,7 @@ class PembelianPageState extends GetView<AlamatController> {
                                                       GestureDetector(
                                                         onTap: () {
                                                           var produkIndex =
-                                                              item.productId!;
+                                                          item.productId!;
                                                           if (produkIndex >=
                                                               0) {
                                                             _getProdukList(item
@@ -510,30 +520,30 @@ class PembelianPageState extends GetView<AlamatController> {
                                                         },
                                                         child: Container(
                                                           width: Dimensions
-                                                                  .height20 *
+                                                              .height20 *
                                                               4,
                                                           height: Dimensions
-                                                                  .height20 *
+                                                              .height20 *
                                                               4,
                                                           margin: EdgeInsets.only(
                                                               top: Dimensions
                                                                   .height10),
                                                           decoration:
-                                                              BoxDecoration(
+                                                          BoxDecoration(
+                                                              image:
+                                                              DecorationImage(
+                                                                  fit: BoxFit
+                                                                      .cover,
                                                                   image:
-                                                                      DecorationImage(
-                                                                          fit: BoxFit
-                                                                              .cover,
-                                                                          image:
-                                                                              NetworkImage(
-                                                                            '${AppConstants.BASE_URL_IMAGE}u_file/product_image/${gambarproduk.single.productImageName}',
-                                                                          )),
-                                                                  borderRadius:
-                                                                      BorderRadius.circular(
-                                                                          Dimensions
-                                                                              .radius20),
-                                                                  color: Colors
-                                                                      .white),
+                                                                  NetworkImage(
+                                                                    '${AppConstants.BASE_URL_IMAGE}u_file/product_image/${gambarproduk.single.productImageName}',
+                                                                  )),
+                                                              borderRadius:
+                                                              BorderRadius.circular(
+                                                                  Dimensions
+                                                                      .radius20),
+                                                              color: Colors
+                                                                  .white),
                                                         ),
                                                       ),
                                                       SizedBox(
@@ -542,31 +552,31 @@ class PembelianPageState extends GetView<AlamatController> {
                                                       ExcludeFocus(
                                                         child: Container(
                                                           height: Dimensions
-                                                                  .height20 *
+                                                              .height20 *
                                                               5,
                                                           width: Dimensions
-                                                                  .width45 *
+                                                              .width45 *
                                                               3,
                                                           child: Column(
                                                             crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
+                                                            CrossAxisAlignment
+                                                                .start,
                                                             mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceEvenly,
+                                                            MainAxisAlignment
+                                                                .spaceEvenly,
                                                             children: [
                                                               BigText(
                                                                 text: item
                                                                     .productName!,
                                                                 size: Dimensions
-                                                                        .font26 /
+                                                                    .font26 /
                                                                     1.5,
                                                               ),
                                                               Row(
                                                                 children: [
                                                                   SmallText(
                                                                       text:
-                                                                          "${item.jumlahMasukKeranjang} barang"),
+                                                                      "${item.jumlahMasukKeranjang} barang"),
                                                                 ],
                                                               ),
                                                               Row(
@@ -579,8 +589,8 @@ class PembelianPageState extends GetView<AlamatController> {
                                                               PriceText(
                                                                 text: CurrencyFormat
                                                                     .convertToIdr(
-                                                                        item.price,
-                                                                        0),
+                                                                    item.price,
+                                                                    0),
                                                                 size: Dimensions
                                                                     .font16,
                                                               ),
@@ -625,35 +635,33 @@ class PembelianPageState extends GetView<AlamatController> {
                                         onTap: () {
                                           showModalBottomSheet(
                                               backgroundColor:
-                                                  Colors.transparent,
+                                              Colors.transparent,
                                               context: context,
                                               builder: (context) {
                                                 return SingleChildScrollView(
                                                   child: Container(
                                                     width:
-                                                        Dimensions.screenWidth,
+                                                    Dimensions.screenWidth,
                                                     height: Dimensions
                                                             .screenHeight,
                                                     decoration: BoxDecoration(
                                                         color: Colors.white,
                                                         borderRadius: BorderRadius.only(
                                                             topLeft:
-                                                                Radius.circular(
-                                                                    Dimensions
-                                                                        .radius20),
+                                                            Radius.circular(
+                                                                Dimensions
+                                                                    .radius20),
                                                             topRight:
-                                                                Radius.circular(
-                                                                    Dimensions
-                                                                        .radius20),
-                                                        ),
-                                                    ),
+                                                            Radius.circular(
+                                                                Dimensions
+                                                                    .radius20))),
                                                     padding: EdgeInsets.only(
                                                         top:
-                                                            Dimensions.height30,
+                                                        Dimensions.height30,
                                                         left:
-                                                            Dimensions.width20,
+                                                        Dimensions.width20,
                                                         right:
-                                                            Dimensions.width20),
+                                                        Dimensions.width20),
                                                     child: Column(
                                                       children: [
                                                         Row(children: [
@@ -664,17 +672,17 @@ class PembelianPageState extends GetView<AlamatController> {
                                                             },
                                                             child: AppIcon(
                                                               icon:
-                                                                  CupertinoIcons
-                                                                      .xmark,
+                                                              CupertinoIcons
+                                                                  .xmark,
                                                               size: Dimensions
                                                                   .iconSize24,
                                                               iconColor:
-                                                                  AppColors
-                                                                      .redColor,
+                                                              AppColors
+                                                                  .redColor,
                                                               backgroundColor:
-                                                                  Colors.white
-                                                                      .withOpacity(
-                                                                          0.0),
+                                                              Colors.white
+                                                                  .withOpacity(
+                                                                  0.0),
                                                             ),
                                                           ),
                                                           SizedBox(
@@ -683,7 +691,7 @@ class PembelianPageState extends GetView<AlamatController> {
                                                           ),
                                                           BigText(
                                                             text:
-                                                                "Pilih Pengiriman",
+                                                            "Pilih Pengiriman",
                                                             size: Dimensions
                                                                 .font26,
                                                           ),
@@ -700,7 +708,7 @@ class PembelianPageState extends GetView<AlamatController> {
                                                                   .width20,
                                                               top: Dimensions
                                                                   .height20),
-                                                          child: SingleChildScrollView(
+                                     child: SingleChildScrollView(
                                                             child: Column(
                                                               children: [
                                                                 PengirimanOptionButton(
@@ -818,7 +826,7 @@ class PembelianPageState extends GetView<AlamatController> {
                                             icon: Icons.note,
                                             iconColor: AppColors.redColor,
                                             backgroundColor:
-                                                Colors.white.withOpacity(0.0),
+                                            Colors.white.withOpacity(0.0),
                                           ),
                                           Obx(() => BigText(
                                                 text: Get.find<
@@ -867,7 +875,7 @@ class PembelianPageState extends GetView<AlamatController> {
                             border: Border.all(
                                 color: AppColors.buttonBackgroundColor),
                             borderRadius:
-                                BorderRadius.circular(Dimensions.radius20),
+                            BorderRadius.circular(Dimensions.radius20),
                             color: Colors.white),
                         child: Row(
                           children: [
@@ -893,7 +901,7 @@ class PembelianPageState extends GetView<AlamatController> {
                             right: Dimensions.width20),
                         decoration: BoxDecoration(
                             borderRadius:
-                                BorderRadius.circular(Dimensions.radius20),
+                            BorderRadius.circular(Dimensions.radius20),
                             color: AppColors.redColor),
                         child: GestureDetector(
                             onTap: () {

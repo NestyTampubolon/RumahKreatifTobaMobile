@@ -31,7 +31,7 @@ class CardUnggulan extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.3),
+              color: Colors.grey.withOpacity(0.4),
               spreadRadius: 1,
               blurRadius: 5,
               offset: Offset(0, 2),
@@ -61,7 +61,6 @@ class CardUnggulan extends StatelessWidget {
                     top: Dimensions.height10 / 2,
                     bottom: Dimensions.height10 / 2),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
                   image: DecorationImage(
                       fit: BoxFit.fill,
                       image:

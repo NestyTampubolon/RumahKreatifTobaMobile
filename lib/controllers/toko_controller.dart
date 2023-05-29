@@ -11,11 +11,12 @@ import 'package:rumah_kreatif_toba/pages/toko/passwordtoko.dart';
 import 'package:rumah_kreatif_toba/pages/toko/profil/profiltoko_page.dart';
 import 'dart:io';
 import '../base/show_custom_message.dart';
+import '../base/snackbar_message.dart';
 import '../data/repository/toko_repo.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 
-import '../pages/toko/hometoko/hometoko.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import '../pages/toko/infotokoktp.dart';
 import '../pages/toko/menungguverifikasi.dart';
 import '../pages/toko/menungguverifikasitoko.dart';
@@ -222,9 +223,7 @@ class TokoController extends GetxController {
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
       Get.offNamed(RouteHelper.getMenungguVerifikasiTokoPage());
-      showCustomSnackBar(
-          "Pendaftaran toko berhasil, tunggu toko Anda diverifikasi",
-          title: "Berhasil");
+      AwesomeSnackbarButton("Berhasil","Pendaftaran toko berhasil, tunggu toko Anda diverifikasi",ContentType.success);
       print("Uploaded!");
     }
     responses.add(response);
@@ -333,7 +332,7 @@ class TokoController extends GetxController {
          profilToko();
         Get.to(HomeTokoPage(initialIndex: 0));
       }else{
-        showCustomSnackBar(response.body["message"], title: "Gagal");
+        AwesomeSnackbarButton("Gagal",response.body["message"],ContentType.failure);
       }
     } else {
       responseModel = ResponseModel(false, response.statusText!);
