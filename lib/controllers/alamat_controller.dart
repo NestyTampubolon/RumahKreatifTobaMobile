@@ -10,9 +10,7 @@ import 'package:rumah_kreatif_toba/models/alamat_toko_model.dart';
 import 'package:rumah_kreatif_toba/pages/alamat/daftaralamat.dart';
 import 'package:rumah_kreatif_toba/pages/toko/AlamatToko/daftar_alamat_toko.dart';
 
-import '../base/snackbar_message.dart';
 import '../models/response_model.dart';
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 class AlamatController extends GetxController {
   RxString provAsalId = "0".obs;
@@ -25,6 +23,7 @@ class AlamatController extends GetxController {
   RxString provTujuanId = "0".obs;
   RxString subTujuanId = "0".obs;
   RxInt berat = 0.obs;
+  RxInt HargaPengiriman = 0.obs;
   var hiddenButton = true.obs;
   var kurir = "".obs;
 
@@ -51,6 +50,10 @@ class AlamatController extends GetxController {
       hiddenButton.value = true;
     }
   }
+  void setHargaPengiriman(int? harga) {
+    HargaPengiriman.value = harga!;
+    update();
+  }
 
   Future<void> getAlamat() async {
     var controller = Get.find<UserController>().usersList[0];
@@ -76,7 +79,7 @@ class AlamatController extends GetxController {
       String province_id,
       String city_id,
       String subdistrict_id,
-     ) async {
+      ) async {
     _isLoading = true;
     update();
     Response response = await alamatRepo.tambahAlamat(
@@ -91,9 +94,9 @@ class AlamatController extends GetxController {
     );
     late ResponseModel responseModel;
     if (response.statusCode == 200) {
-      AwesomeSnackbarButton("Berhasil","Berhasil menambah alamat",ContentType.success);
+      showCustomSnackBar("Berhasil menambah alamat", title: "Berhasil");
       Get.to(
-        () => DaftarAlamatPage(),
+            () => DaftarAlamatPage(),
       );
       getAlamat();
     } else {
@@ -108,7 +111,7 @@ class AlamatController extends GetxController {
     Response response = await alamatRepo.hapusAlamat(user_address_id);
     late ResponseModel responseModel;
     if (response.statusCode == 200) {
-      AwesomeSnackbarButton("Berhasil","Alamat berhasil dihapus",ContentType.success);
+      showCustomSnackBar("Alamat berhasil dihapus", title: "Berhasil");
       getAlamat();
     } else {
       responseModel = ResponseModel(false, response.statusText!);
@@ -157,9 +160,9 @@ class AlamatController extends GetxController {
     );
     late ResponseModel responseModel;
     if (response.statusCode == 200) {
-      AwesomeSnackbarButton("Berhasil","Berhasil menambah alamat toko",ContentType.success);
+      showCustomSnackBar("Berhasil menambah alamat toko", title: "Berhasil");
       Get.to(
-            () => DaftarAlamatTokoPage()
+              () => DaftarAlamatTokoPage()
       );
       getAlamatToko();
     } else {
@@ -173,7 +176,7 @@ class AlamatController extends GetxController {
     Response response = await alamatRepo.hapusAlamatToko(merchant_address_id);
     late ResponseModel responseModel;
     if (response.statusCode == 200) {
-      AwesomeSnackbarButton("Berhasil","Alamat toko berhasil dihapus",ContentType.success);
+      showCustomSnackBar("Alamat toko berhasil dihapus", title: "Berhasil");
       getAlamatToko();
     } else {
       responseModel = ResponseModel(false, response.statusText!);
@@ -197,6 +200,4 @@ class AlamatController extends GetxController {
       update();
     } else {}
   }
-
-
 }

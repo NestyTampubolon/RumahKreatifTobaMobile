@@ -64,31 +64,43 @@ class _EditBiodataPageState extends State<EditBiodataPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              margin: EdgeInsets.only(top: Dimensions.height45),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Get.back();
-                    },
-                    child: AppIcon(
-                      icon: Icons.arrow_back,
-                      iconColor: AppColors.redColor,
-                      backgroundColor: Colors.white,
-                      iconSize: Dimensions.iconSize24,
+              child: Container(
+                margin: EdgeInsets.only(
+                    top: Dimensions.height30, bottom: Dimensions.height20),
+                padding: EdgeInsets.only(
+                    left: Dimensions.width20, right: Dimensions.width20),
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      color: AppColors.buttonBackgroundColor,  // Specify the color of the border
+                      width: 1.0,           // Specify the width of the border
                     ),
                   ),
-                  SizedBox(
-                    width: Dimensions.width20,
-                  ),
-                  Container(
-                    child: BigText(
-                      text: "Ubah Biodata ",
-                      fontWeight: FontWeight.bold,
+                ),
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Get.back();
+                      },
+                      child: AppIcon(
+                        icon: Icons.arrow_back,
+                        iconColor: AppColors.redColor,
+                        backgroundColor: Colors.white.withOpacity(0.0),
+                        iconSize: Dimensions.iconSize24,
+                      ),
                     ),
-                  ),
-                ],
+                    SizedBox(
+                      width: Dimensions.width20,
+                    ),
+                    Container(
+                      child: BigText(
+                        text: "Ubah Biodata",
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             SizedBox(

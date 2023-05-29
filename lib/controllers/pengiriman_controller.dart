@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:rumah_kreatif_toba/controllers/alamat_controller.dart';
 
 import '../base/show_custom_message.dart';
 import '../base/snackbar_message.dart';
@@ -7,12 +8,24 @@ import '../models/response_model.dart';
 import '../routes/route_helper.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
+import 'auth_controller.dart';
+
 class PengirimanController extends GetxController{
   final PengirimanRepo pengirimanRepo;
   PengirimanController({required this.pengirimanRepo});
 
   // int _paymentIndex = 0;
   // int get paymentIndex => _paymentIndex;
+
+  @override
+  void initState() {
+    bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
+    if (_userLoggedIn) {
+      Get.find<AlamatController>().getAlamatUser();
+    }
+  }
+  String _alamatType = "aa";
+  String get alamatType => _alamatType;
 
   RxInt paymentIndex = RxInt(0);
 
@@ -68,6 +81,11 @@ class PengirimanController extends GetxController{
 
   void setTypePengiriman(String title) {
     checkedtypePengiriman.value = title;
+    update();
+  }
+
+  void setTypeAlamat(String type){
+    _alamatType = type;
     update();
   }
 
