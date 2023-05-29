@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rumah_kreatif_toba/controllers/alamat_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/cart_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/popular_produk_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/wishlist_controller.dart';
@@ -34,6 +35,9 @@ class MyApp extends StatelessWidget {
     Get.find<CartController>().getKeranjangList();
     Get.find<WishlistController>().getWishlistList();
     Get.find<BankController>().getBankList();
+    Get.find<AlamatController>().getAlamat();
+    Get.find<AlamatController>().getAlamatUser();
+    Get.find<AlamatController>().getAlamatToko();
 
     return GetBuilder<PopularProdukController>(
       builder: (_) {

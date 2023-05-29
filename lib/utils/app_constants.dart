@@ -11,7 +11,6 @@ class AppConstants {
   static const String BASE_URL =
       "http://192.168.89.154/tobazonerework/public/api/";
 
-
   static const String POPULAR_PRODUCT_URL = "produk";
   static const String KATEGORI_PRODUCT_URL = "lihat_produk";
 
