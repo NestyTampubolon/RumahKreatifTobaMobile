@@ -75,7 +75,7 @@ class AppConstants {
 
   static const String DAFTAR_ALAMAT_TOKO_URL ="alamattoko";
   static const String TAMBAH_ALAMAT_TOKO = "tambahalamattoko";
-  static const String HAPUS_ALAMAT_TOKO_URL = "hapusalamattoko  ";
+  static const String HAPUS_ALAMAT_TOKO_URL = "hapusalamattoko";
 
   static const String TOKEN = "";
   static const String PHONE = "";

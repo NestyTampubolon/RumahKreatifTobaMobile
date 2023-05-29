@@ -6,8 +6,11 @@ import 'package:rumah_kreatif_toba/pages/home/home_page_body.dart';
 import 'package:rumah_kreatif_toba/utils/colors.dart';
 import 'package:rumah_kreatif_toba/widgets/big_text.dart';
 import 'package:get/get.dart';
+import '../../controllers/alamat_controller.dart';
+import '../../controllers/bank_controller.dart';
 import '../../controllers/popular_produk_controller.dart';
 import '../../controllers/user_controller.dart';
+import '../../controllers/wishlist_controller.dart';
 import '../../routes/route_helper.dart';
 import '../../utils/dimensions.dart';
 import '../../widgets/app_icon.dart';
@@ -30,6 +33,7 @@ class _MainHomePageState extends State<MainHomePage> {
       Get.find<UserController>().getUser();
       Get.find<CartController>().getKeranjangList();
     }
+
   }
 
 

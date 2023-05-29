@@ -1,14 +1,16 @@
 import 'dart:async';
-import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:get/get.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:rumah_kreatif_toba/pages/home/home_page.dart';
 import 'package:rumah_kreatif_toba/routes/route_helper.dart';
 
-import 'package:animated_splash_screen/animated_splash_screen.dart';
 
+import '../../controllers/alamat_controller.dart';
+import '../../controllers/auth_controller.dart';
+import '../../controllers/bank_controller.dart';
+import '../../controllers/cart_controller.dart';
 import '../../controllers/popular_produk_controller.dart';
+import '../../controllers/wishlist_controller.dart';
 import '../../utils/dimensions.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -24,6 +26,15 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> _loadResource() async {
     await Get.find<PopularProdukController>().getPopularProdukList();
+    bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
+    if (_userLoggedIn) {
+      await Get.find<CartController>().getKeranjangList();
+      await Get.find<WishlistController>().getWishlistList();
+      await Get.find<BankController>().getBankList();
+      await Get.find<AlamatController>().getAlamat();
+      await Get.find<AlamatController>().getAlamatUser();
+      await Get.find<AlamatController>().getAlamatToko();
+    }
   }
 
   @override

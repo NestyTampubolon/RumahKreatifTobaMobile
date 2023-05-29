@@ -625,190 +625,194 @@ class PembelianPageState extends GetView<AlamatController> {
                                             backgroundColor:
                                             Colors.transparent,
                                             context: context,
-                                            builder: (context) {
-                                              return SingleChildScrollView(
-                                                child: Container(
-                                                  width:
-                                                  Dimensions.screenWidth,
-                                                  height: Dimensions
-                                                      .screenHeight,
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    borderRadius: BorderRadius.only(
-                                                      topLeft:
-                                                      Radius.circular(
-                                                          Dimensions
-                                                              .radius20),
-                                                      topRight:
-                                                      Radius.circular(
-                                                          Dimensions
-                                                              .radius20),
+                                            isScrollControlled: true,
+                                            builder: (BuildContext context){
+                                              return LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints){
+                                                return SingleChildScrollView(
+                                                  child: ConstrainedBox(
+                                                    constraints: BoxConstraints(
+                                                      minHeight: constraints.maxHeight
                                                     ),
-                                                  ),
-                                                  padding: EdgeInsets.only(
-                                                      top:
-                                                      Dimensions.height30,
-                                                      left:
-                                                      Dimensions.width20,
-                                                      right:
-                                                      Dimensions.width20),
-                                                  child: Column(
-                                                    children: [
-                                                      Row(children: [
-                                                        GestureDetector(
-                                                          onTap: () {
-                                                            Navigator.pop(
-                                                                context);
-                                                          },
-                                                          child: AppIcon(
-                                                            icon:
-                                                            CupertinoIcons
-                                                                .xmark,
-                                                            size: Dimensions
-                                                                .iconSize24,
-                                                            iconColor:
-                                                            AppColors
-                                                                .redColor,
-                                                            backgroundColor:
-                                                            Colors.white
-                                                                .withOpacity(
-                                                                0.0),
+                                                    child: IntrinsicHeight(
+                                                      child: Container(
+                                                        height: Dimensions.screenHeight/2,
+                                                        width:
+                                                        Dimensions.screenWidth,
+                                                        decoration: BoxDecoration(
+                                                          color: Colors.white,
+                                                          borderRadius: BorderRadius.only(
+                                                            topLeft:
+                                                            Radius.circular(
+                                                                Dimensions
+                                                                    .radius20),
+                                                            topRight:
+                                                            Radius.circular(
+                                                                Dimensions
+                                                                    .radius20),
                                                           ),
                                                         ),
-                                                        SizedBox(
-                                                          width: Dimensions
-                                                              .width20,
-                                                        ),
-                                                        BigText(
-                                                          text:
-                                                          "Pilih Pengiriman",
-                                                          size: Dimensions
-                                                              .font26,
-                                                        ),
-                                                      ]),
-                                                      Divider(
-                                                          color: AppColors
-                                                              .buttonBackgroundColor),
-                                                      Container(
-                                                        height: 200,
                                                         padding: EdgeInsets.only(
-                                                            left: Dimensions
-                                                                .width20,
-                                                            right: Dimensions
-                                                                .width20,
-                                                            top: Dimensions
-                                                                .height20),
-                                                        child: SingleChildScrollView(
-                                                          child: Column(
-                                                            children: [
-                                                              PengirimanOptionButton(
-                                                                  icon: Icons
-                                                                      .money,
-                                                                  title:
-                                                                  'Ambil Ditempat Rp0',
-                                                                  index: 1,
-                                                                  purchaseIndex:
-                                                                  merchantIndex),
-                                                              SizedBox(
-                                                                  height: Dimensions
-                                                                      .height10),
-                                                              PengirimanOptionButton(
-                                                                  icon: Icons
-                                                                      .money,
-                                                                  title:
-                                                                  'Pesanan Dikirim',
-                                                                  index: 2,
-                                                                  purchaseIndex:
-                                                                  merchantIndex),
-                                                              Obx(
-                                                                    () => Get.find<PengirimanController>()
-                                                                    .paymentIndex
-                                                                    .value ==
-                                                                    2
-                                                                    ? Visibility(
-                                                                  visible:
-                                                                  true, // Set visibility to true when index is 2
-                                                                  child:
-                                                                  Column(
-                                                                    children: [
-                                                                      DropdownSearch<Map<String, dynamic>>(
-                                                                        mode: Mode.MENU,
-                                                                        showClearButton: true,
-                                                                        label: "Tipe Kurir",
-                                                                        hint : "Pilih tipe pengiriman...",
-                                                                        showSearchBox: true,
-                                                                        items: [
-                                                                          {
-                                                                            "code" : "jne",
-                                                                            "name" : "Jalur Nugraha Ekakurir (JNE)"
-                                                                          },
-                                                                          {
-                                                                            "code" : "pos",
-                                                                            "name" : "Perusahaan Opsional Surat (POS Indonesia)"
-                                                                          },
-                                                                          {
-                                                                            "code" : "tiki",
-                                                                            "name" : "Titipan Kilat (TIKI)"
-                                                                          }
-                                                                        ],
-                                                                        dropdownSearchDecoration: InputDecoration(labelText: "Pengiriman"),
-                                                                        onChanged:(value){
-                                                                          if(value != null){
-                                                                            controller.kurir.value = value['code'];
-                                                                            controller.showButton();
-                                                                            print(controller.kurir.value);
-                                                                          }else{
-                                                                            controller.hiddenButton.value = true;
-                                                                            controller.kurir.value = "";
-                                                                          }
-                                                                        },
-                                                                        itemAsString: (item) => "${item?['name']}",
-                                                                        popupItemBuilder: (context, item, isSelected) =>
-                                                                            Container(
-                                                                              padding: EdgeInsets.all(20),
-                                                                              child: Text("${item['name']}",
-                                                                                style: TextStyle(
-                                                                                  fontSize: 18,
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                      ),
-                                                                      Obx(
-                                                                            () => controller.hiddenButton.isTrue
-                                                                            ? SizedBox()
-                                                                            : GestureDetector(
-                                                                          onTap: () {
-                                                                            // print(controller.cityAsalId);
-                                                                            // print(controller.cityTujuanId);
-                                                                            ongkosKirim(controller.cityAsalId,controller.cityTujuanId, controller.berat, controller.kurir);
-                                                                          },
-                                                                          child: AppIcon(
-                                                                            icon: Icons.shopping_bag_outlined,
-                                                                            iconSize: Dimensions.iconSize24,
-                                                                            iconColor: AppColors.redColor,
-                                                                            backgroundColor:
-                                                                            Colors.white.withOpacity(0.0),
-                                                                          ),
-                                                                        ),
-                                                                      )
-                                                                    ],
-                                                                  ),
-                                                                )
-                                                                    : Visibility(
-                                                                  visible:
-                                                                  false, // Set visibility to false when index is not 2
-                                                                  child:
-                                                                  Container(),
+                                                            top:
+                                                            Dimensions.height30,
+                                                            left:
+                                                            Dimensions.width20,
+                                                            right:
+                                                            Dimensions.width20),
+                                                        child: Column(
+                                                          children: [
+                                                            Row(children: [
+                                                              GestureDetector(
+                                                                onTap: () {
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                },
+                                                                child: AppIcon(
+                                                                  icon:
+                                                                  CupertinoIcons
+                                                                      .xmark,
+                                                                  size: Dimensions
+                                                                      .iconSize24,
+                                                                  iconColor:
+                                                                  AppColors
+                                                                      .redColor,
+                                                                  backgroundColor:
+                                                                  Colors.white
+                                                                      .withOpacity(
+                                                                      0.0),
                                                                 ),
                                                               ),
-                                                            ],
-                                                          ),
+                                                              SizedBox(
+                                                                width: Dimensions
+                                                                    .width20,
+                                                              ),
+                                                              BigText(
+                                                                text:
+                                                                "Pilih Pengiriman",
+                                                                size: Dimensions
+                                                                    .font26,
+                                                              ),
+                                                            ]),
+                                                            Divider(
+                                                                color: AppColors
+                                                                    .buttonBackgroundColor),
+                                                            Column(
+                                                              children: [
+                                                                PengirimanOptionButton(
+                                                                    icon: Icons
+                                                                        .money,
+                                                                    title:
+                                                                    'Ambil Ditempat Rp0',
+                                                                    index: 1,
+                                                                    purchaseIndex:
+                                                                    merchantIndex),
+                                                                SizedBox(
+                                                                    height: Dimensions
+                                                                        .height10),
+                                                                PengirimanOptionButton(
+                                                                    icon: Icons
+                                                                        .money,
+                                                                    title:
+                                                                    'Pesanan Dikirim',
+                                                                    index: 2,
+                                                                    purchaseIndex:
+                                                                    merchantIndex),
+                                                                Obx(
+                                                                      () => Get.find<PengirimanController>()
+                                                                      .paymentIndex
+                                                                      .value ==
+                                                                      2
+                                                                      ? Visibility(
+                                                                    visible:
+                                                                    true, // Set visibility to true when index is 2
+                                                                    child:
+                                                                    Column(
+                                                                      children: [
+                                                                        DropdownSearch<Map<String, dynamic>>(
+                                                                          mode: Mode.MENU,
+                                                                          showClearButton: true,
+                                                                          label: "Tipe Kurir",
+                                                                          hint : "Pilih tipe pengiriman...",
+                                                                          showSearchBox: true,
+                                                                          items: [
+                                                                            {
+                                                                              "code" : "jne",
+                                                                              "name" : "Jalur Nugraha Ekakurir (JNE)"
+                                                                            },
+                                                                            {
+                                                                              "code" : "pos",
+                                                                              "name" : "Perusahaan Opsional Surat (POS Indonesia)"
+                                                                            },
+                                                                            {
+                                                                              "code" : "tiki",
+                                                                              "name" : "Titipan Kilat (TIKI)"
+                                                                            }
+                                                                          ],
+                                                                          dropdownSearchDecoration: InputDecoration(labelText: "Pengiriman"),
+                                                                          onChanged:(value){
+                                                                            if(value != null){
+                                                                              controller.kurir.value = value['code'];
+                                                                              controller.showButton();
+                                                                              print(controller.kurir.value);
+                                                                            }else{
+                                                                              controller.hiddenButton.value = true;
+                                                                              controller.kurir.value = "";
+                                                                            }
+                                                                          },
+                                                                          itemAsString: (item) => "${item?['name']}",
+                                                                          popupItemBuilder: (context, item, isSelected) =>
+                                                                              Container(
+                                                                                padding: EdgeInsets.all(20),
+                                                                                child: Text("${item['name']}",
+                                                                                  style: TextStyle(
+                                                                                    fontSize: 18,
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                        ),
+                                                                        Obx(
+                                                                              () => controller.hiddenButton.isTrue
+                                                                              ? SizedBox()
+                                                                              : GestureDetector(
+                                                                            onTap: () {
+                                                                              // print(controller.cityAsalId);
+                                                                              // print(controller.cityTujuanId);
+                                                                              ongkosKirim(controller.cityAsalId,controller.cityTujuanId, controller.berat, controller.kurir);
+                                                                            },
+                                                                            child: Center(
+                                                                              child: Row(
+                                                                                children: [
+                                                                                  BigText(text: "Kirim", size: Dimensions.font16, color: AppColors.redColor,),
+                                                                                  AppIcon(
+                                                                                    icon: Icons.send,
+                                                                                    iconSize: Dimensions.iconSize24,
+                                                                                    iconColor: AppColors.redColor,
+                                                                                    backgroundColor:
+                                                                                    Colors.white.withOpacity(0.0),
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+                                                                            )
+                                                                          ),
+                                                                        )
+                                                                      ],
+                                                                    ),
+                                                                  )
+                                                                      : Visibility(
+                                                                    visible:
+                                                                    false, // Set visibility to false when index is not 2
+                                                                    child:
+                                                                    Container(),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            )
+                                                          ],
                                                         ),
-                                                      )
-                                                    ],
+                                                      ),
+                                                    ),
                                                   ),
-                                                ),
-                                              );
+                                                );
+                                              });
                                             });
                                       },
                                       child: Row( children: [
