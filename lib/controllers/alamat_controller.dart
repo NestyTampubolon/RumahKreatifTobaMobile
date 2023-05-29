@@ -23,6 +23,7 @@ class AlamatController extends GetxController {
   RxString provTujuanId = "0".obs;
   RxString subTujuanId = "0".obs;
   RxInt berat = 0.obs;
+  RxInt HargaPengiriman = 0.obs;
   var hiddenButton = true.obs;
   var kurir = "".obs;
 
@@ -48,6 +49,10 @@ class AlamatController extends GetxController {
     }else{
       hiddenButton.value = true;
     }
+  }
+  void setHargaPengiriman(int? harga) {
+    HargaPengiriman.value = harga!;
+    update();
   }
 
   Future<void> getAlamat() async {
@@ -195,6 +200,4 @@ class AlamatController extends GetxController {
       update();
     } else {}
   }
-
-
 }

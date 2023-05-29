@@ -4,7 +4,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rumah_kreatif_toba/controllers/pengiriman_controller.dart';
-import 'package:rumah_kreatif_toba/widgets/payment_option_button.dart';
+import 'package:rumah_kreatif_toba/models/courier_models.dart';
 import 'package:rumah_kreatif_toba/widgets/small_text.dart';
 import 'package:http/http.dart' as http;
 import '../../base/show_custom_message.dart';
@@ -98,7 +98,42 @@ class PembelianPageState extends GetView<AlamatController> {
           },
         );
         var data = jsonDecode(response.body) as Map<String, dynamic>;
-        print(data);
+        var results = data["rajaongkir"]["results"] as List<dynamic>;
+        var listAllCourier = Courier.fromJsonList(results);
+        var courier = listAllCourier[0];
+        Get.defaultDialog(
+          title: courier.name!,
+          content: Column(
+            children: courier.costs!
+                .map(
+                    (e) =>
+                    GestureDetector(
+                      child: ListTile(
+                        title: Text("${e.service}"),
+                        subtitle: PriceText(
+                          text: CurrencyFormat
+                              .convertToIdr(
+                              e.cost![0].value,
+                              0),
+                          size: Dimensions
+                              .font16,
+                        ),
+                        trailing: Text(courier.code == "pos"
+                            ?"${e.cost![0].etd}"
+                            :"${e.cost![0].etd} HARI"),
+                      ),
+                      onTap: (){
+                        controller.setHargaPengiriman(e.cost![0].value);
+                        print(e.cost![0].value);
+                        Navigator.pop(
+                            context);
+                      },
+                    )
+
+            ).toList(),
+          ),
+        );
+
       }catch(err){
         Get.defaultDialog(
           title :  "Eror",
@@ -249,29 +284,30 @@ class PembelianPageState extends GetView<AlamatController> {
                                                                     spreadRadius:
                                                                         1)
                                                               ]),
-                                                          child: ListTile(
-                                                              dense: true,
-                                                              title: Text(
-                                                                "Alamat ${index + 1}",
-                                                                style: TextStyle(
-                                                                    fontSize:
+                                                          child: Obx(() =>
+                                                              ListTile(
+                                                                  dense: true,
+                                                                  title: Text(
+                                                                    "Alamat ${index + 1}",
+                                                                    style: TextStyle(
+                                                                        fontSize:
                                                                         Dimensions
                                                                             .font20,
-                                                                    fontWeight:
+                                                                        fontWeight:
                                                                         FontWeight
                                                                             .bold),
-                                                              ),
-                                                              subtitle: Text(
-                                                                  "${alamat.user_street_address?.toString() ?? ""}, ${alamat.city_name?.toString() ?? ""}, ${alamat.province_name?.toString() ?? ""} ",
-                                                                  style:
+                                                                  ),
+                                                                  subtitle: Text(
+                                                                      "${alamat.user_street_address?.toString() ?? ""}, ${alamat.city_name?.toString() ?? ""}, ${alamat.province_name?.toString() ?? ""} ",
+                                                                      style:
                                                                       TextStyle(
-                                                                    fontSize:
+                                                                        fontSize:
                                                                         Dimensions
                                                                             .font16,
-                                                                  )),
-                                                              trailing: Icon(
-                                                                  CupertinoIcons
-                                                                      .circle)),
+                                                                      )),
+                                                                  trailing: Icon(
+                                                                      CupertinoIcons
+                                                                          .circle)),)
                                                         ),
                                                       ),
                                                     ],
@@ -562,6 +598,14 @@ class PembelianPageState extends GetView<AlamatController> {
                                       }),
                                   Divider(
                                       color: AppColors.buttonBackgroundColor),
+                                  Obx(() =>
+                                      Column(
+                                        children: [
+                                          Text("Ongkir : ${controller.HargaPengiriman}"),
+                                          Text("Pengiriman : ${controller.kurir.value}"),
+                                        ],
+                                      )
+                                  ),
                                   Container(
                                     padding: EdgeInsets.only(
                                         top: Dimensions.height10,
@@ -698,7 +742,7 @@ class PembelianPageState extends GetView<AlamatController> {
                                                                           items: [
                                                                             {
                                                                               "code" : "jne",
-                                                                              "name" : "Tiki Jalur Nugraha Ekakurir (JNE)"
+                                                                              "name" : "Jalur Nugraha Ekakurir (JNE)"
                                                                             },
                                                                             {
                                                                               "code" : "pos",
@@ -736,7 +780,9 @@ class PembelianPageState extends GetView<AlamatController> {
                                                                               ? SizedBox()
                                                                               : GestureDetector(
                                                                             onTap: () {
-                                                                              ongkosKirim(controller.cityAsalId, controller.cityTujuanId, controller.berat, controller.kurir);
+                                                                              // print(controller.cityAsalId);
+                                                                              // print(controller.cityTujuanId);
+                                                                              ongkosKirim(controller.cityAsalId,controller.cityTujuanId, controller.berat, controller.kurir);
                                                                             },
                                                                             child: AppIcon(
                                                                               icon: Icons.shopping_bag_outlined,
@@ -767,7 +813,7 @@ class PembelianPageState extends GetView<AlamatController> {
                                                 );
                                               });
                                         },
-                                        child: Row(children: [
+                                        child: Row( children: [
                                           AppIcon(
                                             icon: Icons.note,
                                             iconColor: AppColors.redColor,
@@ -830,7 +876,7 @@ class PembelianPageState extends GetView<AlamatController> {
                             ),
                             PriceText(
                               text: CurrencyFormat.convertToIdr(
-                                  calculateTotal(), 0),
+                                  calculateTotal() + controller.HargaPengiriman.toDouble(), 0),
                               size: Dimensions.font16,
                             ),
                             SizedBox(
