@@ -18,6 +18,7 @@ import 'package:grouped_list/grouped_list.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import '../../base/show_custom_message.dart';
 import '../../base/snackbar_message.dart';
+import '../../controllers/alamat_controller.dart';
 import '../../controllers/auth_controller.dart';
 import '../../controllers/user_controller.dart';
 import '../../utils/app_constants.dart';
@@ -534,6 +535,7 @@ class _KeranjangPageState extends State<KeranjangPage> {
                                                         Get.to(
                                                           PembelianPageState(),
                                                         );
+                                                        Get.find<AlamatController>().getAlamatMerchant(merchantItems[merchantIndex].merchantId);
                                                       },
                                                       child: Row(children: [
                                                         BigText(

@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:rumah_kreatif_toba/helper/dependencies.dart';
 import '../../base/show_custom_message.dart';
 import '../../controllers/alamat_controller.dart';
 import '../../controllers/auth_controller.dart';
@@ -25,7 +26,26 @@ import '../../widgets/currency_format.dart';
 import '../../widgets/pengiriman_option_button.dart';
 import '../../widgets/price_text.dart';
 import '../../widgets/small_text.dart';
-class PembelianPageState extends GetView<AlamatController> {
+
+class PembelianPageState extends StatefulWidget {
+  const PembelianPageState({Key? key}) : super(key: key);
+
+  @override
+  State<PembelianPageState> createState() => _PembelianPageState();
+}
+
+class _PembelianPageState extends State<PembelianPageState> {
+
+  AlamatController controller = Get.find<AlamatController>();
+ var subAsalId;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print("INIT BELI");
+    controller.getAlamatUser();
+  }
+
   @override
   Widget build(BuildContext context) {
     List<int?> _carId = [];
@@ -72,19 +92,18 @@ class PembelianPageState extends GetView<AlamatController> {
       controller.detailProduk(product_id).then((status) async {});
     }
 
-    Get.find<AlamatController>().getAlamatUser();
-
     bool isContainerVisible = false;
     void ongkosKirim(address_id, destination_id, berat, kurir) async{
       controller.showButton();
       Uri url = Uri.parse("https://pro.rajaongkir.com/api/cost");
       try{
+        print(controller.daftarAlamatList[0].city_id);
         final response = await http.post(
           url,
           body: {
             "origin" : "${controller.cityTujuanId}",
             "originType" : "city",
-            "destination" : "${controller.subAsalId}",
+            "destination" : "${controller.daftarAlamatList[0].city_id}",
             "destinationType" : "subdistrict",
             "weight" : "${controller.berat}",
             "courier" : "${controller.kurir}",
@@ -136,6 +155,7 @@ class PembelianPageState extends GetView<AlamatController> {
           title :  "Eror",
         );
       }
+
     }
 
     return Scaffold(
@@ -258,8 +278,6 @@ class PembelianPageState extends GetView<AlamatController> {
                                                         children: [
                                                           InkWell(
                                                             onTap: () {
-                                                              print(alamat
-                                                                  .user_address_id);
                                                               Navigator.pop(
                                                                   context);
                                                             },
@@ -336,15 +354,14 @@ class PembelianPageState extends GetView<AlamatController> {
                       height: Dimensions.height10,
                     ),
                     Divider(color: AppColors.buttonBackgroundColor),
-                    GetBuilder<AlamatController>(
-                      builder: (AlamatController) {
-                        return ListView.builder(
+                    Obx(() =>
+                        ListView.builder(
                           shrinkWrap: true,
                           itemCount:
-                          AlamatController.daftarAlamatUserList.length,
+                          controller.getDaftarAlamatUserList.length,
                           itemBuilder: (BuildContext context, int index) {
                             Alamat alamat =
-                            AlamatController.daftarAlamatUserList[index];
+                            controller.getDaftarAlamatUserList[index];
                             return Container(
                               child: Row(
                                 children: [
@@ -371,8 +388,7 @@ class PembelianPageState extends GetView<AlamatController> {
                               ),
                             );
                           },
-                        );
-                      },
+                        ),
                     ),
                     Divider(color: AppColors.buttonBackgroundColor),
                     GetBuilder<CartController>(builder: (cartController) {
@@ -599,7 +615,7 @@ class PembelianPageState extends GetView<AlamatController> {
                                       Column(
                                         children: [
                                           Text("Ongkir : ${controller.HargaPengiriman}"),
-                                          Text("Pengiriman : ${controller.kurir.value}"),
+                                          Text("Pengiriman : ${controller.namakurir.value}"),
                                         ],
                                       )
                                   ),
@@ -750,6 +766,7 @@ class PembelianPageState extends GetView<AlamatController> {
                                                                           onChanged:(value){
                                                                             if(value != null){
                                                                               controller.kurir.value = value['code'];
+                                                                              controller.namakurir.value = value['name'];
                                                                               controller.showButton();
                                                                               print(controller.kurir.value);
                                                                             }else{
@@ -877,7 +894,7 @@ class PembelianPageState extends GetView<AlamatController> {
                             ),
                             PriceText(
                               text: CurrencyFormat.convertToIdr(
-                                  calculateTotal() + controller.HargaPengiriman.toDouble(), 0),
+                                  calculateTotal().toDouble() + controller.HargaPengiriman.toDouble(), 0),
                               size: Dimensions.font16,
                             ),
                             SizedBox(

@@ -33,7 +33,7 @@ class TokoController extends GetxController {
   List<dynamic> _tokoList = [];
   List<dynamic> get tokoList => _tokoList;
 
-  List<dynamic> _profilTokoList = [];
+  RxList<dynamic> _profilTokoList = <dynamic>[].obs;
   List<dynamic> get profilTokoList => _profilTokoList;
 
   bool _isLoading = false;

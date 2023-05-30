@@ -23,8 +23,8 @@ class UserController extends GetxController implements GetxService {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  List<dynamic> _usersList = [];
-  List<dynamic> get usersList => _usersList;
+  RxList<Users> _usersList = <Users>[].obs;
+  List<dynamic> get usersList => _usersList.value;
 
   late AuthController _auth;
 
@@ -33,7 +33,7 @@ class UserController extends GetxController implements GetxService {
     late ResponseModel responseModel;
     if (response.statusCode == 200) {
       List<dynamic> responseBody = response.body;
-      _usersList = [];
+      _usersList.value = [];
       for (dynamic item in responseBody) {
         Users users = Users.fromJson(item);
         _usersList.add(users);

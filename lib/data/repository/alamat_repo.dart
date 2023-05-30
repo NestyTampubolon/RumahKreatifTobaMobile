@@ -79,4 +79,9 @@ class AlamatRepo {
     return await apiClient
         .postData(AppConstants.DAFTAR_ALAMAT_USER, {"user_address_id": user_address_id});
   }
+
+  Future<Response> getAlamatMerchantList() async {
+    return await apiClient.getData(AppConstants.DAFTAR_ALAMAT_MERCHANT_URL);
+  }
+
 }

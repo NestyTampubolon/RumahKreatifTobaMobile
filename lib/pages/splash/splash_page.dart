@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:rumah_kreatif_toba/controllers/user_controller.dart';
 import 'package:rumah_kreatif_toba/routes/route_helper.dart';
 
 
@@ -29,10 +30,12 @@ class _SplashScreenState extends State<SplashScreen> {
     bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
     if (_userLoggedIn) {
       await Get.find<CartController>().getKeranjangList();
+      await Get.find<UserController>().getUser().then((value) async {
+        await Get.find<AlamatController>().getAlamat();
+        await Get.find<AlamatController>().getAlamatUser();
+      });
       await Get.find<WishlistController>().getWishlistList();
       await Get.find<BankController>().getBankList();
-      await Get.find<AlamatController>().getAlamat();
-      await Get.find<AlamatController>().getAlamatUser();
       await Get.find<AlamatController>().getAlamatToko();
     }
   }

@@ -9,7 +9,7 @@ class AppConstants {
       "http://kreatif.tobakab.go.id/asset/";
 
   static const String BASE_URL =
-      "http://172.30.43.165/RumahKreatifBackend/public/api/";
+      "http://172.20.10.4/RumahKreatifBackend/public/api/";
 
 
   static const String POPULAR_PRODUCT_URL = "produk";
@@ -75,6 +75,7 @@ class AppConstants {
   static const String DAFTAR_ALAMAT_USER = "alamatpengguna_now";
 
   static const String DAFTAR_ALAMAT_TOKO_URL ="alamattoko";
+  static const String DAFTAR_ALAMAT_MERCHANT_URL ="alamatmerchant";
   static const String TAMBAH_ALAMAT_TOKO = "tambahalamattoko";
   static const String HAPUS_ALAMAT_TOKO_URL = "hapusalamattoko";
 
