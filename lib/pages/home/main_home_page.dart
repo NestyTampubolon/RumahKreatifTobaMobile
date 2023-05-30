@@ -6,8 +6,11 @@ import 'package:rumah_kreatif_toba/pages/home/home_page_body.dart';
 import 'package:rumah_kreatif_toba/utils/colors.dart';
 import 'package:rumah_kreatif_toba/widgets/big_text.dart';
 import 'package:get/get.dart';
+import '../../controllers/alamat_controller.dart';
+import '../../controllers/bank_controller.dart';
 import '../../controllers/popular_produk_controller.dart';
 import '../../controllers/user_controller.dart';
+import '../../controllers/wishlist_controller.dart';
 import '../../routes/route_helper.dart';
 import '../../utils/dimensions.dart';
 import '../../widgets/app_icon.dart';
@@ -30,6 +33,7 @@ class _MainHomePageState extends State<MainHomePage> {
       Get.find<UserController>().getUser();
       Get.find<CartController>().getKeranjangList();
     }
+
   }
 
 
@@ -110,28 +114,28 @@ class _MainHomePageState extends State<MainHomePage> {
                             },
                             child: Stack(
                               children: [
-                                AppIcon(icon: Icons.shopping_cart_outlined, size: Dimensions.height45, iconColor: AppColors.redColor, backgroundColor: Colors.white.withOpacity(0.0),),
-                                controller.keranjangList.length >= 1
-                                    ? Positioned(
-                                    right: 0,
-                                    top: 0,
-                                    child: AppIcon(
-                                      icon: Icons.circle,
-                                      size: 20,
-                                      iconColor: AppColors.notification_success,
-                                    ))
-                                    : Container(),
-                                controller.keranjangList.length >= 1
-                                    ? Positioned(
-                                  right: 6,
-                                  top: 3,
-                                  child: BigText(
-                                    text: controller.keranjangList.length.toString(),
-                                    size: 10,
-                                    color: Colors.white,
-                                  ),
-                                )
-                                    : Container(),
+                                 AppIcon(icon: Icons.shopping_cart_outlined, size: Dimensions.height45, iconColor: AppColors.redColor, backgroundColor: Colors.white.withOpacity(0.0),),
+                                  controller.keranjangList.length >= 1
+                                      ? Positioned(
+                                      right: 0,
+                                      top: 0,
+                                      child: AppIcon(
+                                        icon: Icons.circle,
+                                        size: 20,
+                                        iconColor: AppColors.notification_success,
+                                      ))
+                                      : Container(),
+                                  controller.keranjangList.length >= 1
+                                      ? Positioned(
+                                    right: 6,
+                                    top: 3,
+                                    child: BigText(
+                                      text: controller.keranjangList.length.toString(),
+                                      size: 10,
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                      : Container(),
                               ],
                             ),
                           );

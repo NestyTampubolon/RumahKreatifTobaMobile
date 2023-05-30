@@ -25,6 +25,50 @@ class KategoriProdukDetail extends StatefulWidget {
 
 class _KategoriProdukDetailState extends State<KategoriProdukDetail> {
   var kategori = Get.arguments;
+  Filter? selectedValue;
+
+  List<Filter?> filters = [
+    Filter(
+      id: 1,
+      name: "Harga Tertinggi"
+    ),
+    Filter(
+      id: 2,
+      name: "Harga Terendah"
+    )
+  ];
+
+  List<dynamic> _list = Get.find<PopularProdukController>()
+      .kategoriProdukList.toList();
+  @override
+  initState(){
+    _list =  Get.find<PopularProdukController>().kategoriProdukList.toList();
+    print(_list);
+    super.initState();
+  }
+
+  Future<void> _filter(int? keyword) async {
+    try {
+      List<dynamic> results = Get.find<PopularProdukController>()
+          .kategoriProdukList
+          .where((produk) => produk.namaKategori.toString() == kategori)
+          .toList();
+
+      if (keyword == 1) {
+        results.sort((a, b) => a.price.compareTo(b.price));
+      } else if (keyword == 2) {
+        results.sort((a, b) => b.price.compareTo(a.price));
+      }
+
+      setState(() {
+        _list = results;
+      });
+    } catch (e) {
+      print('Error filtering products: $e');
+      // Handle the error as needed
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +146,6 @@ class _KategoriProdukDetailState extends State<KategoriProdukDetail> {
             SizedBox(
               height: Dimensions.height10,
             ),
-
             Divider(color: AppColors.buttonBackgroundColor),
             Row(
               children: [
@@ -133,23 +176,36 @@ class _KategoriProdukDetailState extends State<KategoriProdukDetail> {
                 ),
               ],
             ),
-
+            Container(
+              margin: EdgeInsets.all(Dimensions.height10/2),
+              padding: EdgeInsets.symmetric(vertical: Dimensions.width10/2, horizontal: Dimensions.height10),
+              decoration: BoxDecoration(
+                color: Colors.grey.shade200,
+                borderRadius: BorderRadius.circular(Dimensions.radius15/3)
+              ),
+              child: DropdownButton<Filter?>(items: filters.map<DropdownMenuItem<Filter?>>((e) => DropdownMenuItem(child: Text((e?.name ?? '').toString()), value: e,)).toList(),isExpanded:true, underline: SizedBox(),value: selectedValue, hint: Text('Urutkan berdasarkan'),
+                  onChanged: (value){
+                    _filter(selectedValue?.id);
+                    print(selectedValue?.id);
+                setState(() {
+                  selectedValue = value;
+                });
+                  }),
+            ),
             GetBuilder<PopularProdukController>(builder: (produkKategori) {
               return produkKategori.isLoaded
                   ? GridView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2, mainAxisExtent: Dimensions.height45*6),
-                  itemCount: produkKategori.kategoriProdukList.length,
+                  itemCount: _list.length,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     var gambarproduk = produkKategori
                         .imageProdukList
-                        .where((produk) => produk.productId == produkKategori
-                        .kategoriProdukList[index].productId);
-                    if (produkKategori.kategoriProdukList[index].namaKategori.toString() == "$kategori") {
-                      return CardProduk(product_id : produkKategori.kategoriProdukList[index].productId,productImageName : gambarproduk.single.productImageName, productName : produkKategori.kategoriProdukList[index].productName, merchantAddress : produkKategori.kategoriProdukList[index].subdistrictName, price: produkKategori.kategoriProdukList[index].price, countPurchases: produkKategori
-                          .kategoriProdukList[index].countProductPurchases, );
+                        .where((produk) => produk.productId == _list[index].productId);
+                    if (_list[index].namaKategori.toString() == "$kategori") {
+                      return CardProduk(product_id : _list[index].productId,productImageName : gambarproduk.single.productImageName, productName : _list[index].productName, merchantAddress : _list[index].subdistrictName, price: _list[index].price, countPurchases: _list[index].countProductPurchases, );
                     } else {
                       return SizedBox.shrink();
                     }
@@ -259,4 +315,11 @@ class _KategoriProdukDetailState extends State<KategoriProdukDetail> {
       ),
     );
   }
+}
+
+class Filter{
+  int? id;
+  String? name;
+
+  Filter({this.id, this.name});
 }

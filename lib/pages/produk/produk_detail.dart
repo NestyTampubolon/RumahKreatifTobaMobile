@@ -23,6 +23,7 @@ import '../../controllers/user_controller.dart';
 import '../../models/produk_models.dart';
 import '../../utils/app_constants.dart';
 import '../../widgets/big_text.dart';
+import '../../widgets/card_produk.dart';
 import '../../widgets/currency_format.dart';
 
 class ProdukDetail extends StatefulWidget {
@@ -69,10 +70,11 @@ class _ProdukDetailState extends State<ProdukDetail> {
 
   @override
   Widget build(BuildContext context) {
+
     var produkList = Get.find<PopularProdukController>().detailProdukList;
     var daftarproduk = produkList.firstWhere(
         (produk) => produk.productId == produkList[0].productId.toInt());
-
+    Get.find<PopularProdukController>().getKategoriProdukList("${daftarproduk.namaKategori}");
     var wishlistList = Get.find<WishlistController>().wishlistList;
     isProdukExist = wishlistList.any(
         (wishlist) => wishlist.productId == produkList[0].productId.toInt());
@@ -328,6 +330,7 @@ class _ProdukDetailState extends State<ProdukDetail> {
                     child: BigText(
                       text: "Deskripsi",
                       size: Dimensions.font16,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
 
@@ -383,6 +386,40 @@ class _ProdukDetailState extends State<ProdukDetail> {
                           ),
                         ],
                       )),
+                  Container(
+                    margin: EdgeInsets.only(
+                        left: Dimensions.width20, right: Dimensions.width20, top: Dimensions.height10),
+                    child: BigText(
+                      text: "Produk lain yang serupa",
+                      size: Dimensions.font16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  GetBuilder<PopularProdukController>(builder: (produkKategori) {
+                    return produkKategori.isLoaded
+                        ? GridView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2, mainAxisExtent: Dimensions.height45*6),
+                        itemCount: 6,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          var gambarproduk = produkKategori
+                              .imageProdukList
+                              .where((produk) => produk.productId == produkKategori
+                              .kategoriProdukList[index].productId);
+                          if (produkKategori.kategoriProdukList[index].namaKategori.toString() == "${daftarproduk.namaKategori}") {
+                            return CardProduk(product_id : produkKategori.kategoriProdukList[index].productId,productImageName : gambarproduk.single.productImageName, productName : produkKategori.kategoriProdukList[index].productName, merchantAddress : produkKategori.kategoriProdukList[index].subdistrictName, price: produkKategori.kategoriProdukList[index].price, countPurchases: produkKategori
+                                .kategoriProdukList[index].countProductPurchases, );
+                          } else {
+                            return SizedBox.shrink();
+                          }
+                        }
+                    )
+                        : CircularProgressIndicator(
+                      color: AppColors.redColor,
+                    );
+                  })
                 ],
               )
             ],
@@ -395,7 +432,6 @@ class _ProdukDetailState extends State<ProdukDetail> {
               children: [
                 GetBuilder<CartController>(builder: (cartController) {
                   return Container(
-                    height: Dimensions.bottomHeightBar,
                     padding: EdgeInsets.only(
                         top: Dimensions.height10,
                         bottom: Dimensions.height10,
@@ -499,7 +535,7 @@ class _ProdukDetailState extends State<ProdukDetail> {
                               },
                               child: Row(children: [
                                 BigText(
-                                  text: "Beli Langsung",
+                                  text: "Beli Sekarang",
                                   color: Colors.redAccent,
                                   size: Dimensions.height15,
                                 ),

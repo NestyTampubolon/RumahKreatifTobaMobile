@@ -29,7 +29,7 @@ class _UbahPasswordPageState extends State<UbahPasswordPage> {
       String passwordBaru = PasswordBaruController.text.trim();
 
       if (password.isEmpty) {
-        AwesomeSnackbarButton("Warning","Password masih kosong",ContentType.warning);
+        AwesomeSnackbarButton("Warning","Password lama masih kosong",ContentType.warning);
       } else if (passwordBaru.isEmpty) {
         AwesomeSnackbarButton("Warning","Password baru masih kosong",ContentType.warning);
       } else{
@@ -48,31 +48,43 @@ class _UbahPasswordPageState extends State<UbahPasswordPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                margin: EdgeInsets.only(top: Dimensions.height45),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Get.back();
-                      },
-                      child: AppIcon(
-                        icon: Icons.arrow_back,
-                        iconColor: AppColors.redColor,
-                        backgroundColor: Colors.white,
-                        iconSize: Dimensions.iconSize24,
+                child: Container(
+                  margin: EdgeInsets.only(
+                      top: Dimensions.height30, bottom: Dimensions.height20),
+                  padding: EdgeInsets.only(
+                      left: Dimensions.width20, right: Dimensions.width20),
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        color: AppColors.buttonBackgroundColor,  // Specify the color of the border
+                        width: 1.0,           // Specify the width of the border
                       ),
                     ),
-                    SizedBox(
-                      width: Dimensions.width20,
-                    ),
-                    Container(
-                      child: BigText(
-                        text: "Ubah Password ",
-                        fontWeight: FontWeight.bold,
+                  ),
+                  child: Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: AppIcon(
+                          icon: Icons.arrow_back,
+                          iconColor: AppColors.redColor,
+                          backgroundColor: Colors.white.withOpacity(0.0),
+                          iconSize: Dimensions.iconSize24,
+                        ),
                       ),
-                    ),
-                  ],
+                      SizedBox(
+                        width: Dimensions.width20,
+                      ),
+                      Container(
+                        child: BigText(
+                          text: "Ubah Password",
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(
@@ -87,13 +99,13 @@ class _UbahPasswordPageState extends State<UbahPasswordPage> {
                     right: Dimensions.width20,
                     bottom: Dimensions.height10),
                 child: BigText(
-                  text: "Password Sekarang",
+                  text: "Password Lama",
                   size: Dimensions.font16,
                 ),
               ),
               AppTextFieldPassword(
                 textController: PasswordController,
-                hintText: "Masukkan password sekarang",
+                hintText: "Masukkan password lama",
               ),
               SizedBox(
                 height: Dimensions.height20,

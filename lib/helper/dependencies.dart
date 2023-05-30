@@ -73,7 +73,7 @@ Future<void> init() async {
   Get.lazyPut(() => PesananController(pesananRepo: Get.find()));
   Get.put(PesananController(pesananRepo: Get.find()));
 
-  Get.lazyPut(() => AlamatController(alamatRepo: Get.find()));
+  Get.lazyPut(() => AlamatController(alamatRepo: Get.find()), fenix: true);
   Get.put(AlamatController(alamatRepo: Get.find()));
 
   Get.lazyPut(() => WishlistController(wishlistRepo: Get.find()));

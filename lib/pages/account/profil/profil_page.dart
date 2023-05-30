@@ -31,9 +31,17 @@ class ProfilPage extends StatelessWidget {
                   Container(
                     child: Container(
                       margin: EdgeInsets.only(
-                          top: Dimensions.height30),
+                          top: Dimensions.height30, bottom: Dimensions.height20),
                       padding: EdgeInsets.only(
                           left: Dimensions.width20, right: Dimensions.width20),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: AppColors.buttonBackgroundColor,  // Specify the color of the border
+                            width: 1.0,           // Specify the width of the border
+                          ),
+                        ),
+                      ),
                       child: Row(
                         children: [
                           GestureDetector(

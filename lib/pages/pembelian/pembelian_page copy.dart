@@ -1,32 +1,35 @@
-
 import 'dart:convert';
 
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:rumah_kreatif_toba/controllers/pengiriman_controller.dart';
+import 'package:rumah_kreatif_toba/widgets/payment_option_button.dart';
+import 'package:rumah_kreatif_toba/widgets/small_text.dart';
 import 'package:http/http.dart' as http;
 import '../../base/show_custom_message.dart';
 import '../../controllers/alamat_controller.dart';
 import '../../controllers/auth_controller.dart';
 import '../../controllers/cart_controller.dart';
-import '../../controllers/pengiriman_controller.dart';
 import '../../controllers/popular_produk_controller.dart';
 import '../../controllers/user_controller.dart';
 import '../../models/alamat_model.dart';
 import '../../models/cart_models.dart';
-import '../../models/courier_models.dart';
 import '../../routes/route_helper.dart';
 import '../../utils/app_constants.dart';
 import '../../utils/colors.dart';
 import '../../utils/dimensions.dart';
+import 'package:get/get.dart';
+
+import '../../widgets/alamat_options.dart';
 import '../../widgets/app_icon.dart';
 import '../../widgets/big_text.dart';
 import '../../widgets/currency_format.dart';
 import '../../widgets/pengiriman_option_button.dart';
 import '../../widgets/price_text.dart';
-import '../../widgets/small_text.dart';
-class PembelianPageState extends GetView<AlamatController> {
+import 'package:get/get.dart';
+
+class PembelianPageCopyState extends GetView<AlamatController> {
   @override
   Widget build(BuildContext context) {
     List<int?> _carId = [];
@@ -96,42 +99,7 @@ class PembelianPageState extends GetView<AlamatController> {
           },
         );
         var data = jsonDecode(response.body) as Map<String, dynamic>;
-        var results = data["rajaongkir"]["results"] as List<dynamic>;
-        var listAllCourier = Courier.fromJsonList(results);
-        var courier = listAllCourier[0];
-        Get.defaultDialog(
-          title: courier.name!,
-          content: Column(
-            children: courier.costs!
-                .map(
-                    (e) =>
-                    GestureDetector(
-                      child: ListTile(
-                        title: Text("${e.service}"),
-                        subtitle: PriceText(
-                          text: CurrencyFormat
-                              .convertToIdr(
-                              e.cost![0].value,
-                              0),
-                          size: Dimensions
-                              .font16,
-                        ),
-                        trailing: Text(courier.code == "pos"
-                            ?"${e.cost![0].etd}"
-                            :"${e.cost![0].etd} HARI"),
-                      ),
-                      onTap: (){
-                        controller.setHargaPengiriman(e.cost![0].value);
-                        print(e.cost![0].value);
-                        Navigator.pop(
-                            context);
-                      },
-                    )
-
-            ).toList(),
-          ),
-        );
-
+        print(data);
       }catch(err){
         Get.defaultDialog(
           title :  "Eror",
@@ -249,68 +217,68 @@ class PembelianPageState extends GetView<AlamatController> {
                                                       int index) {
                                                     Alamat alamat = AlamatController
                                                         .daftarAlamatList[index];
-                                                    return Container(
-                                                      height: 100,
-                                                      padding: EdgeInsets.only(
-                                                          left: Dimensions.width20,
-                                                          right: Dimensions.width20,
-                                                          top: Dimensions.height20),
-                                                      child: Column(
-                                                        children: [
-                                                          InkWell(
-                                                            onTap: () {
-                                                              print(alamat
-                                                                  .user_address_id);
-                                                              Navigator.pop(
-                                                                  context);
-                                                            },
-                                                            child: Container(
-                                                                decoration: BoxDecoration(
-                                                                    borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                        Dimensions.radius20 /
-                                                                            4),
-                                                                    color: Theme.of(context).cardColor,
-                                                                    boxShadow: [
-                                                                      BoxShadow(
-                                                                          color: Colors
-                                                                              .grey[
-                                                                          200]!,
-                                                                          blurRadius:
-                                                                          5,
-                                                                          spreadRadius:
-                                                                          1)
-                                                                    ]),
-                                                                child: Obx(() =>
-                                                                    ListTile(
-                                                                        dense: true,
-                                                                        title: Text(
-                                                                          "Alamat ${index + 1}",
-                                                                          style: TextStyle(
-                                                                              fontSize:
-                                                                              Dimensions
-                                                                                  .font20,
-                                                                              fontWeight:
-                                                                              FontWeight
-                                                                                  .bold),
-                                                                        ),
-                                                                        subtitle: Text(
-                                                                            "${alamat.user_street_address?.toString() ?? ""}, ${alamat.city_name?.toString() ?? ""}, ${alamat.province_name?.toString() ?? ""} ",
-                                                                            style:
-                                                                            TextStyle(
-                                                                              fontSize:
-                                                                              Dimensions
-                                                                                  .font16,
-                                                                            )),
-                                                                        trailing: Icon(
-                                                                            CupertinoIcons
-                                                                                .circle)),)
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    );
+                                                    // return Container(
+                                                    //   height: 100,
+                                                    //   padding: EdgeInsets.only(
+                                                    //       left: Dimensions.width20,
+                                                    //       right: Dimensions.width20,
+                                                    //       top: Dimensions.height20),
+                                                    //   child: Column(
+                                                    //     children: [
+                                                    //       InkWell(
+                                                    //         onTap: () {
+                                                    //           print(alamat
+                                                    //               .user_address_id);
+                                                    //           Navigator.pop(
+                                                    //               context);
+                                                    //         },
+                                                    //         child: Container(
+                                                    //           decoration: BoxDecoration(
+                                                    //               borderRadius:
+                                                    //               BorderRadius
+                                                    //                   .circular(
+                                                    //                   Dimensions.radius20 /
+                                                    //                       4),
+                                                    //               color: Theme.of(context).cardColor,
+                                                    //               boxShadow: [
+                                                    //                 BoxShadow(
+                                                    //                     color: Colors
+                                                    //                         .grey[
+                                                    //                     200]!,
+                                                    //                     blurRadius:
+                                                    //                     5,
+                                                    //                     spreadRadius:
+                                                    //                     1)
+                                                    //               ]),
+                                                    //           child: ListTile(
+                                                    //               dense: true,
+                                                    //               title: Text(
+                                                    //                 "Alamat ${index + 1}",
+                                                    //                 style: TextStyle(
+                                                    //                     fontSize:
+                                                    //                     Dimensions
+                                                    //                         .font20,
+                                                    //                     fontWeight:
+                                                    //                     FontWeight
+                                                    //                         .bold),
+                                                    //               ),
+                                                    //               subtitle: Text(
+                                                    //                   "${alamat.user_street_address?.toString() ?? ""}, ${alamat.city_name?.toString() ?? ""}, ${alamat.province_name?.toString() ?? ""} ",
+                                                    //                   style:
+                                                    //                   TextStyle(
+                                                    //                     fontSize:
+                                                    //                     Dimensions
+                                                    //                         .font16,
+                                                    //                   )),
+                                                    //               trailing: Icon(
+                                                    //                   CupertinoIcons
+                                                    //                       .circle)),
+                                                    //         ),
+                                                    //       ),
+                                                    //     ],
+                                                    //   ),
+                                                    // );
+                                                        return AlamatOption(value: alamat.user_street_address?.toString() ?? "",street: alamat.user_street_address?.toString() ?? "", city: alamat.city_name?.toString() ?? "", province: alamat.province_name?.toString() ?? "");
                                                   },
                                                 );
                                               }),
@@ -596,14 +564,6 @@ class PembelianPageState extends GetView<AlamatController> {
                                       }),
                                   Divider(
                                       color: AppColors.buttonBackgroundColor),
-                                  Obx(() =>
-                                      Column(
-                                        children: [
-                                          Text("Ongkir : ${controller.HargaPengiriman}"),
-                                          Text("Pengiriman : ${controller.namakurir.value}"),
-                                        ],
-                                      )
-                                  ),
                                   Container(
                                     padding: EdgeInsets.only(
                                         top: Dimensions.height10,
@@ -620,149 +580,21 @@ class PembelianPageState extends GetView<AlamatController> {
                                             Dimensions.radius20 / 2),
                                         color: Colors.white),
                                     child: GestureDetector(
-                                      onTap: () {
-                                        showModalBottomSheet(
-                                            backgroundColor:
-                                            Colors.transparent,
-                                            context: context,
-<<<<<<< HEAD
-                                            builder: (context) {
-                                              return SingleChildScrollView(
-                                                child: Container(
-                                                  width:
-                                                  Dimensions.screenWidth,
-                                                  height: Dimensions
-                                                      .screenHeight,
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    borderRadius: BorderRadius.only(
-                                                      topLeft:
-                                                      Radius.circular(
-                                                          Dimensions
-                                                              .radius20),
-                                                      topRight:
-                                                      Radius.circular(
-                                                          Dimensions
-                                                              .radius20),
-                                                    ),
-                                                  ),
-                                                  padding: EdgeInsets.only(
-                                                      top:
-                                                      Dimensions.height30,
-                                                      left:
-                                                      Dimensions.width20,
-                                                      right:
-                                                      Dimensions.width20),
-                                                  child: Column(
-                                                    children: [
-                                                      Row(children: [
-                                                        GestureDetector(
-                                                          onTap: () {
-                                                            Navigator.pop(
-                                                                context);
-                                                          },
-                                                          child: AppIcon(
-                                                            icon:
-                                                            CupertinoIcons
-                                                                .xmark,
-                                                            size: Dimensions
-                                                                .iconSize24,
-                                                            iconColor:
-                                                            AppColors
-                                                                .redColor,
-                                                            backgroundColor:
-                                                            Colors.white
-                                                                .withOpacity(
-                                                                0.0),
-                                                          ),
-                                                        ),
-                                                        SizedBox(
-                                                          width: Dimensions
-                                                              .width20,
-                                                        ),
-                                                        BigText(
-                                                          text:
-                                                          "Pilih Pengiriman",
-                                                          size: Dimensions
-                                                              .font26,
-                                                        ),
-                                                      ]),
-                                                      Divider(
-                                                          color: AppColors
-                                                              .buttonBackgroundColor),
-                                                      Container(
-                                                        height: 200,
-                                                        padding: EdgeInsets.only(
-                                                            left: Dimensions
-                                                                .width20,
-                                                            right: Dimensions
-                                                                .width20,
-                                                            top: Dimensions
-                                                                .height20),
-                                                        child: SingleChildScrollView(
-                                                          child: Column(
-                                                            children: [
-                                                              PengirimanOptionButton(
-                                                                  icon: Icons
-                                                                      .money,
-                                                                  title:
-                                                                  'Ambil Ditempat Rp0',
-                                                                  index: 1,
-                                                                  purchaseIndex:
-                                                                  merchantIndex),
-                                                              SizedBox(
-                                                                  height: Dimensions
-                                                                      .height10),
-                                                              PengirimanOptionButton(
-                                                                  icon: Icons
-                                                                      .money,
-                                                                  title:
-                                                                  'Pesanan Dikirim',
-                                                                  index: 2,
-                                                                  purchaseIndex:
-                                                                  merchantIndex),
-                                                              Obx(
-                                                                    () => Get.find<PengirimanController>()
-                                                                    .paymentIndex
-                                                                    .value ==
-                                                                    2
-                                                                    ? Visibility(
-                                                                  visible:
-                                                                  true, // Set visibility to true when index is 2
-                                                                  child:
-                                                                  Column(
-                                                                    children: [
-                                                                      DropdownSearch<Map<String, dynamic>>(
-                                                                        mode: Mode.MENU,
-                                                                        showClearButton: true,
-                                                                        label: "Tipe Kurir",
-                                                                        hint : "Pilih tipe pengiriman...",
-                                                                        showSearchBox: true,
-                                                                        items: [
-                                                                          {
-                                                                            "code" : "jne",
-                                                                            "name" : "Jalur Nugraha Ekakurir (JNE)"
-                                                                          },
-                                                                          {
-                                                                            "code" : "pos",
-                                                                            "name" : "Perusahaan Opsional Surat (POS Indonesia)"
-=======
-                                            isScrollControlled: true,
-                                            builder: (BuildContext context){
-                                              return LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints){
+                                        onTap: () {
+                                          showModalBottomSheet(
+                                              backgroundColor:
+                                              Colors.transparent,
+                                              context: context,
+                                              builder: (context) {
                                                 return SingleChildScrollView(
-                                                  child: ConstrainedBox(
-                                                    constraints: BoxConstraints(
-                                                      minHeight: constraints.maxHeight
-                                                    ),
-                                                    child: IntrinsicHeight(
-                                                      child: Container(
-                                                        height: Dimensions.screenHeight/2,
-                                                        width:
-                                                        Dimensions.screenWidth,
-                                                        decoration: BoxDecoration(
-                                                          color: Colors.white,
-                                                          borderRadius: BorderRadius.only(
+                                                  child: Container(
+                                                    width:
+                                                    Dimensions.screenWidth,
+                                                    height: Dimensions
+                                                            .screenHeight,
+                                                    decoration: BoxDecoration(
+                                                        color: Colors.white,
+                                                        borderRadius: BorderRadius.only(
                                                             topLeft:
                                                             Radius.circular(
                                                                 Dimensions
@@ -770,54 +602,62 @@ class PembelianPageState extends GetView<AlamatController> {
                                                             topRight:
                                                             Radius.circular(
                                                                 Dimensions
-                                                                    .radius20),
+                                                                    .radius20))),
+                                                    padding: EdgeInsets.only(
+                                                        top:
+                                                        Dimensions.height30,
+                                                        left:
+                                                        Dimensions.width20,
+                                                        right:
+                                                        Dimensions.width20),
+                                                    child: Column(
+                                                      children: [
+                                                        Row(children: [
+                                                          GestureDetector(
+                                                            onTap: () {
+                                                              Navigator.pop(
+                                                                  context);
+                                                            },
+                                                            child: AppIcon(
+                                                              icon:
+                                                              CupertinoIcons
+                                                                  .xmark,
+                                                              size: Dimensions
+                                                                  .iconSize24,
+                                                              iconColor:
+                                                              AppColors
+                                                                  .redColor,
+                                                              backgroundColor:
+                                                              Colors.white
+                                                                  .withOpacity(
+                                                                  0.0),
+                                                            ),
                                                           ),
-                                                        ),
-                                                        padding: EdgeInsets.only(
-                                                            top:
-                                                            Dimensions.height30,
-                                                            left:
-                                                            Dimensions.width20,
-                                                            right:
-                                                            Dimensions.width20),
-                                                        child: Column(
-                                                          children: [
-                                                            Row(children: [
-                                                              GestureDetector(
-                                                                onTap: () {
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                },
-                                                                child: AppIcon(
-                                                                  icon:
-                                                                  CupertinoIcons
-                                                                      .xmark,
-                                                                  size: Dimensions
-                                                                      .iconSize24,
-                                                                  iconColor:
-                                                                  AppColors
-                                                                      .redColor,
-                                                                  backgroundColor:
-                                                                  Colors.white
-                                                                      .withOpacity(
-                                                                      0.0),
-                                                                ),
-                                                              ),
-                                                              SizedBox(
-                                                                width: Dimensions
-                                                                    .width20,
-                                                              ),
-                                                              BigText(
-                                                                text:
-                                                                "Pilih Pengiriman",
-                                                                size: Dimensions
-                                                                    .font26,
-                                                              ),
-                                                            ]),
-                                                            Divider(
-                                                                color: AppColors
-                                                                    .buttonBackgroundColor),
-                                                            Column(
+                                                          SizedBox(
+                                                            width: Dimensions
+                                                                .width20,
+                                                          ),
+                                                          BigText(
+                                                            text:
+                                                            "Pilih Pengiriman",
+                                                            size: Dimensions
+                                                                .font26,
+                                                          ),
+                                                        ]),
+                                                        Divider(
+                                                            color: AppColors
+                                                                .buttonBackgroundColor),
+                                                        Container(
+                                                          height: 200,
+                                                          padding: EdgeInsets.only(
+                                                              left: Dimensions
+                                                                  .width20,
+                                                              right: Dimensions
+                                                                  .width20,
+                                                              top: Dimensions
+                                                                  .height20),
+                                     child: SingleChildScrollView(
+                                                            child: Column(
                                                               children: [
                                                                 PengirimanOptionButton(
                                                                     icon: Icons
@@ -858,7 +698,7 @@ class PembelianPageState extends GetView<AlamatController> {
                                                                           items: [
                                                                             {
                                                                               "code" : "jne",
-                                                                              "name" : "Jalur Nugraha Ekakurir (JNE)"
+                                                                              "name" : "Tiki Jalur Nugraha Ekakurir (JNE)"
                                                                             },
                                                                             {
                                                                               "code" : "pos",
@@ -879,129 +719,70 @@ class PembelianPageState extends GetView<AlamatController> {
                                                                               controller.hiddenButton.value = true;
                                                                               controller.kurir.value = "";
                                                                             }
->>>>>>> 91db50f5614d39ba1ea25fd2c880f86a88bbfcda
                                                                           },
-                                                                          {
-                                                                            "code" : "tiki",
-                                                                            "name" : "Titipan Kilat (TIKI)"
-                                                                          }
-                                                                        ],
-                                                                        dropdownSearchDecoration: InputDecoration(labelText: "Pengiriman"),
-                                                                        onChanged:(value){
-                                                                          if(value != null){
-                                                                            controller.kurir.value = value['code'];
-                                                                            controller.namakurir.value = value['name'];
-                                                                            controller.showButton();
-                                                                            print(controller.kurir.value);
-                                                                          }else{
-                                                                            controller.hiddenButton.value = true;
-                                                                            controller.kurir.value = "";
-                                                                          }
-                                                                        },
-                                                                        itemAsString: (item) => "${item?['name']}",
-                                                                        popupItemBuilder: (context, item, isSelected) =>
-                                                                            Container(
-                                                                              padding: EdgeInsets.all(20),
-                                                                              child: Text("${item['name']}",
-                                                                                style: TextStyle(
-                                                                                  fontSize: 18,
+                                                                          itemAsString: (item) => "${item?['name']}",
+                                                                          popupItemBuilder: (context, item, isSelected) =>
+                                                                              Container(
+                                                                                padding: EdgeInsets.all(20),
+                                                                                child: Text("${item['name']}",
+                                                                                  style: TextStyle(
+                                                                                    fontSize: 18,
+                                                                                  ),
                                                                                 ),
                                                                               ),
-<<<<<<< HEAD
-                                                                            ),
-                                                                      ),
-                                                                      Obx(
-                                                                            () => controller.hiddenButton.isTrue
-                                                                            ? SizedBox()
-                                                                            : GestureDetector(
-                                                                          onTap: () {
-                                                                            // print(controller.cityAsalId);
-                                                                            // print(controller.cityTujuanId);
-                                                                            ongkosKirim(controller.cityAsalId,controller.cityTujuanId, controller.berat, controller.kurir);
-                                                                          },
-                                                                          child: AppIcon(
-                                                                            icon: Icons.shopping_bag_outlined,
-                                                                            iconSize: Dimensions.iconSize24,
-                                                                            iconColor: AppColors.redColor,
-                                                                            backgroundColor:
-                                                                            Colors.white.withOpacity(0.0),
-=======
                                                                         ),
                                                                         Obx(
                                                                               () => controller.hiddenButton.isTrue
                                                                               ? SizedBox()
                                                                               : GestureDetector(
                                                                             onTap: () {
-                                                                              // print(controller.cityAsalId);
-                                                                              // print(controller.cityTujuanId);
-                                                                              ongkosKirim(controller.cityAsalId,controller.cityTujuanId, controller.berat, controller.kurir);
+                                                                              ongkosKirim(controller.cityAsalId, controller.cityTujuanId, controller.berat, controller.kurir);
                                                                             },
-                                                                            child: Center(
-                                                                              child: Row(
-                                                                                children: [
-                                                                                  BigText(text: "Kirim", size: Dimensions.font16, color: AppColors.redColor,),
-                                                                                  AppIcon(
-                                                                                    icon: Icons.send,
-                                                                                    iconSize: Dimensions.iconSize24,
-                                                                                    iconColor: AppColors.redColor,
-                                                                                    backgroundColor:
-                                                                                    Colors.white.withOpacity(0.0),
-                                                                                  ),
-                                                                                ],
-                                                                              ),
-                                                                            )
->>>>>>> 91db50f5614d39ba1ea25fd2c880f86a88bbfcda
+                                                                            child: AppIcon(
+                                                                              icon: Icons.shopping_bag_outlined,
+                                                                              iconSize: Dimensions.iconSize24,
+                                                                              iconColor: AppColors.redColor,
+                                                                              backgroundColor:
+                                                                              Colors.white.withOpacity(0.0),
+                                                                            ),
                                                                           ),
-                                                                        ),
-                                                                      )
-                                                                    ],
+                                                                        )
+                                                                      ],
+                                                                    ),
+                                                                  )
+                                                                      : Visibility(
+                                                                    visible:
+                                                                    false, // Set visibility to false when index is not 2
+                                                                    child:
+                                                                    Container(),
                                                                   ),
-                                                                )
-                                                                    : Visibility(
-                                                                  visible:
-                                                                  false, // Set visibility to false when index is not 2
-                                                                  child:
-                                                                  Container(),
                                                                 ),
-<<<<<<< HEAD
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                              );
-=======
                                                               ],
-                                                            )
-                                                          ],
-                                                        ),
-                                                      ),
+                                                            ),
+                                                          ),
+                                                        )
+                                                      ],
                                                     ),
                                                   ),
                                                 );
                                               });
->>>>>>> 91db50f5614d39ba1ea25fd2c880f86a88bbfcda
-                                            });
-                                      },
-                                      child: Row( children: [
-                                        AppIcon(
-                                          icon: Icons.note,
-                                          iconColor: AppColors.redColor,
-                                          backgroundColor:
-                                          Colors.white.withOpacity(0.0),
-                                        ),
-                                        Obx(() => BigText(
-                                          text: Get.find<
-                                              PengirimanController>()
-                                              .checkedtypePengiriman
-                                              .value,
-                                          size: Dimensions.height15,
-                                        ),
-                                        ),
-                                      ]),
+                                        },
+                                        child: Row(children: [
+                                          AppIcon(
+                                            icon: Icons.note,
+                                            iconColor: AppColors.redColor,
+                                            backgroundColor:
+                                            Colors.white.withOpacity(0.0),
+                                          ),
+                                          Obx(() => BigText(
+                                                text: Get.find<
+                                                        PengirimanController>()
+                                                    .checkedtypePengiriman
+                                                    .value,
+                                                size: Dimensions.height15,
+                                              ),
+                                          ),
+                                        ]),
                                     ),
                                   ),
                                 ],
@@ -1049,7 +830,7 @@ class PembelianPageState extends GetView<AlamatController> {
                             ),
                             PriceText(
                               text: CurrencyFormat.convertToIdr(
-                                  calculateTotal() + controller.HargaPengiriman.toDouble(), 0),
+                                  calculateTotal(), 0),
                               size: Dimensions.font16,
                             ),
                             SizedBox(

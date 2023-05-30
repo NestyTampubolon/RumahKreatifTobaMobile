@@ -9,10 +9,9 @@ import 'package:rumah_kreatif_toba/controllers/user_controller.dart';
 import 'package:rumah_kreatif_toba/models/alamat_toko_model.dart';
 import 'package:rumah_kreatif_toba/pages/alamat/daftaralamat.dart';
 import 'package:rumah_kreatif_toba/pages/toko/AlamatToko/daftar_alamat_toko.dart';
-
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import '../base/snackbar_message.dart';
 import '../models/response_model.dart';
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 class AlamatController extends GetxController {
   RxString provAsalId = "0".obs;
@@ -82,7 +81,7 @@ class AlamatController extends GetxController {
       String province_id,
       String city_id,
       String subdistrict_id,
-     ) async {
+      ) async {
     _isLoading = true;
     update();
     Response response = await alamatRepo.tambahAlamat(
@@ -99,7 +98,7 @@ class AlamatController extends GetxController {
     if (response.statusCode == 200) {
       AwesomeSnackbarButton("Berhasil","Berhasil menambah alamat",ContentType.success);
       Get.to(
-        () => DaftarAlamatPage(),
+            () => DaftarAlamatPage(),
       );
       getAlamat();
     } else {
@@ -165,7 +164,7 @@ class AlamatController extends GetxController {
     if (response.statusCode == 200) {
       AwesomeSnackbarButton("Berhasil","Berhasil menambah alamat toko",ContentType.success);
       Get.to(
-            () => DaftarAlamatTokoPage()
+              () => DaftarAlamatTokoPage()
       );
       getAlamatToko();
     } else {
