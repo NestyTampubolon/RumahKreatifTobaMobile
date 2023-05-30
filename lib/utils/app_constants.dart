@@ -9,11 +9,8 @@ class AppConstants {
       "http://kreatif.tobakab.go.id/asset/";
 
   static const String BASE_URL =
-<<<<<<< HEAD
       "http://172.30.43.165/RumahKreatifBackend/public/api/";
-=======
-      "http://192.168.89.154/tobazonerework/public/api/";
->>>>>>> 91db50f5614d39ba1ea25fd2c880f86a88bbfcda
+
 
   static const String POPULAR_PRODUCT_URL = "produk";
   static const String KATEGORI_PRODUCT_URL = "lihat_produk";
