@@ -24,15 +24,16 @@ class DaftarAlamatTokoPage extends GetView<AlamatController> {
   Widget build(BuildContext context) {
     Get.find<AlamatController>().getAlamatToko();
 
-    Future<void> _hapusAlamatToko(int? merchant_address_id) async {
-      var cartController = Get.find<AlamatController>();
-      cartController.hapusAlamatToko(merchant_address_id).then((status) {
+    Future<void>_hapusAlamatToko(int? merchant_address_id) async {
+      var Controller = Get.find<AlamatController>();
+      Controller.hapusAlamatToko(merchant_address_id).then((status) {
         if (status.isSuccess) {
         } else {
           AwesomeSnackbarButton("Gagal",status.message,ContentType.failure);
         }
       });
     }
+
 
     return Scaffold(
       backgroundColor: Colors.white,

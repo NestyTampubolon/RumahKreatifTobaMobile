@@ -23,8 +23,8 @@ class DaftarAlamatPage extends GetView<AlamatController> {
     Get.find<AlamatController>().getAlamat();
 
     Future<void> _hapusAlamat(int? user_address_id) async {
-      var cartController = Get.find<AlamatController>();
-      cartController.hapusAlamat(user_address_id).then((status) {
+      var Controller = Get.find<AlamatController>();
+      Controller.hapusAlamat(user_address_id).then((status) {
         if (status.isSuccess) {
         } else {
           AwesomeSnackbarButton("Gagal",status.message,ContentType.failure);

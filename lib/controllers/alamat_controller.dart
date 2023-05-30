@@ -28,6 +28,7 @@ class AlamatController extends GetxController {
   RxInt HargaPengiriman = 0.obs;
   var hiddenButton = true.obs;
   var kurir = "".obs;
+  var namakurir = "".obs;
 
   final AlamatRepo alamatRepo;
 
@@ -174,7 +175,8 @@ class AlamatController extends GetxController {
     update();
     return responseModel;
   }
-  Future<ResponseModel> hapusAlamatToko(int? merchant_address_id) async {
+
+  Future <ResponseModel> hapusAlamatToko(int? merchant_address_id) async {
     Response response = await alamatRepo.hapusAlamatToko(merchant_address_id);
     late ResponseModel responseModel;
     if (response.statusCode == 200) {
