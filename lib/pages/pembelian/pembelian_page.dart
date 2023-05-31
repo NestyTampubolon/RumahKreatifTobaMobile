@@ -49,7 +49,6 @@ class _PembelianPageState extends State<PembelianPageState> {
   @override
   Widget build(BuildContext context) {
     List<int?> _carId = [];
-    int _metodePembelian = 1;
     int _hargaPembelian = 0;
     int _merchantId = 0;
 
@@ -75,15 +74,32 @@ class _PembelianPageState extends State<PembelianPageState> {
         var controller = Get.find<PengirimanController>();
         var userController = Get.find<UserController>().usersList[0];
 
-        controller
-            .beliProduk(userController.id, _carId, _merchantId,
-            _metodePembelian, _hargaPembelian, "", "", "", "")
-            .then((status) async {
-          if (status.isSuccess) {
-          } else {
-            showCustomSnackBar(status.message);
-          }
-        });
+        if(controller.paymentIndex == 0){
+
+        }else if(controller.paymentIndex == 1){
+          controller
+              .beliProduk(userController.id, _carId, _merchantId,
+              1, _hargaPembelian, "", "", "", "")
+              .then((status) async {
+            if (status.isSuccess) {
+            } else {
+              showCustomSnackBar(status.message);
+            }
+          });
+        }else if(controller.paymentIndex == 2){
+          String pengiriman = Get.find<AlamatController>().service.value;
+          String kurir = Get.find<AlamatController>().kurir.value;
+          controller
+              .beliProduk(userController.id, _carId, _merchantId,
+              2, _hargaPembelian, "", Get.find<AlamatController>().daftarAlamatList[0].city_id.toString(), kurir, pengiriman)
+              .then((status) async {
+            if (status.isSuccess) {
+            } else {
+              showCustomSnackBar(status.message);
+            }
+          });
+        }
+
       }
     }
 
@@ -140,7 +156,7 @@ class _PembelianPageState extends State<PembelianPageState> {
                       ),
                       onTap: (){
                         controller.setHargaPengiriman(e.cost![0].value);
-                        print(e.cost![0].value);
+                        controller.setServicePengiriman(e.service!);
                         Navigator.pop(
                             context);
                       },
@@ -349,9 +365,6 @@ class _PembelianPageState extends State<PembelianPageState> {
                           ),
                         ),
                       ],
-                    ),
-                    SizedBox(
-                      height: Dimensions.height10,
                     ),
                     Divider(color: AppColors.buttonBackgroundColor),
                     Obx(() =>
@@ -612,12 +625,29 @@ class _PembelianPageState extends State<PembelianPageState> {
                                   Divider(
                                       color: AppColors.buttonBackgroundColor),
                                   Obx(() =>
+                                      Get.find<PengirimanController>().paymentIndex == 2 ?
                                       Column(
                                         children: [
-                                          Text("Ongkir : ${controller.HargaPengiriman}"),
-                                          Text("Pengiriman : ${controller.namakurir.value}"),
+                                          Row(
+                                            children: [
+                                              BigText(text: "Ongkir : ", size: Dimensions.font16,),
+                                              PriceText(
+                                                text: CurrencyFormat
+                                                    .convertToIdr(
+                                                    controller.HargaPengiriman.toInt(),
+                                                    0),
+                                                size: Dimensions
+                                                    .font16,
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              BigText(text: "Pengiriman : ${controller.namakurir.value}", size: Dimensions.font16, )
+                                            ],
+                                          )
                                         ],
-                                      )
+                                      ) : SizedBox()
                                   ),
                                   Container(
                                     padding: EdgeInsets.only(
