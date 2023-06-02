@@ -26,6 +26,7 @@ class AlamatController extends GetxController {
   RxString subTujuanId = "0".obs;
   RxInt berat = 0.obs;
   RxInt HargaPengiriman = 0.obs;
+  RxString service = "0".obs;
   var subAsal = 0.obs;
   RxString selected = "".obs;
   RxInt alamatID = 0.obs;
@@ -61,6 +62,11 @@ class AlamatController extends GetxController {
   }
   void setHargaPengiriman(int? harga) {
     HargaPengiriman.value = harga!;
+    update();
+  }
+
+  void setServicePengiriman(String? serv) {
+    service.value = serv!;
     update();
   }
 

@@ -9,7 +9,7 @@ class AppConstants {
       "http://kreatif.tobakab.go.id/asset/";
 
   static const String BASE_URL =
-      "http://172.20.10.4/RumahKreatifBackend/public/api/";
+      "http://192.168.89.154/tobazonerework/public/api/";
 
 
   static const String POPULAR_PRODUCT_URL = "produk";
