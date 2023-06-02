@@ -15,6 +15,7 @@ import '../../utils/dimensions.dart';
 
 import 'package:get/get.dart';
 
+import '../../widgets/Filter.dart';
 import '../../widgets/app_icon.dart';
 import '../../widgets/big_text.dart';
 import '../../widgets/currency_format.dart';
@@ -37,6 +38,58 @@ class _PesananPageState extends State<PesananPage> {
     if (_userLoggedIn) {
       Get.find<UserController>().getUser();
       Get.find<PesananController>().getPesanan();
+    }
+  }
+
+  Filter? selectedValue;
+
+  List<Filter?> filters = [
+    Filter(
+        id: 1,
+        name: "Semua"
+    ),
+    Filter(
+        id: 2,
+        name: "Sedang Dikemas"
+    ),
+    Filter(
+        id: 3,
+        name: "Dalam Perjalanan"
+    ),
+    Filter(
+        id: 4,
+        name: "Dalam Perjalanan"
+    ),
+    Filter(
+        id: 5,
+        name: "Belum Diambil"
+    ),
+    Filter(
+        id: 6,
+        name: "Belum Dikonfirmasi Pembeli"
+    ),
+    Filter(
+        id: 7,
+        name: "Berhasil"
+    )
+  ];
+
+  List<dynamic> _list = Get.find<PesananController>().pesananList.toList();
+
+
+  Future<void> _filter(String? keyword) async {
+    try {
+      List<dynamic> results = Get.find<PesananController>().pesananList.toList();
+      if(keyword != "Semua"){
+        results = Get.find<PesananController>().pesananList.where((purchase) => purchase.statusPembelian.toString() == "${keyword}").toList();
+      }
+
+      setState(() {
+        _list = results;
+      });
+    } catch (e) {
+      print('Error filtering products: $e');
+      // Handle the error as needed
     }
   }
 
@@ -133,19 +186,40 @@ class _PesananPageState extends State<PesananPage> {
                 ),
               ),
             ),
+            Row(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(left: Dimensions.width20, top: Dimensions.height10),
+                  width: Dimensions.screenWidth/1.5,
+                  height: Dimensions.height45,
+                  padding: EdgeInsets.symmetric(vertical: Dimensions.width10/2, horizontal: Dimensions.height10),
+                  decoration: BoxDecoration(
+                      color: Colors.grey.shade200,
+                      borderRadius: BorderRadius.circular(Dimensions.radius15/3)
+                  ),
+                  child: DropdownButton<Filter?>(items: filters.map<DropdownMenuItem<Filter?>>((e) => DropdownMenuItem(child: Text((e?.name ?? '').toString()), value: e,)).toList(),isExpanded:true, underline: SizedBox(),value: selectedValue, hint: Text('Urutkan berdasarkan'),
+                      onChanged: (value){
+                        setState(() {
+                          selectedValue = value;
+                        });
+                        _filter(selectedValue?.name);
+                      }),
+                ),
+              ],
+            ),
             GetBuilder<PesananController>(builder: (pesananController) {
               return GridView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 1,
                       mainAxisExtent: Dimensions.height45 * 5),
-                  itemCount: pesananController.pesananList.length,
+                  itemCount: _list.length,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     var gambarproduk = Get.find<PopularProdukController>().imageProdukList.where(
                             (produk) =>
                         produk.productId ==
-                            pesananController.pesananList[index].productId);
+                            _list[index].productId);
                     return Container(
                       width: Dimensions.screenWidth,
                       height: Dimensions.height45 * 3.5,
@@ -159,7 +233,7 @@ class _PesananPageState extends State<PesananPage> {
                           border: Border.all(
                               color: AppColors.buttonBackgroundColor),
                           borderRadius:
-                              BorderRadius.circular(Dimensions.radius20),
+                              BorderRadius.circular(Dimensions.radius20/2),
                           color: Colors.white),
                       child: Column(
                         children: [
@@ -190,8 +264,7 @@ class _PesananPageState extends State<PesananPage> {
                                             size: Dimensions.font16,
                                           ),
                                           SmallText(
-                                              text: pesananController
-                                                  .pesananList[index].name
+                                              text: _list[index].name
                                                   .toString()),
                                           Container(
                                               height: Dimensions.height20,
@@ -202,8 +275,7 @@ class _PesananPageState extends State<PesananPage> {
                                               ),
                                               child: Center(
                                                 child: BigText(
-                                                    text: pesananController
-                                                        .pesananList[index].statusPembelian
+                                                    text: _list[index].statusPembelian
                                                         .toString(),
                                                     size: Dimensions.font16/1.5,
                                                     color: AppColors.notification_success,
@@ -214,6 +286,13 @@ class _PesananPageState extends State<PesananPage> {
                                     ],
                                   ),
                                 ),
+                                Container(
+                                  child: SmallText(
+                                    text: _list[index].createdAt
+                                        .toString() ?? 'N/A',
+                                    size: Dimensions.font20/1.5,
+                                  ),
+                                )
                               ],
                             ),
                           ),
@@ -230,8 +309,7 @@ class _PesananPageState extends State<PesananPage> {
                                       GestureDetector(
                                         onTap: () {
                                           var produkIndex =
-                                          pesananController
-                                              .pesananList[index]
+                                          _list[index]
                                               .productId!;
                                           if (produkIndex >= 0) {
                                             Get.toNamed(RouteHelper
@@ -273,8 +351,7 @@ class _PesananPageState extends State<PesananPage> {
                                           Container(
                                             width : Dimensions.screenWidth/1.6,
                                             child: BigText(
-                                              text: pesananController
-                                                  .pesananList[index]
+                                              text: _list[index]
                                                   .productName,
                                               size: Dimensions.font16,
                                             ),
@@ -282,14 +359,12 @@ class _PesananPageState extends State<PesananPage> {
                                           Row(
                                             children: [
                                               SmallText(
-                                                  text: "${ pesananController
-                                                      .pesananList[index]
+                                                  text: "${ _list[index]
                                                       .jumlahPembelianProduk} x "),
                                               PriceText(
                                                 text: CurrencyFormat
                                                     .convertToIdr(
-                                                    pesananController
-                                                        .pesananList[index]
+                                                    _list[index]
                                                         .price,
                                                     0),
                                                 size: Dimensions.font16,
@@ -321,8 +396,7 @@ class _PesananPageState extends State<PesananPage> {
                                           SmallText(text: "Total Belanja"),
                                           PriceText(
                                             text: CurrencyFormat.convertToIdr(
-                                                pesananController
-                                                    .pesananList[index]
+                                                _list[index]
                                                     .hargaPembelian,
                                                 0),
                                             size: Dimensions.font16,
@@ -334,8 +408,7 @@ class _PesananPageState extends State<PesananPage> {
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    _getDetailPesananList(pesananController
-                                        .pesananList[index].kodePembelian
+                                    _getDetailPesananList(_list[index].kodePembelian
                                         .toString());
                                   },
                                   child: Container(

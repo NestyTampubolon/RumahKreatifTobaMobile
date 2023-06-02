@@ -90,8 +90,7 @@ class Profil extends StatelessWidget {
                                     children: [
                                       BigText(text: "Deskripsi Toko", size: Dimensions.font16, color: AppColors.labelColor,),
                                       Container(
-                                        margin: EdgeInsets.only(
-                                            right: Dimensions.width20),
+                                        width: Dimensions.screenWidth/1.2,
                                         child: SingleChildScrollView(
                                           child: ExpandableTextWidget(
                                               text: profilToko[0].deskripsi_toko.toString()),

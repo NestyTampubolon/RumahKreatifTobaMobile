@@ -106,8 +106,8 @@ class Register extends StatelessWidget {
                         height: Dimensions.screenHeight * 0.05,
                       ),
                       Container(
-                        width: Dimensions.screenHeight * 0.25,
-                        height: Dimensions.screenHeight * 0.25,
+                        width: Dimensions.width45*3,
+                        height: Dimensions.height45*3,
                         margin: EdgeInsets.only(
                             left: Dimensions.width10,
                             right: Dimensions.width10),
@@ -191,7 +191,7 @@ class Register extends StatelessWidget {
                             height: Dimensions.height45,
                             decoration: BoxDecoration(
                                 borderRadius:
-                                    BorderRadius.circular(Dimensions.radius30),
+                                    BorderRadius.circular(Dimensions.radius20/2),
                                 color: AppColors.redColor),
                             child: Center(
                               child: BigText(

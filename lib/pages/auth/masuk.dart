@@ -129,7 +129,7 @@ class Masuk extends StatelessWidget {
                                     height: Dimensions.height45,
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(
-                                            Dimensions.radius30),
+                                            Dimensions.radius20/2),
                                         color: AppColors.redColor),
                                     child: Center(
                                       child: BigText(

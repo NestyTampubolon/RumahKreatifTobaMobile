@@ -107,17 +107,34 @@ class _DetailPesananPageState extends State<DetailPesananPage> {
                     ),
                   ),
                   Divider(color: AppColors.buttonBackgroundColor),
-                  Container(
-                    margin: EdgeInsets.only(bottom: Dimensions.height10),
-                    child: Row(
-                      children: [
-                        BigText(
-                          text: detailPesanan[0].kodePembelian.toString(),
-                          size: Dimensions.font16,
-                        )
-                      ],
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(bottom: Dimensions.height10),
+                        child: Row(
+                          children: [
+                            BigText(
+                              text: detailPesanan[0].kodePembelian.toString(),
+                              size: Dimensions.font16,
+                            )
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: Dimensions.height10),
+                        child: Row(
+                          children: [
+                            BigText(
+                              text: detailPesanan[0].createdAt.toString() ?? 'N/A',
+                              size: Dimensions.font16,
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
+
                 ],
               ),
             ),

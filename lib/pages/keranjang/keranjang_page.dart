@@ -147,7 +147,7 @@ class _KeranjangPageState extends State<KeranjangPage> {
                   ),
                 ),
                 Positioned(
-                  top: Dimensions.height20 * 5,
+                  top: Dimensions.height20 * 4,
                   left: Dimensions.width20,
                   right: Dimensions.width20,
                   bottom: 0,

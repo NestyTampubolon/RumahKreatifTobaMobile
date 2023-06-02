@@ -12,6 +12,7 @@ import '../../../controllers/popular_produk_controller.dart';
 import '../../../routes/route_helper.dart';
 import '../../../utils/app_constants.dart';
 import '../../../utils/dimensions.dart';
+import '../../../widgets/Filter.dart';
 import '../../../widgets/app_icon.dart';
 import '../../../widgets/big_text.dart';
 import '../../../widgets/currency_format.dart';
@@ -30,12 +31,65 @@ class _DaftarPembelianPageState extends State<DaftarPembelianPage>
   late TabController _tabController;
   late bool _isLoggedIn;
 
+
   @override
   void initState() {
     super.initState();
     _isLoggedIn = Get.find<AuthController>().userLoggedIn();
     if (_isLoggedIn) {
       _tabController = TabController(length: 2, vsync: this);
+    }
+  }
+
+  Filter? selectedValue;
+
+  List<Filter?> filters = [
+    Filter(
+        id: 1,
+        name: "Semua"
+    ),
+    Filter(
+        id: 2,
+        name: "Sedang Dikemas"
+    ),
+    Filter(
+        id: 3,
+        name: "Belum Diambil"
+    ),
+    Filter(
+        id: 4,
+        name: "Belum Dikonfirmasi Pembeli"
+    ),
+    Filter(
+        id: 5,
+        name: "Berhasil [Belum Konfirmasi Pembayaran]"
+    ),
+    Filter(
+        id: 6,
+        name: "Berhasil [Telah Konfirmasi Pembayaran]"
+    ),
+    Filter(
+        id: 7,
+        name: "Berhasil"
+    )
+  ];
+
+  List<dynamic> _list = Get.find<PesananController>().pesananList.toList();
+
+
+  Future<void> _filter(String? keyword) async {
+    try {
+      List<dynamic> results = Get.find<PesananController>().pesananList.toList();
+      if(keyword != "Semua"){
+        results = Get.find<PesananController>().pesananList.where((purchase) => purchase.statusPembelian.toString() == "${keyword}").toList();
+      }
+
+      setState(() {
+        _list = results;
+      });
+    } catch (e) {
+      print('Error filtering products: $e');
+      // Handle the error as needed
     }
   }
 
@@ -102,7 +156,7 @@ class _DaftarPembelianPageState extends State<DaftarPembelianPage>
                 var _menungguKonfirmasiList = controller.pembelianList
                     .where((item) => item.statusPembelian == "Perlu Dikemas")
                     .toList();
-                return RefreshIndicator(child: GridView.builder(
+                return Scrollbar(showTrackOnHover: true, thickness: 10, radius: Radius.circular(20),child: RefreshIndicator(child: GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 1,
                         mainAxisExtent: Dimensions.height45 * 5),
@@ -327,13 +381,14 @@ class _DaftarPembelianPageState extends State<DaftarPembelianPage>
                           ],
                         ),
                       );
-                    }), onRefresh: () => Get.find<PembelianController>().getPembelianList());
+                    }), onRefresh: () => Get.find<PembelianController>().getPembelianList()));
               }),
               GetBuilder<PembelianController>(builder: (controller) {
                 var _sudahKonfirmasiList = controller.pembelianList
                     .where((item) => item.statusPembelian != "Perlu Dikemas")
                     .toList();
-                return RefreshIndicator(child: GridView.builder(
+                return RefreshIndicator(
+                    child: GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 1,
                         mainAxisExtent: Dimensions.height45 * 5.5),

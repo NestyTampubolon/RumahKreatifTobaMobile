@@ -15,6 +15,7 @@ import '../../utils/dimensions.dart';
 
 import 'package:get/get.dart';
 
+import '../../widgets/Filter.dart';
 import '../../widgets/app_icon.dart';
 import '../../widgets/big_text.dart';
 import '../../widgets/currency_format.dart';
@@ -38,6 +39,42 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
     if (_userLoggedIn) {
       Get.find<UserController>().getUser();
       Get.find<PesananController>().getPesananMenungguBayaranList();
+    }
+  }
+
+  Filter? selectedValue;
+
+  List<Filter?> filters = [
+    Filter(
+        id: 1,
+        name: "Semua"
+    ),
+    Filter(
+        id: 2,
+        name: "Pembayaran Belum Dikonfirmasi"
+    ),
+    Filter(
+        id: 3,
+        name: "Belum Bayar"
+    ),
+  ];
+
+  List<dynamic> _list = Get.find<PesananController>().pesananMenungguPembayaranList.toList();
+
+
+  Future<void> _filter(String? keyword) async {
+    try {
+      List<dynamic> results = Get.find<PesananController>().pesananMenungguPembayaranList.toList();
+      if(keyword != "Semua"){
+        results = Get.find<PesananController>().pesananMenungguPembayaranList.where((purchase) => purchase.statusPembelian.toString() == "${keyword}").toList();
+      }
+
+      setState(() {
+        _list = results;
+      });
+    } catch (e) {
+      print('Error filtering products: $e');
+      // Handle the error as needed
     }
   }
 
@@ -86,7 +123,6 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
         controller.getPesananMenungguBayaranList();
       }
     }
-
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -121,18 +157,39 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                 ],
               ),
             ),
+            Row(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(left: Dimensions.width20, top: Dimensions.height10),
+                  width: Dimensions.screenWidth/1.5,
+                  height: Dimensions.height45,
+                  padding: EdgeInsets.symmetric(vertical: Dimensions.width10/2, horizontal: Dimensions.height10),
+                  decoration: BoxDecoration(
+                      color: Colors.grey.shade200,
+                      borderRadius: BorderRadius.circular(Dimensions.radius15/3)
+                  ),
+                  child: DropdownButton<Filter?>(items: filters.map<DropdownMenuItem<Filter?>>((e) => DropdownMenuItem(child: Text((e?.name ?? '').toString()), value: e,)).toList(),isExpanded:true, underline: SizedBox(),value: selectedValue, hint: Text('Urutkan berdasarkan'),
+                      onChanged: (value){
+                        setState(() {
+                          selectedValue = value;
+                        });
+                        _filter(selectedValue?.name);
+                      }),
+                ),
+              ],
+            ),
             GetBuilder<PesananController>(builder: (pesananController) {
               return GridView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 1, mainAxisExtent: Dimensions.height45*5),
-                  itemCount: pesananController.pesananMenungguPembayaranList.length,
+                  itemCount: _list.length,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     var gambarproduk = Get.find<PopularProdukController>().imageProdukList.where(
                             (produk) =>
                         produk.productId ==
-                            pesananController.pesananMenungguPembayaranList[index].productId);
+                            _list[index].productId);
 
                     return Container(
                       width: Dimensions.screenWidth,
@@ -147,7 +204,7 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                           border: Border.all(
                               color: AppColors.buttonBackgroundColor),
                           borderRadius:
-                          BorderRadius.circular(Dimensions.radius20),
+                          BorderRadius.circular(Dimensions.radius20/2),
                           color: Colors.white),
                       child: Column(
                         children: [
@@ -178,7 +235,7 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                                             size: Dimensions.font16,
                                           ),
                                           SmallText(
-                                              text: pesananController.pesananMenungguPembayaranList[index].name
+                                              text: _list[index].name
                                                   .toString()),
                                           Container(
                                               height: Dimensions.height20,
@@ -189,7 +246,7 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                                               ),
                                               child: Center(
                                                 child: BigText(
-                                                    text: pesananController.pesananMenungguPembayaranList[index].statusPembelian
+                                                    text: _list[index].statusPembelian
                                                         .toString(),
                                                     size: Dimensions.font16/1.5,
                                                     color: AppColors.notification_success,
@@ -208,7 +265,7 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                                           Dimensions.radius20 / 2)),
                                   child: GestureDetector(
                                     onTap: () {
-                                      _hapusPesanan(pesananController.pesananMenungguPembayaranList[index].kodePembelian.toString());
+                                      _hapusPesanan(_list[index].kodePembelian.toString());
                                     },
                                     child: AppIcon(
                                         iconSize: Dimensions
@@ -235,7 +292,7 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                                       GestureDetector(
                                         onTap: () {
                                           var produkIndex =
-                                          pesananController.pesananMenungguPembayaranList[index]
+                                          _list[index]
                                               .productId!;
                                           if (produkIndex >= 0) {
                                             Get.find<PopularProdukController>().detailProduk(produkIndex);
@@ -275,7 +332,7 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                                           Container(
                                             width : Dimensions.screenWidth/1.6,
                                             child: BigText(
-                                              text: pesananController.pesananMenungguPembayaranList[index]
+                                              text: _list[index]
                                                   .productName,
                                               size: Dimensions.font16,
                                             ),
@@ -283,12 +340,12 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                                           Row(
                                             children: [
                                               SmallText(
-                                                  text: "${ pesananController.pesananMenungguPembayaranList[index]
+                                                  text: "${ _list[index]
                                                       .jumlahPembelianProduk} x "),
                                               PriceText(
                                                 text: CurrencyFormat
                                                     .convertToIdr(
-                                                    pesananController.pesananMenungguPembayaranList[index]
+                                                    _list[index]
                                                         .price,
                                                     0),
                                                 size: Dimensions.font16,

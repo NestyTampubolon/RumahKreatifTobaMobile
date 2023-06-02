@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rumah_kreatif_toba/controllers/alamat_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/cart_controller.dart';
+import 'package:rumah_kreatif_toba/controllers/pesanan_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/popular_produk_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/wishlist_controller.dart';
 import 'package:rumah_kreatif_toba/pages/home/home_page.dart';
@@ -39,6 +40,8 @@ class MyApp extends StatelessWidget {
     Get.find<UserController>().getUser().then((value) async {
       await Get.find<AlamatController>().getAlamat();
       await Get.find<AlamatController>().getAlamatUser();
+      await Get.find<PesananController>().getPesanan();
+      await Get.find<PesananController>().getPesananMenungguBayaranList();
     });
     Get.find<AlamatController>().getAlamatToko();
 

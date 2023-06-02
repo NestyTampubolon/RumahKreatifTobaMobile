@@ -29,7 +29,7 @@ class PopularProdukController extends GetxController{
   List<dynamic> _produkTerbaruList=[];
   List<dynamic> get produkTerbaruList => _produkTerbaruList;
 
-  RxList<dynamic> _detailProdukList=[].obs;
+  RxList<dynamic> _detailProdukList=<dynamic>[].obs;
   List<dynamic> get detailProdukList => _detailProdukList;
 
   List<dynamic> _imageProdukList=[];

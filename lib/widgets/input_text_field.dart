@@ -18,7 +18,7 @@ class InputTextField extends StatelessWidget {
       margin: EdgeInsets.only(left: Dimensions.height20, right: Dimensions.height20),
       decoration: BoxDecoration(
           color : Colors.white,
-          borderRadius: BorderRadius.circular(Dimensions.radius20),
+          borderRadius: BorderRadius.circular(Dimensions.radius20/2),
           boxShadow: [
             BoxShadow(
                 blurRadius: 10,
@@ -38,21 +38,21 @@ class InputTextField extends StatelessWidget {
                 color: AppColors.redColor
             ),
             focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(Dimensions.radius15),
+                borderRadius: BorderRadius.circular(Dimensions.radius20/2),
                 borderSide: BorderSide(
                     width: 1.0,
                     color: AppColors.redColor
                 )
             ),
             enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(Dimensions.radius15),
+                borderRadius: BorderRadius.circular(Dimensions.radius20/2),
                 borderSide: BorderSide(
                     width: 1.0,
                     color: Colors.white
                 )
             ),
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(Dimensions.radius15),
+              borderRadius: BorderRadius.circular(Dimensions.radius20/2),
             )
         ),
       ),

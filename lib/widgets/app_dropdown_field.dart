@@ -24,39 +24,39 @@ class _AppDropdownState extends State<AppDropdownField> {
     return Container(
       margin: EdgeInsets.only(left: Dimensions.height20, right: Dimensions.height20),
       decoration: BoxDecoration(
-          color : Colors.white,
-          borderRadius: BorderRadius.circular(Dimensions.radius20),
-          boxShadow: [
-            BoxShadow(
-                blurRadius: 10,
-                spreadRadius: 7,
-                offset: Offset(1, 1),
-                color: Colors.grey.withOpacity(0.2)
-            )
-          ]
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(Dimensions.radius20 / 2),
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 10,
+            spreadRadius: 7,
+            offset: Offset(1, 1),
+            color: Colors.grey.withOpacity(0.2),
+          ),
+        ],
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButtonFormField(
           decoration: InputDecoration(
-              hintText: widget.hintText,
-              prefixIcon: widget.icon == null ? null : Icon(widget.icon, color: AppColors.redColor,),
-              focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(Dimensions.radius15),
-                  borderSide: BorderSide(
-                      width: 1.0,
-                      color: AppColors.redColor
-                  )
+            hintText: widget.hintText,
+            prefixIcon: widget.icon == null ? null : Icon(widget.icon, color: AppColors.redColor,),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(Dimensions.radius15),
+              borderSide: BorderSide(
+                width: 1.0,
+                color: AppColors.redColor,
               ),
-              enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(Dimensions.radius15),
-                  borderSide: BorderSide(
-                      width: 1.0,
-                      color: Colors.white
-                  )
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(Dimensions.radius15),
+              borderSide: BorderSide(
+                width: 1.0,
+                color: Colors.white,
               ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(Dimensions.radius15),
-              )
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(Dimensions.radius15),
+            ),
           ),
           value: widget.controller.text.isNotEmpty ? widget.controller.text : null,
           onChanged: (String? newValue) {
@@ -69,11 +69,20 @@ class _AppDropdownState extends State<AppDropdownField> {
               .map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
-              child: Text(value),
+              child: IntrinsicWidth(
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(value),
+                    ),
+                  ],
+                ),
+              ),
             );
           }).toList(),
         ),
       ),
     );
+
   }
 }

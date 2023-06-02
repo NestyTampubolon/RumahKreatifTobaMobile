@@ -9,8 +9,19 @@ import '../../../utils/colors.dart';
 import '../../../utils/dimensions.dart';
 import 'hometoko_page.dart';
 
-class HomeToko extends StatelessWidget {
+class HomeToko extends StatefulWidget {
   const HomeToko({Key? key}) : super(key: key);
+
+  @override
+  State<HomeToko> createState() => _HomeTokoState();
+}
+
+class _HomeTokoState extends State<HomeToko> {
+  @override
+  void initState() {
+    Get.find<TokoController>().profilToko();
+    Get.find<TokoController>().homeToko();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +42,7 @@ class HomeToko extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                        width: Dimensions.width15*2,
+                      width: Dimensions.width15*2,
                       height: Dimensions.height30,
                       decoration: BoxDecoration(
                           image: DecorationImage(
@@ -51,30 +62,30 @@ class HomeToko extends StatelessWidget {
                     ),
                     Get.find<TokoController>().isLoading
                         ? Container(
-                            width: Dimensions.screenWidth / 1.8,
-                            height: 30,
-                            margin: EdgeInsets.only(
-                                left: Dimensions.width10,
-                                right: Dimensions.width10),
-                            child: BigText(
-                              text:
-                                  "Toko ${Get.find<TokoController>().profilTokoList[0].nama_merchant.toString()}",
-                              size: Dimensions.font20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          )
+                      width: Dimensions.screenWidth / 1.8,
+                      height: 30,
+                      margin: EdgeInsets.only(
+                          left: Dimensions.width10,
+                          right: Dimensions.width10),
+                      child: BigText(
+                        text:
+                        "Toko ${Get.find<TokoController>().profilTokoList[0].nama_merchant.toString()}",
+                        size: Dimensions.font20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )
                         : Container(
-                            height:
-                                20,
+                      height:
+                      20,
                       width: 20,
 
                       // set the height of the container to your desired height
-                            child: Center(
-                              child: CircularProgressIndicator(
-                                color: AppColors.redColor,
-                              ),
-                            ),
-                          )
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          color: AppColors.redColor,
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -134,10 +145,9 @@ class HomeToko extends StatelessWidget {
                           size: Dimensions.font20 / 1.5,
                         ),
                       ),
-                      Get.find<TokoController>().isLoading
-                          ? Container(
-                        child: Obx(
-                              () => BigText(
+                      Obx(
+                            () => Container(
+                          child: BigText(
                             text: Get.find<TokoController>()
                                 .getJumlahPesanan[
                             'jumlah_pesanan_sedang_berlangsung']!
@@ -146,17 +156,6 @@ class HomeToko extends StatelessWidget {
                           ),
                         ),
                       )
-                          : Container(
-                        height:
-                        20,
-                        width: 20,// set the height of the container to your desired height
-                        child: Center(
-                          child: CircularProgressIndicator(
-                            color: AppColors.redColor,
-                          ),
-                        ),
-                      )
-
                     ],
                   ),
                   Row(
@@ -257,11 +256,11 @@ class HomeToko extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
-                        child: BigText(
-                          text: "PRODUK",
-                          size: Dimensions.font20,
-                          fontWeight: FontWeight.bold,
-                        )
+                          child: BigText(
+                            text: "PRODUK",
+                            size: Dimensions.font20,
+                            fontWeight: FontWeight.bold,
+                          )
                       ),
                       // GestureDetector(
                       //   onTap: () {
@@ -294,17 +293,17 @@ class HomeToko extends StatelessWidget {
                   Get.find<TokoController>().isLoading
                       ? Container(
                     child: Obx(
-                          () => Row(
-                            children: [
-                              BigText(
-                                text: '${Get.find<TokoController>()
-                                    .getJumlahPesanan[
-                                'jumlah_produk']!
-                                    .toString()} produk',
-                                size: Dimensions.font20 / 1.5,
-                              ),
-                            ],
-                          )
+                            () => Row(
+                          children: [
+                            BigText(
+                              text: '${Get.find<TokoController>()
+                                  .getJumlahPesanan[
+                              'jumlah_produk']!
+                                  .toString()} produk',
+                              size: Dimensions.font20 / 1.5,
+                            ),
+                          ],
+                        )
                     ),
                   )
                       : Container(

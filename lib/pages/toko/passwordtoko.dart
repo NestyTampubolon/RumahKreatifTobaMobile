@@ -54,99 +54,114 @@ class _PasswordTokoPageState extends State<PasswordTokoPage> {
     }
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              child: Container(
+      body:  Column(
+        children: [
+          Container(
+            child: Container(
+              margin: EdgeInsets.only(
+                  top: Dimensions.height30),
+              padding: EdgeInsets.only(
+                  left: Dimensions.width20, right: Dimensions.width20),
+              child: Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(HomePage(initialIndex: 3));
+                    },
+                    child: AppIcon(
+                      icon: Icons.arrow_back,
+                      iconColor: AppColors.redColor,
+                      backgroundColor: Colors.white.withOpacity(0.0),
+                      iconSize: Dimensions.iconSize24,
+                    ),
+                  ),
+                  SizedBox(
+                    width: Dimensions.width20,
+                  ),
+                  // Container(
+                  //   child: BigText(
+                  //     text: "Password Toko",
+                  //     fontWeight: FontWeight.bold,
+                  //   ),
+                  // ),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(
+            height: Dimensions.height30*2,
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                width: Dimensions.width45*3,
+                height: Dimensions.height45*3,
                 margin: EdgeInsets.only(
-                    top: Dimensions.height30),
-                padding: EdgeInsets.only(
-                    left: Dimensions.width20, right: Dimensions.width20),
-                child: Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Get.to(HomePage(initialIndex: 3));
-                      },
-                      child: AppIcon(
-                        icon: Icons.arrow_back,
-                        iconColor: AppColors.redColor,
-                        backgroundColor: Colors.white.withOpacity(0.0),
-                        iconSize: Dimensions.iconSize24,
-                      ),
-                    ),
-                    SizedBox(
-                      width: Dimensions.width20,
-                    ),
-                    Container(
-                      child: BigText(
-                        text: "Password Toko",
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  child: Column(
-                    children: [
-                      AppTextFieldPassword(
-                        hintText: 'Password',
-                        icon: Icons.lock,
-                        textController: PasswordTokoController,
-                      ),
-                      SizedBox(
-                        height: Dimensions.height10,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            Container(
-              alignment: Alignment.topLeft,
-              padding: EdgeInsets.all(10),
-              child: SmallText(
-                text: " * Pastikan password yang Anda masukkan benar!",
-                size: 14,
-              ),
-            ),
-            SizedBox(
-              height: 50,
-            ),
-            GestureDetector(
-              onTap: () => {
-                _tambahRekening(),
-              },
-              child: Container(
-                width: 306,
-                height: 45,
-                // alignment: Alignment.topCenter,
+                    left: Dimensions.width10,
+                    right: Dimensions.width10),
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: AppColors.redColor),
-                child: Center(
-                  child: BigText(
-                    text: "Masuk",
-                    fontWeight: FontWeight.bold,
-                    size: Dimensions.font20,
-                    color: Colors.white,
+                    image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage(
+                            "assets/images/logo_rkt.png"))),
+              ),
+              SizedBox(height: Dimensions.height20,),
+              BigText(text: "Selamat Datang!", fontWeight: FontWeight.bold, size: Dimensions.font20*2, color: AppColors.redColor,),
+              BigText(text: "Masuk dengan password Anda", size: Dimensions.font16, color: Colors.grey,),
+              SizedBox(
+                height: Dimensions.height20,
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    child: Column(
+                      children: [
+                        AppTextFieldPassword(
+                          hintText: 'Password',
+                          icon: Icons.lock,
+                          textController: PasswordTokoController,
+                        ),
+                        SizedBox(
+                          height: Dimensions.height10,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: Dimensions.height20,
+              ),
+              GestureDetector(
+                onTap: () => {
+                  _tambahRekening(),
+                },
+                child: Container(
+                  width: Dimensions.width45*3,
+                  height: Dimensions.height45,
+                  // alignment: Alignment.topCenter,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: AppColors.redColor),
+                  child: Center(
+                    child: BigText(
+                      text: "Masuk",
+                      fontWeight: FontWeight.bold,
+                      size: Dimensions.font20,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-      ),
+            ],
+          ),
+
+        ],
+      )
     );
   }
 }

@@ -30,7 +30,7 @@ class _AppTextFieldPasswordState extends State<AppTextFieldPassword> {
       margin: EdgeInsets.only(left: Dimensions.height20, right: Dimensions.height20),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(Dimensions.radius20),
+        borderRadius: BorderRadius.circular(Dimensions.radius20/2),
         boxShadow: [
           BoxShadow(
             blurRadius: 10,

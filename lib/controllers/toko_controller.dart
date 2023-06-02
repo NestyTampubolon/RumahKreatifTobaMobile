@@ -320,8 +320,6 @@ class TokoController extends GetxController {
   }
 
 
-
-
   Future<ResponseModel> masukToko(int? user_id, String password) async {
     _isLoading = true;
     update();
@@ -364,7 +362,6 @@ class TokoController extends GetxController {
     late ResponseModel responseModel;
     if (response.statusCode == 200) {
       try {
-
         jumlahPesanan.value = {
           'jumlah_pesanan_sedang_berlangsung' : response.body["jumlah_pesanan_sedang_berlangsung"],
           'jumlah_pesanan_berhasil_belum_dibayar' : response.body["jumlah_pesanan_berhasil_belum_dibayar"],

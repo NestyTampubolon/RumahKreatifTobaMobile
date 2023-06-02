@@ -11,6 +11,7 @@ import '../../utils/colors.dart';
 import '../../utils/dimensions.dart';
 import 'package:get/get.dart';
 
+import '../../widgets/Filter.dart';
 import '../../widgets/app_icon.dart';
 import '../../widgets/card_produk.dart';
 import '../../widgets/currency_format.dart';
@@ -38,12 +39,11 @@ class _KategoriProdukDetailState extends State<KategoriProdukDetail> {
     )
   ];
 
-  List<dynamic> _list = Get.find<PopularProdukController>()
-      .kategoriProdukList.toList();
+  List<dynamic> _list = Get.find<PopularProdukController>().kategoriProdukList.toList();
+
   @override
-  initState(){
-    _list =  Get.find<PopularProdukController>().kategoriProdukList.toList();
-    print(_list);
+  void initState() {
+    _list = Get.find<PopularProdukController>().kategoriProdukList.toList();
     super.initState();
   }
 
@@ -55,9 +55,9 @@ class _KategoriProdukDetailState extends State<KategoriProdukDetail> {
           .toList();
 
       if (keyword == 1) {
-        results.sort((a, b) => a.price.compareTo(b.price));
-      } else if (keyword == 2) {
         results.sort((a, b) => b.price.compareTo(a.price));
+      } else if (keyword == 2) {
+        results.sort((a, b) => a.price.compareTo(b.price));
       }
 
       setState(() {
@@ -68,7 +68,6 @@ class _KategoriProdukDetailState extends State<KategoriProdukDetail> {
       // Handle the error as needed
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -176,24 +175,30 @@ class _KategoriProdukDetailState extends State<KategoriProdukDetail> {
                 ),
               ],
             ),
-            Container(
-              margin: EdgeInsets.all(Dimensions.height10/2),
-              padding: EdgeInsets.symmetric(vertical: Dimensions.width10/2, horizontal: Dimensions.height10),
-              decoration: BoxDecoration(
-                color: Colors.grey.shade200,
-                borderRadius: BorderRadius.circular(Dimensions.radius15/3)
-              ),
-              child: DropdownButton<Filter?>(items: filters.map<DropdownMenuItem<Filter?>>((e) => DropdownMenuItem(child: Text((e?.name ?? '').toString()), value: e,)).toList(),isExpanded:true, underline: SizedBox(),value: selectedValue, hint: Text('Urutkan berdasarkan'),
-                  onChanged: (value){
-                    _filter(selectedValue?.id);
-                    print(selectedValue?.id);
-                setState(() {
-                  selectedValue = value;
-                });
-                  }),
+            Row(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(left: Dimensions.height10, top: Dimensions.height10),
+                  width: Dimensions.screenWidth/2,
+                  height: Dimensions.height45,
+                  padding: EdgeInsets.symmetric(vertical: Dimensions.width10/2, horizontal: Dimensions.height10),
+                  decoration: BoxDecoration(
+                      color: Colors.grey.shade200,
+                      borderRadius: BorderRadius.circular(Dimensions.radius15/3)
+                  ),
+                  child: DropdownButton<Filter?>(items: filters.map<DropdownMenuItem<Filter?>>((e) => DropdownMenuItem(child: Container(width: Dimensions.width45*3, child: Text((e?.name ?? '').toString()),), value: e,)).toList(),isExpanded:true, underline: SizedBox(),value: selectedValue, hint: Text('Urutkan berdasarkan'),
+                      onChanged: (value){
+                        setState(() {
+                          selectedValue = value;
+                        });
+                        _filter(selectedValue?.id);
+                        print(selectedValue?.id);
+                      }),
+                ),
+              ],
             ),
             GetBuilder<PopularProdukController>(builder: (produkKategori) {
-              return produkKategori.isLoaded
+              return produkKategori.isLoading.value
                   ? GridView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -204,11 +209,7 @@ class _KategoriProdukDetailState extends State<KategoriProdukDetail> {
                     var gambarproduk = produkKategori
                         .imageProdukList
                         .where((produk) => produk.productId == _list[index].productId);
-                    if (_list[index].namaKategori.toString() == "$kategori") {
-                      return CardProduk(product_id : _list[index].productId,productImageName : gambarproduk.single.productImageName, productName : _list[index].productName, merchantAddress : _list[index].subdistrictName, price: _list[index].price, countPurchases: _list[index].countProductPurchases, );
-                    } else {
-                      return SizedBox.shrink();
-                    }
+                    return CardProduk(product_id : _list[index].productId,productImageName : gambarproduk.single.productImageName, productName : _list[index].productName, merchantAddress : _list[index].subdistrictName, price: _list[index].price, countPurchases: _list[index].countProductPurchases, );
                   }
               )
                   : CircularProgressIndicator(
@@ -317,9 +318,3 @@ class _KategoriProdukDetailState extends State<KategoriProdukDetail> {
   }
 }
 
-class Filter{
-  int? id;
-  String? name;
-
-  Filter({this.id, this.name});
-}

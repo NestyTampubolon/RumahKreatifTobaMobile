@@ -65,6 +65,7 @@ class DaftarAlamatPage extends GetView<AlamatController> {
                       ),
                     ],
                   ),
+                  Get.find<AlamatController>().daftarAlamatList.length <= 5 ?
                   Row(
                     children: [
                       GestureDetector(
@@ -78,7 +79,7 @@ class DaftarAlamatPage extends GetView<AlamatController> {
                             )),
                       ),
                     ],
-                  ),
+                  ) : SizedBox()
                 ],
               ),
             ),

@@ -48,7 +48,6 @@ class _WishlistPageState extends State<WishlistPage> {
       bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
       if (_userLoggedIn) {
         var controller = Get.find<UserController>().usersList[0];
-        await controller.getUser();
         var cartController = Get.find<CartController>();
         cartController
             .tambahKeranjang(controller.id, product_id,

@@ -16,6 +16,8 @@ import '../../../utils/colors.dart';
 import '../../../widgets/app_icon.dart';
 import '../../../widgets/big_text.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+
+import '../hometoko/hometoko_page.dart';
 class DaftarAlamatTokoPage extends GetView<AlamatController> {
   int index = 0;
   int _selectedIndex = -1;
@@ -52,7 +54,7 @@ class DaftarAlamatTokoPage extends GetView<AlamatController> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Get.back();
+                          Get.to(HomeTokoPage(initialIndex: 3));
                         },
                         child: AppIcon(
                           icon: Icons.arrow_back,
