@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:rumah_kreatif_toba/base/show_custom_message.dart';
@@ -26,6 +27,8 @@ class AlamatController extends GetxController {
   RxInt berat = 0.obs;
   RxInt HargaPengiriman = 0.obs;
   var subAsal = 0.obs;
+  RxString selected = "".obs;
+  RxInt alamatID = 0.obs;
   var hiddenButton = true.obs;
   var kurir = "".obs;
   var namakurir = "".obs;
@@ -66,6 +69,19 @@ class AlamatController extends GetxController {
     update();
   }
 
+  void setTypeAlamat(String? getalamat) {
+    selected.value = getalamat!;
+    update();
+  }
+
+  void setId(int? idAlamat){
+    alamatID.value = idAlamat!;
+    update();
+  }
+
+  void setAlamat(){
+
+  }
 
   Future<void> getAlamat() async {
     var controller = Get.find<UserController>().usersList[0];
