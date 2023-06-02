@@ -12,9 +12,8 @@ class PengirimanOptionButton extends StatelessWidget {
   final IconData icon;
   final String title;
   final int index;
-  final int purchaseIndex;
   const PengirimanOptionButton(
-      {Key? key, required this.icon, required this.title, required this.index, required this.purchaseIndex})
+      {Key? key, required this.icon, required this.title, required this.index})
       : super(key: key);
 
   @override

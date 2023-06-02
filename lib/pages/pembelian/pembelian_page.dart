@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:rumah_kreatif_toba/helper/dependencies.dart';
 import '../../base/show_custom_message.dart';
+import '../../base/snackbar_message.dart';
 import '../../controllers/alamat_controller.dart';
 import '../../controllers/auth_controller.dart';
 import '../../controllers/cart_controller.dart';
@@ -26,7 +27,7 @@ import '../../widgets/currency_format.dart';
 import '../../widgets/pengiriman_option_button.dart';
 import '../../widgets/price_text.dart';
 import '../../widgets/small_text.dart';
-
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 class PembelianPageState extends StatefulWidget {
   const PembelianPageState({Key? key}) : super(key: key);
 
@@ -74,16 +75,44 @@ class _PembelianPageState extends State<PembelianPageState> {
       if (_userLoggedIn) {
         var controller = Get.find<PengirimanController>();
         var userController = Get.find<UserController>().usersList[0];
+        var courier = Get.find<AlamatController>().kurir.value;
+        var service = Get.find<AlamatController>().service.value;
+        var alamat = Get.find<AlamatController>().alamatID.value;
+        var ongkir = Get.find<AlamatController>().HargaPengiriman.value;
 
-        controller
-            .beliProduk(userController.id, _carId, _merchantId,
-                _metodePembelian, _hargaPembelian, "", "", "", "")
-            .then((status) async {
-          if (status.isSuccess) {
-          } else {
-            showCustomSnackBar(status.message);
+        if(controller.paymentIndex.value == 1){
+          controller
+              .beliProduk(userController.id, _carId, _merchantId,
+              1, _hargaPembelian, "", 0, "", "", 0)
+              .then((status) async {
+            if (status.isSuccess) {
+            } else {
+              showCustomSnackBar(status.message);
+            }
+          });
+        }else if(controller.paymentIndex.value == 2){
+          if(alamat == 0 ){
+            AwesomeSnackbarButton("Gagal","Alamat masih kosong",ContentType.failure);
+          }else if(courier == 0){
+            AwesomeSnackbarButton("Gagal","Courir masih kosong",ContentType.failure);
+          }else if(service == null){
+            AwesomeSnackbarButton("Gagal","Service masih kosong",ContentType.failure);
+          }else if(ongkir == null){
+            AwesomeSnackbarButton("Gagal","Ongkos kirim masih kosong",ContentType.failure);
+          }else{
+            controller
+                .beliProduk(userController.id, _carId, _merchantId,
+                2, _hargaPembelian, "", alamat, courier, service, ongkir )
+                .then((status) async {
+              if (status.isSuccess) {
+              } else {
+                showCustomSnackBar(status.message);
+              }
+            });
           }
-        });
+
+        }
+
       }
     }
 
@@ -136,7 +165,9 @@ class _PembelianPageState extends State<PembelianPageState> {
                       ),
                       onTap: () {
                         controller.setHargaPengiriman(e.cost![0].value);
-                        print(e.cost![0].value);
+                        controller.setServicePengiriman(e.service);
+                        print(controller.service.value);
+                        print(Get.find<AlamatController>().alamatID.value);
                         Navigator.pop(context);
                       },
                     ))
@@ -179,6 +210,7 @@ class _PembelianPageState extends State<PembelianPageState> {
                     BigText(
                       text: "Pengiriman",
                       size: Dimensions.font20,
+                      fontWeight: FontWeight.bold,
                     ),
                   ],
                 ),
@@ -582,14 +614,27 @@ class _PembelianPageState extends State<PembelianPageState> {
                                       }),
                                   Divider(
                                       color: AppColors.buttonBackgroundColor),
-                                  Obx(() => Column(
+                                  Obx(() => Get.find<PengirimanController>().paymentIndex.value == 2 ?  Column(
                                         children: [
-                                          Text(
-                                              "Ongkir : ${controller.HargaPengiriman}"),
-                                          Text(
-                                              "Pengiriman : ${controller.namakurir.value}"),
+                                          Row(
+                                            children: [
+                                              BigText(text: "Ongkir : ", size: Dimensions.font16,),
+                                              PriceText(
+                                                text: CurrencyFormat.convertToIdr(
+                                                    controller.HargaPengiriman.value,
+                                                    0),
+                                                color: AppColors.redColor,
+                                                size: Dimensions.font16,
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              BigText(text: "Pengiriman : ${controller.namakurir.value}", size: Dimensions.font16,)
+                                            ],
+                                          )
                                         ],
-                                      )),
+                                      ) : SizedBox()),
                                   Container(
                                     padding: EdgeInsets.only(
                                         top: Dimensions.height10,
@@ -694,9 +739,7 @@ class _PembelianPageState extends State<PembelianPageState> {
                                                                         .money,
                                                                     title:
                                                                         'Ambil Ditempat Rp0',
-                                                                    index: 1,
-                                                                    purchaseIndex:
-                                                                        merchantIndex),
+                                                                    index: 1),
                                                                 SizedBox(
                                                                     height: Dimensions
                                                                         .height10),
@@ -705,9 +748,7 @@ class _PembelianPageState extends State<PembelianPageState> {
                                                                         .money,
                                                                     title:
                                                                         'Pesanan Dikirim',
-                                                                    index: 2,
-                                                                    purchaseIndex:
-                                                                        merchantIndex),
+                                                                    index: 2,),
                                                                 Obx(
                                                                   () => Get.find<PengirimanController>()
                                                                               .paymentIndex

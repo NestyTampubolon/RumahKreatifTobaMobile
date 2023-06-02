@@ -16,9 +16,10 @@ class PengirimanRepo {
       int metode_pembelian,
       int harga_pembelian,
       String potongan_pembelian,
-      String alamat_purchase,
+      int alamat_purchase,
       String courier_code,
-      String service) async {
+      String service,
+      int ongkir) async {
     return await apiClient.postData(AppConstants.BELI_PRODUK, {
       "user_id": user_id,
       "cart_id": cart_id,
@@ -28,7 +29,8 @@ class PengirimanRepo {
       "potongan_pembelian": potongan_pembelian,
       "alamat_purchase": alamat_purchase,
       "courier_code": courier_code,
-      "service": service
+      "service": service,
+      "ongkir" : ongkir
     });
   }
 
@@ -39,9 +41,10 @@ class PengirimanRepo {
       int jumlah_masuk_keranjang,
       int harga_pembelian,
       String potongan_pembelian,
-      String alamat_purchase,
+      int alamat_purchase,
       String courier_code,
-      String service) async {
+      String service,
+      int ongkir) async {
     return await apiClient.postData(AppConstants.BELI_LANGSUNG, {
       "user_id": user_id,
       "product_id": product_id,
@@ -51,7 +54,8 @@ class PengirimanRepo {
       "potongan_pembelian": potongan_pembelian,
       "alamat_purchase": alamat_purchase,
       "courier_code": courier_code,
-      "service": service
+      "service": service,
+      "ongkir" : ongkir
     });
   }
 }

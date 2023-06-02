@@ -39,6 +39,7 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
     if (_userLoggedIn) {
       Get.find<UserController>().getUser();
       Get.find<PesananController>().getPesananMenungguBayaranList();
+      _list = Get.find<PesananController>().pesananMenungguPembayaranList.toList();
     }
   }
 
@@ -58,6 +59,7 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
         name: "Belum Bayar"
     ),
   ];
+
 
   List<dynamic> _list = Get.find<PesananController>().pesananMenungguPembayaranList.toList();
 
@@ -378,7 +380,7 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                                           SmallText(text: "Total Belanja"),
                                           PriceText(
                                             text: CurrencyFormat.convertToIdr(
-                                                pesananController.pesananMenungguPembayaranList[index].hargaPembelian
+                                                pesananController.pesananMenungguPembayaranList[index].hargaPembelian + pesananController.pesananMenungguPembayaranList[index].ongkir
                                                 , 0),
                                             size: Dimensions.font16,
                                           ),

@@ -22,7 +22,7 @@ class PesananController extends GetxController {
   List<dynamic> _pesananList = [];
   List<dynamic> get pesananList => _pesananList;
 
-  List<dynamic> _pesananMenungguPembayaranList = [];
+  RxList<dynamic> _pesananMenungguPembayaranList = <dynamic>[].obs;
   List<dynamic> get pesananMenungguPembayaranList =>
       _pesananMenungguPembayaranList;
 
@@ -67,7 +67,7 @@ class PesananController extends GetxController {
     late ResponseModel responseModel;
     if (response.statusCode == 200) {
       List<dynamic> responseBody = response.body;
-      _pesananMenungguPembayaranList = [];
+      _pesananMenungguPembayaranList = [].obs;
       for (dynamic item in responseBody) {
         PurchaseModel purchase = PurchaseModel.fromJson(item);
         _pesananMenungguPembayaranList.add(purchase);
@@ -181,16 +181,15 @@ class PesananController extends GetxController {
   }
 
   Future<ResponseModel> hapusPesanan(String kode_pembelian) async {
-    _isLoading = true;
-    update();
     Response response = await pesananRepo.hapusPesanan(kode_pembelian);
     late ResponseModel responseModel;
     if(response.statusCode == 200){
       AwesomeSnackbarButton("Berhasil","Pesanan berhasil dihapus",ContentType.success);
-      getPesananMenungguBayaranList();
+
     }else{
       responseModel = ResponseModel(false, response.statusText!);
     }
+    getPesananMenungguBayaranList();
     _isLoading = false;
     update();
     return responseModel;

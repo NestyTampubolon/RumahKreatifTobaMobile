@@ -38,10 +38,10 @@ class PengirimanController extends GetxController{
   RxString checkedtypePengiriman = RxString("Pilih Pengiriman");
 
 
-  Future<ResponseModel> beliProduk(int? user_id, List cart_id, int merchant_id, int metode_pembelian, int harga_pembelian, String potongan_pembelian,  String alamat_purchase, String courier_code, String service) async {
+  Future<ResponseModel> beliProduk(int? user_id, List cart_id, int merchant_id, int metode_pembelian, int harga_pembelian, String potongan_pembelian,  int alamat_purchase, String courier_code, String service, int ongkir) async {
     _isLoading = true;
     update();
-    Response response = await pengirimanRepo.beliProduk(user_id!, cart_id, merchant_id, metode_pembelian, harga_pembelian, potongan_pembelian, alamat_purchase, courier_code, service);
+    Response response = await pengirimanRepo.beliProduk(user_id!, cart_id, merchant_id, metode_pembelian, harga_pembelian, potongan_pembelian, alamat_purchase, courier_code, service, ongkir);
     late ResponseModel responseModel;
     if(response.statusCode == 200){
       AwesomeSnackbarButton("Berhasil","Produk berhasil dibeli",ContentType.success);
@@ -56,10 +56,10 @@ class PengirimanController extends GetxController{
     return responseModel;
   }
 
-  Future<ResponseModel> beliLangsung(int? user_id, int product_id, int metode_pembelian, int jumlah_masuk_keranjang, int harga_pembelian, String potongan_pembelian,  String alamat_purchase, String courier_code, String service) async {
+  Future<ResponseModel> beliLangsung(int? user_id, int product_id, int metode_pembelian, int jumlah_masuk_keranjang, int harga_pembelian, String potongan_pembelian,  int alamat_purchase, String courier_code, String service, int ongkir) async {
     _isLoading = true;
     update();
-    Response response = await pengirimanRepo.beliLangsung(user_id!, product_id,  metode_pembelian, jumlah_masuk_keranjang, harga_pembelian, potongan_pembelian, alamat_purchase, courier_code, service);
+    Response response = await pengirimanRepo.beliLangsung(user_id!, product_id,  metode_pembelian, jumlah_masuk_keranjang, harga_pembelian, potongan_pembelian, alamat_purchase, courier_code, service, ongkir);
     late ResponseModel responseModel;
     if(response.statusCode == 200){
       AwesomeSnackbarButton("Berhasil","Produk berhasil dibeli",ContentType.success);
