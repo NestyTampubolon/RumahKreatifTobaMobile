@@ -332,7 +332,7 @@ class _PembayaranPageState extends State<PembayaranPage> {
                 padding: EdgeInsets.all(Dimensions.height20),
                 width: Dimensions.screenWidth,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(Dimensions.radius20),
+                    borderRadius: BorderRadius.circular(Dimensions.radius20/2),
                     color: AppColors.redColor),
                 child: GestureDetector(
                     onTap: () {
@@ -395,7 +395,7 @@ class _PembayaranPageState extends State<PembayaranPage> {
                             right: Dimensions.width20),
                         decoration: BoxDecoration(
                             borderRadius:
-                                BorderRadius.circular(Dimensions.radius20),
+                                BorderRadius.circular(Dimensions.radius20/4),
                             color: AppColors.redColor),
                         child: GestureDetector(
                             onTap: () {

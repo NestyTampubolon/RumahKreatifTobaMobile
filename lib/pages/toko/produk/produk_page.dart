@@ -60,8 +60,10 @@ class _ProdukPageState extends State<ProdukPage> {
       }
     }
 
-    return RefreshIndicator(child: SingleChildScrollView(
-      child: Column(
+    return RefreshIndicator(
+        child: Scrollbar(
+            showTrackOnHover: true, thickness: 7, radius: Radius.circular(20),
+      child: ListView(
         children: [
           Container(
             child: Container(
@@ -227,6 +229,5 @@ class _ProdukPageState extends State<ProdukPage> {
       ),
     ),
         onRefresh: () => Get.find<PopularProdukController>().getProdukList());
-
   }
 }

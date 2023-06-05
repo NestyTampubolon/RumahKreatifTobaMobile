@@ -156,7 +156,7 @@ class _DaftarPembelianPageState extends State<DaftarPembelianPage>
                 var _menungguKonfirmasiList = controller.pembelianList
                     .where((item) => item.statusPembelian == "Perlu Dikemas")
                     .toList();
-                return Scrollbar(showTrackOnHover: true, thickness: 10, radius: Radius.circular(20),child: RefreshIndicator(child: GridView.builder(
+                return Scrollbar(showTrackOnHover: true, thickness: 7, radius: Radius.circular(20),child: RefreshIndicator(child: GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 1,
                         mainAxisExtent: Dimensions.height45 * 5),
@@ -341,7 +341,7 @@ class _DaftarPembelianPageState extends State<DaftarPembelianPage>
                                             PriceText(
                                               text: _menungguKonfirmasiList[index].hargaPembelian != null
                                                   ? CurrencyFormat.convertToIdr(
-                                                _menungguKonfirmasiList[index].hargaPembelian,
+                                                _menungguKonfirmasiList[index].hargaPembelian + _menungguKonfirmasiList[index].ongkir ?? 0,
                                                 0,
                                               )
                                                   : 'N/A',
@@ -387,232 +387,233 @@ class _DaftarPembelianPageState extends State<DaftarPembelianPage>
                 var _sudahKonfirmasiList = controller.pembelianList
                     .where((item) => item.statusPembelian != "Perlu Dikemas")
                     .toList();
-                return RefreshIndicator(
+                return Scrollbar(
+                    showTrackOnHover: true, thickness: 7, radius: Radius.circular(20),child: RefreshIndicator(
                     child: GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 1,
-                        mainAxisExtent: Dimensions.height45 * 5.5),
-                    itemCount: _sudahKonfirmasiList.length,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      var gambarproduk = Get.find<PopularProdukController>().imageProdukList.where(
-                              (produk) =>
-                          produk.productId ==
-                              _sudahKonfirmasiList[index].productId);
-                      return Container(
-                        width: Dimensions.screenWidth,
-                        height: Dimensions.height45 * 3.5,
-                        margin: EdgeInsets.only(
-                            bottom: Dimensions.height10,
-                            top: Dimensions.height10 / 2,
-                            left: Dimensions.width20,
-                            right: Dimensions.width20),
-                        padding: EdgeInsets.all(Dimensions.height10),
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                color: AppColors.buttonBackgroundColor),
-                            borderRadius:
-                            BorderRadius.circular(Dimensions.radius20),
-                            color: Colors.white),
-                        child: Column(
-                          children: [
-                            Container(
-                              child: Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    child: Row(
-                                      children: [
-                                        Container(
-                                          child: AppIcon(
-                                            icon: Icons.shopping_bag_outlined,
-                                            iconSize: Dimensions.iconSize24,
-                                            iconColor: AppColors.redColor,
-                                            backgroundColor:
-                                            Colors.white.withOpacity(0.0),
-                                          ),
-                                        ),
-                                        Column(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                          children: [
-                                            BigText(
-                                              text: "Belanja",
-                                              size: Dimensions.font16,
-                                            ),
-                                            SmallText(
-                                                text: _sudahKonfirmasiList[index].name
-                                                    .toString()),
-                                            Container(
-                                                height: Dimensions.height20,
-                                                padding: EdgeInsets.only(right: Dimensions.width10, left: Dimensions.width10),
-                                                decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(Dimensions.radius30),
-                                                  color: AppColors.notification_success.withOpacity(0.3),
-                                                ),
-                                                child: Center(
-                                                  child: BigText(
-                                                      text: _sudahKonfirmasiList[index].statusPembelian
-                                                          .toString(),
-                                                      size: Dimensions.font16/1.5,
-                                                      color: AppColors.notification_success,
-                                                      fontWeight: FontWeight.bold),
-                                                )),
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Divider(color: AppColors.buttonBackgroundColor),
-                            Container(
-                              child: Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-
-                                    child: Row(
-                                      children: [
-                                        GestureDetector(
-                                          onTap: () {
-                                            var produkIndex =
-                                            controller
-                                                .detailPembelianList[index]
-                                                .productId!;
-                                            if (produkIndex >= 0) {
-                                              Get.toNamed(RouteHelper
-                                                  .getProdukDetail(
-                                                  produkIndex));
-                                            }
-                                          },
-                                          child: Container(
-                                            width:
-                                            Dimensions.height20 *
-                                                3,
-                                            height:
-                                            Dimensions.height20 *
-                                                3,
-                                            margin: EdgeInsets.only(
-                                                top: Dimensions
-                                                    .height10),
-                                            decoration: BoxDecoration(
-                                                image: DecorationImage(
-                                                    fit: BoxFit.cover,
-                                                    image: NetworkImage(
-                                                      '${AppConstants.BASE_URL_IMAGE}u_file/product_image/${gambarproduk.single.productImageName}',
-                                                    )
-                                                ),
-                                                borderRadius:
-                                                BorderRadius.circular(
-                                                    Dimensions
-                                                        .radius20),
-                                                color: Colors.white),
-                                          ),
-                                        ),
-                                        SizedBox(width: Dimensions.width20,),
-                                        Column(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 1,
+                            mainAxisExtent: Dimensions.height45 * 5.5),
+                        itemCount: _sudahKonfirmasiList.length,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          var gambarproduk = Get.find<PopularProdukController>().imageProdukList.where(
+                                  (produk) =>
+                              produk.productId ==
+                                  _sudahKonfirmasiList[index].productId);
+                          return Container(
+                            width: Dimensions.screenWidth,
+                            height: Dimensions.height45 * 3.5,
+                            margin: EdgeInsets.only(
+                                bottom: Dimensions.height10,
+                                top: Dimensions.height10 / 2,
+                                left: Dimensions.width20,
+                                right: Dimensions.width20),
+                            padding: EdgeInsets.all(Dimensions.height10),
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: AppColors.buttonBackgroundColor),
+                                borderRadius:
+                                BorderRadius.circular(Dimensions.radius20),
+                                color: Colors.white),
+                            child: Column(
+                              children: [
+                                Container(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        child: Row(
                                           children: [
                                             Container(
-                                              width : Dimensions.screenWidth/1.6,
-                                              child: BigText(
-                                                text: _sudahKonfirmasiList[index]
-                                                    .productName,
-                                                size: Dimensions.font16,
+                                              child: AppIcon(
+                                                icon: Icons.shopping_bag_outlined,
+                                                iconSize: Dimensions.iconSize24,
+                                                iconColor: AppColors.redColor,
+                                                backgroundColor:
+                                                Colors.white.withOpacity(0.0),
                                               ),
                                             ),
-                                            Row(
+                                            Column(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                               children: [
+                                                BigText(
+                                                  text: "Belanja",
+                                                  size: Dimensions.font16,
+                                                ),
                                                 SmallText(
-                                                    text: "${ _sudahKonfirmasiList[index]
-                                                        .jumlahPembelianProduk} x "),
+                                                    text: _sudahKonfirmasiList[index].name
+                                                        .toString()),
+                                                Container(
+                                                    height: Dimensions.height20,
+                                                    padding: EdgeInsets.only(right: Dimensions.width10, left: Dimensions.width10),
+                                                    decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(Dimensions.radius30),
+                                                      color: AppColors.notification_success.withOpacity(0.3),
+                                                    ),
+                                                    child: Center(
+                                                      child: BigText(
+                                                          text: _sudahKonfirmasiList[index].statusPembelian
+                                                              .toString(),
+                                                          size: Dimensions.font16/1.5,
+                                                          color: AppColors.notification_success,
+                                                          fontWeight: FontWeight.bold),
+                                                    )),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Divider(color: AppColors.buttonBackgroundColor),
+                                Container(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+
+                                        child: Row(
+                                          children: [
+                                            GestureDetector(
+                                              onTap: () {
+                                                var produkIndex =
+                                                controller
+                                                    .detailPembelianList[index]
+                                                    .productId!;
+                                                if (produkIndex >= 0) {
+                                                  Get.toNamed(RouteHelper
+                                                      .getProdukDetail(
+                                                      produkIndex));
+                                                }
+                                              },
+                                              child: Container(
+                                                width:
+                                                Dimensions.height20 *
+                                                    3,
+                                                height:
+                                                Dimensions.height20 *
+                                                    3,
+                                                margin: EdgeInsets.only(
+                                                    top: Dimensions
+                                                        .height10),
+                                                decoration: BoxDecoration(
+                                                    image: DecorationImage(
+                                                        fit: BoxFit.cover,
+                                                        image: NetworkImage(
+                                                          '${AppConstants.BASE_URL_IMAGE}u_file/product_image/${gambarproduk.single.productImageName}',
+                                                        )
+                                                    ),
+                                                    borderRadius:
+                                                    BorderRadius.circular(
+                                                        Dimensions
+                                                            .radius20),
+                                                    color: Colors.white),
+                                              ),
+                                            ),
+                                            SizedBox(width: Dimensions.width20,),
+                                            Column(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                              children: [
+                                                Container(
+                                                  width : Dimensions.screenWidth/1.6,
+                                                  child: BigText(
+                                                    text: _sudahKonfirmasiList[index]
+                                                        .productName,
+                                                    size: Dimensions.font16,
+                                                  ),
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    SmallText(
+                                                        text: "${ _sudahKonfirmasiList[index]
+                                                            .jumlahPembelianProduk} x "),
+                                                    PriceText(
+                                                      text: CurrencyFormat
+                                                          .convertToIdr(
+                                                          _sudahKonfirmasiList[index]
+                                                              .price,
+                                                          0),
+                                                      size: Dimensions.font16,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(height: Dimensions.height10,),
+                                Container(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        child: Row(
+                                          children: [
+                                            Column(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                              children: [
+                                                SmallText(text: "Total Belanja"),
                                                 PriceText(
-                                                  text: CurrencyFormat
-                                                      .convertToIdr(
-                                                      _sudahKonfirmasiList[index]
-                                                          .price,
-                                                      0),
+                                                  text: _sudahKonfirmasiList[index].hargaPembelian != null
+                                                      ? CurrencyFormat.convertToIdr(
+                                                    _sudahKonfirmasiList[index].hargaPembelian + _sudahKonfirmasiList[index].hargaPembelian ?? 0,
+                                                    0,
+                                                  )
+                                                      : 'N/A',
                                                   size: Dimensions.font16,
                                                 ),
                                               ],
-                                            ),
+                                            )
                                           ],
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(height: Dimensions.height10,),
-                            Container(
-                              child: Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    child: Row(
-                                      children: [
-                                        Column(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                          children: [
-                                            SmallText(text: "Total Belanja"),
-                                            PriceText(
-                                              text: _sudahKonfirmasiList[index].hargaPembelian != null
-                                                  ? CurrencyFormat.convertToIdr(
-                                                _sudahKonfirmasiList[index].hargaPembelian,
-                                                0,
-                                              )
-                                                  : 'N/A',
-                                              size: Dimensions.font16,
-                                            ),
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      _detailPembelianList(_sudahKonfirmasiList[index].purchaseId);
-                                    },
-                                    child: Container(
-                                      padding: EdgeInsets.only(
-                                          top: Dimensions.height10 / 2,
-                                          bottom: Dimensions.height10 / 2,
-                                          left: Dimensions.height10,
-                                          right: Dimensions.height10),
-                                      decoration: BoxDecoration(
-                                          border: Border.all(
-                                              color: AppColors.redColor),
-                                          borderRadius: BorderRadius.circular(
-                                              Dimensions.radius20 / 2),
-                                          color: Colors.white),
-                                      child: BigText(
-                                        text: "Lihat Detail",
-                                        size: Dimensions.iconSize16,
-                                        color: AppColors.redColor,
+                                        ),
                                       ),
-                                    ),
-                                  )
-                                ],
-                              ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          _detailPembelianList(_sudahKonfirmasiList[index].purchaseId);
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.only(
+                                              top: Dimensions.height10 / 2,
+                                              bottom: Dimensions.height10 / 2,
+                                              left: Dimensions.height10,
+                                              right: Dimensions.height10),
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: AppColors.redColor),
+                                              borderRadius: BorderRadius.circular(
+                                                  Dimensions.radius20 / 2),
+                                              color: Colors.white),
+                                          child: BigText(
+                                            text: "Lihat Detail",
+                                            size: Dimensions.iconSize16,
+                                            color: AppColors.redColor,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      );
-                    }), onRefresh: () => Get.find<PembelianController>().getPembelianList());
+                          );
+                        }), onRefresh: () => Get.find<PembelianController>().getPembelianList()));
               })
             ],
           ),

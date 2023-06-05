@@ -70,6 +70,7 @@ class _DaftarRekeningState extends State<DaftarRekening> {
                       ),
                     ],
                   ),
+                  Get.find<BankController>().daftarRekeningList.length <=5 ?
                   GestureDetector(
                     onTap: (){
                       Get.to(DataBankPage());
@@ -79,7 +80,7 @@ class _DaftarRekeningState extends State<DaftarRekening> {
                           Icons.add,
                           color: AppColors.redColor,
                         )),
-                  )
+                  ) : SizedBox()
                 ],
               ),
             ),

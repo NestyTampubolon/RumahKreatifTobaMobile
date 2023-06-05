@@ -197,7 +197,7 @@ class _DetailPesananPageState extends State<DetailPesananPage> {
                                 border: Border.all(
                                     color: AppColors.buttonBackgroundColor),
                                 borderRadius:
-                                    BorderRadius.circular(Dimensions.radius20),
+                                    BorderRadius.circular(Dimensions.radius20/2),
                                 color: Colors.white),
                             child: Column(
                               children: [
@@ -207,7 +207,6 @@ class _DetailPesananPageState extends State<DetailPesananPage> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Container(
-
                                         child: Row(
                                           children: [
                                             GestureDetector(

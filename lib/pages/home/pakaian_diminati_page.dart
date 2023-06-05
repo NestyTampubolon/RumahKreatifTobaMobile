@@ -14,8 +14,9 @@ class PakaianDiminatiPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
+      body: Scrollbar(
+        showTrackOnHover: true, thickness: 7, radius: Radius.circular(20),
+        child: ListView(
           children: [
             Container(
               child: Container(

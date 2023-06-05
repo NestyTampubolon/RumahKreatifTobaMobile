@@ -29,6 +29,15 @@ class PurchaseModel {
   int? heavy;
   int? isDeleted;
   String? name;
+  int? userAddressId;
+  int? provinceId;
+  String? provinceName;
+  int? cityId;
+  String? cityName;
+  int? subdistrictId;
+  String? subdistrictName;
+  String? userStreetAddress;
+  String? noHp;
 
   PurchaseModel(
       {this.purchaseId,
@@ -60,7 +69,17 @@ class PurchaseModel {
         this.price,
         this.heavy,
         this.isDeleted,
-        this.name});
+        this.name,
+        this.userAddressId,
+        this.provinceId,
+        this.provinceName,
+        this.cityId,
+        this.cityName,
+        this.subdistrictId,
+        this.subdistrictName,
+        this.userStreetAddress,
+        this.noHp,
+      });
 
   PurchaseModel.fromJson(Map<String, dynamic> json) {
     purchaseId = json['purchase_id'];
@@ -93,6 +112,15 @@ class PurchaseModel {
     heavy = json['heavy'];
     isDeleted = json['is_deleted'];
     name = json['name'];
+    userAddressId = json['user_address_id'];
+    provinceId = json['province_id'];
+    provinceName = json['province_name'];
+    cityId = json['city_id'];
+    cityName = json['city_name'];
+    subdistrictId = json['subdistrict_id'];
+    subdistrictName = json['subdistrict_name'];
+    userStreetAddress = json['user_street_address'];
+    noHp = json['no_hp'];
   }
 
   Map<String, dynamic> toJson() {
@@ -127,6 +155,15 @@ class PurchaseModel {
     data['heavy'] = this.heavy;
     data['is_deleted'] = this.isDeleted;
     data['name'] = this.name;
+    data['user_address_id'] = this.userAddressId;
+    data['province_id'] = this.provinceId;
+    data['province_name'] = this.provinceName;
+    data['city_id'] = this.cityId;
+    data['city_name'] = this.cityName;
+    data['subdistrict_id'] = this.subdistrictId;
+    data['subdistrict_name'] = this.subdistrictName;
+    data['user_street_address'] = this.userStreetAddress;
+    data['no_hp'] = this.noHp;
     return data;
   }
 }

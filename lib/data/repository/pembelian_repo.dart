@@ -20,4 +20,8 @@ class PembelianRepo{
   Future<Response> updateStatusPembelian(int purchase_id) async {
     return await apiClient.postData(AppConstants.UPDATE_STATUS_PEMBELIAN_URL, {"purchase_id": purchase_id });
   }
+
+  Future<Response> updateNoResiPembelian(int purchase_id, String no_resi) async {
+    return await apiClient.postData(AppConstants.UPDATE_NORESI_PEMBELIAN_URL, {"purchase_id": purchase_id, "no_resi" : no_resi});
+  }
 }

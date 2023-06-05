@@ -2,12 +2,14 @@ import 'package:get/get.dart';
 import 'package:rumah_kreatif_toba/controllers/user_controller.dart';
 import 'package:rumah_kreatif_toba/data/repository/pembelian_repo.dart';
 import '../base/show_custom_message.dart';
+import '../base/snackbar_message.dart';
 import '../models/purchase_models.dart';
 import '../models/response_model.dart';
 import 'package:get/get.dart';
 
 import '../pages/toko/hometoko/hometoko_page.dart';
 import '../pages/toko/pembelian/pembelian_page.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 class PembelianController extends GetxController {
   final PembelianRepo pembelianRepo;
@@ -69,6 +71,23 @@ class PembelianController extends GetxController {
       getPembelianList();
       Get.to(HomeTokoPage(initialIndex: 2));
       responseModel = ResponseModel(true, "successfully");
+      AwesomeSnackbarButton("Berhasil","Berhasil konfirmasi pesanan",ContentType.success);
+    } else {
+      responseModel = ResponseModel(false, response.statusText!);
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  Future<ResponseModel> updateNoResiPembelian(int purchase_id, String no_resi) async {
+    Response response = await pembelianRepo.updateNoResiPembelian(purchase_id, no_resi);
+    late ResponseModel responseModel;
+    if (response.statusCode == 200) {
+      getPembelianList();
+      Get.to(HomeTokoPage(initialIndex: 2));
+      responseModel = ResponseModel(true, "successfully");
+      AwesomeSnackbarButton("Berhasil","Berhasil masukkan nomor resi",ContentType.success);
     } else {
       responseModel = ResponseModel(false, response.statusText!);
     }

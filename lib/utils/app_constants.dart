@@ -67,6 +67,7 @@ class AppConstants {
   static const String DAFTAR_PEMBELIAN_URL = "daftarpembelian";
   static const String DETAIL_PEMBELIAN_URL = "detailpembelian";
   static const String UPDATE_STATUS_PEMBELIAN_URL = "updatestatuspembelian";
+  static const String UPDATE_NORESI_PEMBELIAN_URL = "updatestatus2pembelian";
 
   static const String DAFTAR_ALAMAT = "alamatpengguna";
   static const String TAMBAH_ALAMAT = "tambahalamat";

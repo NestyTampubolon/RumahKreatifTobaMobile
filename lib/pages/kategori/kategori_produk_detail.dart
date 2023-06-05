@@ -78,7 +78,7 @@ class _KategoriProdukDetailState extends State<KategoriProdukDetail> {
     }
     return Scaffold(
       body: SingleChildScrollView(
-        child: Column(
+        child: Scrollbar(showTrackOnHover: true, thickness: 10, radius: Radius.circular(20), child: Column(
           children: [
             Container(
               child: Container(
@@ -161,7 +161,7 @@ class _KategoriProdukDetailState extends State<KategoriProdukDetail> {
                     image: DecorationImage(
                         fit: BoxFit.fill,
                         image:
-                            AssetImage("assets/images/kategori/$kategori.png")),
+                        AssetImage("assets/images/kategori/$kategori.png")),
                   ),
                 ),
                 Container(
@@ -312,7 +312,7 @@ class _KategoriProdukDetailState extends State<KategoriProdukDetail> {
             //         );
             // }),
           ],
-        ),
+        ),),
       ),
     );
   }

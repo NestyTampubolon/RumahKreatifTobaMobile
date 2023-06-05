@@ -110,7 +110,8 @@ class _PembelianPageState extends State<PembelianPageState> {
               }
             });
           }
-
+        }else{
+          AwesomeSnackbarButton("Gagal","Pilih pengiriman masih kosong",ContentType.failure);
         }
 
       }
@@ -851,23 +852,35 @@ class _PembelianPageState extends State<PembelianPageState> {
                                               });
                                             });
                                       },
-                                      child: Row(children: [
-                                        AppIcon(
-                                          icon: Icons.note,
-                                          iconColor: AppColors.redColor,
-                                          backgroundColor:
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(
+                                              children: [
+                                            AppIcon(
+                                              icon: Icons.note,
+                                              iconColor: AppColors.redColor,
+                                              backgroundColor:
                                               Colors.white.withOpacity(0.0),
-                                        ),
-                                        Obx(
-                                          () => BigText(
-                                            text:
+                                            ),
+                                            Obx(
+                                                  () => BigText(
+                                                text:
                                                 Get.find<PengirimanController>()
                                                     .checkedtypePengiriman
                                                     .value,
-                                            size: Dimensions.height15,
+                                                size: Dimensions.height15,
+                                              ),
+                                            ),
+                                          ]),
+                                          AppIcon(
+                                            icon: Icons.arrow_drop_down_outlined,
+                                            iconColor: AppColors.redColor,
+                                            backgroundColor:
+                                            Colors.white.withOpacity(0.0),
                                           ),
-                                        ),
-                                      ]),
+                                        ],
+                                      )
                                     ),
                                   ),
                                 ],
