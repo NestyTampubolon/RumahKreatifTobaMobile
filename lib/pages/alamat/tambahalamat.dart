@@ -80,6 +80,7 @@ class TambahAlamatPage extends GetView<AlamatController> {
                   BigText(
                     text: "Alamat",
                     size: Dimensions.font20,
+                    fontWeight: FontWeight.bold,
                   ),
                 ],
               ),
@@ -224,22 +225,19 @@ class TambahAlamatPage extends GetView<AlamatController> {
               },
               child: Container(
                 alignment: Alignment.bottomCenter,
-                width: 306,
-                height: 45,
+                width: Dimensions.width45*3,
+                height: Dimensions.height45,
                 // alignment: Alignment.topCenter,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(
-                    color: AppColors.redColor,
-                    width: 3,
-                  ),
+                  color: AppColors.redColor
                 ),
                 child: Center(
                   child: BigText(
                     text: "Tambah",
                     fontWeight: FontWeight.bold,
                     size: Dimensions.font20,
-                    color: AppColors.redColor,
+                    color: Colors.white,
                   ),
                 ),
               ),

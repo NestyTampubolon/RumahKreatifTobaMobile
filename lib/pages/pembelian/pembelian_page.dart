@@ -293,8 +293,8 @@ class _PembelianPageState extends State<PembelianPageState> {
                                                   return Container(
                                                     height: 120,
                                                     padding: EdgeInsets.symmetric(
-                                                      horizontal: Dimensions.width20,
-                                                      vertical: Dimensions.height20,
+                                                      horizontal: Dimensions.width10,
+                                                      vertical: Dimensions.height10,
                                                     ),
                                                     child: Column(
                                                       children: [
@@ -458,7 +458,7 @@ class _PembelianPageState extends State<PembelianPageState> {
                                   border: Border.all(
                                       color: AppColors.buttonBackgroundColor),
                                   borderRadius: BorderRadius.circular(
-                                      Dimensions.radius20),
+                                      Dimensions.radius20/2),
                                   color: Colors.white),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -509,7 +509,7 @@ class _PembelianPageState extends State<PembelianPageState> {
                                                           .buttonBackgroundColor),
                                                   borderRadius:
                                                       BorderRadius.circular(
-                                                          Dimensions.radius20),
+                                                          Dimensions.radius20/2),
                                                   color: Colors.white),
                                               child: Column(
                                                 children: [
@@ -548,7 +548,7 @@ class _PembelianPageState extends State<PembelianPageState> {
                                                                   borderRadius:
                                                                       BorderRadius.circular(
                                                                           Dimensions
-                                                                              .radius20),
+                                                                              .radius20/2),
                                                                   color: Colors
                                                                       .white),
                                                         ),
@@ -924,21 +924,26 @@ class _PembelianPageState extends State<PembelianPageState> {
                             borderRadius:
                                 BorderRadius.circular(Dimensions.radius20),
                             color: Colors.white),
-                        child: Row(
+                        child: Column(
                           children: [
-                            SizedBox(
-                              width: Dimensions.width10 / 2,
-                            ),
-                            PriceText(
-                              text: CurrencyFormat.convertToIdr(
-                                  calculateTotal().toDouble() +
-                                      controller.HargaPengiriman.toDouble(),
-                                  0),
-                              size: Dimensions.font16,
-                            ),
-                            SizedBox(
-                              width: Dimensions.width10 / 2,
-                            ),
+                            SmallText(text: "Total Harga"),
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width: Dimensions.width10 / 2,
+                                ),
+                                Obx(() => PriceText(
+                                  text: CurrencyFormat.convertToIdr(
+                                      calculateTotal().toDouble() +
+                                          controller.HargaPengiriman.toDouble(),
+                                      0),
+                                  size: Dimensions.font16,
+                                ),),
+                                SizedBox(
+                                  width: Dimensions.width10 / 2,
+                                ),
+                              ],
+                            )
                           ],
                         ),
                       ),
@@ -950,7 +955,7 @@ class _PembelianPageState extends State<PembelianPageState> {
                             right: Dimensions.width20),
                         decoration: BoxDecoration(
                             borderRadius:
-                                BorderRadius.circular(Dimensions.radius20),
+                                BorderRadius.circular(Dimensions.radius20/4),
                             color: AppColors.redColor),
                         child: GestureDetector(
                             onTap: () {

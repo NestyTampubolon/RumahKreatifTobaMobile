@@ -70,8 +70,7 @@ class _MainAccountPageState extends State<MainAccountPage> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Get.to(() => Masuk(),
-                        transition: Transition.fadeIn);
+                    Get.to(() => Masuk());
                   },
                   child: Container(
                       width: Dimensions.screenWidth / 4,
@@ -96,8 +95,7 @@ class _MainAccountPageState extends State<MainAccountPage> {
                 //daftar
                 GestureDetector(
                   onTap: () {
-                    Get.to(() => Register(),
-                        transition: Transition.fadeIn);
+                    Get.to(() => Register());
                   },
                   child: Container(
                       width: Dimensions.screenWidth / 4,

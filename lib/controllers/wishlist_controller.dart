@@ -46,7 +46,7 @@ class WishlistController extends GetxController{
     Response response = await wishlistRepo.getWishlistList(controller.id!);
     if(response.statusCode == 200){
       List<dynamic> responseBody = response.body;
-      _wishlistList.value = [];
+      _wishlistList.value = [].obs;
       for (dynamic item in responseBody) {
         WishlistModel wishlist = WishlistModel.fromJson(item);
         _wishlistList.add(wishlist);

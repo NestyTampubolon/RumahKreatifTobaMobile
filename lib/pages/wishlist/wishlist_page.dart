@@ -154,7 +154,7 @@ class _WishlistPageState extends State<WishlistPage> {
           ),
           Expanded(child: SingleChildScrollView(
             child: GetBuilder<WishlistController>(builder: (wishlistController) {
-              return wishlistController.isLoading
+              return Obx(() => wishlistController.isLoading
                   ? GridView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -184,9 +184,9 @@ class _WishlistPageState extends State<WishlistPage> {
                               )
                             ]),
                         margin: EdgeInsets.only(
-                            left: Dimensions.width20,
-                            right: Dimensions.width20,
-                            bottom: Dimensions.height20,),
+                          left: Dimensions.width20,
+                          right: Dimensions.width20,
+                          bottom: Dimensions.height20,),
                         child: GestureDetector(
                           onTap: () {},
                           child: Column(
@@ -401,7 +401,7 @@ class _WishlistPageState extends State<WishlistPage> {
               )
                   : CircularProgressIndicator(
                 color: AppColors.redColor,
-              );
+              ));
             }),
           )),
         ],

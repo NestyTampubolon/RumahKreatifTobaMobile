@@ -85,7 +85,7 @@ class Register extends StatelessWidget {
             gender: gender);
         authController.registrasi(users).then((status) {
           if (status.isSuccess) {
-            AwesomeSnackbarButton("Berhasil","Akun sudah berhasil di daftar silahkan kembali masuk dengan username dan passsword Anda!",ContentType.success);
+            AwesomeSnackbarButton("Berhasil","Akun sudah berhasil di daftar!",ContentType.success);
             Get.offNamed(RouteHelper.getInitial());
           } else {
             AwesomeSnackbarButton("Gagal",status.message,ContentType.failure);

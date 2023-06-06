@@ -24,13 +24,13 @@ class NamaToko extends StatefulWidget {
 }
 
 class _NamaTokoState extends State<NamaToko> {
+
+  var NamaTokoController = TextEditingController();
+  var DeskripsiTokoController = TextEditingController();
+  var KontakTokoController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    var NamaTokoController = TextEditingController();
-    var DeskripsiTokoController = TextEditingController();
-    var KontakTokoController = TextEditingController();
-
-
     Future<void> _tambahToko() async {
       String namatoko = NamaTokoController.text.trim();
       String deskripsitoko = DeskripsiTokoController.text.trim();

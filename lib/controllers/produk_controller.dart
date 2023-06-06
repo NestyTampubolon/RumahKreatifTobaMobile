@@ -98,7 +98,6 @@ class ProdukController extends GetxController {
     if (response.statusCode == 200) {
       Get.offNamed(RouteHelper.getMenungguVerifikasiTokoPage());
       AwesomeSnackbarButton("Berhasil","Pendaftaran toko berhasil, tunggu toko Anda diverifikasi",ContentType.success);
-      print("Uploaded!");
     }
     responses.add(response);
     return responses;
@@ -234,6 +233,7 @@ class ProdukController extends GetxController {
       Get.to(HomeTokoPage(initialIndex: 1));
       AwesomeSnackbarButton("Berhasil","Tambah produk berhasil",ContentType.success);
       print("Uploaded!");
+      Get.find<PopularProdukController>().getPopularProdukList();
 
     }
     responses.add(response);

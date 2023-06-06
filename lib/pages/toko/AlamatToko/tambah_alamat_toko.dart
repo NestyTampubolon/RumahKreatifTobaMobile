@@ -36,7 +36,7 @@ class TambahAlamatToko extends GetView<AlamatController> {
         AwesomeSnackbarButton("Warning","Kabupaten / Kota masih kosong",ContentType.warning);
       } else if (controller.subAsalId.value.isEmpty) {
         AwesomeSnackbarButton("Warning","Kecamatan masih kosong",ContentType.warning);
-      } else if (JalanController == null) {
+      } else if (JalanController == '') {
         AwesomeSnackbarButton("Warning","Jalan masih kosong",ContentType.warning);
       } else {
         var merchantController = Get.find<TokoController>().profilTokoList[0];

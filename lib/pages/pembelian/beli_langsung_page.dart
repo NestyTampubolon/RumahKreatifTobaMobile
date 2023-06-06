@@ -86,7 +86,7 @@ class _BeliLangsungPageState extends State<BeliLangsungPage> {
       controller.showButton();
       Uri url = Uri.parse("https://pro.rajaongkir.com/api/cost");
       try {
-        print(controller.daftarAlamatList[0].city_id);
+        print("tes ${controller.cityTujuanId}");
         final response = await http.post(
           url,
           body: {
@@ -126,7 +126,6 @@ class _BeliLangsungPageState extends State<BeliLangsungPage> {
               onTap: () {
                 controller.setHargaPengiriman(e.cost![0].value);
                 controller.setServicePengiriman(e.service);
-                print(controller.service.value);
                 print(Get.find<AlamatController>().alamatID.value);
                 Navigator.pop(context);
               },
@@ -169,6 +168,7 @@ class _BeliLangsungPageState extends State<BeliLangsungPage> {
                     BigText(
                       text: "Beli Langsung",
                       size: Dimensions.font20,
+                      fontWeight: FontWeight.bold,
                     ),
                   ],
                 ),
@@ -304,7 +304,6 @@ class _BeliLangsungPageState extends State<BeliLangsungPage> {
                                                                   onChanged: (String? value) => {
                                                                     controller.setTypeAlamat(value!),
                                                                     controller.setId(alamat.user_address_id),
-                                                                    print(controller.alamatID.value)
                                                                   },
                                                                   activeColor: Theme.of(context).primaryColor,
                                                                 ),
@@ -809,7 +808,10 @@ class _BeliLangsungPageState extends State<BeliLangsungPage> {
                         ),
                         Row(
                           children: [
-                            BigText(text: "Pengiriman : ${controller.namakurir.value}", size: Dimensions.font16,)
+                           Container(
+                             width: Dimensions.screenWidth/1.3,
+                             child:  BigText(text: "Pengiriman : ${controller.namakurir.value}", size: Dimensions.font16,),
+                           )
                           ],
                         )
                       ],

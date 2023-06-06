@@ -118,6 +118,8 @@ class TokoController extends GetxController {
       request.files.add(http.MultipartFile('ktp_dan_selfie',
           _fileSelfieKTP.readAsBytes().asStream(), _fileSelfieKTP.lengthSync(),
           filename: _fileSelfieKTP.path.split('/').last));
+    }else{
+      AwesomeSnackbarButton("Warning","Harap memasukkan gambar!",ContentType.warning);
     }
     request.fields['user_id'] = user_id.toString();
     http.StreamedResponse response = await request.send();

@@ -118,7 +118,7 @@ class PopularProdukController extends GetxController{
 
 
   //Daftar Produk sesuai merchant
-  List<dynamic> _daftarProdukList=[];
+  List<dynamic> _daftarProdukList=[].obs;
   List<dynamic> get daftarProdukList => _daftarProdukList;
 
   Future<void> getProdukList() async{
@@ -126,7 +126,7 @@ class PopularProdukController extends GetxController{
     Response response = await popularProdukRepo.getProdukList(controller.id!);
     if(response.statusCode == 200){
       List<dynamic> responseBody = response.body;
-      _daftarProdukList = [];
+      _daftarProdukList = [].obs;
       for (dynamic item in responseBody) {
         Produk produk = Produk.fromJson(item);
         _daftarProdukList.add(produk);

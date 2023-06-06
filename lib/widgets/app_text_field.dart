@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../utils/dimensions.dart';
 import '../utils/colors.dart';
+import 'package:flutter/services.dart';
 
 class AppTextField extends StatelessWidget {
   final TextEditingController textController;
@@ -14,6 +15,10 @@ class AppTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final inputFormatters = textInputType == TextInputType.number
+        ? [FilteringTextInputFormatter.digitsOnly]
+        : null;
+
     return Container(
       margin: EdgeInsets.only(left: Dimensions.height20, right: Dimensions.height20),
       decoration: BoxDecoration(
@@ -30,6 +35,7 @@ class AppTextField extends StatelessWidget {
       ),
       child: TextField(
         keyboardType: textInputType,
+        inputFormatters: inputFormatters,
         obscureText: isObscure?true:false,
         controller: textController,
         decoration: InputDecoration(

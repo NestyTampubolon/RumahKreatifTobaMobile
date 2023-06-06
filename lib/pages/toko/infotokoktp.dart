@@ -92,25 +92,26 @@ class _TokoKTPState extends State<TokoKTP> {
                         GetBuilder<TokoController>(builder: (controllertoko) {
                           return Column(
                             children: [
-                              Container(
-                                margin: EdgeInsets.all(Dimensions.height20),
-                                padding: EdgeInsets.all(Dimensions.height20),
-                                width: Dimensions.screenWidth,
-                                decoration: BoxDecoration(
-                                    borderRadius:
-                                    BorderRadius.circular(Dimensions.radius20),
-                                    color: AppColors.redColor),
-                                child: GestureDetector(
-                                    onTap: () {
-                                      controllertoko.pickImage();
-                                    },
-                                    child: Row(children: [
-                                      BigText(
-                                        text: "Upload Foto KTP",
-                                        color: Colors.white,
-                                        size: Dimensions.height15,
-                                      ),
-                                    ])),
+                              GestureDetector(
+                                onTap: (){
+                                  controllertoko.pickImage();
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.all(Dimensions.height20),
+                                  padding: EdgeInsets.all(Dimensions.height20),
+                                  width: Dimensions.screenWidth,
+                                  decoration: BoxDecoration(
+                                      borderRadius:
+                                      BorderRadius.circular(Dimensions.radius20),
+                                      color: AppColors.redColor),
+                                  child: Row(children: [
+                                    BigText(
+                                      text: "Upload Foto KTP",
+                                      color: Colors.white,
+                                      size: Dimensions.height15,
+                                    ),
+                                  ]),
+                                ),
                               ),
                               controllertoko.pickedFileKTP != null
                                   ? Padding(
@@ -168,25 +169,26 @@ class _TokoKTPState extends State<TokoKTP> {
                         GetBuilder<TokoController>(builder: (controllertoko) {
                           return Column(
                             children: [
-                              Container(
-                                margin: EdgeInsets.all(Dimensions.height20),
-                                padding: EdgeInsets.all(Dimensions.height20),
-                                width: Dimensions.screenWidth,
-                                decoration: BoxDecoration(
-                                    borderRadius:
-                                    BorderRadius.circular(Dimensions.radius20),
-                                    color: AppColors.redColor),
-                                child: GestureDetector(
-                                    onTap: () {
-                                      controllertoko.pickImageSelfieKTP();
-                                    },
-                                    child: Row(children: [
-                                      BigText(
-                                        text: "Upload Foto Selfie dengan KTP",
-                                        color: Colors.white,
-                                        size: Dimensions.height15,
-                                      ),
-                                    ])),
+                              GestureDetector(
+                                onTap: (){
+                                  controllertoko.pickImageSelfieKTP();
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.all(Dimensions.height20),
+                                  padding: EdgeInsets.all(Dimensions.height20),
+                                  width: Dimensions.screenWidth,
+                                  decoration: BoxDecoration(
+                                      borderRadius:
+                                      BorderRadius.circular(Dimensions.radius20),
+                                      color: AppColors.redColor),
+                                  child: Row(children: [
+                                    BigText(
+                                      text: "Upload Foto Selfie dengan KTP",
+                                      color: Colors.white,
+                                      size: Dimensions.height15,
+                                    ),
+                                  ]),
+                                ),
                               ),
                               controllertoko.pickedFileSelfieKTP != null
                                   ? Padding(

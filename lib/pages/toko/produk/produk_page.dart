@@ -95,7 +95,7 @@ class _ProdukPageState extends State<ProdukPage> {
             ),
           ),
           GetBuilder<PopularProdukController>(builder: (controller) {
-            return controller.isLoaded ?  ListView.builder(
+            return Obx(() => controller.isLoaded ?  ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: controller.daftarProdukList.length,
                 shrinkWrap: true,
@@ -105,7 +105,6 @@ class _ProdukPageState extends State<ProdukPage> {
                       produk.productId ==
                           controller
                               .daftarProdukList[index].productId);
-
                   return Container(
                     width: Dimensions.screenWidth / 1.2,
                     padding: EdgeInsets.only(
@@ -143,7 +142,7 @@ class _ProdukPageState extends State<ProdukPage> {
                                   image: DecorationImage(
                                       fit: BoxFit.cover,
                                       image: NetworkImage(
-                                        '${AppConstants.BASE_URL_IMAGE}u_file/product_image/${gambarproduk?.single.productImageName}',
+                                        '${AppConstants.BASE_URL_IMAGE}u_file/product_image/${gambarproduk.single.productImageName}',
                                       )),
                                   borderRadius: BorderRadius.circular(
                                       Dimensions.radius20),
@@ -212,7 +211,8 @@ class _ProdukPageState extends State<ProdukPage> {
                       ],
                     ),
                   );
-                }) : Container(
+                }) :
+            Container(
               height:
               50, // set the height of the container to your desired height
               child: Center(
@@ -220,7 +220,7 @@ class _ProdukPageState extends State<ProdukPage> {
                   color: AppColors.redColor,
                 ),
               ),
-            );
+            ));
           }),
           SizedBox(
             height: Dimensions.height20,

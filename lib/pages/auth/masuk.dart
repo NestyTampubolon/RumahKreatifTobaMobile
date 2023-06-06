@@ -87,8 +87,8 @@ class Masuk extends StatelessWidget {
                                 height: Dimensions.screenHeight * 0.05,
                               ),
                               Container(
-                                width: Dimensions.screenHeight * 0.25,
-                                height: Dimensions.screenHeight * 0.25,
+                                width: Dimensions.width45*3,
+                                height: Dimensions.height45*3,
                                 margin: EdgeInsets.only(
                                     left: Dimensions.width10,
                                     right: Dimensions.width10),

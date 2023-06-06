@@ -43,6 +43,7 @@ class MenungguVerifikasi extends StatelessWidget {
                         BigText(
                           text: "Menunggu Verifikasi",
                           size: Dimensions.font20,
+                          fontWeight: FontWeight.bold,
                         ),
                       ],
                     ),
