@@ -64,20 +64,19 @@ class UserController extends GetxController implements GetxService {
     return responseModel;
   }
 
-  Future<ResponseModel> ubahPassword(int? user_id, String password, String password_baru) async {
+  Future<void> ubahPassword(int? user_id, String password, String password_baru) async {
     _isLoading = true;
     update();
     Response response = await userRepo.ubahPassword(user_id!, password, password_baru);
     late ResponseModel responseModel;
     if(response.statusCode == 200){
-      AwesomeSnackbarButton("Berhasil","Berhasil mengubah password",ContentType.success);
+      AwesomeSnackbarButton("Berhasil",response.body["message"],ContentType.success);
       Get.to(ProfilPage());
       getUser();
     }else{
-      responseModel = ResponseModel(false, response.statusText!);
+      AwesomeSnackbarButton("Gagal",response.body["message"],ContentType.failure);
     }
     _isLoading = false;
     update();
-    return responseModel;
   }
 }

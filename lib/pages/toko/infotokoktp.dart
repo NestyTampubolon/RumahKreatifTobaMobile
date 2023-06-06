@@ -13,6 +13,7 @@ import '../../routes/route_helper.dart';
 import '../../utils/colors.dart';
 import '../../widgets/app_icon.dart';
 import '../../widgets/small_text.dart';
+import '../home/home_page.dart';
 
 class TokoKTP extends StatefulWidget {
   const TokoKTP({Key? key}) : super(key: key);
@@ -40,35 +41,33 @@ class _TokoKTPState extends State<TokoKTP> {
           child: Column(
             children: [
               Container(
-                child: Container(
-                  margin: EdgeInsets.only(
-                      top: Dimensions.height45, bottom: Dimensions.height15),
-                  padding: EdgeInsets.only(
-                      left: Dimensions.width20, right: Dimensions.width20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          // Get.toNamed(RouteHelper.getInitial());
-                          Get.back();
-                        },
-                        child: AppIcon(
-                          icon: Icons.arrow_back,
-                          iconColor:AppColors.redColor,
-                          backgroundColor:  Colors.white,
-                          iconSize: Dimensions.iconSize24,
-                        ),
+                margin: EdgeInsets.only(
+                    top: Dimensions.height30),
+                padding: EdgeInsets.only(
+                    left: Dimensions.width20, right: Dimensions.width20),
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(HomePage(initialIndex: 3));
+                      },
+                      child: AppIcon(
+                        icon: Icons.arrow_back,
+                        iconColor: AppColors.redColor,
+                        backgroundColor: Colors.white.withOpacity(0.0),
+                        iconSize: Dimensions.iconSize24,
                       ),
-                      SizedBox(
-                        width: Dimensions.width20,
-                      ),
-                      BigText(
+                    ),
+                    SizedBox(
+                      width: Dimensions.width20,
+                    ),
+                    Container(
+                      child: BigText(
                         text: "Masukkan Info Toko",
-                        size: Dimensions.font20,
+                        fontWeight: FontWeight.bold,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
               SizedBox(
@@ -129,7 +128,7 @@ class _TokoKTPState extends State<TokoKTP> {
                               )
                                   : Text(
                                 "Tidak Ada Gambar",
-                                style: TextStyle(fontSize: 20),
+                                style: TextStyle(fontSize: Dimensions.font16),
                               ),
                             ],
                           );
@@ -205,7 +204,7 @@ class _TokoKTPState extends State<TokoKTP> {
                               )
                                   : Text(
                                 "Tidak Ada Gambar",
-                                style: TextStyle(fontSize: 20),
+                                style: TextStyle(fontSize: Dimensions.font16),
                               ),
                             ],
                           );

@@ -60,8 +60,7 @@ class _HomeTokoState extends State<HomeToko> {
                               fit: BoxFit.cover,
                               image: AssetImage("assets/images/Bangga_Buatan_Indonesia_Logo.png"))),
                     ),
-                    Get.find<TokoController>().isLoading
-                        ? Container(
+                    Container(
                       width: Dimensions.screenWidth / 1.8,
                       height: 30,
                       margin: EdgeInsets.only(
@@ -72,18 +71,6 @@ class _HomeTokoState extends State<HomeToko> {
                         "Toko ${Get.find<TokoController>().profilTokoList[0].nama_merchant.toString()}",
                         size: Dimensions.font20,
                         fontWeight: FontWeight.bold,
-                      ),
-                    )
-                        : Container(
-                      height:
-                      20,
-                      width: 20,
-
-                      // set the height of the container to your desired height
-                      child: Center(
-                        child: CircularProgressIndicator(
-                          color: AppColors.redColor,
-                        ),
                       ),
                     )
                   ],
@@ -150,8 +137,8 @@ class _HomeTokoState extends State<HomeToko> {
                           child: BigText(
                             text: Get.find<TokoController>()
                                 .getJumlahPesanan[
-                            'jumlah_pesanan_sedang_berlangsung']!
-                                .toString(),
+                            'jumlah_pesanan_sedang_berlangsung']
+                                .toString() ?? 'N/A',
                             size: Dimensions.font20 / 1.5,
                           ),
                         ),
@@ -168,26 +155,14 @@ class _HomeTokoState extends State<HomeToko> {
                           size: Dimensions.font20 / 1.5,
                         ),
                       ),
-                      Get.find<TokoController>().isLoading
-                          ? Container(
+                      Container(
                         child: Obx(
                               () => BigText(
                             text: Get.find<TokoController>()
                                 .getJumlahPesanan[
-                            'jumlah_pesanan_berhasil_belum_dibayar']!
-                                .toString(),
+                            'jumlah_pesanan_berhasil_belum_dibayar']
+                                .toString() ?? "N/A",
                             size: Dimensions.font20 / 1.5,
-                          ),
-                        ),
-                      )
-                          : Container(
-                        height:
-                        20,
-                        width: 20,
-                        // set the height of the container to your desired height
-                        child: Center(
-                          child: CircularProgressIndicator(
-                            color: AppColors.redColor,
                           ),
                         ),
                       )
@@ -203,25 +178,14 @@ class _HomeTokoState extends State<HomeToko> {
                           size: Dimensions.font20 / 1.5,
                         ),
                       ),
-                      Get.find<TokoController>().isLoading
-                          ? Container(
+                      Container(
                         child: Obx(
                               () => BigText(
                             text: Get.find<TokoController>()
                                 .getJumlahPesanan[
-                            'jumlah_pesanan_berhasil_telah_dibayar']!
-                                .toString(),
+                            'jumlah_pesanan_berhasil_telah_dibayar']
+                                .toString() ?? "N/A",
                             size: Dimensions.font20 / 1.5,
-                          ),
-                        ),
-                      )
-                          : Container(
-                        height:
-                        20,
-                        width: 20,
-                        child: Center(
-                          child: CircularProgressIndicator(
-                            color: AppColors.redColor,
                           ),
                         ),
                       ),
@@ -290,30 +254,19 @@ class _HomeTokoState extends State<HomeToko> {
                       ],
                     ),
                   ),
-                  Get.find<TokoController>().isLoading
-                      ? Container(
+                  Container(
                     child: Obx(
                             () => Row(
                           children: [
                             BigText(
                               text: '${Get.find<TokoController>()
                                   .getJumlahPesanan[
-                              'jumlah_produk']!
-                                  .toString()} produk',
+                              'jumlah_produk']
+                                  .toString() ?? "N/A"} produk',
                               size: Dimensions.font20 / 1.5,
                             ),
                           ],
                         )
-                    ),
-                  )
-                      : Container(
-                    height:
-                    20,
-                    width: 20,// set the height of the container to your desired height
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        color: AppColors.redColor,
-                      ),
                     ),
                   )
                 ],

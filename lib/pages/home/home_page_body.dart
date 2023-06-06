@@ -182,6 +182,7 @@ class _HomePageBodyState extends State<HomePageBody> {
               child: BigText(
                 text: "Makanan dan Minuman Terfavorit Untukmu",
                 fontWeight: FontWeight.bold,
+                size: Dimensions.font16,
               ),
             ),
             GestureDetector(
@@ -207,7 +208,7 @@ class _HomePageBodyState extends State<HomePageBody> {
           ],
         ),
         Container(
-          height: Dimensions.height45 * 6,
+          height: Dimensions.height45 * 6.5,
           margin: EdgeInsets.only(
               left: Dimensions.width20,
               right: Dimensions.width20,
@@ -215,7 +216,7 @@ class _HomePageBodyState extends State<HomePageBody> {
               bottom: Dimensions.height10),
           child: GetBuilder<PopularProdukController>(
             builder: (popularProduk) {
-              return popularProduk.isLoading.value ? ListView.builder(
+              return Obx(() => popularProduk.isLoading.value ? ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: 10,
                 itemBuilder: (context, index) {
@@ -239,7 +240,8 @@ class _HomePageBodyState extends State<HomePageBody> {
                         .produkMakananMinumanList[index].countProductPurchases,
                   );
                 },
-              ) : Container(
+              ) :
+              Container(
                 height:
                 50, // set the height of the container to your desired height
                 child: Center(
@@ -247,7 +249,7 @@ class _HomePageBodyState extends State<HomePageBody> {
                     color: AppColors.redColor,
                   ),
                 ),
-              );
+              ));
             },
           ),
         ),
@@ -263,6 +265,7 @@ class _HomePageBodyState extends State<HomePageBody> {
               child: BigText(
                 text: "Pakaian Paling Diminati",
                 fontWeight: FontWeight.bold,
+                size: Dimensions.font16,
               ),
             ),
             GestureDetector(
@@ -288,7 +291,7 @@ class _HomePageBodyState extends State<HomePageBody> {
           ],
         ),
         Container(
-          height: Dimensions.height45 * 6,
+          height: Dimensions.height45 * 6.5,
           margin: EdgeInsets.only(
               left: Dimensions.width20,
               right: Dimensions.width20,
@@ -340,6 +343,7 @@ class _HomePageBodyState extends State<HomePageBody> {
               child: BigText(
                 text: "Produk Terbaru",
                 fontWeight: FontWeight.bold,
+                size: Dimensions.font16,
               ),
             ),
             GestureDetector(
@@ -365,7 +369,7 @@ class _HomePageBodyState extends State<HomePageBody> {
           ],
         ),
         Container(
-          height: Dimensions.height45 * 6,
+          height: Dimensions.height45 * 6.5,
           margin: EdgeInsets.only(
               left: Dimensions.width20,
               right: Dimensions.width20,

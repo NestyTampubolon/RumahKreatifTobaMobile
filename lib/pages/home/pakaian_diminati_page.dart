@@ -66,8 +66,14 @@ class PakaianDiminatiPage extends StatelessWidget {
                     return CardProduk(product_id : controller.produkPakaianList[index].productId,productImageName : gambarproduk.single.productImageName, productName : controller.produkPakaianList[index].productName, merchantAddress : controller.produkPakaianList[index].subdistrictName, price: controller.produkPakaianList[index].price, countPurchases: controller.produkPakaianList[index].countProductPurchases, );
                   }
               )
-                  : CircularProgressIndicator(
-                color: AppColors.redColor,
+                  : Container(
+                height:
+                50, // set the height of the container to your desired height
+                child: Center(
+                  child: CircularProgressIndicator(
+                    color: AppColors.redColor,
+                  ),
+                ),
               );
             })
           ],

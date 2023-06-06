@@ -19,6 +19,8 @@ import '../../../widgets/currency_format.dart';
 import '../../../widgets/price_text.dart';
 import '../../../widgets/small_text.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+
+import '../hometoko/hometoko_page.dart';
 class PembelianDetailPage extends StatefulWidget {
   const PembelianDetailPage({Key? key}) : super(key: key);
 
@@ -38,6 +40,18 @@ class _PembelianDetailPageState extends State<PembelianDetailPage> {
   bool _cekStatusstatus2 =
       Get.find<PembelianController>().detailPembelianList[0].statusPembelian ==
           "Perlu Dikemas dan Masukkan Nomor Resi";
+
+  bool _cekStatusstatus3 =
+      Get.find<PembelianController>().detailPembelianList[0].statusPembelian ==
+          "Dalam Perjalanan";
+
+  bool _cekStatusstatus5 =
+      Get.find<PembelianController>().detailPembelianList[0].statusPembelian ==
+          "Belum Diambil";
+
+  bool _cekStatusstatus4 =
+      Get.find<PembelianController>().detailPembelianList[0].statusPembelian ==
+          "Belum Dikonfirmasi Pembeli";
 
   bool _cekStatus =
       Get.find<PembelianController>().detailPembelianList[0].statusPembelian ==
@@ -67,7 +81,9 @@ class _PembelianDetailPageState extends State<PembelianDetailPage> {
       bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
       if (_userLoggedIn) {
         var controller = Get.find<PembelianController>();
-        controller.updateStatusPembelian(purchase_id).then((status) async {});
+        controller.updateStatusPembelian(purchase_id).then((status) async {
+          Get.to(HomeTokoPage(initialIndex: 2));
+        });
       }
     }
 
@@ -428,202 +444,363 @@ class _PembelianDetailPageState extends State<PembelianDetailPage> {
               ),
             ),
 
-            _cekStatusstatus2 ?
-            Column(
-              children: [
-                //LOKASI PENGIRIMAN
-                Container(
-                    width: Dimensions.screenWidth,
-                    decoration: BoxDecoration(color: Colors.white, boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.3),
-                        spreadRadius: 1,
-                        blurRadius: 5,
-                        offset: Offset(0, 2),
-                      )
-                    ]),
-                    margin: EdgeInsets.only(top: Dimensions.height20),
-                    padding: EdgeInsets.only(
-                        top: Dimensions.height30,
-                        left: Dimensions.width20,
-                        right: Dimensions.width20,
-                        bottom: Dimensions.height30),
-                    child: Column(
-                      children: [
-                        Container(
-                            alignment: Alignment.topLeft,
-                            child: BigText(
-                              text: "Lokasi Pengiriman",
-                              size: Dimensions.font20,
-                              fontWeight: FontWeight.bold,
-                            )
-                        ),
-                        Divider(color: AppColors.buttonBackgroundColor),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: BigText(
-                                text: "Provinsi",
-                                size: Dimensions.font16,
-                              ),
-                            ),
-                            Expanded(
-                              child: BigText(
-                                text: detailPembelian[0].provinceName.toString() ?? "N/A",
-                                size: Dimensions.font16,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: BigText(
-                                text: "Kota",
-                                size: Dimensions.font16,
-                              ),
-                            ),
-                            Expanded(
-                              child: BigText(
-                                text: detailPembelian[0].cityName.toString() ?? "N/A",
-                                size: Dimensions.font16,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: BigText(
-                                text: "Kecamatan",
-                                size: Dimensions.font16,
-                              ),
-                            ),
-                            Expanded(
-                              child: BigText(
-                                text: detailPembelian[0].subdistrictName.toString() ?? "N/A",
-                                size: Dimensions.font16,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: BigText(
-                                text: "Alamat",
-                                size: Dimensions.font16,
-                              ),
-                            ),
-                            Expanded(
-                              child: BigText(
-                                text: detailPembelian[0].userStreetAddress.toString() ?? "N/A",
-                                size: Dimensions.font16,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: BigText(
-                                text: "Nomor Telepon",
-                                size: Dimensions.font16,
-                              ),
-                            ),
-                            Expanded(
-                              child: BigText(
-                                text: detailPembelian[0].noHp.toString() ?? "N/A",
-                                size: Dimensions.font16,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    )),
 
-                //NOMOR RESI
-                Container(
-                    width: Dimensions.screenWidth,
-                    decoration: BoxDecoration(color: Colors.white, boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.3),
-                        spreadRadius: 1,
-                        blurRadius: 5,
-                        offset: Offset(0, 2),
-                      )
-                    ]),
-                    margin: EdgeInsets.only(top: Dimensions.height20),
-                    padding: EdgeInsets.only(
-                        top: Dimensions.height30,
-                        left: Dimensions.width20,
-                        right: Dimensions.width20,
-                        bottom: Dimensions.height30),
-                    child: Column(
-                      children: [
-                        Container(
-                            alignment: Alignment.topLeft,
-                            child: BigText(
-                              text: "Nomor Resi",
-                              size: Dimensions.font20,
-                              fontWeight: FontWeight.bold,
-                            )
-                        ),
-                        Divider(color: AppColors.buttonBackgroundColor),
-                        BigText(text: "Jika pesanan telah dikirim dan sedang dalam perjalanan.",size: Dimensions.font16,),
-                        Container(
-                          width: Dimensions.screenWidth,
-                          child: BigText(text: "SILAHKAN GUNAKAN KIRIM MELALUI  ${detailPembelian[0].courierCode.toString() ?? 'N/A'} - ${detailPembelian[0].service.toString() ?? 'N/A'} UNTUK PESANAN", size: Dimensions.font16),
-                        ),
+            _cekStatusstatus4
+                ? Container(
+              decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.3),
+                  spreadRadius: 1,
+                  blurRadius: 5,
+                  offset: Offset(0, 2),
+                )
+              ]),
+              margin: EdgeInsets.only(top: Dimensions.height20),
+              padding: EdgeInsets.only(
+                  top: Dimensions.height30,
+                  left: Dimensions.width20,
+                  right: Dimensions.width20,
+                  bottom: Dimensions.height30),
+              child: Column(
+                children: [
+                  Container(
+                      width: Dimensions.screenWidth,
+                      margin:
+                      EdgeInsets.only(bottom: Dimensions.height10),
+                      child: SmallText(
+                        text:
+                        "TUNGGU PELANGGAN MENGKONFIRMASI PESANAN YANG TELAH DIAMBIL.",
+                      )),
+                ],
+              ),
+            )
+                : SizedBox(),
 
-                        SizedBox(height: Dimensions.height10,),
-                        AppTextField(
-                          textController: noResiController,
-                          hintText: 'Nomor Resi',
-                          icon: Icons.confirmation_num,
-                        ),
-                        SizedBox(height: Dimensions.height10,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SizedBox(),
-                            GestureDetector(
-                              onTap: () {
-                                _updateNoResiPembelian(
-                                    detailPembelian[0].purchaseId);
-                              },
-                              child: Container(
-                                width: Dimensions.width45 * 3,
-                                height: Dimensions.height30,
-                                // alignment: Alignment.topCenter,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: AppColors.redColor),
-                                child: Center(
-                                  child: BigText(
-                                    text: "Kirim",
-                                    size: Dimensions.font16,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
+            _cekStatusstatus5
+                ? Container(
+              decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.3),
+                  spreadRadius: 1,
+                  blurRadius: 5,
+                  offset: Offset(0, 2),
+                )
+              ]),
+              margin: EdgeInsets.only(top: Dimensions.height20),
+              padding: EdgeInsets.only(
+                  top: Dimensions.height30,
+                  left: Dimensions.width20,
+                  right: Dimensions.width20,
+                  bottom: Dimensions.height30),
+              child: Column(
+                children: [
+                  Container(
+                      width: Dimensions.screenWidth,
+                      margin:
+                      EdgeInsets.only(bottom: Dimensions.height10),
+                      child: SmallText(
+                        text:
+                        "Jika pesanan telah diambil pelanggan. SILAHKAN KONFIRMASI PESANAN.",
+                      )),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(),
+                      GestureDetector(
+                        onTap: () {
+                          _updateStatusPembelian(
+                              detailPembelian[0].purchaseId);
+                        },
+                        child: Container(
+                          width: Dimensions.width45 * 3,
+                          height: Dimensions.height30,
+                          // alignment: Alignment.topCenter,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: AppColors.redColor),
+                          child: Center(
+                            child: BigText(
+                              text: "Konfirmasi",
+                              size: Dimensions.font16,
+                              color: Colors.white,
                             ),
-                          ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            )
+                : SizedBox(),
+
+            _cekStatusstatus2  || _cekStatusstatus3 ?
+            //LOKASI PENGIRIMAN
+            Container(
+                width: Dimensions.screenWidth,
+                decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.3),
+                    spreadRadius: 1,
+                    blurRadius: 5,
+                    offset: Offset(0, 2),
+                  )
+                ]),
+                margin: EdgeInsets.only(top: Dimensions.height20),
+                padding: EdgeInsets.only(
+                    top: Dimensions.height30,
+                    left: Dimensions.width20,
+                    right: Dimensions.width20,
+                    bottom: Dimensions.height30),
+                child: Column(
+                  children: [
+                    Container(
+                        alignment: Alignment.topLeft,
+                        child: BigText(
+                          text: "Lokasi Pengiriman",
+                          size: Dimensions.font20,
+                          fontWeight: FontWeight.bold,
                         )
+                    ),
+                    Divider(color: AppColors.buttonBackgroundColor),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: BigText(
+                            text: "Provinsi",
+                            size: Dimensions.font16,
+                          ),
+                        ),
+                        Expanded(
+                          child: BigText(
+                            text: detailPembelian[0].provinceName.toString() ?? "N/A",
+                            size: Dimensions.font16,
+                          ),
+                        ),
                       ],
-                    )),
-              ],
-            ) : SizedBox(),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: BigText(
+                            text: "Kota",
+                            size: Dimensions.font16,
+                          ),
+                        ),
+                        Expanded(
+                          child: BigText(
+                            text: detailPembelian[0].cityName.toString() ?? "N/A",
+                            size: Dimensions.font16,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: BigText(
+                            text: "Kecamatan",
+                            size: Dimensions.font16,
+                          ),
+                        ),
+                        Expanded(
+                          child: BigText(
+                            text: detailPembelian[0].subdistrictName.toString() ?? "N/A",
+                            size: Dimensions.font16,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: BigText(
+                            text: "Alamat",
+                            size: Dimensions.font16,
+                          ),
+                        ),
+                        Expanded(
+                          child: BigText(
+                            text: detailPembelian[0].userStreetAddress.toString() ?? "N/A",
+                            size: Dimensions.font16,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: BigText(
+                            text: "Nomor Telepon",
+                            size: Dimensions.font16,
+                          ),
+                        ),
+                        Expanded(
+                          child: BigText(
+                            text: detailPembelian[0].noHp.toString() ?? "N/A",
+                            size: Dimensions.font16,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                )) : SizedBox(),
+
+            _cekStatusstatus3 ?
+            //UPDATE NOMOR RESI
+            Container(
+                width: Dimensions.screenWidth,
+                decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.3),
+                    spreadRadius: 1,
+                    blurRadius: 5,
+                    offset: Offset(0, 2),
+                  )
+                ]),
+                margin: EdgeInsets.only(top: Dimensions.height20),
+                padding: EdgeInsets.only(
+                    top: Dimensions.height30,
+                    left: Dimensions.width20,
+                    right: Dimensions.width20,
+                    bottom: Dimensions.height30),
+                child: Column(
+                  children: [
+                    Container(
+                        alignment: Alignment.topLeft,
+                        child: BigText(
+                          text: "Nomor Resi",
+                          size: Dimensions.font20,
+                          fontWeight: FontWeight.bold,
+                        )
+                    ),
+                    Divider(color: AppColors.buttonBackgroundColor),
+                    Container(
+                      width: Dimensions.screenWidth,
+                      child: BigText(text: "SILAHKAN CEK RESI MENGUNAKAN NOMOR RESI : ${detailPembelian[0].noResi.toString() ?? 'N/A'} ${detailPembelian[0].courierCode.toString() ?? 'N/A'} - ${detailPembelian[0].service.toString() ?? 'N/A'}", size: Dimensions.font16),
+                    ),
+                    Container(
+                      width: Dimensions.screenWidth,
+                      child: BigText(text: "Atau update nomor resi", size: Dimensions.font16,),
+                    ),
+                    SizedBox(height: Dimensions.height10,),
+                    AppTextField(
+                      textController: noResiController,
+                      hintText: 'Nomor Resi',
+                      icon: Icons.confirmation_num,
+                    ),
+                    SizedBox(height: Dimensions.height10,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(),
+                        GestureDetector(
+                          onTap: () {
+                            _updateNoResiPembelian(
+                                detailPembelian[0].purchaseId);
+                          },
+                          child: Container(
+                            width: Dimensions.width45 * 3,
+                            height: Dimensions.height30,
+                            // alignment: Alignment.topCenter,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: AppColors.redColor),
+                            child: Center(
+                              child: BigText(
+                                text: "Edit",
+                                size: Dimensions.font16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                )) : SizedBox(),
+
+            _cekStatusstatus2 ?
+            //NOMOR RESI
+            Container(
+                width: Dimensions.screenWidth,
+                decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.3),
+                    spreadRadius: 1,
+                    blurRadius: 5,
+                    offset: Offset(0, 2),
+                  )
+                ]),
+                margin: EdgeInsets.only(top: Dimensions.height20),
+                padding: EdgeInsets.only(
+                    top: Dimensions.height30,
+                    left: Dimensions.width20,
+                    right: Dimensions.width20,
+                    bottom: Dimensions.height30),
+                child: Column(
+                  children: [
+                    Container(
+                        alignment: Alignment.topLeft,
+                        child: BigText(
+                          text: "Nomor Resi",
+                          size: Dimensions.font20,
+                          fontWeight: FontWeight.bold,
+                        )
+                    ),
+                    Divider(color: AppColors.buttonBackgroundColor),
+                    BigText(text: "Jika pesanan telah dikirim dan sedang dalam perjalanan.",size: Dimensions.font16,),
+                    Container(
+                      width: Dimensions.screenWidth,
+                      child: BigText(text: "SILAHKAN GUNAKAN KIRIM MELALUI  ${detailPembelian[0].courierCode.toString() ?? 'N/A'} - ${detailPembelian[0].service.toString() ?? 'N/A'} UNTUK PESANAN", size: Dimensions.font16),
+                    ),
+
+                    SizedBox(height: Dimensions.height10,),
+                    AppTextField(
+                      textController: noResiController,
+                      hintText: 'Nomor Resi',
+                      icon: Icons.confirmation_num,
+                    ),
+                    SizedBox(height: Dimensions.height10,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(),
+                        GestureDetector(
+                          onTap: () {
+                            _updateNoResiPembelian(
+                                detailPembelian[0].purchaseId);
+                          },
+                          child: Container(
+                            width: Dimensions.width45 * 3,
+                            height: Dimensions.height30,
+                            // alignment: Alignment.topCenter,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: AppColors.redColor),
+                            child: Center(
+                              child: BigText(
+                                text: "Kirim",
+                                size: Dimensions.font16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                )) : SizedBox(),
 
             _cekStatus
                 ? Container(

@@ -283,7 +283,7 @@ class _WishlistPageState extends State<WishlistPage> {
                                                                   AppIcon(
                                                                     icon: CupertinoIcons.xmark,
                                                                     size: Dimensions
-                                                                        .iconSize24,
+                                                                        .iconSize16,
                                                                     iconColor:
                                                                     AppColors
                                                                         .redColor,
@@ -357,7 +357,7 @@ class _WishlistPageState extends State<WishlistPage> {
                                               child: Row(
                                                   mainAxisAlignment: MainAxisAlignment.start,
                                                   children: [
-                                                    Icon(Icons.more_horiz, color: AppColors.blackColor,),
+                                                    Icon(Icons.more_horiz, color: AppColors.blackColor, size: Dimensions.iconSize16,),
                                                   ])),
                                         ),
                                         Container(
@@ -378,7 +378,7 @@ class _WishlistPageState extends State<WishlistPage> {
                                               child: Row(
                                                   mainAxisAlignment: MainAxisAlignment.start,
                                                   children: [
-                                                    Icon(Icons.add, color: AppColors.redColor,),
+                                                    Icon(Icons.add, color: AppColors.redColor, size: Dimensions.iconSize16,),
                                                     BigText(
                                                       text: "Keranjang",
                                                       color: AppColors.redColor,

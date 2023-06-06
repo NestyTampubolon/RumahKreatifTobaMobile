@@ -189,9 +189,14 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     var gambarproduk = Get.find<PopularProdukController>().imageProdukList.where(
-                            (produk) =>
-                        produk.productId ==
-                            _list[index].productId);
+                          (produk) => produk.productId == _list[index].productId,
+                    );
+
+                    String productImageName = gambarproduk.isNotEmpty ? gambarproduk.single.productImageName : '';
+                    print("productImageName");
+                    print(_list[index].productId);
+
+
 
                     return Container(
                       width: Dimensions.screenWidth,
@@ -313,9 +318,14 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                                           decoration: BoxDecoration(
                                               image: DecorationImage(
                                                   fit: BoxFit.cover,
-                                                  image: NetworkImage(
-                                                    '${AppConstants.BASE_URL_IMAGE}u_file/product_image/${gambarproduk.single.productImageName}',
-                                                  )
+                                                image: gambarproduk.single.productImageName != null && gambarproduk.single.productImageName.isNotEmpty
+                                                    ? NetworkImage(
+                                                  '${AppConstants.BASE_URL_IMAGE}u_file/product_image/${gambarproduk.single.productImageName}',
+                                                )
+                                                    : AssetImage(
+                                                  "assets/images/logo_rkt.png",
+                                                ) as ImageProvider<Object>,
+
                                               ),
                                               borderRadius:
                                               BorderRadius.circular(

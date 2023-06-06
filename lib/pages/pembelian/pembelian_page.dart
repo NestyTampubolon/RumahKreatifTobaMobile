@@ -631,9 +631,12 @@ class _PembelianPageState extends State<PembelianPageState> {
                                           ),
                                           Row(
                                             children: [
-                                              BigText(text: "Pengiriman : ${controller.namakurir.value}", size: Dimensions.font16,)
+                                              Container(
+                                                width: Dimensions.screenWidth/1.4,
+                                                child: BigText(text: "Pengiriman : ${controller.namakurir.value}", size: Dimensions.font16,),
+                                              )
                                             ],
-                                          )
+                                          ),
                                         ],
                                       ) : SizedBox()),
                                   Container(

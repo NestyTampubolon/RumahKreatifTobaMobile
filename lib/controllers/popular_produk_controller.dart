@@ -20,19 +20,19 @@ class PopularProdukController extends GetxController{
   RxList<dynamic> _popularProdukList=[].obs;
   List<dynamic> get popularProdukList => _popularProdukList;
 
-  List<dynamic> _produkmakananminumanList=[];
+  List<dynamic> _produkmakananminumanList=[].obs;
   List<dynamic> get produkMakananMinumanList => _produkmakananminumanList;
 
-  List<dynamic> _produkPakaianList=[];
+  List<dynamic> _produkPakaianList=[].obs;
   List<dynamic> get produkPakaianList => _produkPakaianList;
 
-  List<dynamic> _produkTerbaruList=[];
+  List<dynamic> _produkTerbaruList=[].obs;
   List<dynamic> get produkTerbaruList => _produkTerbaruList;
 
   RxList<dynamic> _detailProdukList=<dynamic>[].obs;
   List<dynamic> get detailProdukList => _detailProdukList;
 
-  List<dynamic> _imageProdukList=[];
+  List<dynamic> _imageProdukList=[].obs;
   List<dynamic> get imageProdukList => _imageProdukList;
 
   RxList<dynamic> _kategoriProdukList=[].obs;
@@ -60,21 +60,21 @@ class PopularProdukController extends GetxController{
       late ResponseModel responseModel;
       if (response.statusCode == 200) {
         List<dynamic> responseBody = response.body["produk_makanan_minuman_terlaris"];
-        _produkmakananminumanList.clear();
+        _produkmakananminumanList = [].obs;
         for (dynamic item in responseBody) {
           Produk produk = Produk.fromJson(item);
           _produkmakananminumanList.add(produk);
         }
 
         List<dynamic> responseBodyTerlaris= response.body["produk_pakaian_terlaris"];
-        _produkPakaianList.clear();
+        _produkPakaianList = [].obs;
         for (dynamic item in responseBodyTerlaris) {
           Produk produk = Produk.fromJson(item);
           _produkPakaianList.add(produk);
         }
 
         List<dynamic> responseBodyTerbaru= response.body["new_products"];
-        _produkTerbaruList.clear();
+        _produkTerbaruList = [].obs;
         for (dynamic item in responseBodyTerbaru) {
           Produk produk = Produk.fromJson(item);
           _produkTerbaruList.add(produk);

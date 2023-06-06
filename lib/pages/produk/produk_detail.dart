@@ -400,7 +400,7 @@ class _ProdukDetailState extends State<ProdukDetail> {
                         ? GridView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2, mainAxisExtent: Dimensions.height45*6),
+                            crossAxisCount: 2, mainAxisExtent: Dimensions.height45*6.5),
                         itemCount: 6,
                         shrinkWrap: true,
                         itemBuilder: (context, index) {

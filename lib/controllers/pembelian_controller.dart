@@ -69,7 +69,6 @@ class PembelianController extends GetxController {
     late ResponseModel responseModel;
     if (response.statusCode == 200) {
       getPembelianList();
-      Get.to(HomeTokoPage(initialIndex: 2));
       responseModel = ResponseModel(true, "successfully");
       AwesomeSnackbarButton("Berhasil","Berhasil konfirmasi pesanan",ContentType.success);
     } else {

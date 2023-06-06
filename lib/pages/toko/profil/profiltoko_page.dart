@@ -70,7 +70,7 @@ class ProfilTokoPage extends StatelessWidget {
                             image: DecorationImage(
                                 fit: BoxFit.cover,
                                 image: NetworkImage(
-                                  '${AppConstants.BASE_URL_IMAGE}u_file/foto_merchant/${tokoController.profilTokoList[0].foto_merchant.toString()}',
+                                  '${AppConstants.BASE_URL_IMAGE}u_file/foto_merchant/${tokoController.profilTokoList[0].foto_merchant.toString() ?? ''}',
                                 ))),
                       ),
                       Container(
