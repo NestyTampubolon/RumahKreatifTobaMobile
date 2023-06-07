@@ -21,7 +21,7 @@ class CartController extends GetxController {
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
-  List<dynamic> _keranjangList = [];
+  List<dynamic> _keranjangList = [].obs;
   List<dynamic> get keranjangList => _keranjangList;
 
   List<dynamic> _merchantKeranjangList = [];
@@ -113,7 +113,7 @@ class CartController extends GetxController {
     Response response = await cartRepo.getKeranjangList(controller.id!);
     if (response.statusCode == 200) {
       List<dynamic> responseBody = response.body["cart"];
-      _keranjangList = [];
+      _keranjangList = [].obs;
       for (dynamic item in responseBody) {
         CartModel cartModel = CartModel.fromJson(item);
         _keranjangList.add(cartModel);

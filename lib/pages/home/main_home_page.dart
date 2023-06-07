@@ -24,7 +24,6 @@ class MainHomePage extends StatefulWidget {
 }
 
 class _MainHomePageState extends State<MainHomePage> {
-
   @override
   void initState() {
     super.initState();
@@ -33,9 +32,7 @@ class _MainHomePageState extends State<MainHomePage> {
       Get.find<UserController>().getUser();
       Get.find<CartController>().getKeranjangList();
     }
-
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -88,8 +85,10 @@ class _MainHomePageState extends State<MainHomePage> {
                       child: Row(
                     children: [
                       GestureDetector(
-                        onTap: (){
-                          Get.to(SearchPage(kategori: 'All',));
+                        onTap: () {
+                          Get.to(SearchPage(
+                            kategori: 'All',
+                          ));
                         },
                         child: Container(
                           width: Dimensions.height45,
@@ -101,47 +100,55 @@ class _MainHomePageState extends State<MainHomePage> {
                           ),
                         ),
                       ),
-                      GetBuilder<CartController>(
-                          builder: (controller) {
-                          return GestureDetector(
-                            onTap: () {
-                              if(Get.find<AuthController>().userLoggedIn()){
-                                Get.toNamed(RouteHelper.getKeranjangPage());
-                              }
-                              else{
-                                Get.toNamed(RouteHelper.getMasukPage());
-                              }
-                            },
-                            child: Stack(
-                              children: [
-                                 AppIcon(icon: Icons.shopping_cart_outlined, size: Dimensions.height45, iconColor: AppColors.redColor, backgroundColor: Colors.white.withOpacity(0.0),),
-                                  controller.keranjangList.length >= 1
-                                      ? Positioned(
-                                      right: 0,
-                                      top: 0,
-                                      child: AppIcon(
-                                        icon: Icons.circle,
-                                        size: 20,
-                                        iconColor: AppColors.notification_success,
-                                      ))
-                                      : Container(),
-                                  controller.keranjangList.length >= 1
-                                      ? Positioned(
-                                    right: 6,
-                                    top: 3,
-                                    child: BigText(
-                                      text: controller.keranjangList.length.toString(),
-                                      size: 10,
-                                      color: Colors.white,
-                                    ),
-                                  )
-                                      : Container(),
-                              ],
-                            ),
-                          );
-
+                      GetBuilder<CartController>(builder: (controller) {
+                        return GestureDetector(
+                          onTap: () {
+                            if (Get.find<AuthController>().userLoggedIn()) {
+                              Get.toNamed(RouteHelper.getKeranjangPage());
+                            } else {
+                              Get.toNamed(RouteHelper.getMasukPage());
+                            }
+                          },
+                          child: Stack(
+                            children: [
+                              AppIcon(
+                                icon: Icons.shopping_cart_outlined,
+                                size: Dimensions.height45,
+                                iconColor: AppColors.redColor,
+                                backgroundColor: Colors.white.withOpacity(0.0),
+                              ),
+                              Get.find<AuthController>().userLoggedIn() ?
+                              Obx(() =>  controller.keranjangList.length >= 1
+                                  ? Positioned(
+                                  right: 0,
+                                  top: 0,
+                                  child: AppIcon(
+                                    icon: Icons.circle,
+                                    size: 20,
+                                    iconColor:
+                                    AppColors.notification_success,
+                                  ))
+                                  : Container(),) :
+                                  SizedBox(),
+                              Get.find<AuthController>().userLoggedIn() ?
+                              Obx(
+                                () => controller.keranjangList.length >= 1
+                                    ? Positioned(
+                                        right: 6,
+                                        top: 3,
+                                        child: BigText(
+                                          text: controller.keranjangList.length
+                                              .toString(),
+                                          size: 10,
+                                          color: Colors.white,
+                                        ),
+                                      )
+                                    : Container(),
+                              ) : SizedBox()
+                            ],
+                          ),
+                        );
                       })
-
                     ],
                   ))
                 ],

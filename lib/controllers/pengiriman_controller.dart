@@ -6,6 +6,9 @@ import '../base/show_custom_message.dart';
 import '../base/snackbar_message.dart';
 import '../data/repository/pengiriman_repo.dart';
 import '../models/response_model.dart';
+import '../pages/pembayaran/pembayaran_page.dart';
+import '../pages/pesanan/detail_pesanan_page.dart';
+import '../pages/pesanan/pesanan_page.dart';
 import '../routes/route_helper.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
@@ -14,7 +17,7 @@ import 'auth_controller.dart';
 class PengirimanController extends GetxController{
   final PengirimanRepo pengirimanRepo;
   PengirimanController({required this.pengirimanRepo});
-
+  RxInt purchaseId = 0.obs;
   // int _paymentIndex = 0;
   // int get paymentIndex => _paymentIndex;
 
@@ -46,8 +49,9 @@ class PengirimanController extends GetxController{
     late ResponseModel responseModel;
     if(response.statusCode == 200){
       AwesomeSnackbarButton("Berhasil","Produk berhasil dibeli",ContentType.success);
-      Get.find<PesananController>().getPesananMenungguBayaranList();
-      Get.offNamed(RouteHelper.getMenungguPembayaranPage());
+      purchaseId.value = response.body;
+      Get.find<PesananController>().getDetailPesananList(purchaseId.value);
+      Get.to(PembayaranPage());
     }else{
       responseModel = ResponseModel(false, response.statusText!);
       AwesomeSnackbarButton("Gagal",response.statusText!,ContentType.failure);
@@ -64,8 +68,9 @@ class PengirimanController extends GetxController{
     late ResponseModel responseModel;
     if(response.statusCode == 200){
       AwesomeSnackbarButton("Berhasil","Produk berhasil dibeli",ContentType.success);
-      Get.find<PesananController>().getPesananMenungguBayaranList();
-      Get.offNamed(RouteHelper.getMenungguPembayaranPage());
+      purchaseId.value = response.body;
+      Get.find<PesananController>().getDetailPesananList(purchaseId.value);
+      Get.to(PembayaranPage());
     }else{
       responseModel = ResponseModel(false, response.statusText!);
 

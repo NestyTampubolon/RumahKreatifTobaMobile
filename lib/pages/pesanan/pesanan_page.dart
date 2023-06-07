@@ -95,11 +95,11 @@ class _PesananPageState extends State<PesananPage> {
 
   @override
   Widget build(BuildContext context) {
-    Future<void> _getDetailPesananList(String kode_pembelian) async {
+    Future<void> _getDetailPesananList(int purchase_id) async {
       bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
       if (_userLoggedIn) {
         var controller = Get.find<PesananController>();
-        controller.getDetailPesananList(kode_pembelian).then((status) async {
+        controller.getDetailPesananList(purchase_id).then((status) async {
           if (status.isSuccess) {
             Get.to(DetailPesananPage());
           } else {
@@ -408,8 +408,7 @@ class _PesananPageState extends State<PesananPage> {
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    _getDetailPesananList(_list[index].kodePembelian
-                                        .toString());
+                                    _getDetailPesananList(_list[index].purchaseId);
                                   },
                                   child: Container(
                                     padding: EdgeInsets.only(

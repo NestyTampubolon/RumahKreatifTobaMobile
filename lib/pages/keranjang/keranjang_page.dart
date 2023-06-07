@@ -35,6 +35,7 @@ class _KeranjangPageState extends State<KeranjangPage> {
   bool? allChecked = false;
   bool? isChecked = false;
   Map<String, bool> map = {};
+  late bool _cekKeranjang;
 
   @override
   void initState() {
@@ -49,11 +50,12 @@ class _KeranjangPageState extends State<KeranjangPage> {
       key: (item) => item.namaMerchant,
       value: (item) => false,
     );
+    _cekKeranjang = Get.find<CartController>().keranjangList.isEmpty;
   }
 
   @override
   Widget build(BuildContext context) {
-    bool _cekKeranjang = Get.find<CartController>().keranjangList.isEmpty;
+    _cekKeranjang = Get.find<CartController>().keranjangList.isEmpty;
 
     bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
     if (_userLoggedIn) {
@@ -612,7 +614,7 @@ class _KeranjangPageState extends State<KeranjangPage> {
                                   image: AssetImage(
                                       "assets/images/keranjang_kosong.png"))),
                         ),
-                        BigText(text: "Keranjang Kosong")
+                        BigText(text: "Keranjang Kosong! Ayo belanja sekarang")
                       ],
                     ),
                   )),

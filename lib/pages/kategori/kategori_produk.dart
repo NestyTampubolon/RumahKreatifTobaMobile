@@ -57,6 +57,7 @@ class KategoriProduk extends StatelessWidget {
                                 child: Stack(
                                   children: [
                                     AppIcon(icon: Icons.shopping_cart_outlined, size: Dimensions.height45, iconColor: AppColors.redColor, backgroundColor: Colors.white.withOpacity(0.0),),
+                                    Get.find<AuthController>().userLoggedIn() ?
                                     controller.keranjangList.length >= 1
                                         ? Positioned(
                                         right: 0,
@@ -66,7 +67,8 @@ class KategoriProduk extends StatelessWidget {
                                           size: 20,
                                           iconColor: AppColors.notification_success,
                                         ))
-                                        : Container(),
+                                        : Container() :SizedBox(),
+                                    Get.find<AuthController>().userLoggedIn() ?
                                     controller.keranjangList.length >= 1
                                         ? Positioned(
                                       right: 6,
@@ -77,7 +79,7 @@ class KategoriProduk extends StatelessWidget {
                                         color: Colors.white,
                                       ),
                                     )
-                                        : Container(),
+                                        : Container() : SizedBox()
                                   ],
                                 ),
                               );

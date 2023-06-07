@@ -43,7 +43,7 @@ class AccountPage extends StatelessWidget {
             ? GetBuilder<UserController>(
                 builder: (userController) {
                   return userController.isLoading
-                      ? Container(
+                      ? Container (
                       width: double.maxFinite,
                       margin: EdgeInsets.only(top: Dimensions.height20),
                       child: SingleChildScrollView(

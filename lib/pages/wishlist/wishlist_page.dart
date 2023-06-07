@@ -238,126 +238,125 @@ class _WishlistPageState extends State<WishlistPage> {
                                               bottom: Dimensions.height10/2,
                                               left: Dimensions.width10/2,
                                               right: Dimensions.width10/2),
-                                          decoration: BoxDecoration(
-                                              border: Border.all(color: AppColors.border),
-                                              borderRadius: BorderRadius.circular(
-                                                  Dimensions.radius20 / 2),
-                                              color: Colors.white),
                                           child: GestureDetector(
-                                              onTap: () {
-                                                showModalBottomSheet(
-                                                    backgroundColor:
-                                                    Colors.transparent,
-                                                    context: context,
-                                                    builder: (context) {
-                                                      return SingleChildScrollView(
-                                                        child: Container(
-                                                          width: Dimensions
-                                                              .screenWidth,
-                                                          decoration: BoxDecoration(
-                                                              color: Colors.white,
-                                                              borderRadius: BorderRadius.only(
-                                                                  topLeft: Radius
-                                                                      .circular(
-                                                                      Dimensions
-                                                                          .radius20),
-                                                                  topRight: Radius
-                                                                      .circular(
-                                                                      Dimensions
-                                                                          .radius20))),
-                                                          padding: EdgeInsets.only(
-                                                              top: Dimensions
-                                                                  .height10,
-                                                              left: Dimensions
-                                                                  .width20,
-                                                              right: Dimensions
-                                                                  .width20),
-                                                          child: Column(
-                                                            children: [
-                                                              GestureDetector(
-                                                                onTap: (){
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                },
-                                                                child: Row(children: [
-                                                                  AppIcon(
-                                                                    icon: CupertinoIcons.xmark,
-                                                                    size: Dimensions
-                                                                        .iconSize16,
-                                                                    iconColor:
-                                                                    AppColors
-                                                                        .redColor,
-                                                                    backgroundColor:
-                                                                    Colors.white
-                                                                        .withOpacity(
-                                                                        0.0),
-                                                                  ),
-                                                                  SizedBox(
-                                                                    width: Dimensions
-                                                                        .width20,
-                                                                  ),
-                                                                ]),
-                                                              ),
-                                                              Divider(
-                                                                  color: AppColors
-                                                                      .buttonBackgroundColor),
-                                                              Container(
-                                                                height: Dimensions.height45*2,
-                                                                padding: EdgeInsets.only(
-                                                                    left: Dimensions
-                                                                        .width20,
-                                                                    right: Dimensions
-                                                                        .width20,
-                                                                    top: Dimensions
-                                                                        .height20),
-                                                                child: Column(
-                                                                  children: [
-                                                                    InkWell(
-                                                                      onTap: () {
-                                                                        _hapusWishlist(wishlistController.wishlistList[index].wishlistId);
-                                                                        Navigator.pop(
-                                                                            context);
-                                                                      },
-                                                                      child:
-                                                                      Row(children: [
-                                                                        AppIcon(
-                                                                          icon: Icons
-                                                                              .delete,
-                                                                          size: Dimensions
-                                                                              .iconSize24,
-                                                                          iconColor:
-                                                                          AppColors
-                                                                              .redColor,
-                                                                          backgroundColor:
-                                                                          Colors.white
-                                                                              .withOpacity(
-                                                                              0.0),
-                                                                        ),
-                                                                        SizedBox(
-                                                                          width: Dimensions
-                                                                              .width20,
-                                                                        ),
-                                                                        BigText(
-                                                                          text: "Hapus",
-                                                                        )
-                                                                      ]),
-                                                                    ),
-                                                                    SizedBox(
-                                                                        height: Dimensions
-                                                                            .height10),
-                                                                  ],
-                                                                ),
-                                                              )
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      );
-                                                    });
+                                              onTap: ()
+                                              // {
+                                              //   showModalBottomSheet(
+                                              //       backgroundColor:
+                                              //       Colors.transparent,
+                                              //       context: context,
+                                              //       builder: (context) {
+                                              //         return SingleChildScrollView(
+                                              //           child: Container(
+                                              //             width: Dimensions
+                                              //                 .screenWidth,
+                                              //             decoration: BoxDecoration(
+                                              //                 color: Colors.white,
+                                              //                 borderRadius: BorderRadius.only(
+                                              //                     topLeft: Radius
+                                              //                         .circular(
+                                              //                         Dimensions
+                                              //                             .radius20),
+                                              //                     topRight: Radius
+                                              //                         .circular(
+                                              //                         Dimensions
+                                              //                             .radius20))),
+                                              //             padding: EdgeInsets.only(
+                                              //                 top: Dimensions
+                                              //                     .height10,
+                                              //                 left: Dimensions
+                                              //                     .width20,
+                                              //                 right: Dimensions
+                                              //                     .width20),
+                                              //             child: Column(
+                                              //               children: [
+                                              //                 GestureDetector(
+                                              //                   onTap: (){
+                                              //                     Navigator.pop(
+                                              //                         context);
+                                              //                   },
+                                              //                   child: Row(children: [
+                                              //                     AppIcon(
+                                              //                       icon: CupertinoIcons.xmark,
+                                              //                       size: Dimensions
+                                              //                           .iconSize16,
+                                              //                       iconColor:
+                                              //                       AppColors
+                                              //                           .redColor,
+                                              //                       backgroundColor:
+                                              //                       Colors.white
+                                              //                           .withOpacity(
+                                              //                           0.0),
+                                              //                     ),
+                                              //                     SizedBox(
+                                              //                       width: Dimensions
+                                              //                           .width20,
+                                              //                     ),
+                                              //                   ]),
+                                              //                 ),
+                                              //                 Divider(
+                                              //                     color: AppColors
+                                              //                         .buttonBackgroundColor),
+                                              //                 Container(
+                                              //                   height: Dimensions.height45*2,
+                                              //                   padding: EdgeInsets.only(
+                                              //                       left: Dimensions
+                                              //                           .width20,
+                                              //                       right: Dimensions
+                                              //                           .width20,
+                                              //                       top: Dimensions
+                                              //                           .height20),
+                                              //                   child: Column(
+                                              //                     children: [
+                                              //                       InkWell(
+                                              //                         onTap: () {
+                                              //                           _hapusWishlist(wishlistController.wishlistList[index].wishlistId);
+                                              //                           Navigator.pop(
+                                              //                               context);
+                                              //                         },
+                                              //                         child:
+                                              //                         Row(children: [
+                                              //                           AppIcon(
+                                              //                             icon: Icons
+                                              //                                 .delete,
+                                              //                             size: Dimensions
+                                              //                                 .iconSize24,
+                                              //                             iconColor:
+                                              //                             AppColors
+                                              //                                 .redColor,
+                                              //                             backgroundColor:
+                                              //                             Colors.white
+                                              //                                 .withOpacity(
+                                              //                                 0.0),
+                                              //                           ),
+                                              //                           SizedBox(
+                                              //                             width: Dimensions
+                                              //                                 .width20,
+                                              //                           ),
+                                              //                           BigText(
+                                              //                             text: "Hapus",
+                                              //                           )
+                                              //                         ]),
+                                              //                       ),
+                                              //                       SizedBox(
+                                              //                           height: Dimensions
+                                              //                               .height10),
+                                              //                     ],
+                                              //                   ),
+                                              //                 )
+                                              //               ],
+                                              //             ),
+                                              //           ),
+                                              //         );
+                                              //       });
+                                              // },
+                                              {
+                                                _hapusWishlist(wishlistController.wishlistList[index].wishlistId);
                                               },
                                               child: Row(
                                                   mainAxisAlignment: MainAxisAlignment.start,
                                                   children: [
-                                                    Icon(Icons.more_horiz, color: AppColors.blackColor, size: Dimensions.iconSize16,),
+                                                    Icon(Icons.delete, color: AppColors.redColor, size: Dimensions.iconSize16,),
                                                   ])),
                                         ),
                                         Container(

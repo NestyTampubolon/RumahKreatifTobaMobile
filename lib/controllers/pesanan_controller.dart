@@ -26,10 +26,10 @@ class PesananController extends GetxController {
   List<dynamic> get pesananMenungguPembayaranList =>
       _pesananMenungguPembayaranList;
 
-  List<dynamic> _detailPesananList = [];
+  List<dynamic> _detailPesananList = [].obs;
   List<dynamic> get detailPesananList => _detailPesananList;
 
-  List<dynamic> _detailPesanan = [];
+  List<dynamic> _detailPesanan = [].obs;
   List<dynamic> get detailPesanan => _detailPesanan;
 
   bool _isLoading = false;
@@ -81,10 +81,10 @@ class PesananController extends GetxController {
     return responseModel;
   }
 
-  Future<ResponseModel> getDetailPesananList(String kode_pembelian) async {
+  Future<ResponseModel> getDetailPesananList(int purchaseId) async {
     var controller = Get.find<UserController>().usersList[0];
     Response response = await pesananRepo.getDetailPesananList(
-        controller.id!, kode_pembelian);
+        controller.id!, purchaseId);
     late ResponseModel responseModel;
     if (response.statusCode == 200) {
       List<dynamic> responseBody = response.body["purchasesdetail"];

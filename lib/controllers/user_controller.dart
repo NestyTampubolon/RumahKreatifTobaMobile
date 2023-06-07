@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:rumah_kreatif_toba/controllers/auth_controller.dart';
+import 'package:rumah_kreatif_toba/data/repository/auth_repo.dart';
 import 'package:rumah_kreatif_toba/models/response_model.dart';
 import '../base/show_custom_message.dart';
 import '../base/snackbar_message.dart';
@@ -14,7 +15,6 @@ class UserController extends GetxController implements GetxService {
     required this.userRepo,
   });
 
-
   @override
   void initState() {
     getUser();
@@ -24,39 +24,46 @@ class UserController extends GetxController implements GetxService {
   bool get isLoading => _isLoading;
 
   RxList<Users> _usersList = <Users>[].obs;
-  List<dynamic> get usersList => _usersList.value;
+  List<dynamic> get usersList => _usersList;
 
   late AuthController _auth;
 
-  Future<ResponseModel> getUser() async {
-    Response response = await userRepo.getUserInfo();
-    late ResponseModel responseModel;
-    if (response.statusCode == 200) {
-      List<dynamic> responseBody = response.body;
-      _usersList.value = [];
-      for (dynamic item in responseBody) {
-        Users users = Users.fromJson(item);
-        _usersList.add(users);
+  Future<void> getUser() async {
+    ResponseModel responseModel;
+
+    if (authRepo.userLoggedIn()) {
+      Response response = await userRepo.getUserInfo();
+
+      print("HELLO ${response.body.toString()}");
+      if (response.statusCode == 200) {
+        List<dynamic> responseBody = response.body;
+        _usersList.value = [];
+        for (dynamic item in responseBody) {
+          Users users = Users.fromJson(item);
+          _usersList.add(users);
+        }
+        _isLoading = true;
+        update();
+        responseModel = ResponseModel(true, "successfully");
+      } else {
+        responseModel = ResponseModel(false, response.statusText!);
       }
-      _isLoading = true;
-      update();
-      responseModel = ResponseModel(true, "successfully");
-    } else {
-      responseModel = ResponseModel(false, response.statusText!);
     }
-    return responseModel;
   }
 
-  Future<ResponseModel> ubahProfil(int? user_id, String name, String no_hp, String birthday, String gender) async {
+  Future<ResponseModel> ubahProfil(int? user_id, String name, String no_hp,
+      String birthday, String gender) async {
     _isLoading = true;
     update();
-    Response response = await userRepo.ubahProfil(user_id!, name, no_hp, birthday, gender);
+    Response response =
+    await userRepo.ubahProfil(user_id!, name, no_hp, birthday, gender);
     late ResponseModel responseModel;
-    if(response.statusCode == 200){
-      AwesomeSnackbarButton("Berhasil","Berhasil mengubah profil",ContentType.success);
+    if (response.statusCode == 200) {
+      AwesomeSnackbarButton(
+          "Berhasil", "Berhasil mengubah profil", ContentType.success);
       Get.to(ProfilPage());
       getUser();
-    }else{
+    } else {
       responseModel = ResponseModel(false, response.statusText!);
     }
     _isLoading = false;
@@ -64,17 +71,21 @@ class UserController extends GetxController implements GetxService {
     return responseModel;
   }
 
-  Future<void> ubahPassword(int? user_id, String password, String password_baru) async {
+  Future<void> ubahPassword(
+      int? user_id, String password, String password_baru) async {
     _isLoading = true;
     update();
-    Response response = await userRepo.ubahPassword(user_id!, password, password_baru);
+    Response response =
+    await userRepo.ubahPassword(user_id!, password, password_baru);
     late ResponseModel responseModel;
-    if(response.statusCode == 200){
-      AwesomeSnackbarButton("Berhasil",response.body["message"],ContentType.success);
+    if (response.statusCode == 200) {
+      AwesomeSnackbarButton(
+          "Berhasil", response.body["message"], ContentType.success);
       Get.to(ProfilPage());
       getUser();
-    }else{
-      AwesomeSnackbarButton("Gagal",response.body["message"],ContentType.failure);
+    } else {
+      AwesomeSnackbarButton(
+          "Gagal", response.body["message"], ContentType.failure);
     }
     _isLoading = false;
     update();

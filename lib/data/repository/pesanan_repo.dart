@@ -17,8 +17,8 @@ class PesananRepo{
     return await apiClient.postData(AppConstants.MENUNGGU_PEMBAYARAN_URL, {"user_id": user_id});
   }
 
-  Future<Response> getDetailPesananList(int user_id, String kode_pembelian) async{
-    return await apiClient.postData(AppConstants.DETAIL_PESANAN_URL, {"user_id": user_id, "kode_pembelian" : kode_pembelian});
+  Future<Response> getDetailPesananList(int user_id, int purchase_id) async{
+    return await apiClient.postData(AppConstants.DETAIL_PESANAN_URL, {"user_id": user_id, "purchase_id" : purchase_id});
   }
 
   Future<Response> postBuktiPembayaran(List purchase_id, String proof_of_payment_image ) async {

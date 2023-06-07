@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:rumah_kreatif_toba/data/api/api_client.dart';
+import 'package:rumah_kreatif_toba/pages/pesanan/menunggu_pembayaran_page.dart';
 import '../../base/show_custom_message.dart';
 import '../../controllers/auth_controller.dart';
 import '../../controllers/cart_controller.dart';
@@ -119,7 +120,7 @@ class _PembayaranPageState extends State<PembayaranPage> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Get.back();
+                        Get.to(MenungguPembayaranPage());
                       },
                       child: AppIcon(
                         icon: Icons.arrow_back,
@@ -210,11 +211,11 @@ class _PembayaranPageState extends State<PembayaranPage> {
                           margin: EdgeInsets.only(bottom: Dimensions.height10),
                           child: Row(
                             children: [
-                              PriceText(
+                              Obx(() => PriceText(
                                 text: CurrencyFormat.convertToIdr(
                                     detailPesanan[0].hargaPembelian, 0),
                                 size: Dimensions.font16,
-                              ),
+                              ),)
                             ],
                           ),
                         ),
@@ -229,11 +230,11 @@ class _PembayaranPageState extends State<PembayaranPage> {
                             text: "Total Ongkos Kirim",
                             size: Dimensions.font16,
                           ),
-                          PriceText(
+                          Obx(() => PriceText(
                             text: CurrencyFormat.convertToIdr(
                                 detailPesanan[0].ongkir, 0),
                             size: Dimensions.font16,
-                          ),
+                          ),)
                         ],
                       ),
                     ),
@@ -246,11 +247,11 @@ class _PembayaranPageState extends State<PembayaranPage> {
                           size: Dimensions.font20,
                           fontWeight: FontWeight.bold,
                         ),
-                        PriceText(
+                        Obx(() => PriceText(
                           text: CurrencyFormat.convertToIdr(
                               detailPesanan[0].hargaPembelian + detailPesanan[0].ongkir, 0),
                           size: Dimensions.font16,
-                        ),
+                        ),)
                       ],
                     )
                   ],
@@ -362,7 +363,7 @@ class _PembayaranPageState extends State<PembayaranPage> {
               )
                   : Text(
                 "Tidak ada gambar",
-                style: TextStyle(fontSize: 20),
+                style: TextStyle(fontSize: Dimensions.font16),
               )
             ],
           );

@@ -24,6 +24,9 @@ class PengirimanOptionButton extends StatelessWidget {
       return InkWell(
         onTap: () => {
           controller.setPaymentIndex(index),
+          if(index == 1){
+            Navigator.pop(context)
+          },
           Get.find<PengirimanController>().setTypePengiriman(title),
         },
         child: Column(
@@ -50,7 +53,7 @@ class PengirimanOptionButton extends StatelessWidget {
                 ),
                 title: Text(
                   title,
-                  style: TextStyle(fontSize: Dimensions.font20),
+                  style: TextStyle(fontSize: Dimensions.font16),
                 ),
                 trailing: _selected
                     ? Icon(

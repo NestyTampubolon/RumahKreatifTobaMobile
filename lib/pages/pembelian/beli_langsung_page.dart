@@ -884,7 +884,7 @@ class _BeliLangsungPageState extends State<BeliLangsungPage> {
                             },
                             child: Row(children: [
                               BigText(
-                                text: "Beli Langsung",
+                                text: "Bayar",
                                 color: Colors.white,
                                   size: Dimensions
                                       .height15

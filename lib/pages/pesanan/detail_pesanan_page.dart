@@ -62,7 +62,6 @@ class _DetailPesananPageState extends State<DetailPesananPage> {
   Widget build(BuildContext context) {
     var detailPesanan = Get.find<PesananController>().detailPesanan;
     Future<void> _updateStatusPembelian(int purchase_id) async {
-      print("aa");
       bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
       if (_userLoggedIn) {
         var controller = Get.find<PembelianController>();

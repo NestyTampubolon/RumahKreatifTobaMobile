@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rumah_kreatif_toba/pages/pembayaran/pembayaran_page.dart';
+import 'package:rumah_kreatif_toba/pages/pesanan/pesanan_page.dart';
 
 import '../../base/show_custom_message.dart';
 import '../../base/snackbar_message.dart';
@@ -84,11 +85,11 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
   @override
   Widget build(BuildContext context) {
     Get.find<PesananController>().getPesananMenungguBayaranList();
-    Future<void> _getDetailPesananList(String kode_pembelian) async {
+    Future<void> _getDetailPesananList(int purchaseId) async {
       bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
       if (_userLoggedIn) {
         var controller = Get.find<PesananController>();
-        controller.getDetailPesananList(kode_pembelian).then((status) async {
+        controller.getDetailPesananList(purchaseId).then((status) async {
           if (status.isSuccess) {
             Get.to(PembayaranPage());
           } else {
@@ -98,11 +99,11 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
       }
     }
 
-    Future<void> _getDetailPesanan(String kode_pembelian) async {
+    Future<void> _getDetailPesanan(int purchase_id) async {
       bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
       if (_userLoggedIn) {
         var controller = Get.find<PesananController>();
-        controller.getDetailPesananList(kode_pembelian).then((status) async {
+        controller.getDetailPesananList(purchase_id).then((status) async {
           if (status.isSuccess) {
             Get.to(DetailPesananPage());
           } else {
@@ -137,7 +138,7 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Get.back();
+                      Get.to(PesananPage());
                     },
                     child: AppIcon(
                       icon: Icons.arrow_back,
@@ -235,7 +236,7 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                                           ),
                                           SmallText(
                                               text: _list[index].name
-                                                  .toString()),
+                                                  .toString() ?? ""),
                                           Container(
                                               height: Dimensions.height20,
                                               padding: EdgeInsets.only(right: Dimensions.width10, left: Dimensions.width10),
@@ -246,7 +247,7 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                                               child: Center(
                                                 child: BigText(
                                                     text: _list[index].statusPembelian
-                                                        .toString(),
+                                                        .toString() ?? "",
                                                     size: Dimensions.font16/1.5,
                                                     color: AppColors.notification_success,
                                                     fontWeight: FontWeight.bold),
@@ -264,7 +265,7 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                                           Dimensions.radius20 / 2)),
                                   child: GestureDetector(
                                     onTap: () {
-                                      _hapusPesanan(_list[index].kodePembelian.toString());
+                                      _hapusPesanan(_list[index].kodePembelian.toString() ?? "");
                                     },
                                     child: AppIcon(
                                         iconSize: Dimensions
@@ -292,7 +293,7 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                                         onTap: () {
                                           var produkIndex =
                                           _list[index]
-                                              .productId!;
+                                              .productId ?? 0;
                                           if (produkIndex >= 0) {
                                             Get.find<PopularProdukController>().detailProduk(produkIndex);
                                           }
@@ -337,7 +338,7 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                                             width : Dimensions.screenWidth/1.6,
                                             child: BigText(
                                               text: _list[index]
-                                                  .productName,
+                                                  .productName ?? "",
                                               size: Dimensions.font16,
                                             ),
                                           ),
@@ -345,12 +346,12 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                                             children: [
                                               SmallText(
                                                   text: "${ _list[index]
-                                                      .jumlahPembelianProduk} x "),
+                                                      .jumlahPembelianProduk ?? 0} x "),
                                               PriceText(
                                                 text: CurrencyFormat
                                                     .convertToIdr(
                                                     _list[index]
-                                                        .price,
+                                                        .price ?? 0,
                                                     0),
                                                 size: Dimensions.font16,
                                               ),
@@ -394,7 +395,7 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                                 pesananController.pesananMenungguPembayaranList[index].statusPembelian == "Belum Bayar" ?
                                 GestureDetector(
                                   onTap: (){
-                                    _getDetailPesananList(pesananController.pesananMenungguPembayaranList[index].kodePembelian.toString());
+                                    _getDetailPesananList(pesananController.pesananMenungguPembayaranList[index].purchaseId);
                                   },
                                   child:Container(
                                     padding: EdgeInsets.only(
@@ -417,8 +418,7 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                                 ) : GestureDetector(
                                   onTap: () {
                                     _getDetailPesanan(pesananController
-                                        .pesananMenungguPembayaranList[index].kodePembelian
-                                        .toString());
+                                        .pesananMenungguPembayaranList[index].purchaseId);
                                   },
                                   child: Container(
                                     padding: EdgeInsets.only(
