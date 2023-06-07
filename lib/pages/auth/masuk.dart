@@ -1,13 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:rumah_kreatif_toba/controllers/cart_controller.dart';
 import 'package:rumah_kreatif_toba/pages/auth/register.dart';
 import 'package:rumah_kreatif_toba/routes/route_helper.dart';
 import 'package:rumah_kreatif_toba/utils/colors.dart';
 import 'package:rumah_kreatif_toba/widgets/big_text.dart';
 import 'package:get/get.dart';
 import '../../base/custom_loader.dart';
-import '../../base/show_custom_message.dart';
 import '../../base/snackbar_message.dart';
 import '../../controllers/auth_controller.dart';
 import '../../utils/dimensions.dart';
@@ -15,6 +13,7 @@ import '../../widgets/app_icon.dart';
 import '../../widgets/app_text_field.dart';
 import '../../widgets/app_text_field_password.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+
 class Masuk extends StatelessWidget {
   const Masuk({Key? key}) : super(key: key);
 
@@ -43,7 +42,6 @@ class Masuk extends StatelessWidget {
     }
 
     return Scaffold(
-        backgroundColor: Colors.white,
         body: Column(
           children: [
             Container(
@@ -58,7 +56,7 @@ class Masuk extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Get.toNamed(RouteHelper.getInitial());
+                          Get.back();
                         },
                         child: AppIcon(
                           icon: Icons.arrow_back,
@@ -73,104 +71,105 @@ class Masuk extends StatelessWidget {
                     ],
                   )),
             ),
-            Flexible(
-                child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: GetBuilder<AuthController>(
-                builder: (authController) {
-                  return !authController.isLoading
-                      ? SingleChildScrollView(
-                          physics: BouncingScrollPhysics(),
-                          child: Column(
+            GetBuilder<AuthController>(
+              builder: (authController) {
+                return !authController.isLoading
+                    ? Column(
+                  children: [
+                    SizedBox(
+                      height: Dimensions.screenHeight * 0.05,
+                    ),
+                    Container(
+                      width: Dimensions.width45*3,
+                      height: Dimensions.height45*3,
+                      margin: EdgeInsets.only(
+                          left: Dimensions.width10,
+                          right: Dimensions.width10),
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage(
+                                  "assets/images/logo_rkt.png"))),
+                    ),
+                    SizedBox(
+                      height: Dimensions.height20,
+                    ),
+                    AppTextField(
+                      textController: usernameController,
+                      hintText: 'Username',
+                      icon: Icons.person,
+                    ),
+                    SizedBox(
+                      height: Dimensions.height20,
+                    ),
+                    AppTextFieldPassword(
+                      textController: passwordController,
+                      hintText: 'Password',
+                      icon: Icons.lock,
+                    ),
+                    SizedBox(
+                      height: Dimensions.height20,
+                    ),
+                    SizedBox(
+                      height: Dimensions.height20,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        _login(authController);
+                      },
+                      child: Container(
+                          width: Dimensions.width45*3,
+                          height: Dimensions.height45,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(
+                                  Dimensions.radius20/2),
+                              color: AppColors.redColor),
+                          child: Center(
+                            child: BigText(
+                              text: "Masuk",
+                              size: Dimensions.font20,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )),
+                    ),
+                    SizedBox(
+                      height: Dimensions.height10,
+                    ),
+                    RichText(
+                        text: TextSpan(
+                            text: "Tidak memiliki Akun? ",
+                            style: TextStyle(
+                                color: Colors.grey[500],
+                                fontSize: Dimensions.font16),
                             children: [
-                              SizedBox(
-                                height: Dimensions.screenHeight * 0.05,
-                              ),
-                              Container(
-                                width: Dimensions.width45*3,
-                                height: Dimensions.height45*3,
-                                margin: EdgeInsets.only(
-                                    left: Dimensions.width10,
-                                    right: Dimensions.width10),
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        fit: BoxFit.cover,
-                                        image: AssetImage(
-                                            "assets/images/logo_rkt.png"))),
-                              ),
-                              SizedBox(
-                                height: Dimensions.height20,
-                              ),
-                              AppTextField(
-                                textController: usernameController,
-                                hintText: 'Username',
-                                icon: Icons.person,
-                              ),
-                              SizedBox(
-                                height: Dimensions.height20,
-                              ),
-                              AppTextFieldPassword(
-                                textController: passwordController,
-                                hintText: 'Password',
-                                icon: Icons.lock,
-                              ),
-                              SizedBox(
-                                height: Dimensions.height20,
-                              ),
-                              SizedBox(
-                                height: Dimensions.height20,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  _login(authController);
-                                },
-                                child: Container(
-                                    width: Dimensions.width45*3,
-                                    height: Dimensions.height45,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(
-                                            Dimensions.radius20/2),
-                                        color: AppColors.redColor),
-                                    child: Center(
-                                      child: BigText(
-                                        text: "Masuk",
-                                        size: Dimensions.font20,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    )),
-                              ),
-                              SizedBox(
-                                height: Dimensions.height10,
-                              ),
-                              RichText(
-                                  text: TextSpan(
-                                      text: "Tidak memiliki Akun? ",
-                                      style: TextStyle(
-                                          color: Colors.grey[500],
-                                          fontSize: Dimensions.font16),
-                                      children: [
-                                    TextSpan(
-                                        recognizer: TapGestureRecognizer()
-                                          ..onTap = () => Get.to(
-                                              () => Register(),
-                                              transition: Transition.fadeIn),
-                                        text: "Daftar",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black,
-                                            fontSize: Dimensions.font16))
-                                  ])),
-                              SizedBox(
-                                height: Dimensions.height15,
-                              ),
-                            ],
-                          ),
-                        )
-                      : CustomLoader();
-                },
-              ),
-            ))
+                              TextSpan(
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () => Get.to(
+                                            () => Register(),
+                                        transition: Transition.fadeIn),
+                                  text: "Daftar",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                      fontSize: Dimensions.font16))
+                            ])),
+                    SizedBox(
+                      height: Dimensions.height15,
+                    ),
+                  ],
+                )
+                    : Container(
+                  height:
+                  50, // set the height of the container to your desired height
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      color: AppColors.redColor,
+                    ),
+                  ),
+                );
+              },
+            )
           ],
         ));
   }

@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:rumah_kreatif_toba/controllers/alamat_controller.dart';
+import 'package:rumah_kreatif_toba/controllers/pesanan_controller.dart';
 
 import '../base/show_custom_message.dart';
 import '../base/snackbar_message.dart';
@@ -45,7 +46,7 @@ class PengirimanController extends GetxController{
     late ResponseModel responseModel;
     if(response.statusCode == 200){
       AwesomeSnackbarButton("Berhasil","Produk berhasil dibeli",ContentType.success);
-
+      Get.find<PesananController>().getPesananMenungguBayaranList();
       Get.offNamed(RouteHelper.getMenungguPembayaranPage());
     }else{
       responseModel = ResponseModel(false, response.statusText!);
@@ -63,6 +64,7 @@ class PengirimanController extends GetxController{
     late ResponseModel responseModel;
     if(response.statusCode == 200){
       AwesomeSnackbarButton("Berhasil","Produk berhasil dibeli",ContentType.success);
+      Get.find<PesananController>().getPesananMenungguBayaranList();
       Get.offNamed(RouteHelper.getMenungguPembayaranPage());
     }else{
       responseModel = ResponseModel(false, response.statusText!);

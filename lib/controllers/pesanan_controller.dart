@@ -145,6 +145,8 @@ class PesananController extends GetxController {
         // Handle error
         print('Error: Response was not a map');
       }
+      Get.find<PesananController>().pesananMenungguPembayaranList.toList();
+      _pickedFile = null;
     } else {
       print(response);
     }
@@ -180,19 +182,18 @@ class PesananController extends GetxController {
     return responses;
   }
 
-  Future<ResponseModel> hapusPesanan(String kode_pembelian) async {
+  Future<void> hapusPesanan(String kode_pembelian) async {
     Response response = await pesananRepo.hapusPesanan(kode_pembelian);
     late ResponseModel responseModel;
     if(response.statusCode == 200){
       AwesomeSnackbarButton("Berhasil","Pesanan berhasil dihapus",ContentType.success);
-
+      getPesananMenungguBayaranList();
     }else{
-      responseModel = ResponseModel(false, response.statusText!);
+      AwesomeSnackbarButton("Gagal",response.statusText!,ContentType.failure);
     }
     getPesananMenungguBayaranList();
     _isLoading = false;
     update();
-    return responseModel;
   }
 
 

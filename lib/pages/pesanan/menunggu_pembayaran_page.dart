@@ -37,6 +37,7 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
   void initState() {
     bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
     if (_userLoggedIn) {
+      Get.find<PesananController>().pesananMenungguPembayaranList.toList();
       Get.find<UserController>().getUser();
       Get.find<PesananController>().getPesananMenungguBayaranList();
       _list = Get.find<PesananController>().pesananMenungguPembayaranList.toList();
@@ -61,7 +62,7 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
   ];
 
 
-  List<dynamic> _list = Get.find<PesananController>().pesananMenungguPembayaranList.toList();
+  List<dynamic> _list = Get.find<PesananController>().pesananMenungguPembayaranList.toList().obs;
 
 
   Future<void> _filter(String? keyword) async {
@@ -116,15 +117,13 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
       if (_userLoggedIn) {
         var controller = Get.find<PesananController>();
         controller.hapusPesanan(kode_pembelian).then((status) async {
-          if (status.isSuccess) {
-            await controller.getPesananMenungguBayaranList();
-          } else {
-            AwesomeSnackbarButton("Gagal",status.message,ContentType.failure);
-          }
+          await controller.getPesananMenungguBayaranList();
+          _list = Get.find<PesananController>().pesananMenungguPembayaranList.toList().obs;
         });
         controller.getPesananMenungguBayaranList();
       }
     }
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -191,14 +190,7 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                     var gambarproduk = Get.find<PopularProdukController>().imageProdukList.where(
                           (produk) => produk.productId == _list[index].productId,
                     );
-
-                    String productImageName = gambarproduk.isNotEmpty ? gambarproduk.single.productImageName : '';
-                    print("productImageName");
-                    print(_list[index].productId);
-
-
-
-                    return Container(
+                    return Obx(() => Container(
                       width: Dimensions.screenWidth,
                       height: Dimensions.height45 * 3.5,
                       margin: EdgeInsets.only(
@@ -317,7 +309,7 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                                                   .height10),
                                           decoration: BoxDecoration(
                                               image: DecorationImage(
-                                                  fit: BoxFit.cover,
+                                                fit: BoxFit.cover,
                                                 image: gambarproduk.single.productImageName != null && gambarproduk.single.productImageName.isNotEmpty
                                                     ? NetworkImage(
                                                   '${AppConstants.BASE_URL_IMAGE}u_file/product_image/${gambarproduk.single.productImageName}',
@@ -453,7 +445,7 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                           ),
                         ],
                       ),
-                    );
+                    ));
                   }
               );
             }),

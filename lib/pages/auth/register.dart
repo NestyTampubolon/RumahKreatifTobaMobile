@@ -44,9 +44,6 @@ class Register extends StatelessWidget {
       String birthday = tanggalLahirController.text.trim();
       String gender = jenisKelaminController.text.trim();
 
-      DateTime parsedBirthday = DateFormat('dd-MM-yyyy').parse(birthday);
-      String formattedDate = DateFormat('yyyy-MM-dd').format(parsedBirthday);
-      birthdayValue = formattedDate;
 
       if (jenisKelaminController.text.trim() == "Laki-laki") {
         gender = "L";
@@ -58,14 +55,14 @@ class Register extends StatelessWidget {
         AwesomeSnackbarButton("Warning","Nama masih kosong",ContentType.warning);
       } else if (username.isEmpty) {
         AwesomeSnackbarButton("Warning","Username masih kosong",ContentType.warning);
-      } else if (password.isEmpty) {
-        AwesomeSnackbarButton("Warning","Password masih kosong",ContentType.warning);
-      } else if (konfirmasiPassword.isEmpty) {
-        AwesomeSnackbarButton("Warning","Konfirmasi Password masih kosong",ContentType.warning);
       } else if (email.isEmpty) {
         AwesomeSnackbarButton("Warning","Email masih kosong",ContentType.warning);
       } else if (!GetUtils.isEmail(email)) {
         AwesomeSnackbarButton("Warning","Email tidak sesuai",ContentType.warning);
+      } else if (password.isEmpty) {
+        AwesomeSnackbarButton("Warning","Password masih kosong",ContentType.warning);
+      } else if (konfirmasiPassword.isEmpty) {
+        AwesomeSnackbarButton("Warning","Konfirmasi Password masih kosong",ContentType.warning);
       } else if (no_hp.isEmpty) {
         AwesomeSnackbarButton("Warning","Nomor Telepon masih kosong",ContentType.warning);
       } else if (gender == null) {
@@ -75,6 +72,10 @@ class Register extends StatelessWidget {
       } else if (konfirmasiPassword != password) {
         AwesomeSnackbarButton("Warning","Password tidak sama dengan Konfirmasi Password",ContentType.warning);
       } else {
+        DateTime parsedBirthday = DateFormat('dd-MM-yyyy').parse(birthday);
+        String formattedDate = DateFormat('yyyy-MM-dd').format(parsedBirthday);
+        birthdayValue = formattedDate;
+
         Users users = Users(
             name: name,
             username: username,

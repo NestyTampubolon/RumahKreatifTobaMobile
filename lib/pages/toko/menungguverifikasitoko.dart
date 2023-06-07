@@ -6,6 +6,7 @@ import '../../utils/colors.dart';
 import '../../utils/dimensions.dart';
 import '../../widgets/app_icon.dart';
 import '../../widgets/big_text.dart';
+import 'hometoko/hometoko_page.dart';
 
 class MenungguVerifikasiToko extends StatelessWidget {
   const MenungguVerifikasiToko({Key? key}) : super(key: key);
@@ -28,7 +29,7 @@ class MenungguVerifikasiToko extends StatelessWidget {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Get.toNamed(RouteHelper.getInitial());
+                            Get.to(HomeTokoPage(initialIndex: 3));
                             // Get.back();
                           },
                           child: AppIcon(
@@ -44,6 +45,7 @@ class MenungguVerifikasiToko extends StatelessWidget {
                         BigText(
                           text: "Menunggu Verifikasi",
                           size: Dimensions.font20,
+                          fontWeight: FontWeight.bold,
                         ),
                       ],
                     ),
