@@ -50,7 +50,7 @@ class PengirimanController extends GetxController{
     if(response.statusCode == 200){
       AwesomeSnackbarButton("Berhasil","Produk berhasil dibeli",ContentType.success);
       purchaseId.value = response.body;
-      Get.find<PesananController>().getDetailPesananList(purchaseId.value);
+      await Get.find<PesananController>().getDetailPesananList(purchaseId.value);
       Get.to(PembayaranPage());
     }else{
       responseModel = ResponseModel(false, response.statusText!);
@@ -69,7 +69,7 @@ class PengirimanController extends GetxController{
     if(response.statusCode == 200){
       AwesomeSnackbarButton("Berhasil","Produk berhasil dibeli",ContentType.success);
       purchaseId.value = response.body;
-      Get.find<PesananController>().getDetailPesananList(purchaseId.value);
+      await Get.find<PesananController>().getDetailPesananList(purchaseId.value);
       Get.to(PembayaranPage());
     }else{
       responseModel = ResponseModel(false, response.statusText!);

@@ -85,59 +85,69 @@ class _BeliLangsungPageState extends State<BeliLangsungPage> {
     void ongkosKirim(address_id, destination_id, berat, kurir) async {
       controller.showButton();
       Uri url = Uri.parse("https://pro.rajaongkir.com/api/cost");
-      try {
-        print("tes ${controller.cityTujuanId}");
-        final response = await http.post(
-          url,
-          body: {
-            "origin": "${controller.cityTujuanId}",
-            "originType": "city",
-            "destination": "${controller.daftarAlamatList[0].city_id}",
-            "destinationType": "subdistrict",
-            "weight": "${controller.berat}",
-            "courier": "${controller.kurir}",
-          },
-          headers: {
-            "key": "41df939eff72c9b050a81d89b4be72ba",
-            "content-type": "application/x-www-form-urlencoded"
-          },
-        );
+      if(controller.cityUserId.value == "0"){
+        AwesomeSnackbarButton(
+            "Gagal", "Alamat pengiriman masih kosong. Silahkan pilih alamat pengiriman", ContentType.failure);
+      }else{
+        try {
+          print("tes ${controller.cityUserId}");
+          print("tes ini ${controller.cityTujuanId.value}");
+          print("berat ${controller.berat}");
+          print("kurir ${controller.kurir}");
+          final response = await http.post(
+            url,
+            body: {
+              "origin": "${controller.cityTujuanId}",
+              "originType": "city",
+              "destination": "${controller.cityUserId.value}",
+              "destinationType": "subdistrict",
+              "weight": "${controller.berat}",
+              "courier": "${controller.kurir}",
+            },
+            headers: {
+              "key": "41df939eff72c9b050a81d89b4be72ba",
+              "content-type": "application/x-www-form-urlencoded"
+            },
+          );
 
-        var data = jsonDecode(response.body) as Map<String, dynamic>;
-        var results = data["rajaongkir"]["results"] as List<dynamic>;
-        var listAllCourier = Courier.fromJsonList(results);
-        var courier = listAllCourier[0];
-        Get.defaultDialog(
-          title: courier.name!,
-          content: Column(
-            children: courier.costs!
-                .map((e) => GestureDetector(
-              child: ListTile(
-                title: Text("${e.service}"),
-                subtitle: PriceText(
-                  text:
-                  CurrencyFormat.convertToIdr(e.cost![0].value, 0),
-                  size: Dimensions.font16,
+          var data = jsonDecode(response.body) as Map<String, dynamic>;
+          var results = data["rajaongkir"]["results"] as List<dynamic>;
+          var listAllCourier = Courier.fromJsonList(results);
+          var courier = listAllCourier[0];
+          Get.defaultDialog(
+            title: courier.name!,
+            content: Column(
+              children: courier.costs!
+                  .map((e) => GestureDetector(
+                child: ListTile(
+                  title: Text("${e.service}"),
+                  subtitle: PriceText(
+                    text:
+                    CurrencyFormat.convertToIdr(e.cost![0].value, 0),
+                    size: Dimensions.font16,
+                  ),
+                  trailing: Text(courier.code == "pos"
+                      ? "${e.cost![0].etd}"
+                      : "${e.cost![0].etd} HARI"),
                 ),
-                trailing: Text(courier.code == "pos"
-                    ? "${e.cost![0].etd}"
-                    : "${e.cost![0].etd} HARI"),
-              ),
-              onTap: () {
-                controller.setHargaPengiriman(e.cost![0].value);
-                controller.setServicePengiriman(e.service);
-                print(Get.find<AlamatController>().alamatID.value);
-                Navigator.pop(context);
-              },
-            ))
-                .toList(),
-          ),
-        );
-      } catch (err) {
-        Get.defaultDialog(
-          title: "Eror",
-        );
+                onTap: () {
+                  controller.setHargaPengiriman(e.cost![0].value);
+                  controller.setServicePengiriman(e.service);
+                  print(Get.find<AlamatController>().alamatID.value);
+                  Navigator.pop(context);
+                },
+              ))
+                  .toList(),
+            ),
+          );
+        } catch (err) {
+          Get.defaultDialog(
+            title: "Eror",
+          );
+        }
       }
+
+
     }
     return Scaffold(
         body: SingleChildScrollView(
@@ -304,6 +314,7 @@ class _BeliLangsungPageState extends State<BeliLangsungPage> {
                                                                   onChanged: (String? value) => {
                                                                     controller.setTypeAlamat(value!),
                                                                     controller.setId(alamat.user_address_id),
+                                                                    controller.cityUserId.value = alamat.city_id.toString()! ,
                                                                   },
                                                                   activeColor: Theme.of(context).primaryColor,
                                                                 ),
@@ -390,6 +401,9 @@ class _BeliLangsungPageState extends State<BeliLangsungPage> {
                                 .imageProdukList
                                 .where((produk) =>
                             produk.productId == cartController.getItems[index].productId);
+                            controller.berat.value =
+                                cartController.getItems[index].heavy ?? 0;
+                            controller.cityTujuanId.value = cartController.getItems[index].cityId.toString() ;
                             return Container(
                               width: Dimensions.screenWidth / 1.2,
                               height: Dimensions.height45 * 4,
@@ -659,9 +673,7 @@ class _BeliLangsungPageState extends State<BeliLangsungPage> {
                                                       'Pesanan Dikirim',
                                                       index: 2,),
                                                   Obx(
-                                                        () => Get.find<PengirimanController>()
-                                                        .paymentIndex
-                                                        .value ==
+                                                        () => Get.find<PengirimanController>().paymentIndex.value ==
                                                         2
                                                         ? Visibility(
                                                       visible:
@@ -694,8 +706,7 @@ class _BeliLangsungPageState extends State<BeliLangsungPage> {
                                                               if (value != null) {
                                                                 controller.kurir.value = value['code'];
                                                                 controller.namakurir.value = value['name'];
-                                                                controller.showButton();
-                                                                print(controller.kurir.value);
+                                                                ongkosKirim(controller.cityAsalId, controller.cityTujuanId, controller.berat, controller.kurir);
                                                               } else {
                                                                 controller.hiddenButton.value = true;
                                                                 controller.kurir.value = "";
@@ -712,33 +723,38 @@ class _BeliLangsungPageState extends State<BeliLangsungPage> {
                                                               ),
                                                             ),
                                                           ),
-                                                          Obx(
-                                                                () => controller.hiddenButton.isTrue
-                                                                ? SizedBox()
-                                                                : GestureDetector(
-                                                                onTap: () {
-                                                                  // print(controller.cityAsalId);
-                                                                  // print(controller.cityTujuanId);
-                                                                  ongkosKirim(controller.cityAsalId, controller.cityTujuanId, controller.berat, controller.kurir);
-                                                                },
-                                                                child: Center(
-                                                                  child: Row(
-                                                                    children: [
-                                                                      BigText(
-                                                                        text: "Kirim",
-                                                                        size: Dimensions.font16,
-                                                                        color: AppColors.redColor,
-                                                                      ),
-                                                                      AppIcon(
-                                                                        icon: Icons.send,
-                                                                        iconSize: Dimensions.iconSize24,
-                                                                        iconColor: AppColors.redColor,
-                                                                        backgroundColor: Colors.white.withOpacity(0.0),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                )),
-                                                          )
+                                                          SizedBox(
+                                                            height: Dimensions.height10,
+                                                          ),
+                                                          // Obx(
+                                                          //   () => controller.hiddenButton.isTrue
+                                                          //       ? SizedBox()
+                                                          //       : Row(
+                                                          //     mainAxisAlignment: MainAxisAlignment.end,
+                                                          //     children: [
+                                                          //       GestureDetector(
+                                                          //         onTap: () {
+                                                          //           ongkosKirim(controller.cityAsalId, controller.cityTujuanId, controller.berat, controller.kurir);
+                                                          //         },
+                                                          //         child: Container(
+                                                          //           width: Dimensions.width45*3,
+                                                          //           height: Dimensions.width45,
+                                                          //           // alignment: Alignment.topCenter,
+                                                          //           decoration: BoxDecoration(
+                                                          //               borderRadius: BorderRadius.circular(10),
+                                                          //               color: AppColors.redColor),
+                                                          //           child: Center(
+                                                          //             child: BigText(
+                                                          //               text: "Selanjutnya",
+                                                          //               fontWeight: FontWeight.bold,
+                                                          //               size: Dimensions.font20,
+                                                          //               color: Colors.white,
+                                                          //             ),
+                                                          //           ),
+                                                          //         ),)
+                                                          //     ],
+                                                          //   ),
+                                                          // )
                                                         ],
                                                       ),
                                                     )
@@ -749,6 +765,136 @@ class _BeliLangsungPageState extends State<BeliLangsungPage> {
                                                       Container(),
                                                     ),
                                                   ),
+                                                  Obx(() => controller.service.value !=
+                                                      "" && Get.find<PengirimanController>().paymentIndex.value ==
+                                                      2 && controller.namakurir.value != ""
+                                                      ? Visibility(
+                                                      visible:
+                                                      true,
+                                                      child:
+                                                      Column(
+                                                        mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                        crossAxisAlignment:
+                                                        CrossAxisAlignment.start,
+                                                        children: [
+                                                          SizedBox(
+                                                            height: Dimensions.height10,
+                                                          ),
+                                                          BigText(
+                                                            text: "Jenis Pengiriman",
+                                                            fontWeight: FontWeight.bold,
+                                                          ),
+                                                          Container(
+                                                            width: Dimensions.screenWidth,
+                                                            child: Row(
+                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                              children: [
+                                                                Expanded(
+                                                                  child: BigText(text: "Kurir"),
+                                                                ),
+                                                                Expanded(
+                                                                    child: Container(
+                                                                      width: Dimensions.screenWidth / 1.4,
+                                                                      child: BigText(
+                                                                        text: controller.namakurir.value,
+                                                                      ),
+                                                                    ))
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          Container(
+                                                            width: Dimensions.screenWidth,
+                                                            child: Row(
+                                                              mainAxisAlignment: MainAxisAlignment.start,
+                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                              children: [
+                                                                Expanded(
+                                                                  child: BigText(text: "Service"),
+                                                                ),
+                                                                Expanded(
+                                                                  child: Container(
+                                                                    width: Dimensions.screenWidth / 1.4,
+                                                                    child: BigText(
+                                                                      text: controller.service.value,
+                                                                    ),
+                                                                  ),
+                                                                )
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          Container(
+                                                            width: Dimensions.screenWidth,
+                                                            child: Row(
+                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                              children: [
+                                                                Expanded(
+                                                                  child: BigText(text: "Ongkir"),
+                                                                ),
+                                                                Expanded(
+                                                                  child: PriceText(
+                                                                    text: CurrencyFormat.convertToIdr(controller.HargaPengiriman.value, 0),
+                                                                    color: AppColors.redColor,
+                                                                    size: Dimensions.font16,
+                                                                  ),
+                                                                )
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          Container(
+                                                            width: Dimensions.screenWidth,
+                                                            child: Row(
+                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                              children: [
+                                                                Expanded(
+                                                                  child: BigText(text: "Estimasi"),
+                                                                ),
+                                                                Expanded(
+                                                                  child: BigText(
+                                                                    text: controller.estimasi.value,
+                                                                  ),
+                                                                )
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                            height: Dimensions.height10,
+                                                          ),
+                                                          Row(
+                                                            mainAxisAlignment: MainAxisAlignment.end,
+                                                            children: [
+                                                              GestureDetector(
+                                                                onTap: () {
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                },
+                                                                child: Container(
+                                                                  width: Dimensions.width45 * 3,
+                                                                  height: Dimensions.width45,
+                                                                  // alignment: Alignment.topCenter,
+                                                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: AppColors.redColor),
+                                                                  child: Center(
+                                                                    child: BigText(
+                                                                      text: "Selanjutnya",
+                                                                      fontWeight: FontWeight.bold,
+                                                                      size: Dimensions.font20,
+                                                                      color: Colors.white,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      )) : Visibility(
+                                                    visible:
+                                                    false, // Set visibility to false when index is not 2
+                                                    child:
+                                                    Container(),
+                                                  ))
                                                 ],
                                               )
                                             ],

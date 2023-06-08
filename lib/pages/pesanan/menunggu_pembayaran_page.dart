@@ -181,7 +181,7 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
               ],
             ),
             GetBuilder<PesananController>(builder: (pesananController) {
-              return GridView.builder(
+              return RefreshIndicator(onRefresh: () => pesananController.getPesananMenungguBayaranList(), child: GridView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 1, mainAxisExtent: Dimensions.height45*5),
@@ -292,8 +292,8 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                                       GestureDetector(
                                         onTap: () {
                                           var produkIndex =
-                                          _list[index]
-                                              .productId ?? 0;
+                                              _list[index]
+                                                  .productId ?? 0;
                                           if (produkIndex >= 0) {
                                             Get.find<PopularProdukController>().detailProduk(produkIndex);
                                           }
@@ -447,7 +447,7 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                       ),
                     ));
                   }
-              );
+              ));
             }),
 
 

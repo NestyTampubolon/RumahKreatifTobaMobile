@@ -6,6 +6,7 @@ import '../../utils/colors.dart';
 import '../../utils/dimensions.dart';
 import '../../widgets/app_icon.dart';
 import '../../widgets/big_text.dart';
+import '../home/home_page.dart';
 import 'hometoko/hometoko_page.dart';
 
 class MenungguVerifikasiToko extends StatelessWidget {
@@ -29,7 +30,7 @@ class MenungguVerifikasiToko extends StatelessWidget {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Get.to(HomeTokoPage(initialIndex: 3));
+                            Get.to(HomePage(initialIndex: 3));
                             // Get.back();
                           },
                           child: AppIcon(

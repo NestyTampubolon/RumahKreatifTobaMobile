@@ -130,7 +130,8 @@ class _PembelianPageState extends State<PembelianPageState> {
       if(controller.cityUserId.value == "0"){
         AwesomeSnackbarButton(
             "Gagal", "Alamat pengiriman masih kosong. Silahkan pilih alamat pengiriman", ContentType.failure);
-      }else{
+      }
+      else{
         try {
           final response = await http.post(
             url,

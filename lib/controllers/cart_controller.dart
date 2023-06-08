@@ -50,6 +50,7 @@ class CartController extends GetxController {
     if (_items.containsKey(produk.productId!)) {
       _items.update(produk.productId!, (value) {
         totalQuantity = value.jumlahMasukKeranjang! + jumlahMasukKeranjang;
+        print("ini alamat ${value.cityId}");
         return CartModel(
             productId: value.productId,
             jumlahMasukKeranjang:
@@ -59,6 +60,7 @@ class CartController extends GetxController {
             productName: value.productName,
             price: value.price,
             heavy: value.heavy,
+            cityId : value.cityId,
             produk: produk);
       });
 
@@ -83,6 +85,7 @@ class CartController extends GetxController {
             productName: produk.productName,
             price: produk.price,
             heavy: produk.heavy,
+            cityId: produk.cityId,
             produk: produk);
       });
       //  }
