@@ -31,10 +31,9 @@ class UserController extends GetxController implements GetxService {
   Future<void> getUser() async {
     ResponseModel responseModel;
 
-    if (authRepo.userLoggedIn()) {
+    if (Get.find<AuthController>().userLoggedIn()) {
       Response response = await userRepo.getUserInfo();
 
-      print("HELLO ${response.body.toString()}");
       if (response.statusCode == 200) {
         List<dynamic> responseBody = response.body;
         _usersList.value = [];

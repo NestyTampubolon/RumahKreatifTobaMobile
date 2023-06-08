@@ -131,7 +131,7 @@ class AccountPage extends StatelessWidget {
                               height: Dimensions.height20,
                             ),
 
-                            //Keranjangku
+                            //Toko
                             GestureDetector(
                               onTap: () {
                                 if (Get.find<AuthController>()
@@ -239,10 +239,10 @@ class AccountPage extends StatelessWidget {
                                   Get.find<AuthController>()
                                       .clearSharedData();
                                   Get.offNamed(RouteHelper.getInitial());
+                                  Get.find<AuthController>().isLoading = false;
                                 } else {
                                   Get.to(
                                           () => HomePage(initialIndex: 0));
-                                  print("Anda sudah keluar");
                                 }
                               },
                               child: AccountWidget(

@@ -10,6 +10,7 @@ class CartModel {
   Null? emailVerifiedAt, isAdmin, isBanned, rememberToken;
   Produk? produk;
   bool isChecked;
+  int? cityId;
 
   CartModel({
     this.cartId,
@@ -38,7 +39,7 @@ class CartModel {
     this.isAdmin,
     this.isBanned,
     this.rememberToken,
-
+    this.cityId,
     this.isChecked = false,
     this.produk
   });
@@ -70,6 +71,7 @@ class CartModel {
     isAdmin: json['is_admin'],
     isBanned: json['is_banned'],
     rememberToken: json['remember_token'],
+    cityId : json['city_id'],
     produk : json['produk'] != null ? Produk.fromJson(json['produk']) : null,
   );
 
@@ -100,6 +102,7 @@ class CartModel {
     'is_admin': isAdmin,
     'is_banned': isBanned,
     'remember_token': rememberToken,
+    'city_id' : cityId
   };
 
   bool getChecked() {

@@ -135,10 +135,10 @@ class _DaftarPembelianPageState extends State<DaftarPembelianPage>
         Container(
           width: Dimensions.screenWidth,
           child: TabBar(
-            indicatorColor: AppColors.redColor,
+            indicatorColor: AppColors.notification_success,
             indicatorWeight: 3,
-            labelColor: AppColors.redColor,
-            unselectedLabelColor: AppColors.orangeColor,
+            labelColor: AppColors.notification_success,
+            unselectedLabelColor: AppColors.buttonBackgroundColor,
             controller: _tabController,
             tabs: [
               Tab(text: "Menunggu Konfirmasi"),

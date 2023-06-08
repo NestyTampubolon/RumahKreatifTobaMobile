@@ -272,7 +272,6 @@ class _HomeTokoState extends State<HomeToko> {
                 ],
               ),
             ),
-
           ],
         ),
       ),

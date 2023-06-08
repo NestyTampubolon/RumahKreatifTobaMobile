@@ -96,7 +96,6 @@ class _HomePageBodyState extends State<HomePageBody> {
               margin: EdgeInsets.only(
                   left: Dimensions.width20,
                   right: Dimensions.width20,
-                  top: Dimensions.height10,
                   bottom: Dimensions.height10),
               child: GridView.count(
                   crossAxisCount: 4,

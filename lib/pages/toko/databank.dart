@@ -3,27 +3,16 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:rumah_kreatif_toba/controllers/bank_controller.dart';
-import 'package:rumah_kreatif_toba/pages/account/account_page.dart';
-import 'package:rumah_kreatif_toba/pages/kategori/kategori_produk_detail.dart';
-import 'package:rumah_kreatif_toba/pages/toko/AlamatToko/tambah_alamat_toko.dart';
-import 'package:rumah_kreatif_toba/pages/toko/namatoko.dart';
 import 'package:rumah_kreatif_toba/utils/dimensions.dart';
-import 'package:rumah_kreatif_toba/widgets/app_dropdown_field.dart';
 import 'package:rumah_kreatif_toba/widgets/app_text_field.dart';
 import 'package:rumah_kreatif_toba/widgets/big_text.dart';
-import 'package:rumah_kreatif_toba/widgets/monserrat_text.dart';
 import 'package:rumah_kreatif_toba/widgets/small_text.dart';
-import '../../base/show_custom_message.dart';
 import '../../base/snackbar_message.dart';
-import '../../controllers/toko_controller.dart';
 import '../../controllers/user_controller.dart';
-import '../../routes/route_helper.dart';
 import '../../utils/colors.dart';
 import '../../widgets/app_dropdown_field_bank.dart';
 import '../../widgets/app_icon.dart';
-import '../home/home_page.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 class DataBankPage extends StatefulWidget {
   const DataBankPage({Key? key}) : super(key: key);
@@ -51,11 +40,11 @@ class _DataBankPageState extends State<DataBankPage> {
       String atasnama = PemilikBankController.text.trim();
 
       if (namabank.isEmpty) {
-        AwesomeSnackbarButton("Warning","Nama bank masih kosong",ContentType.warning);
+        AwesomeSnackbarButton("Warning","Nama bank masih kosong. Silahkan isi nama bank Anda!",ContentType.warning);
       } else if (norekening.isEmpty) {
-        AwesomeSnackbarButton("Warning","Nomor rekening masih kosong",ContentType.warning);
+        AwesomeSnackbarButton("Warning","Nomor rekening masih kosong. Silahkan isi nomor rekening Anda!",ContentType.warning);
       } else if (atasnama.isEmpty) {
-        AwesomeSnackbarButton("Warning","Atas nama masih kosong",ContentType.warning);
+        AwesomeSnackbarButton("Warning","Atas nama masih kosong. Silahkan isi nama rekening!",ContentType.warning);
       } else {
         var userController = Get.find<UserController>().usersList[0];
 

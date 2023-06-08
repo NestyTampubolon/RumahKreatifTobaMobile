@@ -56,130 +56,132 @@ class _MasukState extends State<Masuk> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
-          children: [
-            Container(
-              margin: EdgeInsets.only(
-                  top: Dimensions.height45, left: Dimensions.height10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Get.back();
-                    },
-                    child: AppIcon(
-                      icon: Icons.arrow_back,
-                      iconColor: AppColors.redColor,
-                      backgroundColor: Colors.white.withOpacity(0.0),
-                      iconSize: Dimensions.iconSize24,
-                    ),
-                  ),
-                  SizedBox(
-                    width: Dimensions.width20,
-                  ),
-                ],
-              ),
-            ),
-            GetBuilder<AuthController>(
-              builder: (authController) {
-                return !authController.isLoading
-                    ? Column(
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                margin: EdgeInsets.only(
+                    top: Dimensions.height45, left: Dimensions.height10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      height: Dimensions.screenHeight * 0.05,
-                    ),
-                    Container(
-                      width: Dimensions.width45 * 3,
-                      height: Dimensions.height45 * 3,
-                      margin: EdgeInsets.only(
-                          left: Dimensions.width10,
-                          right: Dimensions.width10),
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image:
-                              AssetImage("assets/images/logo_rkt.png"))),
-                    ),
-                    SizedBox(
-                      height: Dimensions.height20,
-                    ),
-                    AppTextField(
-                      textController: usernameController,
-                      hintText: 'Username',
-                      icon: Icons.person,
-                    ),
-                    SizedBox(
-                      height: Dimensions.height20,
-                    ),
-                    AppTextFieldPassword(
-                      textController: passwordController,
-                      hintText: 'Password',
-                      icon: Icons.lock,
-                    ),
-                    SizedBox(
-                      height: Dimensions.height20,
-                    ),
-                    SizedBox(
-                      height: Dimensions.height20,
-                    ),
                     GestureDetector(
                       onTap: () {
-                        _login(authController);
+                        Get.back();
                       },
-                      child: Container(
-                          width: Dimensions.width45 * 3,
-                          height: Dimensions.height45,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(
-                                  Dimensions.radius20 / 2),
-                              color: AppColors.redColor),
-                          child: Center(
-                            child: BigText(
-                              text: "Masuk",
-                              size: Dimensions.font20,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          )),
+                      child: AppIcon(
+                        icon: Icons.arrow_back,
+                        iconColor: AppColors.redColor,
+                        backgroundColor: Colors.white.withOpacity(0.0),
+                        iconSize: Dimensions.iconSize24,
+                      ),
                     ),
                     SizedBox(
-                      height: Dimensions.height10,
-                    ),
-                    RichText(
-                        text: TextSpan(
-                            text: "Tidak memiliki Akun? ",
-                            style: TextStyle(
-                                color: Colors.grey[500],
-                                fontSize: Dimensions.font16),
-                            children: [
-                              TextSpan(
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () => Get.to(() => Register(),
-                                        transition: Transition.fadeIn),
-                                  text: "Daftar",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                      fontSize: Dimensions.font16))
-                            ])),
-                    SizedBox(
-                      height: Dimensions.height15,
+                      width: Dimensions.width20,
                     ),
                   ],
-                )
-                    : Container(
-                  height:
-                  50, // set the height of the container to your desired height
-                  child: Center(
-                    child: CircularProgressIndicator(
-                      color: AppColors.redColor,
+                ),
+              ),
+              GetBuilder<AuthController>(
+                builder: (authController) {
+                  return !authController.isLoading
+                      ? Column(
+                    children: [
+                      SizedBox(
+                        height: Dimensions.screenHeight * 0.05,
+                      ),
+                      Container(
+                        width: Dimensions.width45 * 3,
+                        height: Dimensions.height45 * 3,
+                        margin: EdgeInsets.only(
+                            left: Dimensions.width10,
+                            right: Dimensions.width10),
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image:
+                                AssetImage("assets/images/logo_rkt.png"))),
+                      ),
+                      SizedBox(
+                        height: Dimensions.height20,
+                      ),
+                      AppTextField(
+                        textController: usernameController,
+                        hintText: 'Username',
+                        icon: Icons.person,
+                      ),
+                      SizedBox(
+                        height: Dimensions.height20,
+                      ),
+                      AppTextFieldPassword(
+                        textController: passwordController,
+                        hintText: 'Password',
+                        icon: Icons.lock,
+                      ),
+                      SizedBox(
+                        height: Dimensions.height20,
+                      ),
+                      SizedBox(
+                        height: Dimensions.height20,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          _login(authController);
+                        },
+                        child: Container(
+                            width: Dimensions.width45 * 3,
+                            height: Dimensions.height45,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(
+                                    Dimensions.radius20 / 2),
+                                color: AppColors.redColor),
+                            child: Center(
+                              child: BigText(
+                                text: "Masuk",
+                                size: Dimensions.font20,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )),
+                      ),
+                      SizedBox(
+                        height: Dimensions.height10,
+                      ),
+                      RichText(
+                          text: TextSpan(
+                              text: "Tidak memiliki Akun? ",
+                              style: TextStyle(
+                                  color: Colors.grey[500],
+                                  fontSize: Dimensions.font16),
+                              children: [
+                                TextSpan(
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () => Get.to(() => Register(),
+                                          transition: Transition.fadeIn),
+                                    text: "Daftar",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                        fontSize: Dimensions.font16))
+                              ])),
+                      SizedBox(
+                        height: Dimensions.height15,
+                      ),
+                    ],
+                  )
+                      : Container(
+                    height:
+                    50, // set the height of the container to your desired height
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        color: AppColors.redColor,
+                      ),
                     ),
-                  ),
-                );
-              },
-            )
-          ],
+                  );
+                },
+              )
+            ],
+          ),
         ));
   }
 }

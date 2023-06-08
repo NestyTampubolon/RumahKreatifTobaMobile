@@ -67,7 +67,7 @@ class Register extends StatelessWidget {
         AwesomeSnackbarButton("Warning","Nomor Telepon masih kosong",ContentType.warning);
       } else if (gender == null) {
         AwesomeSnackbarButton("Warning","Jenis Kelamin masih kosong",ContentType.warning);
-      } else if (birthdayValue == null) {
+      } else if (birthday.isEmpty) {
         AwesomeSnackbarButton("Warning","Tanggal Lahir masih kosong",ContentType.warning);
       } else if (konfirmasiPassword != password) {
         AwesomeSnackbarButton("Warning","Password tidak sama dengan Konfirmasi Password",ContentType.warning);

@@ -109,26 +109,29 @@ class CartController extends GetxController {
   }
 
   Future<void> getKeranjangList() async {
-    var controller = Get.find<UserController>().usersList[0];
-    Response response = await cartRepo.getKeranjangList(controller.id!);
-    if (response.statusCode == 200) {
-      List<dynamic> responseBody = response.body["cart"];
-      _keranjangList = [].obs;
-      for (dynamic item in responseBody) {
-        CartModel cartModel = CartModel.fromJson(item);
-        _keranjangList.add(cartModel);
-      }
+    if (Get.find<AuthController>().userLoggedIn()) {
+      var controller = Get.find<UserController>().usersList[0];
+      Response response = await cartRepo.getKeranjangList(controller.id!);
+      if (response.statusCode == 200) {
+        List<dynamic> responseBody = response.body["cart"];
+        _keranjangList = [].obs;
+        for (dynamic item in responseBody) {
+          CartModel cartModel = CartModel.fromJson(item);
+          _keranjangList.add(cartModel);
+        }
 
-      List<dynamic> responseBodymerchant = response.body["cart_by_merchants"];
-      _merchantKeranjangList = [];
-      for (dynamic item in responseBodymerchant) {
-        CartModel cartModel = CartModel.fromJson(item);
-        _merchantKeranjangList.add(cartModel);
-      }
+        List<dynamic> responseBodymerchant = response.body["cart_by_merchants"];
+        _merchantKeranjangList = [];
+        for (dynamic item in responseBodymerchant) {
+          CartModel cartModel = CartModel.fromJson(item);
+          _merchantKeranjangList.add(cartModel);
+        }
 
-      _isLoading = true;
-      update();
-    } else {}
+        _isLoading = true;
+        update();
+      } else {}
+    }
+
   }
 
   Future<void> _tambahKeranjang(CartController cartController) async {

@@ -372,6 +372,9 @@ class TambahProdukPage extends StatelessWidget {
           ),
 
           //Berat
+          SizedBox(
+            height: Dimensions.height20,
+          ),
           Container(
             padding: EdgeInsets.only(
                 left: Dimensions.width20,
@@ -387,7 +390,14 @@ class TambahProdukPage extends StatelessWidget {
             hintText: 'Berat',
             textInputType: TextInputType.number,
           ),
+          SizedBox(
+            height: Dimensions.height10,
+          ),
           Container(
+              padding: EdgeInsets.only(
+                  left: Dimensions.width20,
+                  right: Dimensions.width20,
+                  bottom: Dimensions.height10),
             child: SmallText(text: "Berat dihitung dalam gram (gr)."),
           ),
           SizedBox(
@@ -425,7 +435,7 @@ class TambahProdukPage extends StatelessWidget {
                     margin: EdgeInsets.only(bottom: Dimensions.height10),
                     decoration: BoxDecoration(
                         borderRadius:
-                            BorderRadius.circular(Dimensions.radius30),
+                            BorderRadius.circular(Dimensions.radius20/2),
                         color: AppColors.redColor),
                     child: Center(
                       child: BigText(

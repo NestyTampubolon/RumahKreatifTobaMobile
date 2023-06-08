@@ -148,7 +148,7 @@ class DaftarAlamatTokoPage extends GetView<AlamatController> {
             // ),
             GetBuilder<AlamatController>(
               builder: (AlamatController) {
-                return ListView.builder(
+                return Obx(() =>  ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: AlamatController.daftarAlamatTokoList.length,
@@ -240,7 +240,7 @@ class DaftarAlamatTokoPage extends GetView<AlamatController> {
                       ),
                     );
                   },
-                );
+                ));
               },
             ),
           ],

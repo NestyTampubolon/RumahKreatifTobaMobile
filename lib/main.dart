@@ -42,8 +42,11 @@ class MyApp extends StatelessWidget {
       await Get.find<AlamatController>().getAlamatUser();
       await Get.find<PesananController>().getPesanan();
       await Get.find<PesananController>().getPesananMenungguBayaranList();
+      await Get.find<CartController>().getKeranjangList();
+      await Get.find<WishlistController>().getWishlistList();
+      await Get.find<BankController>().getBankList();
+      await  Get.find<AlamatController>().getAlamatToko();
     });
-    Get.find<AlamatController>().getAlamatToko();
 
     return GetBuilder<PopularProdukController>(
       builder: (_) {

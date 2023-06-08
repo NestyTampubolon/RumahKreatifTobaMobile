@@ -17,8 +17,11 @@ class AuthController extends GetxController implements GetxService {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
+  set isLoading(bool value) {
+    _isLoading = value;
+  }
+
   Future<ResponseModel> registrasi(Users users) async {
-    _isLoading = true;
     update();
     Response response = await authRepo.registrasi(users);
     late ResponseModel responseModel;

@@ -13,6 +13,7 @@ import 'package:rumah_kreatif_toba/pages/toko/AlamatToko/daftar_alamat_toko.dart
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import '../base/snackbar_message.dart';
 import '../models/response_model.dart';
+import 'auth_controller.dart';
 
 class AlamatController extends GetxController {
   RxString provAsalId = "0".obs;
@@ -21,15 +22,21 @@ class AlamatController extends GetxController {
   RxString city = "0".obs;
   RxString subAsalId = "0".obs;
   RxString sub= "0".obs;
+
   RxString cityTujuanId = "0".obs;
+  RxString cityUserId = "0".obs;
+
   RxString provTujuanId = "0".obs;
   RxString subTujuanId = "0".obs;
+
   RxInt berat = 0.obs;
   RxInt HargaPengiriman = 0.obs;
+  RxString estimasi = "".obs;
   RxString service = "".obs;
   var subAsal = 0.obs;
   RxString selected = "".obs;
   RxInt alamatID = 0.obs;
+
   var hiddenButton = true.obs;
   var kurir = "".obs;
   var namakurir = "".obs;
@@ -65,6 +72,11 @@ class AlamatController extends GetxController {
     update();
   }
 
+  void setEstimasiPengiriman(String? est) {
+    estimasi.value = est!;
+    update();
+  }
+
   void setServicePengiriman(String? serv) {
     service.value = serv!;
     update();
@@ -90,19 +102,24 @@ class AlamatController extends GetxController {
   }
 
   Future<void> getAlamat() async {
-    var controller = Get.find<UserController>().usersList[0];
-    Response response = await alamatRepo.getAlamat(controller.id!);;
-    if (response.statusCode == 200) {
-      List<dynamic> responseBody = response.body["alamat"];
-      _daftarAlamatList.value = [];
-      for (dynamic item in responseBody) {
-        Alamat alamat = Alamat.fromJson(item);
-        print(alamat.city_name);
-        _daftarAlamatList.add(alamat);
-      }
-      _isLoading = true;
-      update();
-    } else {}
+    if (Get.find<AuthController>().userLoggedIn()) {
+      var controller = Get
+          .find<UserController>()
+          .usersList[0];
+      Response response = await alamatRepo.getAlamat(controller.id!);
+      ;
+      if (response.statusCode == 200) {
+        List<dynamic> responseBody = response.body["alamat"];
+        _daftarAlamatList.value = [];
+        for (dynamic item in responseBody) {
+          Alamat alamat = Alamat.fromJson(item);
+          print(alamat.city_name);
+          _daftarAlamatList.add(alamat);
+        }
+        _isLoading = true;
+        update();
+      } else {}
+    }
   }
 
   Future<ResponseModel> tambahAlamat(
@@ -157,20 +174,21 @@ class AlamatController extends GetxController {
   }
 
   Future<void> getAlamatToko() async {
-    var controller = Get.find<TokoController>().profilTokoList[0];
-    Response response = await alamatRepo.getAlamatToko(controller.merchant_id!);
-    if (response.statusCode == 200) {
-      List<dynamic> responseBody = response.body["alamattoko"];
-      _daftarAlamatTokoList.value = [];
-      for (dynamic item in responseBody) {
-        AlamatToko alamat = AlamatToko.fromJson(item);
-        _daftarAlamatTokoList.add(alamat);
-      }
-      print("ALAMAT " + _daftarAlamatTokoList.length.toString());
+    if (Get.find<AuthController>().userLoggedIn()) {
+      var controller = Get.find<TokoController>().profilTokoList[0];
+      Response response = await alamatRepo.getAlamatToko(controller.merchant_id!);
+      if (response.statusCode == 200) {
+        List<dynamic> responseBody = response.body["alamattoko"];
+        _daftarAlamatTokoList.value = [];
+        for (dynamic item in responseBody) {
+          AlamatToko alamat = AlamatToko.fromJson(item);
+          _daftarAlamatTokoList.add(alamat);
+        }
+        _isLoading = true;
+        update();
+      } else {}
+    }
 
-      _isLoading = true;
-      update();
-    } else {}
   }
 
   Future<void> getAlamatMerchant(int? merchant_id) async {
@@ -181,7 +199,6 @@ class AlamatController extends GetxController {
       for (dynamic item in responseBody) {
         AlamatToko alamat = AlamatToko.fromJson(item);
         _daftarAlamatTokoList.add(alamat);
-        cityTujuanId.value = alamat.city_id.toString()!;
       }
 
       _isLoading = true;
@@ -241,17 +258,20 @@ class AlamatController extends GetxController {
   }
 
   Future<void> getAlamatUser() async {
-    var alamat = daftarAlamatList[0];
-    Response response = await alamatRepo.getAlamatUser(alamat.user_address_id);
-    if (response.statusCode == 200) {
-      List<dynamic> responseBody = response.body["alamat"];
-      _daftarAlamatUserList.value = [];
-      for (dynamic item in responseBody) {
-        Alamat alamat = Alamat.fromJson(item);
-        _daftarAlamatUserList.add(alamat);
-      }
-      _isLoading = true;
-      update();
-    } else {}
+    if (Get.find<AuthController>().userLoggedIn()) {
+      var alamat = daftarAlamatList[0];
+      Response response = await alamatRepo.getAlamatUser(alamat.user_address_id);
+      if (response.statusCode == 200) {
+        List<dynamic> responseBody = response.body["alamat"];
+        _daftarAlamatUserList.value = [];
+        for (dynamic item in responseBody) {
+          Alamat alamat = Alamat.fromJson(item);
+          _daftarAlamatUserList.add(alamat);
+        }
+        _isLoading = true;
+        update();
+      } else {}
+    }
+
   }
 }

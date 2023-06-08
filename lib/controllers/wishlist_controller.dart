@@ -9,6 +9,8 @@ import '../base/snackbar_message.dart';
 import '../models/response_model.dart';
 import '../utils/app_constants.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+
+import 'auth_controller.dart';
 class WishlistController extends GetxController{
   final WishlistRepo wishlistRepo;
   WishlistController({required this.wishlistRepo});
@@ -42,25 +44,26 @@ class WishlistController extends GetxController{
   }
 
   Future<void> getWishlistList() async{
-    var controller = Get.find<UserController>().usersList[0];
-    Response response = await wishlistRepo.getWishlistList(controller.id!);
-    if(response.statusCode == 200){
-      List<dynamic> responseBody = response.body;
-      _wishlistList.value = [].obs;
-      for (dynamic item in responseBody) {
-        WishlistModel wishlist = WishlistModel.fromJson(item);
-        _wishlistList.add(wishlist);
-      }
-      _isLoading = true;
-      update();
-    }else{
+    if (Get.find<AuthController>().userLoggedIn()) {
+      var controller = Get.find<UserController>().usersList[0];
+      Response response = await wishlistRepo.getWishlistList(controller.id!);
+      if(response.statusCode == 200){
+        List<dynamic> responseBody = response.body;
+        _wishlistList.value = [].obs;
+        for (dynamic item in responseBody) {
+          WishlistModel wishlist = WishlistModel.fromJson(item);
+          _wishlistList.add(wishlist);
+        }
+        _isLoading = true;
+        update();
+      }else{
 
+      }
     }
+
   }
 
   Future<ResponseModel> hapusWishlist(int wishlist_id) async {
-    _isLoading = true;
-    update();
     Response response = await wishlistRepo.hapusWishlist(wishlist_id);
     late ResponseModel responseModel;
     if(response.statusCode == 200){

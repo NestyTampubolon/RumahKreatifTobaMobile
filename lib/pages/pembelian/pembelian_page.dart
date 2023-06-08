@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:rumah_kreatif_toba/helper/dependencies.dart';
 import '../../base/show_custom_message.dart';
 import '../../base/snackbar_message.dart';
 import '../../controllers/alamat_controller.dart';
@@ -126,72 +125,66 @@ class _PembelianPageState extends State<PembelianPageState> {
     void ongkosKirim(address_id, destination_id, berat, kurir) async {
       controller.showButton();
       Uri url = Uri.parse("https://pro.rajaongkir.com/api/cost");
-      try {
-        print(controller.daftarAlamatList[0].city_id);
-        final response = await http.post(
-          url,
-          body: {
-            "origin": "${controller.cityTujuanId}",
-            "originType": "city",
-            "destination": "${controller.daftarAlamatList[0].city_id}",
-            "destinationType": "subdistrict",
-            "weight": "${controller.berat}",
-            "courier": "${controller.kurir}",
-          },
-          headers: {
-            "key": "41df939eff72c9b050a81d89b4be72ba",
-            "content-type": "application/x-www-form-urlencoded"
-          },
-        );
+      print("tujuan id ${controller.cityTujuanId}");
+      print("destinasi ${controller.cityUserId.value}");
+      if(controller.cityUserId.value == "0"){
+        AwesomeSnackbarButton(
+            "Gagal", "Alamat pengiriman masih kosong. Silahkan pilih alamat pengiriman", ContentType.failure);
+      }else{
+        try {
+          final response = await http.post(
+            url,
+            body: {
+              "origin": "${controller.cityTujuanId}",
+              "originType": "city",
+              "destination": "${controller.cityUserId.value}",
+              "destinationType": "subdistrict",
+              "weight": "${controller.berat}",
+              "courier": "${controller.kurir}",
+            },
+            headers: {
+              "key": "41df939eff72c9b050a81d89b4be72ba",
+              "content-type": "application/x-www-form-urlencoded"
+            },
+          );
 
-        var data = jsonDecode(response.body) as Map<String, dynamic>;
-        var results = data["rajaongkir"]["results"] as List<dynamic>;
-        var listAllCourier = Courier.fromJsonList(results);
-        var courier = listAllCourier[0];
-        Get.dialog(
-          Dialog(
-            child: Column(
-              children: [
-                BigText(text: courier.name!),
-                Container(
-                  width: Dimensions.width45 * 4,
-                  child: ListView(
-                    shrinkWrap: true,
-                    children: courier.costs!
-                        .map(
-                          (e) => GestureDetector(
-                            child: ListTile(
-                              title: Text("${e.service}"),
-                              subtitle: PriceText(
-                                text: CurrencyFormat.convertToIdr(
-                                    e.cost![0].value, 0),
-                                size: Dimensions.font16,
-                              ),
-                              trailing: Text(
-                                courier.code == "pos"
-                                    ? "${e.cost![0].etd}"
-                                    : "${e.cost![0].etd} HARI",
-                              ),
-                            ),
-                            onTap: () {
-                              controller.setHargaPengiriman(e.cost![0].value);
-                              controller.setServicePengiriman(e.service);
-                              Navigator.pop(context);
-                            },
-                          ),
-                        )
-                        .toList(),
+          var data = jsonDecode(response.body) as Map<String, dynamic>;
+          var results = data["rajaongkir"]["results"] as List<dynamic>;
+          var listAllCourier = Courier.fromJsonList(results);
+          var courier = listAllCourier[0];
+          Get.defaultDialog(
+            title: courier.name!,
+            content: Column(
+              children: courier.costs!
+                  .map((e) => GestureDetector(
+                child: ListTile(
+                  title: Text("${e.service}"),
+                  subtitle: PriceText(
+                    text:
+                    CurrencyFormat.convertToIdr(e.cost![0].value, 0),
+                    size: Dimensions.font16,
                   ),
+                  trailing: Text(courier.code == "pos"
+                      ? "${e.cost![0].etd}"
+                      : "${e.cost![0].etd} HARI"),
                 ),
-              ],
+                onTap: () {
+                  controller.setHargaPengiriman(e.cost![0].value);
+                  controller.setServicePengiriman(e.service);
+                  controller.setEstimasiPengiriman(e.cost![0].etd);
+                  Navigator.pop(context);
+                },
+              ))
+                  .toList(),
             ),
-          ),
-        );
-      } catch (err) {
-        Get.defaultDialog(
-          title: "Eror",
-        );
+          );
+        } catch (err) {
+          Get.defaultDialog(
+            title: "Eror",
+          );
+        }
       }
+
     }
 
     return Scaffold(
@@ -307,7 +300,7 @@ class _PembelianPageState extends State<PembelianPageState> {
                                                   Alamat alamat = controller
                                                       .daftarAlamatList[index];
                                                   return Container(
-                                                    height: 120,
+                                                    height: Dimensions.height45*2.5,
                                                     padding:
                                                         EdgeInsets.symmetric(
                                                       horizontal:
@@ -323,8 +316,6 @@ class _PembelianPageState extends State<PembelianPageState> {
                                                                 context);
                                                           },
                                                           child: Container(
-                                                            padding:
-                                                                EdgeInsets.zero,
                                                             decoration:
                                                                 BoxDecoration(
                                                               borderRadius:
@@ -385,7 +376,8 @@ class _PembelianPageState extends State<PembelianPageState> {
                                                                             .user_address_id),
                                                                     print(controller
                                                                         .alamatID
-                                                                        .value)
+                                                                        .value),
+                                                                            controller.cityUserId.value = alamat.city_id.toString()! ,
                                                                   },
                                                                   activeColor: Theme.of(
                                                                           context)
@@ -425,10 +417,13 @@ class _PembelianPageState extends State<PembelianPageState> {
                       height: Dimensions.height10,
                     ),
                     Divider(color: AppColors.buttonBackgroundColor),
-                    Obx(() => BigText(
-                          text: controller.selected.value.toString(),
-                          size: 15,
-                        )),
+                    Obx(() => Container(
+                      alignment: Alignment.centerLeft,
+                      child: BigText(
+                        text: controller.selected.value.toString(),
+                        size: 15,
+                      ),
+                    )),
                     Divider(color: AppColors.buttonBackgroundColor),
                     GetBuilder<CartController>(builder: (cartController) {
                       var _keranjangList = cartController.keranjangList;
@@ -520,6 +515,8 @@ class _PembelianPageState extends State<PembelianPageState> {
                                         var item = merchantItems[index];
                                         controller.berat.value =
                                             item.heavy ?? 0;
+                                        controller.cityTujuanId.value = item.cityId.toString() ;
+
                                         var gambarproduk =
                                             Get.find<PopularProdukController>()
                                                 .imageProdukList
@@ -991,10 +988,8 @@ class _PembelianPageState extends State<PembelianPageState> {
                                                                                   child: BigText(text: "Estimasi"),
                                                                                 ),
                                                                                 Expanded(
-                                                                                  child: PriceText(
-                                                                                    text: CurrencyFormat.convertToIdr(controller.HargaPengiriman.value, 0),
-                                                                                    color: AppColors.redColor,
-                                                                                    size: Dimensions.font16,
+                                                                                  child: BigText(
+                                                                                    text: controller.estimasi.value,
                                                                                   ),
                                                                                 )
                                                                               ],
@@ -1007,7 +1002,10 @@ class _PembelianPageState extends State<PembelianPageState> {
                                                                             mainAxisAlignment: MainAxisAlignment.end,
                                                                             children: [
                                                                               GestureDetector(
-                                                                                onTap: () {},
+                                                                                onTap: () {
+                                                                                  Navigator.pop(
+                                                                                      context);
+                                                                                },
                                                                                 child: Container(
                                                                                   width: Dimensions.width45 * 3,
                                                                                   height: Dimensions.width45,

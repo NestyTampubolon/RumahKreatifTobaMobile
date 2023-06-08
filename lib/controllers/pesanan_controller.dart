@@ -14,6 +14,7 @@ import 'package:get/get.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import '../pages/pesanan/pesanan_page.dart';
 import '../utils/app_constants.dart';
+import 'auth_controller.dart';
 
 class PesananController extends GetxController {
   final PesananRepo pesananRepo;
@@ -40,45 +41,46 @@ class PesananController extends GetxController {
     getPesanan();
   }
 
-  Future<ResponseModel> getPesanan() async {
-    var controller = Get.find<UserController>().usersList[0];
-    Response response = await pesananRepo.getPesananList(controller.id!);
-    late ResponseModel responseModel;
-    if (response.statusCode == 200) {
-      List<dynamic> responseBody = response.body;
-      _pesananList = [];
-      for (dynamic item in responseBody) {
-        PurchaseModel purchase = PurchaseModel.fromJson(item);
-        _pesananList.add(purchase);
+  Future<void> getPesanan() async {
+    if (Get.find<AuthController>().userLoggedIn()) {
+      var controller = Get.find<UserController>().usersList[0];
+      Response response = await pesananRepo.getPesananList(controller.id!);
+      late ResponseModel responseModel;
+      if (response.statusCode == 200) {
+        List<dynamic> responseBody = response.body;
+        _pesananList = [];
+        for (dynamic item in responseBody) {
+          PurchaseModel purchase = PurchaseModel.fromJson(item);
+          _pesananList.add(purchase);
+        }
+      } else {
       }
-      responseModel = ResponseModel(true, "successfully");
-    } else {
-      responseModel = ResponseModel(false, response.statusText!);
+      _isLoading = false;
+      update();
     }
-    _isLoading = false;
-    update();
-    return responseModel;
   }
 
-  Future<ResponseModel> getPesananMenungguBayaranList() async {
-    var controller = Get.find<UserController>().usersList[0];
-    Response response =
-        await pesananRepo.getPesananMenungguBayaranList(controller.id!);
-    late ResponseModel responseModel;
-    if (response.statusCode == 200) {
-      List<dynamic> responseBody = response.body;
-      _pesananMenungguPembayaranList = [].obs;
-      for (dynamic item in responseBody) {
-        PurchaseModel purchase = PurchaseModel.fromJson(item);
-        _pesananMenungguPembayaranList.add(purchase);
+  Future<void> getPesananMenungguBayaranList() async {
+    if (Get.find<AuthController>().userLoggedIn()) {
+      var controller = Get.find<UserController>().usersList[0];
+      Response response =
+      await pesananRepo.getPesananMenungguBayaranList(controller.id!);
+      late ResponseModel responseModel;
+      if (response.statusCode == 200) {
+        List<dynamic> responseBody = response.body;
+        _pesananMenungguPembayaranList = [].obs;
+        for (dynamic item in responseBody) {
+          PurchaseModel purchase = PurchaseModel.fromJson(item);
+          _pesananMenungguPembayaranList.add(purchase);
+        }
+        responseModel = ResponseModel(true, "successfully");
+      } else {
+        responseModel = ResponseModel(false, response.statusText!);
       }
-      responseModel = ResponseModel(true, "successfully");
-    } else {
-      responseModel = ResponseModel(false, response.statusText!);
+      _isLoading = false;
     }
-    _isLoading = false;
+
     update();
-    return responseModel;
   }
 
   Future<ResponseModel> getDetailPesananList(int purchaseId) async {
