@@ -26,7 +26,7 @@ class Profil extends StatelessWidget {
               Container(
                 margin: EdgeInsets.only(
                     top: Dimensions.height30,
-                    left: Dimensions.width20,
+                    left: Dimensions.width10,
                     right: Dimensions.width20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -43,11 +43,10 @@ class Profil extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                      width: Dimensions.width20,
+                      width: Dimensions.width10,
                     ),
                     BigText(
                       text: "Profil Toko",
-                      size: Dimensions.font20,
                       fontWeight: FontWeight.bold,
                     ),
                   ],

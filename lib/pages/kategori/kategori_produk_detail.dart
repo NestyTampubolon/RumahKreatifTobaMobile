@@ -29,17 +29,12 @@ class _KategoriProdukDetailState extends State<KategoriProdukDetail> {
   Filter? selectedValue;
 
   List<Filter?> filters = [
-    Filter(
-      id: 1,
-      name: "Harga Tertinggi"
-    ),
-    Filter(
-      id: 2,
-      name: "Harga Terendah"
-    )
+    Filter(id: 1, name: "Harga Tertinggi"),
+    Filter(id: 2, name: "Harga Terendah")
   ];
 
-  List<dynamic> _list = Get.find<PopularProdukController>().kategoriProdukList.toList();
+  List<dynamic> _list =
+      Get.find<PopularProdukController>().kategoriProdukList.toList();
 
   @override
   void initState() {
@@ -73,248 +68,213 @@ class _KategoriProdukDetailState extends State<KategoriProdukDetail> {
   Widget build(BuildContext context) {
     Future<void> _getProdukList(int product_id) async {
       var controller = Get.find<PopularProdukController>();
-      controller.detailProduk(product_id).then((status) async {
-      });
+      controller.detailProduk(product_id).then((status) async {});
     }
+
     return Scaffold(
       body: SingleChildScrollView(
-        child: Scrollbar(showTrackOnHover: true, thickness: 10, radius: Radius.circular(20), child: Column(
-          children: [
-            Container(
-              child: Container(
-                margin: EdgeInsets.only(
-                    top: Dimensions.height30, bottom: Dimensions.height10),
-                padding: EdgeInsets.only(
-                    left: Dimensions.width20, right: Dimensions.width20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Center(
-                        child: Row(
-                          children: [
-                            GestureDetector(
-                              onTap: (){
-                                Get.back();
-                              },
-                              child: Container(
-                                width: Dimensions.height45,
-                                height: Dimensions.height45,
-                                child: Icon(
-                                  Icons.arrow_back,
-                                  color: AppColors.redColor,
-                                  size: Dimensions.iconSize24,
-                                ),
-                              ),
-                            ),
-                          ],
-                        )),
-                    Center(
-                        child: Row(
-                          children: [
-                            GestureDetector(
-                              onTap: (){
-                                Get.to(SearchPage(kategori: kategori,));
-                              },
-                              child: Container(
-                                width: Dimensions.height45,
-                                height: Dimensions.height45,
-                                child: Icon(
-                                  Icons.search,
-                                  color: AppColors.redColor,
-                                  size: Dimensions.iconSize24,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ))
-                  ],
-                ),
-              ),
-            ),
-            Container(
-              height: Dimensions.pageViewContainer,
-              margin: EdgeInsets.only(
-                  left: Dimensions.width10, right: Dimensions.width10),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  image: DecorationImage(
-                      fit: BoxFit.contain,
-                      image: AssetImage(
-                          "assets/images/kategori_detail/$kategori.png"))),
-            ),
-            SizedBox(
-              height: Dimensions.height10,
-            ),
-            Divider(color: AppColors.buttonBackgroundColor),
-            Row(
-              children: [
-                Container(
-                  height: 40,
-                  width: 40,
+        child: Scrollbar(
+          showTrackOnHover: true,
+          thickness: 10,
+          radius: Radius.circular(20),
+          child: Column(
+            children: [
+              Container(
+                child: Container(
                   margin: EdgeInsets.only(
-                      left: Dimensions.width20,
-                      right: Dimensions.width10 / 4,
-                      top: Dimensions.height10 / 2,
-                      bottom: Dimensions.height10 / 2),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    image: DecorationImage(
-                        fit: BoxFit.fill,
-                        image:
-                        AssetImage("assets/images/kategori/$kategori.png")),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(left: Dimensions.width20),
+                      top: Dimensions.height30, bottom: Dimensions.height10),
+                  padding: EdgeInsets.only(
+                      left: Dimensions.width20, right: Dimensions.width20),
                   child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      BigText(text: "$kategori", size: Dimensions.font20 * 1.5),
+                      Center(
+                          child: Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: Container(
+                              width: Dimensions.height45,
+                              height: Dimensions.height45,
+                              child: Icon(
+                                Icons.arrow_back,
+                                color: AppColors.redColor,
+                                size: Dimensions.iconSize24,
+                              ),
+                            ),
+                          ),
+                        ],
+                      )),
+                      Center(
+                          child: Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Get.to(SearchPage(
+                                kategori: kategori,
+                              ));
+                            },
+                            child: Container(
+                              width: Dimensions.height45,
+                              height: Dimensions.height45,
+                              child: Icon(
+                                Icons.search,
+                                color: AppColors.redColor,
+                                size: Dimensions.iconSize24,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ))
                     ],
                   ),
                 ),
-              ],
-            ),
-            Row(
-              children: [
-                Container(
-                  margin: EdgeInsets.only(left: Dimensions.height10, top: Dimensions.height10),
-                  width: Dimensions.screenWidth/2,
-                  height: Dimensions.height45,
-                  padding: EdgeInsets.symmetric(vertical: Dimensions.width10/2, horizontal: Dimensions.height10),
-                  decoration: BoxDecoration(
-                      color: Colors.grey.shade200,
-                      borderRadius: BorderRadius.circular(Dimensions.radius15/3)
+              ),
+              Container(
+                height: Dimensions.pageViewContainer,
+                margin: EdgeInsets.only(
+                    left: Dimensions.width10, right: Dimensions.width10),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    image: DecorationImage(
+                        fit: BoxFit.contain,
+                        image: AssetImage(
+                            "assets/images/kategori_detail/$kategori.png"))),
+              ),
+              SizedBox(
+                height: Dimensions.height10,
+              ),
+              Divider(color: AppColors.buttonBackgroundColor),
+              Row(
+                children: [
+                  Container(
+                    height: 40,
+                    width: 40,
+                    margin: EdgeInsets.only(
+                        left: Dimensions.width20,
+                        right: Dimensions.width10 / 4,
+                        top: Dimensions.height10 / 2,
+                        bottom: Dimensions.height10 / 2),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      image: DecorationImage(
+                          fit: BoxFit.fill,
+                          image: AssetImage(
+                              "assets/images/kategori/$kategori.png")),
+                    ),
                   ),
-                  child: DropdownButton<Filter?>(items: filters.map<DropdownMenuItem<Filter?>>((e) => DropdownMenuItem(child: Container(width: Dimensions.width45*3, child: Text((e?.name ?? '').toString()),), value: e,)).toList(),isExpanded:true, underline: SizedBox(),value: selectedValue, hint: Text('Urutkan berdasarkan'),
-                      onChanged: (value){
-                        setState(() {
-                          selectedValue = value;
-                        });
-                        _filter(selectedValue?.id);
-                        print(selectedValue?.id);
-                      }),
-                ),
-              ],
-            ),
-            GetBuilder<PopularProdukController>(builder: (produkKategori) {
-              return produkKategori.isLoading.value
-                  ? GridView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2, mainAxisExtent: Dimensions.height45*6),
-                  itemCount: _list.length,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    var gambarproduk = produkKategori
-                        .imageProdukList
-                        .where((produk) => produk.productId == _list[index].productId);
-                    return CardProduk(product_id : _list[index].productId,productImageName : gambarproduk.single.productImageName, productName : _list[index].productName, merchantAddress : _list[index].subdistrictName, price: _list[index].price, countPurchases: _list[index].countProductPurchases, );
-                  }
-              )
-                  : CircularProgressIndicator(
-                color: AppColors.redColor,
-              );
-            })
-
-
-            // GetBuilder<PopularProdukController>(builder: (produkKategori) {
-            //   return produkKategori.isLoaded
-            //       ? Container(
-            //           child: ListView.builder(
-            //               physics: NeverScrollableScrollPhysics(),
-            //               shrinkWrap: true,
-            //               itemCount: produkKategori.popularProdukList.length,
-            //               itemBuilder: (context, index) {
-            //                 if (produkKategori
-            //                         .popularProdukList[index].namaKategori
-            //                         .toString() ==
-            //                     "$kategori") {
-            //                   return Container(
-            //                     margin: EdgeInsets.only(
-            //                         left: Dimensions.width20,
-            //                         right: Dimensions.width20,
-            //                         bottom: Dimensions.height10),
-            //                     child: Row(
-            //                       children: [
-            //                         Container(
-            //                           width: Dimensions.width20 * 6,
-            //                           height: Dimensions.height30 * 4,
-            //                           decoration: BoxDecoration(
-            //                               borderRadius: BorderRadius.circular(
-            //                                   Dimensions.radius20),
-            //                               color: Colors.white,
-            //                               image: DecorationImage(
-            //                                   fit: BoxFit.cover,
-            //                                   image: AssetImage(
-            //                                       "assets/images/kategori_detail/$kategori.png"))),
-            //                         ),
-            //                         GestureDetector(
-            //                           onTap: () {
-            //                             Get.toNamed(RouteHelper.getProdukDetail(
-            //                                 produkKategori
-            //                                     .popularProdukList[index]
-            //                                     .productId));
-            //                           },
-            //                           child: Container(
-            //                             height: 100,
-            //                             width: Dimensions.width45*5,
-            //                             decoration: BoxDecoration(
-            //                                 borderRadius: BorderRadius.only(
-            //                                     topRight: Radius.circular(
-            //                                         Dimensions.radius20),
-            //                                     bottomRight: Radius.circular(
-            //                                         Dimensions.radius20)),
-            //                                 color: Colors.white),
-            //                             child: Padding(
-            //                               padding: EdgeInsets.only(
-            //                                   left: Dimensions.width10),
-            //                               child: Column(
-            //                                 mainAxisAlignment:
-            //                                     MainAxisAlignment.center,
-            //                                 crossAxisAlignment:
-            //                                     CrossAxisAlignment.start,
-            //                                 children: [
-            //                                   BigText(
-            //                                     text: produkKategori
-            //                                         .popularProdukList[index]
-            //                                         .productName
-            //                                         .toString(), size: Dimensions.font16,
-            //                                   ),
-            //                                   SmallText(
-            //                                       text: produkKategori
-            //                                           .popularProdukList[index]
-            //                                           .namaMerchant
-            //                                           .toString()),
-            //                                   PriceText(
-            //                                       text: CurrencyFormat
-            //                                           .convertToIdr(
-            //                                               produkKategori
-            //                                                   .popularProdukList[
-            //                                                       index]
-            //                                                   .price,
-            //                                               0), size: Dimensions.font16,),
-            //                                 ],
-            //                               ),
-            //                             ),
-            //                           ),
-            //                         ),
-            //                       ],
-            //                     ),
-            //                   );
-            //                 } else {
-            //                   return Container();
-            //                 }
-            //               }),
-            //         )
-            //       : CircularProgressIndicator(
-            //           color: AppColors.redColor,
-            //         );
-            // }),
-          ],
-        ),),
+                  Container(
+                    margin: EdgeInsets.only(left: Dimensions.width20),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        BigText(
+                            text: "$kategori", size: Dimensions.font20 * 1.5),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(
+                        left: Dimensions.height10, top: Dimensions.height10),
+                    width: Dimensions.screenWidth / 2,
+                    height: Dimensions.height45,
+                    padding: EdgeInsets.symmetric(
+                        vertical: Dimensions.width10 / 2,
+                        horizontal: Dimensions.height10),
+                    decoration: BoxDecoration(
+                        color: Colors.grey.shade200,
+                        borderRadius:
+                            BorderRadius.circular(Dimensions.radius15 / 3)),
+                    child: DropdownButton<Filter?>(
+                        items: filters
+                            .map<DropdownMenuItem<Filter?>>(
+                                (e) => DropdownMenuItem(
+                                      child: Container(
+                                        width: Dimensions.width45 * 3,
+                                        child: Text((e?.name ?? '').toString()),
+                                      ),
+                                      value: e,
+                                    ))
+                            .toList(),
+                        isExpanded: true,
+                        underline: SizedBox(),
+                        value: selectedValue,
+                        hint: Text('Urutkan berdasarkan'),
+                        onChanged: (value) {
+                          setState(() {
+                            selectedValue = value;
+                          });
+                          _filter(selectedValue?.id);
+                          print(selectedValue?.id);
+                        }),
+                  ),
+                ],
+              ),
+              GetBuilder<PopularProdukController>(builder: (produkKategori) {
+                return produkKategori.isLoading.value
+                    ? selectedValue?.id == null
+                        ? GridView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    mainAxisExtent: Dimensions.height45 * 6.5),
+                            itemCount: produkKategori.kategoriProdukList.length,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              var gambarproduk = produkKategori.imageProdukList
+                                  .where((produk) =>
+                                      produk.productId ==
+                                          produkKategori.kategoriProdukList[index].productId);
+                              return CardProduk(
+                                product_id: produkKategori.kategoriProdukList[index].productId,
+                                productImageName:
+                                    gambarproduk.single.productImageName,
+                                productName: produkKategori.kategoriProdukList[index].productName,
+                                merchantAddress: produkKategori.kategoriProdukList[index].subdistrictName,
+                                price: produkKategori.kategoriProdukList[index].price,
+                                countPurchases:
+                                produkKategori.kategoriProdukList[index].countProductPurchases,
+                              );
+                            })
+                        : GridView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    mainAxisExtent: Dimensions.height45 * 6.5),
+                            itemCount: _list.length,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              var gambarproduk = produkKategori.imageProdukList
+                                  .where((produk) =>
+                                      produk.productId ==
+                                      _list[index].productId);
+                              return CardProduk(
+                                product_id: _list[index].productId,
+                                productImageName:
+                                    gambarproduk.single.productImageName,
+                                productName: _list[index].productName,
+                                merchantAddress: _list[index].subdistrictName,
+                                price: _list[index].price,
+                                countPurchases:
+                                    _list[index].countProductPurchases,
+                              );
+                            })
+                    : CircularProgressIndicator(
+                        color: AppColors.redColor,
+                      );
+              })
+            ],
+          ),
+        ),
       ),
     );
   }
 }
-

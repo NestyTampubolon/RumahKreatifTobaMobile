@@ -20,7 +20,7 @@ class PesananController extends GetxController {
   final PesananRepo pesananRepo;
   PesananController({required this.pesananRepo});
 
-  List<dynamic> _pesananList = [];
+  RxList<dynamic> _pesananList = <dynamic>[].obs;
   List<dynamic> get pesananList => _pesananList;
 
   RxList<dynamic> _pesananMenungguPembayaranList = <dynamic>[].obs;
@@ -45,17 +45,16 @@ class PesananController extends GetxController {
     if (Get.find<AuthController>().userLoggedIn()) {
       var controller = Get.find<UserController>().usersList[0];
       Response response = await pesananRepo.getPesananList(controller.id!);
-      late ResponseModel responseModel;
       if (response.statusCode == 200) {
         List<dynamic> responseBody = response.body;
-        _pesananList = [];
+        _pesananList.value = [].obs;
         for (dynamic item in responseBody) {
           PurchaseModel purchase = PurchaseModel.fromJson(item);
           _pesananList.add(purchase);
         }
-      } else {
+        print("nama ${pesananList[0].name.toString()}");
+        _isLoading = false;
       }
-      _isLoading = false;
       update();
     }
   }
@@ -68,7 +67,7 @@ class PesananController extends GetxController {
       late ResponseModel responseModel;
       if (response.statusCode == 200) {
         List<dynamic> responseBody = response.body;
-        _pesananMenungguPembayaranList = [].obs;
+        _pesananMenungguPembayaranList.value = [].obs;
         for (dynamic item in responseBody) {
           PurchaseModel purchase = PurchaseModel.fromJson(item);
           _pesananMenungguPembayaranList.add(purchase);

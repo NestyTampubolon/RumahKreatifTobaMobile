@@ -346,21 +346,27 @@ class TokoController extends GetxController {
     var controller = Get.find<UserController>().usersList[0];
     Response response = await tokoRepo.profilToko(controller.id!);
     if (response.statusCode == 200) {
+      // dynamic responseBody = response.body;
+      // _profilTokoList = [].obs;
+      //
+      // Toko toko = Toko.fromJson(responseBody);
+      // _profilTokoList.add(toko);
+
       List<dynamic> responseBody= response.body;
       _profilTokoList = [].obs;
       for (dynamic item in responseBody) {
         Toko toko = Toko.fromJson(item);
         _profilTokoList.add(toko);
       }
+
     } else {
       // Handle the case when the response status code is not 200
     }
-
     _isLoading = true;
     update();
   }
 
-  Future<ResponseModel> homeToko() async {
+  Future<void> homeToko() async {
     var controller = Get.find<UserController>().usersList[0];
     Response response = await tokoRepo.homeToko(controller.id!);
     late ResponseModel responseModel;
@@ -379,9 +385,7 @@ class TokoController extends GetxController {
     } else {
       responseModel = ResponseModel(false, response.statusText!);
     }
-
     update();
-    return responseModel;
   }
 
 }

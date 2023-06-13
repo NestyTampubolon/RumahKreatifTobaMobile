@@ -1,6 +1,6 @@
 class Filter{
   int? id;
-  String? name;
+  String name;
 
-  Filter({this.id, this.name});
+  Filter({this.id, required this.name});
 }

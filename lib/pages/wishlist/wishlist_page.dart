@@ -83,7 +83,8 @@ class _WishlistPageState extends State<WishlistPage> {
     }
     return Scaffold(
       body: _userLoggedIn
-          ? Column(
+          ? RefreshIndicator(
+          child: Column(
         children: [
           Container(
             child: Container(
@@ -102,26 +103,26 @@ class _WishlistPageState extends State<WishlistPage> {
                   ),
                   Center(
                       child: Row(
-                    children: [
-                      GetBuilder<CartController>(builder: (controller) {
-                        return GestureDetector(
-                          onTap: () {
-                            if (Get.find<AuthController>().userLoggedIn()) {
-                              Get.toNamed(RouteHelper.getKeranjangPage());
-                            } else {
-                              Get.toNamed(RouteHelper.getMasukPage());
-                            }
-                          },
-                          child: Stack(
-                            children: [
-                              AppIcon(
-                                icon: Icons.shopping_cart_outlined,
-                                size: Dimensions.height45,
-                                iconColor: AppColors.redColor,
-                                backgroundColor: Colors.white.withOpacity(0.0),
-                              ),
-                              controller.keranjangList.length >= 1
-                                  ? Positioned(
+                        children: [
+                          GetBuilder<CartController>(builder: (controller) {
+                            return GestureDetector(
+                              onTap: () {
+                                if (Get.find<AuthController>().userLoggedIn()) {
+                                  Get.toNamed(RouteHelper.getKeranjangPage());
+                                } else {
+                                  Get.toNamed(RouteHelper.getMasukPage());
+                                }
+                              },
+                              child: Stack(
+                                children: [
+                                  AppIcon(
+                                    icon: Icons.shopping_cart_outlined,
+                                    size: Dimensions.height45,
+                                    iconColor: AppColors.redColor,
+                                    backgroundColor: Colors.white.withOpacity(0.0),
+                                  ),
+                                  controller.keranjangList.length >= 1
+                                      ? Positioned(
                                       right: 0,
                                       top: 0,
                                       child: AppIcon(
@@ -129,284 +130,283 @@ class _WishlistPageState extends State<WishlistPage> {
                                         size: 20,
                                         iconColor: AppColors.notification_success,
                                       ))
-                                  : Container(),
-                              controller.keranjangList.length >= 1
-                                  ? Positioned(
-                                      right: 6,
-                                      top: 3,
-                                      child: BigText(
-                                        text: controller.keranjangList.length
-                                            .toString(),
-                                        size: 10,
-                                        color: Colors.white,
-                                      ),
-                                    )
-                                  : Container(),
-                            ],
-                          ),
-                        );
-                      })
-                    ],
-                  ))
+                                      : Container(),
+                                  controller.keranjangList.length >= 1
+                                      ? Positioned(
+                                    right: 6,
+                                    top: 3,
+                                    child: BigText(
+                                      text: controller.keranjangList.length
+                                          .toString(),
+                                      size: 10,
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                      : Container(),
+                                ],
+                              ),
+                            );
+                          })
+                        ],
+                      ))
                 ],
               ),
             ),
           ),
-          Expanded(child: SingleChildScrollView(
+          Expanded(child:
+          SingleChildScrollView(
             child: GetBuilder<WishlistController>(builder: (wishlistController) {
-              return Obx(() {
-                return wishlistController.isLoading
-                    ? GridView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2, mainAxisExtent: Dimensions.height45*7),
-                    itemCount: wishlistController.wishlistList.length,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      var gambarproduk = Get.find<PopularProdukController>().imageProdukList.where(
-                              (produk) =>
-                          produk.productId ==
-                              wishlistController
-                                  .wishlistList[index].productId);
-                      return GestureDetector(
-                        onTap: () {},
-                        child: Container(
-                          width: 150,
-                          height: Dimensions.height45*7,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(15),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.3),
-                                  spreadRadius: 1,
-                                  blurRadius: 5,
-                                  offset: Offset(0, 2),
-                                )
-                              ]),
-                          margin: EdgeInsets.only(
-                            left: Dimensions.width20,
-                            right: Dimensions.width20,
-                            bottom: Dimensions.height20,),
-                          child: GestureDetector(
-                            onTap: () {},
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                //image section
-                                Container(
-                                  height: Dimensions.height45*3,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(Dimensions.radius15),
-                                          topRight: Radius.circular(Dimensions.radius15)),
-                                      image: DecorationImage(
-                                          fit: BoxFit.fill,
-                                          image: NetworkImage(
-                                            '${AppConstants.BASE_URL_IMAGE}u_file/product_image/${gambarproduk.single.productImageName}',
-                                          ))
-                                  ),
-                                  // child: SmallText(text: gambarproduk.single.productImageName.toString(),),
+              return wishlistController.isLoading
+                  ? GridView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2, mainAxisExtent: Dimensions.height45*7),
+                  itemCount: wishlistController.wishlistList.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    var gambarproduk = Get.find<PopularProdukController>().imageProdukList.where(
+                            (produk) =>
+                        produk.productId ==
+                            wishlistController
+                                .wishlistList[index].productId);
+                    return GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        width: 150,
+                        height: Dimensions.height45*7,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(15),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.3),
+                                spreadRadius: 1,
+                                blurRadius: 5,
+                                offset: Offset(0, 2),
+                              )
+                            ]),
+                        margin: EdgeInsets.only(
+                          left: Dimensions.width20,
+                          right: Dimensions.width20,
+                          bottom: Dimensions.height20,),
+                        child: GestureDetector(
+                          onTap: () {},
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              //image section
+                              Container(
+                                height: Dimensions.height45*3,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(Dimensions.radius15),
+                                        topRight: Radius.circular(Dimensions.radius15)),
+                                    image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: NetworkImage(
+                                          '${AppConstants.BASE_URL_IMAGE}u_file/product_image/${gambarproduk.single.productImageName}',
+                                        ))
                                 ),
-                                Container(
-                                  padding: EdgeInsets.all(10.0),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
+                                // child: SmallText(text: gambarproduk.single.productImageName.toString(),),
+                              ),
+                              Container(
+                                padding: EdgeInsets.all(10.0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
 
-                                      TittleText(
-                                        text: wishlistController.wishlistList[index].productName,
-                                        size: Dimensions.font16,
-                                      ),
-                                      SmallText(
-                                        text: wishlistController.wishlistList[index].namaMerchant,
-                                      ),
-                                      PriceText(
-                                        text:CurrencyFormat.convertToIdr(
-                                            wishlistController.wishlistList[index].price,
-                                            0),
-                                        color: AppColors.redColor,
-                                        size: Dimensions.font16,
-                                      ),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Container(
-                                            padding: EdgeInsets.only(
-                                                top: Dimensions.height10/2,
-                                                bottom: Dimensions.height10/2,
-                                                left: Dimensions.width10/2,
-                                                right: Dimensions.width10/2),
-                                            child: GestureDetector(
-                                                onTap: ()
-                                                // {
-                                                //   showModalBottomSheet(
-                                                //       backgroundColor:
-                                                //       Colors.transparent,
-                                                //       context: context,
-                                                //       builder: (context) {
-                                                //         return SingleChildScrollView(
-                                                //           child: Container(
-                                                //             width: Dimensions
-                                                //                 .screenWidth,
-                                                //             decoration: BoxDecoration(
-                                                //                 color: Colors.white,
-                                                //                 borderRadius: BorderRadius.only(
-                                                //                     topLeft: Radius
-                                                //                         .circular(
-                                                //                         Dimensions
-                                                //                             .radius20),
-                                                //                     topRight: Radius
-                                                //                         .circular(
-                                                //                         Dimensions
-                                                //                             .radius20))),
-                                                //             padding: EdgeInsets.only(
-                                                //                 top: Dimensions
-                                                //                     .height10,
-                                                //                 left: Dimensions
-                                                //                     .width20,
-                                                //                 right: Dimensions
-                                                //                     .width20),
-                                                //             child: Column(
-                                                //               children: [
-                                                //                 GestureDetector(
-                                                //                   onTap: (){
-                                                //                     Navigator.pop(
-                                                //                         context);
-                                                //                   },
-                                                //                   child: Row(children: [
-                                                //                     AppIcon(
-                                                //                       icon: CupertinoIcons.xmark,
-                                                //                       size: Dimensions
-                                                //                           .iconSize16,
-                                                //                       iconColor:
-                                                //                       AppColors
-                                                //                           .redColor,
-                                                //                       backgroundColor:
-                                                //                       Colors.white
-                                                //                           .withOpacity(
-                                                //                           0.0),
-                                                //                     ),
-                                                //                     SizedBox(
-                                                //                       width: Dimensions
-                                                //                           .width20,
-                                                //                     ),
-                                                //                   ]),
-                                                //                 ),
-                                                //                 Divider(
-                                                //                     color: AppColors
-                                                //                         .buttonBackgroundColor),
-                                                //                 Container(
-                                                //                   height: Dimensions.height45*2,
-                                                //                   padding: EdgeInsets.only(
-                                                //                       left: Dimensions
-                                                //                           .width20,
-                                                //                       right: Dimensions
-                                                //                           .width20,
-                                                //                       top: Dimensions
-                                                //                           .height20),
-                                                //                   child: Column(
-                                                //                     children: [
-                                                //                       InkWell(
-                                                //                         onTap: () {
-                                                //                           _hapusWishlist(wishlistController.wishlistList[index].wishlistId);
-                                                //                           Navigator.pop(
-                                                //                               context);
-                                                //                         },
-                                                //                         child:
-                                                //                         Row(children: [
-                                                //                           AppIcon(
-                                                //                             icon: Icons
-                                                //                                 .delete,
-                                                //                             size: Dimensions
-                                                //                                 .iconSize24,
-                                                //                             iconColor:
-                                                //                             AppColors
-                                                //                                 .redColor,
-                                                //                             backgroundColor:
-                                                //                             Colors.white
-                                                //                                 .withOpacity(
-                                                //                                 0.0),
-                                                //                           ),
-                                                //                           SizedBox(
-                                                //                             width: Dimensions
-                                                //                                 .width20,
-                                                //                           ),
-                                                //                           BigText(
-                                                //                             text: "Hapus",
-                                                //                           )
-                                                //                         ]),
-                                                //                       ),
-                                                //                       SizedBox(
-                                                //                           height: Dimensions
-                                                //                               .height10),
-                                                //                     ],
-                                                //                   ),
-                                                //                 )
-                                                //               ],
-                                                //             ),
-                                                //           ),
-                                                //         );
-                                                //       });
-                                                // },
-                                                {
-                                                  _hapusWishlist(wishlistController.wishlistList[index].wishlistId);
-                                                },
-                                                child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment.start,
-                                                    children: [
-                                                      Icon(Icons.delete, color: AppColors.redColor, size: Dimensions.iconSize16,),
-                                                    ])),
-                                          ),
-                                          Container(
-                                            padding: EdgeInsets.only(
-                                                top: Dimensions.height10/2,
-                                                bottom: Dimensions.height10/2,
-                                                left: Dimensions.width10/2,
-                                                right: Dimensions.width10/2),
-                                            decoration: BoxDecoration(
-                                                border: Border.all(color: AppColors.redColor),
-                                                borderRadius: BorderRadius.circular(
-                                                    Dimensions.radius20 / 2),
-                                                color: Colors.white),
-                                            child: GestureDetector(
-                                                onTap: () {
-                                                  _tambahKeranjang(wishlistController.wishlistList[index].productId);
-                                                },
-                                                child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment.start,
-                                                    children: [
-                                                      Icon(Icons.add, color: AppColors.redColor, size: Dimensions.iconSize16,),
-                                                      BigText(
-                                                        text: "Keranjang",
-                                                        color: AppColors.redColor,
-                                                        size: Dimensions.height15,
-                                                      ),
-                                                    ])),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                )
-                                //text container
-                              ],
-                            ),
+                                    TittleText(
+                                      text: wishlistController.wishlistList[index].productName,
+                                      size: Dimensions.font16,
+                                    ),
+                                    PriceText(
+                                      text:CurrencyFormat.convertToIdr(
+                                          wishlistController.wishlistList[index].price,
+                                          0),
+                                      color: AppColors.redColor,
+                                      size: Dimensions.font16,
+                                    ),
+                                    SmallText(
+                                      text: wishlistController.wishlistList[index].namaMerchant,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Container(
+                                          padding: EdgeInsets.only(
+                                              top: Dimensions.height10/2,
+                                              bottom: Dimensions.height10/2,
+                                              left: Dimensions.width10/2,
+                                              right: Dimensions.width10/2),
+                                          child: GestureDetector(
+                                              onTap: ()
+                                              // {
+                                              //   showModalBottomSheet(
+                                              //       backgroundColor:
+                                              //       Colors.transparent,
+                                              //       context: context,
+                                              //       builder: (context) {
+                                              //         return SingleChildScrollView(
+                                              //           child: Container(
+                                              //             width: Dimensions
+                                              //                 .screenWidth,
+                                              //             decoration: BoxDecoration(
+                                              //                 color: Colors.white,
+                                              //                 borderRadius: BorderRadius.only(
+                                              //                     topLeft: Radius
+                                              //                         .circular(
+                                              //                         Dimensions
+                                              //                             .radius20),
+                                              //                     topRight: Radius
+                                              //                         .circular(
+                                              //                         Dimensions
+                                              //                             .radius20))),
+                                              //             padding: EdgeInsets.only(
+                                              //                 top: Dimensions
+                                              //                     .height10,
+                                              //                 left: Dimensions
+                                              //                     .width20,
+                                              //                 right: Dimensions
+                                              //                     .width20),
+                                              //             child: Column(
+                                              //               children: [
+                                              //                 GestureDetector(
+                                              //                   onTap: (){
+                                              //                     Navigator.pop(
+                                              //                         context);
+                                              //                   },
+                                              //                   child: Row(children: [
+                                              //                     AppIcon(
+                                              //                       icon: CupertinoIcons.xmark,
+                                              //                       size: Dimensions
+                                              //                           .iconSize16,
+                                              //                       iconColor:
+                                              //                       AppColors
+                                              //                           .redColor,
+                                              //                       backgroundColor:
+                                              //                       Colors.white
+                                              //                           .withOpacity(
+                                              //                           0.0),
+                                              //                     ),
+                                              //                     SizedBox(
+                                              //                       width: Dimensions
+                                              //                           .width20,
+                                              //                     ),
+                                              //                   ]),
+                                              //                 ),
+                                              //                 Divider(
+                                              //                     color: AppColors
+                                              //                         .buttonBackgroundColor),
+                                              //                 Container(
+                                              //                   height: Dimensions.height45*2,
+                                              //                   padding: EdgeInsets.only(
+                                              //                       left: Dimensions
+                                              //                           .width20,
+                                              //                       right: Dimensions
+                                              //                           .width20,
+                                              //                       top: Dimensions
+                                              //                           .height20),
+                                              //                   child: Column(
+                                              //                     children: [
+                                              //                       InkWell(
+                                              //                         onTap: () {
+                                              //                           _hapusWishlist(wishlistController.wishlistList[index].wishlistId);
+                                              //                           Navigator.pop(
+                                              //                               context);
+                                              //                         },
+                                              //                         child:
+                                              //                         Row(children: [
+                                              //                           AppIcon(
+                                              //                             icon: Icons
+                                              //                                 .delete,
+                                              //                             size: Dimensions
+                                              //                                 .iconSize24,
+                                              //                             iconColor:
+                                              //                             AppColors
+                                              //                                 .redColor,
+                                              //                             backgroundColor:
+                                              //                             Colors.white
+                                              //                                 .withOpacity(
+                                              //                                 0.0),
+                                              //                           ),
+                                              //                           SizedBox(
+                                              //                             width: Dimensions
+                                              //                                 .width20,
+                                              //                           ),
+                                              //                           BigText(
+                                              //                             text: "Hapus",
+                                              //                           )
+                                              //                         ]),
+                                              //                       ),
+                                              //                       SizedBox(
+                                              //                           height: Dimensions
+                                              //                               .height10),
+                                              //                     ],
+                                              //                   ),
+                                              //                 )
+                                              //               ],
+                                              //             ),
+                                              //           ),
+                                              //         );
+                                              //       });
+                                              // },
+                                              {
+                                                _hapusWishlist(wishlistController.wishlistList[index].wishlistId);
+                                              },
+                                              child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  children: [
+                                                    Icon(Icons.delete, color: AppColors.redColor, size: Dimensions.iconSize16,),
+                                                  ])),
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.only(
+                                              top: Dimensions.height10/2,
+                                              bottom: Dimensions.height10/2,
+                                              left: Dimensions.width10/2,
+                                              right: Dimensions.width10/2),
+                                          decoration: BoxDecoration(
+                                              border: Border.all(color: AppColors.redColor),
+                                              borderRadius: BorderRadius.circular(
+                                                  Dimensions.radius20 / 2),
+                                              color: Colors.white),
+                                          child: GestureDetector(
+                                              onTap: () {
+                                                _tambahKeranjang(wishlistController.wishlistList[index].productId);
+                                              },
+                                              child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  children: [
+                                                    Icon(Icons.add, color: AppColors.redColor, size: Dimensions.iconSize16,),
+                                                    BigText(
+                                                      text: "Keranjang",
+                                                      color: AppColors.redColor,
+                                                      size: Dimensions.height15,
+                                                    ),
+                                                  ])),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              )
+                              //text container
+                            ],
                           ),
                         ),
-                      );
-                    }
-                )
-                    : CircularProgressIndicator(
-                  color: AppColors.redColor,
-                );
-              });
+                      ),
+                    );
+                  }
+              )
+                  : CircularProgressIndicator(
+                color: AppColors.redColor,
+              );
             }),
           )),
         ],
-      ) : MainAccountPage(),
+      ), onRefresh: () => Get.find<WishlistController>().getWishlistList()) : MainAccountPage(),
     );
   }
 }

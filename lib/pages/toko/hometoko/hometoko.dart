@@ -105,7 +105,6 @@ class _HomeTokoState extends State<HomeToko> {
                       Container(
                           child: BigText(
                             text: "PENJUALAN",
-                            size: Dimensions.font20,
                             fontWeight: FontWeight.bold,
                           )
                       ),
@@ -129,7 +128,7 @@ class _HomeTokoState extends State<HomeToko> {
                       Container(
                         child: TittleText(
                           text: "Pesanan Sedang Berlangsung",
-                          size: Dimensions.font20 / 1.5,
+                          size: Dimensions.font16 / 1.5,
                         ),
                       ),
                       Obx(
@@ -139,7 +138,7 @@ class _HomeTokoState extends State<HomeToko> {
                                 .getJumlahPesanan[
                             'jumlah_pesanan_sedang_berlangsung']
                                 .toString() ?? 'N/A',
-                            size: Dimensions.font20 / 1.5,
+                            size: Dimensions.font16 / 1.5,
                           ),
                         ),
                       )
@@ -152,7 +151,7 @@ class _HomeTokoState extends State<HomeToko> {
                         child: TittleText(
                           text:
                           "Pesanan Berhasil [Belum Konfirmasi Pembayaran]",
-                          size: Dimensions.font20 / 1.5,
+                          size: Dimensions.font16 / 1.5,
                         ),
                       ),
                       Container(
@@ -162,7 +161,7 @@ class _HomeTokoState extends State<HomeToko> {
                                 .getJumlahPesanan[
                             'jumlah_pesanan_berhasil_belum_dibayar']
                                 .toString() ?? "N/A",
-                            size: Dimensions.font20 / 1.5,
+                            size: Dimensions.font16 / 1.5,
                           ),
                         ),
                       )
@@ -175,7 +174,7 @@ class _HomeTokoState extends State<HomeToko> {
                         child: TittleText(
                           text:
                           "Pesanan Berhasil [Telah Konfirmasi Pembayaran]",
-                          size: Dimensions.font20 / 1.5,
+                          size: Dimensions.font16 / 1.5,
                         ),
                       ),
                       Container(
@@ -185,7 +184,7 @@ class _HomeTokoState extends State<HomeToko> {
                                 .getJumlahPesanan[
                             'jumlah_pesanan_berhasil_telah_dibayar']
                                 .toString() ?? "N/A",
-                            size: Dimensions.font20 / 1.5,
+                            size: Dimensions.font16 / 1.5,
                           ),
                         ),
                       ),
@@ -222,7 +221,6 @@ class _HomeTokoState extends State<HomeToko> {
                       Container(
                           child: BigText(
                             text: "PRODUK",
-                            size: Dimensions.font20,
                             fontWeight: FontWeight.bold,
                           )
                       ),
@@ -249,7 +247,6 @@ class _HomeTokoState extends State<HomeToko> {
                       children: [
                         BigText(
                           text: "Daftar Produkmu",
-                          size: Dimensions.font16,
                         )
                       ],
                     ),
@@ -263,7 +260,7 @@ class _HomeTokoState extends State<HomeToko> {
                                   .getJumlahPesanan[
                               'jumlah_produk']
                                   .toString() ?? "N/A"} produk',
-                              size: Dimensions.font20 / 1.5,
+                              size: Dimensions.font16 / 1.5,
                             ),
                           ],
                         )

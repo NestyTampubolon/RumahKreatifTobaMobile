@@ -66,7 +66,7 @@ class CardProduk extends StatelessWidget {
                     topRight: Radius.circular(
                         Dimensions.radius15)),
                   image: DecorationImage(
-                      fit: BoxFit.fill,
+                      fit: BoxFit.cover,
                       image: NetworkImage(
                         '${AppConstants.BASE_URL_IMAGE}u_file/product_image/${productImageName}',
                       ))

@@ -49,7 +49,7 @@ class DaftarAlamatPage extends GetView<AlamatController> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Get.to(HomePage(initialIndex: 3));
+                          Get.to(HomePage(initialIndex: 4));
                         },
                         child: AppIcon(
                           icon: Icons.arrow_back,
@@ -58,9 +58,9 @@ class DaftarAlamatPage extends GetView<AlamatController> {
                           iconSize: Dimensions.iconSize24,
                         ),
                       ),
+                      SizedBox(width: Dimensions.width10,),
                       BigText(
                         text: "Daftar Alamat",
-                        size: Dimensions.font20,
                         fontWeight: FontWeight.bold,
                       ),
                     ],
@@ -105,7 +105,7 @@ class DaftarAlamatPage extends GetView<AlamatController> {
                           border: Border.all(
                               color: AppColors.buttonBackgroundColor),
                           borderRadius:
-                          BorderRadius.circular(Dimensions.radius20),
+                          BorderRadius.circular(Dimensions.radius20/4),
                           color: Colors.white),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,

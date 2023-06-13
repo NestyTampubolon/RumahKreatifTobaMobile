@@ -24,7 +24,8 @@ class ProfilTokoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(body: GetBuilder<TokoController>(
+    return Scaffold(body:
+    GetBuilder<TokoController>(
       builder: (tokoController) {
         return tokoController.isLoading
             ? Container(
@@ -36,8 +37,7 @@ class ProfilTokoPage extends StatelessWidget {
                   Container(
                     child: Container(
                       margin: EdgeInsets.only(
-                          top: Dimensions.height30,
-                          bottom: Dimensions.height10),
+                          top: Dimensions.height20,),
                       padding: EdgeInsets.only(
                           left: Dimensions.width20,
                           right: Dimensions.width20),

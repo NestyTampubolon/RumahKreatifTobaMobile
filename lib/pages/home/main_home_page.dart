@@ -47,7 +47,7 @@ class _MainHomePageState extends State<MainHomePage> {
           Container(
             child: Container(
               margin: EdgeInsets.only(
-                  top: Dimensions.height30*1.4),
+                  top: Dimensions.height30),
               padding: EdgeInsets.only(
                   left: Dimensions.width20, right: Dimensions.width20),
               child: Row(

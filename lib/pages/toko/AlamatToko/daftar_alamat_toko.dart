@@ -63,9 +63,9 @@ class DaftarAlamatTokoPage extends GetView<AlamatController> {
                           iconSize: Dimensions.iconSize24,
                         ),
                       ),
+                      SizedBox(width: Dimensions.width10,),
                       BigText(
                         text: "Alamat Toko",
-                        size: Dimensions.font20,
                         fontWeight: FontWeight.bold,
                       ),
                     ],

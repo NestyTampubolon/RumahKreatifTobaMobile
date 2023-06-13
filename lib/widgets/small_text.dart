@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SmallText extends StatelessWidget {
   Color? color;
@@ -19,12 +20,10 @@ class SmallText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: TextStyle(
-          fontFamily: 'Roboto',
+      style: GoogleFonts.poppins().copyWith(
           color: color,
           fontWeight: FontWeight.w400,
-          fontSize: size,
-          height: height),
+          fontSize: size)
     );
   }
 }

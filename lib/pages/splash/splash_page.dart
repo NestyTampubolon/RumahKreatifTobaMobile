@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:rumah_kreatif_toba/controllers/pesanan_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/user_controller.dart';
 import 'package:rumah_kreatif_toba/routes/route_helper.dart';
 
@@ -37,6 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
       await Get.find<WishlistController>().getWishlistList();
       await Get.find<BankController>().getBankList();
       await Get.find<AlamatController>().getAlamatToko();
+      await Get.find<PesananController>().getPesanan();
     }
   }
 

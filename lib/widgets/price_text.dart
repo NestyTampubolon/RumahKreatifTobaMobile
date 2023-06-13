@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:rumah_kreatif_toba/utils/colors.dart';
 
 import '../utils/dimensions.dart';
@@ -21,11 +22,10 @@ class PriceText extends StatelessWidget {
     return Text(
       text,
       overflow: overFlow,
-      style: TextStyle(
-          fontFamily: 'Montserrat',
+      style: GoogleFonts.poppins().copyWith(
           color: AppColors.redColor,
           fontWeight: FontWeight.bold,
-          fontSize: size==0?Dimensions.font16:size),
+          fontSize: size == 0 ? Dimensions.font16 : size),
     );
   }
 }

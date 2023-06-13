@@ -5,6 +5,7 @@ import 'package:rumah_kreatif_toba/controllers/toko_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/user_controller.dart';
 import 'package:rumah_kreatif_toba/pages/account/account_widget.dart';
 import 'package:rumah_kreatif_toba/pages/account/profil/profil_page.dart';
+import 'package:rumah_kreatif_toba/pages/account/profil/ubah_password_page.dart';
 import 'package:rumah_kreatif_toba/pages/auth/masuk.dart';
 import 'package:rumah_kreatif_toba/pages/pesanan/pesanan_page.dart';
 import 'package:rumah_kreatif_toba/utils/colors.dart';
@@ -131,6 +132,31 @@ class AccountPage extends StatelessWidget {
                               height: Dimensions.height20,
                             ),
 
+                            //Ganti Password
+                            GestureDetector(
+                              onTap: () {
+                                if (Get.find<AuthController>()
+                                    .userLoggedIn()) {
+                                  Get.to(UbahPasswordPage());
+                                }
+                              },
+                              child: AccountWidget(
+                                  appIcon: AppIcon(
+                                    icon: Icons.lock,
+                                    backgroundColor:
+                                    Colors.white.withOpacity(0.0),
+                                    iconColor: AppColors.redColor,
+                                    iconSize: Dimensions.height10 * 5 / 2,
+                                    size: Dimensions.height10 * 5,
+                                  ),
+                                  bigText: BigText(
+                                    text: "Ubah Password",
+                                  )),
+                            ),
+                            SizedBox(
+                              height: Dimensions.height20,
+                            ),
+
                             //Toko
                             GestureDetector(
                               onTap: () {
@@ -183,27 +209,6 @@ class AccountPage extends StatelessWidget {
                               height: Dimensions.height20,
                             ),
 
-                            //Pesananku
-                            GestureDetector(
-                              onTap: () {
-                                Get.to(PesananPage());
-                              },
-                              child: AccountWidget(
-                                  appIcon: AppIcon(
-                                    icon: Icons.receipt_long_outlined,
-                                    backgroundColor:
-                                    Colors.white.withOpacity(0.0),
-                                    iconColor: AppColors.redColor,
-                                    iconSize: Dimensions.height10 * 5 / 2,
-                                    size: Dimensions.height10 * 5,
-                                  ),
-                                  bigText: BigText(
-                                    text: "Pesananku",
-                                  )),
-                            ),
-                            SizedBox(
-                              height: Dimensions.height20,
-                            ),
                             //Alamat
                             GestureDetector(
                               onTap: () {

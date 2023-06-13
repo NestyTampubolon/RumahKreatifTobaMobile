@@ -55,7 +55,7 @@ class TambahAlamatToko extends GetView<AlamatController> {
             Container(
               margin: EdgeInsets.only(
                   top: Dimensions.height30,
-                  left: Dimensions.width20,
+                  left: Dimensions.width10,
                   right: Dimensions.width20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -72,11 +72,10 @@ class TambahAlamatToko extends GetView<AlamatController> {
                     ),
                   ),
                   SizedBox(
-                    width: Dimensions.width20,
+                    width: Dimensions.width10,
                   ),
                   BigText(
                     text: "Alamat",
-                    size: Dimensions.font20,
                     fontWeight: FontWeight.bold,
                   ),
                 ],
@@ -232,8 +231,6 @@ class TambahAlamatToko extends GetView<AlamatController> {
                 child: Center(
                   child: BigText(
                     text: "Tambah",
-                    fontWeight: FontWeight.bold,
-                    size: Dimensions.font20,
                     color: Colors.white,
                   ),
                 ),

@@ -4,6 +4,7 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:rumah_kreatif_toba/pages/account/account_page.dart';
 import 'package:rumah_kreatif_toba/pages/home/main_home_page.dart';
 import 'package:rumah_kreatif_toba/pages/kategori/kategori_produk.dart';
+import 'package:rumah_kreatif_toba/pages/pesanan/pesanan_page.dart';
 import 'package:rumah_kreatif_toba/pages/wishlist/wishlist_page.dart';
 
 import '../../utils/colors.dart';
@@ -30,6 +31,7 @@ class _HomePageState extends State<HomePage> {
       MainHomePage(),
       KategoriProduk(),
       WishlistPage(),
+      PesananPage(),
       AccountPage(),
     ];
   }
@@ -51,6 +53,12 @@ class _HomePageState extends State<HomePage> {
       PersistentBottomNavBarItem(
         icon: Icon(CupertinoIcons.heart),
         title: ("Favorit"),
+        activeColorPrimary: AppColors.redColor,
+        inactiveColorPrimary: CupertinoColors.systemGrey,
+      ),
+      PersistentBottomNavBarItem(
+        icon: Icon(Icons.receipt_long_outlined),
+        title: ("Pesananku"),
         activeColorPrimary: AppColors.redColor,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),

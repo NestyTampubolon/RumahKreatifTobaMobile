@@ -44,12 +44,12 @@ class _TokoKTPState extends State<TokoKTP> {
                 margin: EdgeInsets.only(
                     top: Dimensions.height30),
                 padding: EdgeInsets.only(
-                    left: Dimensions.width20, right: Dimensions.width20),
+                    left: Dimensions.width10, right: Dimensions.width20),
                 child: Row(
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Get.to(HomePage(initialIndex: 3));
+                        Get.to(HomePage(initialIndex: 4));
                       },
                       child: AppIcon(
                         icon: Icons.arrow_back,
@@ -59,7 +59,7 @@ class _TokoKTPState extends State<TokoKTP> {
                       ),
                     ),
                     SizedBox(
-                      width: Dimensions.width20,
+                      width: Dimensions.width10,
                     ),
                     Container(
                       child: BigText(

@@ -60,6 +60,8 @@ class _ProdukPageState extends State<ProdukPage> {
       }
     }
 
+    bool _cekProduk = Get.find<PopularProdukController>().daftarProdukList.isEmpty;
+
     return RefreshIndicator(
         child: Scrollbar(
             showTrackOnHover: true, thickness: 7, radius: Radius.circular(20),
@@ -68,7 +70,7 @@ class _ProdukPageState extends State<ProdukPage> {
           Container(
             child: Container(
               margin: EdgeInsets.only(
-                  top: Dimensions.height30, bottom: Dimensions.height10),
+                  top: Dimensions.height10, bottom: Dimensions.height10),
               padding: EdgeInsets.only(
                   left: Dimensions.width20, right: Dimensions.width20),
               child: Row(
@@ -94,6 +96,7 @@ class _ProdukPageState extends State<ProdukPage> {
               ),
             ),
           ),
+          !_cekProduk ?
           GetBuilder<PopularProdukController>(builder: (controller) {
             return Obx(() => controller.isLoaded ?  ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
@@ -118,7 +121,7 @@ class _ProdukPageState extends State<ProdukPage> {
                         bottom: Dimensions.height10),
                     decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.circular(15),
+                        borderRadius: BorderRadius.circular(Dimensions.radius20/4),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(0.3),
@@ -157,7 +160,6 @@ class _ProdukPageState extends State<ProdukPage> {
                                     text: controller
                                         .daftarProdukList[index].productName
                                         .toString(),
-                                    size: Dimensions.font20,
                                   ),
                                 ),
                                 PriceText(
@@ -221,7 +223,33 @@ class _ProdukPageState extends State<ProdukPage> {
                 ),
               ),
             ));
-          }),
+          }) :
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: Dimensions.height45*3,),
+              Container(
+                alignment: Alignment.center,
+                child: Center(
+                  child: Column(
+                    children: [
+                      Container(
+                        height: Dimensions.height45 * 5,
+                        width: Dimensions.width45 * 5,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(Dimensions.radius15)),
+                            image: DecorationImage(
+                                fit: BoxFit.fill,
+                                image: AssetImage(
+                                    "assets/images/produk_kosong.png"))),
+                      ),
+                      BigText(text: "Produk Kosong! Ayo tambah produk sekarang")
+                    ],
+                  ),
+                )),],
+          ),
           SizedBox(
             height: Dimensions.height20,
           )

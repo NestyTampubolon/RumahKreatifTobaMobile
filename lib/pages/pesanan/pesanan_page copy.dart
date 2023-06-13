@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:rumah_kreatif_toba/pages/pembayaran/pembayaran_page.dart';
-import 'package:rumah_kreatif_toba/pages/pesanan/pesanan_page.dart';
+import 'package:rumah_kreatif_toba/pages/pesanan/detail_pesanan_page.dart';
 
 import '../../base/show_custom_message.dart';
 import '../../base/snackbar_message.dart';
@@ -22,48 +21,82 @@ import '../../widgets/big_text.dart';
 import '../../widgets/currency_format.dart';
 import '../../widgets/price_text.dart';
 import '../../widgets/small_text.dart';
+import '../../widgets/tittle_text.dart';
 import '../home/home_page.dart';
-import 'detail_pesanan_page.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
-
-class MenungguPembayaranPage extends StatefulWidget {
-  const MenungguPembayaranPage({Key? key}) : super(key: key);
+class PesananPageCopy extends StatefulWidget {
+  const PesananPageCopy({Key? key}) : super(key: key);
 
   @override
-  State<MenungguPembayaranPage> createState() => _MenungguPembayaranPageState();
+  State<PesananPageCopy> createState() => _PesananPageState();
 }
 
-class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
-
+class _PesananPageState extends State<PesananPageCopy> {
   @override
   void initState() {
     bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
     if (_userLoggedIn) {
-      Get.find<PesananController>().pesananMenungguPembayaranList.toList();
       Get.find<UserController>().getUser();
-      Get.find<PesananController>().getPesananMenungguBayaranList();
+      Get.find<PesananController>().getPesanan();
+      _list = Get.find<PesananController>().pesananList.toList();
     }
   }
 
+  Filter? selectedValue;
+
+  List<Filter?> filters = [
+    Filter(
+        id: 1,
+        name: "Semua"
+    ),
+    Filter(
+        id: 2,
+        name: "Sedang Dikemas"
+    ),
+    Filter(
+        id: 3,
+        name: "Dalam Perjalanan"
+    ),
+    Filter(
+        id: 4,
+        name: "Dalam Perjalanan"
+    ),
+    Filter(
+        id: 5,
+        name: "Belum Diambil"
+    ),
+    Filter(
+        id: 6,
+        name: "Belum Dikonfirmasi Pembeli"
+    ),
+    Filter(
+        id: 7,
+        name: "Berhasil"
+    )
+  ];
+
+  List<dynamic> _list = Get.find<PesananController>().pesananList.toList();
+
+
+  Future<void> _filter(String? keyword) async {
+    try {
+      List<dynamic> results = Get.find<PesananController>().pesananList.toList();
+      if(keyword != "Semua"){
+        results = Get.find<PesananController>().pesananList.where((purchase) => purchase.statusPembelian.toString() == "${keyword}").toList();
+      }
+
+      setState(() {
+        _list = results;
+      });
+    } catch (e) {
+      print('Error filtering products: $e');
+      // Handle the error as needed
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    Get.find<PesananController>().getPesananMenungguBayaranList();
-    Future<void> _getDetailPesananList(int purchaseId) async {
-      bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
-      if (_userLoggedIn) {
-        var controller = Get.find<PesananController>();
-        controller.getDetailPesananList(purchaseId).then((status) async {
-          if (status.isSuccess) {
-            Get.to(PembayaranPage());
-          } else {
-            AwesomeSnackbarButton("Gagal",status.message,ContentType.failure);
-          }
-        });
-      }
-    }
-
-    Future<void> _getDetailPesanan(int purchase_id) async {
+    Future<void> _getDetailPesananList(int purchase_id) async {
       bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
       if (_userLoggedIn) {
         var controller = Get.find<PesananController>();
@@ -77,22 +110,8 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
       }
     }
 
-    Future<void> _hapusPesanan(String kode_pembelian) async {
-      bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
-      if (_userLoggedIn) {
-        var controller = Get.find<PesananController>();
-        controller.hapusPesanan(kode_pembelian).then((status) async {
-          await controller.getPesananMenungguBayaranList();
-        });
-        controller.getPesananMenungguBayaranList();
-      }
-    }
-
-    bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
-
-
     return Scaffold(
-      body: RefreshIndicator(child: SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
@@ -104,7 +123,7 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Get.to(HomePage(initialIndex: 3));
+                      Get.to(HomePage(initialIndex: 4));
                     },
                     child: AppIcon(
                       icon: Icons.arrow_back,
@@ -118,25 +137,91 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                   ),
                   Container(
                     child: BigText(
-                      text: "Menunggu Pembayaran",
+                      text: "Pesananku",
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ],
               ),
             ),
+            GestureDetector(
+              onTap: () {
+                Get.toNamed(RouteHelper.getMenungguPembayaranPage());
+              },
+              child: Container(
+                width: Dimensions.screenWidth,
+                margin: EdgeInsets.only(
+                    bottom: Dimensions.height10 / 2,
+                    top: Dimensions.height10,
+                    left: Dimensions.width20,
+                    right: Dimensions.width20),
+                padding: EdgeInsets.all(Dimensions.height10),
+                decoration: BoxDecoration(
+                    border: Border.all(color: AppColors.redColor),
+                    borderRadius:
+                        BorderRadius.circular(Dimensions.radius20 / 2),
+                    color: Colors.white),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      height: 20,
+                      width: 40,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage(
+                                  "assets/images/indonesian-rupiah.png"))),
+                    ),
+                    SmallText(
+                      text: "Menunggu Pembayaran",
+                      size: Dimensions.font20,
+                    ),
+                    AppIcon(
+                      icon: Icons.chevron_right,
+                      size: Dimensions.iconSize24,
+                      iconColor: AppColors.redColor,
+                      backgroundColor: Colors.white.withOpacity(0.0),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Row(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(left: Dimensions.width20, top: Dimensions.height10),
+                  width: Dimensions.screenWidth/1.5,
+                  height: Dimensions.height45,
+                  padding: EdgeInsets.symmetric(vertical: Dimensions.width10/2, horizontal: Dimensions.height10),
+                  decoration: BoxDecoration(
+                      color: Colors.grey.shade200,
+                      borderRadius: BorderRadius.circular(Dimensions.radius15/3)
+                  ),
+                  child: DropdownButton<Filter?>(items: filters.map<DropdownMenuItem<Filter?>>((e) => DropdownMenuItem(child: Text((e?.name ?? '').toString()), value: e,)).toList(),isExpanded:true, underline: SizedBox(),value: selectedValue, hint: Text('Urutkan berdasarkan'),
+                      onChanged: (value){
+                        setState(() {
+                          selectedValue = value;
+                        });
+                        _filter(selectedValue?.name);
+                      }),
+                ),
+              ],
+            ),
             GetBuilder<PesananController>(builder: (pesananController) {
-              return RefreshIndicator(onRefresh: () => pesananController.getPesananMenungguBayaranList(), child: GridView.builder(
+              return GridView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 1, mainAxisExtent: Dimensions.height45*5.5),
-                  itemCount: pesananController.pesananMenungguPembayaranList.length,
+                      crossAxisCount: 1,
+                      mainAxisExtent: Dimensions.height45 * 5),
+                  itemCount: _list.length,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     var gambarproduk = Get.find<PopularProdukController>().imageProdukList.where(
-                          (produk) => produk.productId == pesananController.pesananMenungguPembayaranList[index].productId,
-                    );
-                    return Obx(() => Container(
+                            (produk) =>
+                        produk.productId ==
+                            _list[index].productId);
+                    return Container(
                       width: Dimensions.screenWidth,
                       height: Dimensions.height45 * 3.5,
                       margin: EdgeInsets.only(
@@ -149,7 +234,7 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                           border: Border.all(
                               color: AppColors.buttonBackgroundColor),
                           borderRadius:
-                          BorderRadius.circular(Dimensions.radius20/2),
+                              BorderRadius.circular(Dimensions.radius20/2),
                           color: Colors.white),
                       child: Column(
                         children: [
@@ -166,22 +251,22 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                                           iconSize: Dimensions.iconSize24,
                                           iconColor: AppColors.redColor,
                                           backgroundColor:
-                                          Colors.white.withOpacity(0.0),
+                                              Colors.white.withOpacity(0.0),
                                         ),
                                       ),
                                       Column(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.start,
+                                            MainAxisAlignment.start,
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                         children: [
                                           BigText(
                                             text: "Belanja",
                                             size: Dimensions.font16,
                                           ),
                                           SmallText(
-                                              text: pesananController.pesananMenungguPembayaranList[index].name
-                                                  .toString() ?? ""),
+                                              text: _list[index].name
+                                                  .toString()),
                                           Container(
                                               height: Dimensions.height20,
                                               padding: EdgeInsets.only(right: Dimensions.width10, left: Dimensions.width10),
@@ -191,8 +276,8 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                                               ),
                                               child: Center(
                                                 child: BigText(
-                                                    text: pesananController.pesananMenungguPembayaranList[index].statusPembelian
-                                                        .toString() ?? "",
+                                                    text: _list[index].statusPembelian
+                                                        .toString(),
                                                     size: Dimensions.font16/1.5,
                                                     color: AppColors.notification_success,
                                                     fontWeight: FontWeight.bold),
@@ -203,23 +288,10 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                                   ),
                                 ),
                                 Container(
-                                  padding:
-                                  EdgeInsets.all(Dimensions.height10 / 2),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(
-                                          Dimensions.radius20 / 2)),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      _hapusPesanan(pesananController.pesananMenungguPembayaranList[index].kodePembelian.toString() ?? "");
-                                    },
-                                    child: AppIcon(
-                                        iconSize: Dimensions
-                                            .iconSize24,
-                                        iconColor: AppColors
-                                            .redColor,
-                                        backgroundColor:
-                                        Colors.white,
-                                        icon: Icons.delete),
+                                  child: SmallText(
+                                    text: _list[index].createdAt
+                                        .toString() ?? 'N/A',
+                                    size: Dimensions.font20/1.5,
                                   ),
                                 )
                               ],
@@ -232,15 +304,18 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                               MainAxisAlignment.spaceBetween,
                               children: [
                                 Container(
+
                                   child: Row(
                                     children: [
                                       GestureDetector(
                                         onTap: () {
                                           var produkIndex =
-                                              pesananController.pesananMenungguPembayaranList[index]
-                                                  .productId ?? 0;
+                                          _list[index]
+                                              .productId!;
                                           if (produkIndex >= 0) {
-                                            Get.find<PopularProdukController>().detailProduk(produkIndex);
+                                            Get.toNamed(RouteHelper
+                                                .getProdukDetail(
+                                                produkIndex));
                                           }
                                         },
                                         child: Container(
@@ -255,15 +330,10 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                                                   .height10),
                                           decoration: BoxDecoration(
                                               image: DecorationImage(
-                                                fit: BoxFit.cover,
-                                                image: gambarproduk.single.productImageName != null && gambarproduk.single.productImageName.isNotEmpty
-                                                    ? NetworkImage(
-                                                  '${AppConstants.BASE_URL_IMAGE}u_file/product_image/${gambarproduk.single.productImageName}',
-                                                )
-                                                    : AssetImage(
-                                                  "assets/images/logo_rkt.png",
-                                                ) as ImageProvider<Object>,
-
+                                                  fit: BoxFit.cover,
+                                                  image: NetworkImage(
+                                                    '${AppConstants.BASE_URL_IMAGE}u_file/product_image/${gambarproduk.single.productImageName}',
+                                                  )
                                               ),
                                               borderRadius:
                                               BorderRadius.circular(
@@ -282,21 +352,21 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                                           Container(
                                             width : Dimensions.screenWidth/1.6,
                                             child: BigText(
-                                              text: pesananController.pesananMenungguPembayaranList[index]
-                                                  .productName ?? "",
+                                              text: _list[index]
+                                                  .productName,
                                               size: Dimensions.font16,
                                             ),
                                           ),
                                           Row(
                                             children: [
                                               SmallText(
-                                                  text: "${ pesananController.pesananMenungguPembayaranList[index]
-                                                      .jumlahPembelianProduk ?? 0} x "),
+                                                  text: "${ _list[index]
+                                                      .jumlahPembelianProduk} x "),
                                               PriceText(
                                                 text: CurrencyFormat
                                                     .convertToIdr(
-                                                    pesananController.pesananMenungguPembayaranList[index]
-                                                        .price ?? 0,
+                                                    _list[index]
+                                                        .price,
                                                     0),
                                                 size: Dimensions.font16,
                                               ),
@@ -311,7 +381,6 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                             ),
                           ),
                           SizedBox(height: Dimensions.height10,),
-
                           Container(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -321,15 +390,16 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                                     children: [
                                       Column(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.start,
+                                            MainAxisAlignment.start,
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                         children: [
                                           SmallText(text: "Total Belanja"),
                                           PriceText(
                                             text: CurrencyFormat.convertToIdr(
-                                                pesananController.pesananMenungguPembayaranList[index].hargaPembelian + pesananController.pesananMenungguPembayaranList[index].ongkir
-                                                , 0),
+                                                _list[index]
+                                                    .hargaPembelian,
+                                                0),
                                             size: Dimensions.font16,
                                           ),
                                         ],
@@ -337,33 +407,9 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                                     ],
                                   ),
                                 ),
-                                pesananController.pesananMenungguPembayaranList[index].statusPembelian == "Belum Bayar" ?
                                 GestureDetector(
-                                  onTap: (){
-                                    _getDetailPesananList(pesananController.pesananMenungguPembayaranList[index].purchaseId);
-                                  },
-                                  child:Container(
-                                    padding: EdgeInsets.only(
-                                        top: Dimensions.height10 / 2,
-                                        bottom: Dimensions.height10 / 2,
-                                        left: Dimensions.height10,
-                                        right: Dimensions.height10),
-                                    decoration: BoxDecoration(
-                                        border:
-                                        Border.all(color: AppColors.redColor),
-                                        borderRadius: BorderRadius.circular(
-                                            Dimensions.radius20 / 2),
-                                        color: Colors.white),
-                                    child: BigText(
-                                      text: "Bayar",
-                                      size: Dimensions.iconSize16,
-                                      color: AppColors.redColor,
-                                    ),
-                                  ) ,
-                                ) : GestureDetector(
                                   onTap: () {
-                                    _getDetailPesanan(pesananController
-                                        .pesananMenungguPembayaranList[index].purchaseId);
+                                    _getDetailPesananList(_list[index].purchaseId);
                                   },
                                   child: Container(
                                     padding: EdgeInsets.only(
@@ -384,17 +430,14 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
                                     ),
                                   ),
                                 )
-
                               ],
                             ),
                           ),
                         ],
                       ),
-                    ));
-                  }
-              ));
+                    );
+                  });
             }),
-
 
             // GetBuilder<PesananController>(builder: (pesananController) {
             //   return Expanded(child: ListView.builder(
@@ -521,7 +564,7 @@ class _MenungguPembayaranPageState extends State<MenungguPembayaranPage> {
             // })
           ],
         ),
-      ), onRefresh: () => Get.find<PesananController>().getPesananMenungguBayaranList())
+      ),
     );
   }
 }

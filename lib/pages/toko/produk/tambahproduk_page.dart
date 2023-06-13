@@ -78,7 +78,7 @@ class TambahProdukPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            margin: EdgeInsets.only(top: Dimensions.height45),
+            margin: EdgeInsets.only(top: Dimensions.height30, left: Dimensions.width10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -96,7 +96,7 @@ class TambahProdukPage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  width: Dimensions.width20,
+                  width: Dimensions.width10,
                 ),
                 Container(
                   child: BigText(
@@ -440,7 +440,6 @@ class TambahProdukPage extends StatelessWidget {
                     child: Center(
                       child: BigText(
                         text: "Tambah",
-                        size: Dimensions.font20,
                         color: Colors.white,
                       ),
                     ))),

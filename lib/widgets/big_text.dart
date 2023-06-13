@@ -1,5 +1,6 @@
 import 'package:flutter/painting.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:rumah_kreatif_toba/utils/dimensions.dart';
 
 class BigText extends StatelessWidget {
@@ -26,8 +27,7 @@ class BigText extends StatelessWidget {
       maxLines: 2,
       overflow: overFlow,
       textAlign: textAlign,
-      style: TextStyle(
-          fontFamily: 'Montserrat',
+      style: GoogleFonts.poppins().copyWith(
           color: color,
           fontWeight: fontWeight,
           fontSize: size == 0 ? Dimensions.font16 : size),

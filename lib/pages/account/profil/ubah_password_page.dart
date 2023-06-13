@@ -52,15 +52,7 @@ class _UbahPasswordPageState extends State<UbahPasswordPage> {
                   margin: EdgeInsets.only(
                       top: Dimensions.height30, bottom: Dimensions.height20),
                   padding: EdgeInsets.only(
-                      left: Dimensions.width20, right: Dimensions.width20),
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        color: AppColors.buttonBackgroundColor,  // Specify the color of the border
-                        width: 1.0,           // Specify the width of the border
-                      ),
-                    ),
-                  ),
+                      left: Dimensions.width10, right: Dimensions.width20),
                   child: Row(
                     children: [
                       GestureDetector(
@@ -75,7 +67,7 @@ class _UbahPasswordPageState extends State<UbahPasswordPage> {
                         ),
                       ),
                       SizedBox(
-                        width: Dimensions.width20,
+                        width: Dimensions.width10,
                       ),
                       Container(
                         child: BigText(
@@ -87,12 +79,7 @@ class _UbahPasswordPageState extends State<UbahPasswordPage> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: Dimensions.height20,
-              ),
-
-
-              // Password Sekarang
+              // Password Lama
               Container(
                 padding: EdgeInsets.only(
                     left: Dimensions.width20,

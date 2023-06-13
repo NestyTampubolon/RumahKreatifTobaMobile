@@ -66,30 +66,9 @@ class _HomePageBodyState extends State<HomePageBody> {
       controller.detailProduk(product_id).then((status) async {});
     }
 
-    return RefreshIndicator(child: Column(
+    return RefreshIndicator(
+        child: Column(
       children: [
-        // Container(
-        //   height: Dimensions.pageView,
-        //   margin: EdgeInsets.only(top: 10, bottom: 20),
-        //   child: PageView.builder(
-        //       controller: pageController,
-        //       itemCount: 5,
-        //       itemBuilder: (context, position) {
-        //         return _buildPageItem(position);
-        //       }),
-        // ),
-        // new DotsIndicator(
-        //   dotsCount: 5,
-        //   position: _currPageValue,
-        //   decorator: DotsDecorator(
-        //     activeColor: AppColors.redColor,
-        //     size: const Size.square(9.0),
-        //     activeSize: const Size(18.0, 9.0),
-        //     activeShape: RoundedRectangleBorder(
-        //         borderRadius: BorderRadius.circular(5.0)),
-        //   ),
-        // ),
-
         GetBuilder<PopularProdukController>(builder: (_produkController) {
           return Container(
               height: Dimensions.height45 * 5,
@@ -167,7 +146,6 @@ class _HomePageBodyState extends State<HomePageBody> {
                     )
                   ]));
         }),
-
         SizedBox(
           height: Dimensions.height10,
         ),
@@ -332,7 +310,6 @@ class _HomePageBodyState extends State<HomePageBody> {
             },
           ),
         ),
-
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

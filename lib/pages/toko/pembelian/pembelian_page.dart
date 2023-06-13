@@ -159,7 +159,7 @@ class _DaftarPembelianPageState extends State<DaftarPembelianPage>
                 return Scrollbar(showTrackOnHover: true, thickness: 7, radius: Radius.circular(20),child: RefreshIndicator(child: GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 1,
-                        mainAxisExtent: Dimensions.height45 * 5),
+                        mainAxisExtent: Dimensions.height45 * 5.5),
                     itemCount: _menungguKonfirmasiList.length,
                     shrinkWrap: true,
                     itemBuilder: (context, index) {

@@ -119,7 +119,7 @@ class _KeranjangPageState extends State<KeranjangPage> {
               children: [
                 Positioned(
                   top: Dimensions.height30,
-                  left: Dimensions.width20,
+                  left: Dimensions.width10,
                   right: Dimensions.width20,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -137,11 +137,10 @@ class _KeranjangPageState extends State<KeranjangPage> {
                         ),
                       ),
                       SizedBox(
-                        width: Dimensions.width20,
+                        width: Dimensions.width10,
                       ),
                       BigText(
                         text: "Keranjang",
-                        size: Dimensions.font20,
                         fontWeight: FontWeight.bold,
                       ),
                     ],
@@ -194,7 +193,7 @@ class _KeranjangPageState extends State<KeranjangPage> {
 
                                 return Container(
                                   margin: EdgeInsets.only(
-                                      bottom: Dimensions.height20),
+                                      bottom: Dimensions.height10),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -203,7 +202,7 @@ class _KeranjangPageState extends State<KeranjangPage> {
                                         children: [
                                           BigText(
                                             text: merchantName,
-                                            size: Dimensions.font20,
+                                            size: Dimensions.font16,
                                           ),
                                         ],
                                       ),

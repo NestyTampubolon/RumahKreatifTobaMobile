@@ -42,7 +42,7 @@ class _DaftarRekeningState extends State<DaftarRekening> {
         child:Column(
           children: [
             Container(
-              margin: EdgeInsets.only(top: Dimensions.height45, left: Dimensions.width20, right: Dimensions.width20),
+              margin: EdgeInsets.only(top: Dimensions.height30, left: Dimensions.width10, right: Dimensions.width20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -60,7 +60,7 @@ class _DaftarRekeningState extends State<DaftarRekening> {
                         ),
                       ),
                       SizedBox(
-                        width: Dimensions.width20,
+                        width: Dimensions.width10,
                       ),
                       Container(
                         child: BigText(

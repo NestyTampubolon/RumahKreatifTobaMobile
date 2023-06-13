@@ -16,6 +16,7 @@ class WishlistModel {
   String? kontakToko;
   String? fotoMerchant;
   int? isVerified;
+  String? subdistrictName;
 
   WishlistModel(
       {this.wishlistId,
@@ -34,7 +35,9 @@ class WishlistModel {
         this.deskripsiToko,
         this.kontakToko,
         this.fotoMerchant,
-        this.isVerified});
+        this.isVerified,
+        this.subdistrictName
+      });
 
   WishlistModel.fromJson(Map<String, dynamic> json) {
     wishlistId = json['wishlist_id'];
@@ -54,6 +57,7 @@ class WishlistModel {
     kontakToko = json['kontak_toko'];
     fotoMerchant = json['foto_merchant'];
     isVerified = json['is_verified'];
+    subdistrictName = json['subdistrict_name'];
   }
 
   Map<String, dynamic> toJson() {
@@ -75,6 +79,7 @@ class WishlistModel {
     data['kontak_toko'] = this.kontakToko;
     data['foto_merchant'] = this.fotoMerchant;
     data['is_verified'] = this.isVerified;
+    data['subdistrict_name'] = this.subdistrictName;
     return data;
   }
 }

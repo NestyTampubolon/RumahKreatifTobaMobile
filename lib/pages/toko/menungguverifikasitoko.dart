@@ -30,7 +30,7 @@ class MenungguVerifikasiToko extends StatelessWidget {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Get.to(HomePage(initialIndex: 3));
+                            Get.to(HomePage(initialIndex: 4));
                             // Get.back();
                           },
                           child: AppIcon(

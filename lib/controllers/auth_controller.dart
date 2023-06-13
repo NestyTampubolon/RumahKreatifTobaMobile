@@ -1,10 +1,16 @@
 import 'package:get/get.dart';
+import 'package:rumah_kreatif_toba/controllers/pesanan_controller.dart';
+import 'package:rumah_kreatif_toba/controllers/wishlist_controller.dart';
 import 'package:rumah_kreatif_toba/data/repository/auth_repo.dart';
 import 'package:rumah_kreatif_toba/models/response_model.dart';
 import '../base/show_custom_message.dart';
 import '../base/snackbar_message.dart';
 import '../models/users_models.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+
+import 'alamat_controller.dart';
+import 'bank_controller.dart';
+import 'cart_controller.dart';
 
 class AuthController extends GetxController implements GetxService {
   final AuthRepo authRepo;

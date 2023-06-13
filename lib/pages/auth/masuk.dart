@@ -138,9 +138,7 @@ class _MasukState extends State<Masuk> {
                             child: Center(
                               child: BigText(
                                 text: "Masuk",
-                                size: Dimensions.font20,
                                 color: Colors.white,
-                                fontWeight: FontWeight.bold,
                               ),
                             )),
                       ),

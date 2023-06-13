@@ -32,21 +32,12 @@ class ProfilPage extends StatelessWidget {
                     child: Container(
                       margin: EdgeInsets.only(
                           top: Dimensions.height30, bottom: Dimensions.height20),
-                      padding: EdgeInsets.only(
-                          left: Dimensions.width20, right: Dimensions.width20),
-                      decoration: BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(
-                            color: AppColors.buttonBackgroundColor,  // Specify the color of the border
-                            width: 1.0,           // Specify the width of the border
-                          ),
-                        ),
-                      ),
+                      padding: EdgeInsets.only(left: Dimensions.width10),
                       child: Row(
                         children: [
                           GestureDetector(
                             onTap: () {
-                              Get.to(HomePage(initialIndex: 3));
+                              Get.to(HomePage(initialIndex: 4));
                             },
                             child: AppIcon(
                               icon: Icons.arrow_back,
@@ -56,7 +47,7 @@ class ProfilPage extends StatelessWidget {
                             ),
                           ),
                           SizedBox(
-                            width: Dimensions.width20,
+                            width: Dimensions.width10,
                           ),
                           Container(
                             child: BigText(
@@ -100,42 +91,6 @@ class ProfilPage extends StatelessWidget {
                                   children: [
                                     BigText(text: "Email", color: AppColors.labelColor, size: Dimensions.font16),
                                     BigText(text: userController.usersList[0].email, size: Dimensions.font16 ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: Dimensions.height20,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    BigText(text: "Password", color: AppColors.labelColor, size: Dimensions.font16),
-                                    Container(
-                                      width: Dimensions.width20*3,
-                                      padding: EdgeInsets.only(
-                                          top: Dimensions.height10/2,
-                                          bottom: Dimensions.height10/2 ,
-                                          left: Dimensions.width10,
-                                          right: Dimensions.width10),
-                                      decoration: BoxDecoration(
-                                          border: Border.all(
-                                              color: AppColors.redColor),
-                                          borderRadius: BorderRadius.circular(
-                                              Dimensions.radius20 / 2),
-                                          color: Colors.white),
-                                      child: GestureDetector(
-                                          onTap: () {
-                                            Get.to(UbahPasswordPage());
-                                          },
-                                          child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                BigText(
-                                                  text: "Edit",
-                                                  color: Colors.redAccent,
-                                                  size: Dimensions.height15,
-                                                ),
-                                              ])),
-                                    ),
                                   ],
                                 ),
                                 SizedBox(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../utils/dimensions.dart';
 
@@ -21,11 +22,10 @@ class TittleText extends StatelessWidget {
       text,
       maxLines: 2,
       overflow: overFlow,
-      style: TextStyle(
-          fontFamily: 'Montserrat',
+      style: GoogleFonts.poppins().copyWith(
           color: color,
           fontWeight: FontWeight.w400,
-          fontSize: size==0?Dimensions.font16:size),
+          fontSize: size == 0 ? Dimensions.font16 : size),
     );
   }
 }
