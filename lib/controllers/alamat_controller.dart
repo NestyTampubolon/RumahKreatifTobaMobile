@@ -107,13 +107,11 @@ class AlamatController extends GetxController {
           .find<UserController>()
           .usersList[0];
       Response response = await alamatRepo.getAlamat(controller.id!);
-      ;
       if (response.statusCode == 200) {
         List<dynamic> responseBody = response.body["alamat"];
-        _daftarAlamatList.value = [];
+        _daftarAlamatList.value = [].obs;
         for (dynamic item in responseBody) {
           Alamat alamat = Alamat.fromJson(item);
-          print(alamat.city_name);
           _daftarAlamatList.add(alamat);
         }
         _isLoading = true;

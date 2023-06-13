@@ -84,7 +84,7 @@ class _KategoriProdukDetailState extends State<KategoriProdukDetail> {
                   margin: EdgeInsets.only(
                       top: Dimensions.height30, bottom: Dimensions.height10),
                   padding: EdgeInsets.only(
-                      left: Dimensions.width20, right: Dimensions.width20),
+                      left: Dimensions.width10, right: Dimensions.width20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

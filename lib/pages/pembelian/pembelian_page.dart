@@ -132,60 +132,64 @@ class _PembelianPageState extends State<PembelianPageState> {
             "Gagal", "Alamat pengiriman masih kosong. Silahkan pilih alamat pengiriman", ContentType.failure);
       }
       else{
-        try {
-          final response = await http.post(
-            url,
-            body: {
-              "origin": "${controller.cityTujuanId}",
-              "originType": "city",
-              "destination": "${controller.cityUserId.value}",
-              "destinationType": "subdistrict",
-              "weight": "${controller.berat}",
-              "courier": "${controller.kurir}",
-            },
-            headers: {
-              "key": "41df939eff72c9b050a81d89b4be72ba",
-              "content-type": "application/x-www-form-urlencoded"
-            },
-          );
+        if(controller.service.value != ""){
+          try {
+            final response = await http.post(
+              url,
+              body: {
+                "origin": "${controller.cityTujuanId}",
+                "originType": "city",
+                "destination": "${controller.cityUserId.value}",
+                "destinationType": "subdistrict",
+                "weight": "${controller.berat}",
+                "courier": "${controller.kurir}",
+              },
+              headers: {
+                "key": "41df939eff72c9b050a81d89b4be72ba",
+                "content-type": "application/x-www-form-urlencoded"
+              },
+            );
 
-          var data = jsonDecode(response.body) as Map<String, dynamic>;
-          var results = data["rajaongkir"]["results"] as List<dynamic>;
-          var listAllCourier = Courier.fromJsonList(results);
-          var courier = listAllCourier[0];
-          Get.defaultDialog(
-            title: courier.name!,
-            content: Column(
-              children: courier.costs!
-                  .map((e) => GestureDetector(
-                child: ListTile(
-                  title: Text("${e.service}"),
-                  subtitle: PriceText(
-                    text:
-                    CurrencyFormat.convertToIdr(e.cost![0].value, 0),
-                    size: Dimensions.font16,
+            var data = jsonDecode(response.body) as Map<String, dynamic>;
+            var results = data["rajaongkir"]["results"] as List<dynamic>;
+            var listAllCourier = Courier.fromJsonList(results);
+            var courier = listAllCourier[0];
+            Get.defaultDialog(
+              title: courier.name!,
+              content: Column(
+                children: courier.costs!
+                    .map((e) => GestureDetector(
+                  child: ListTile(
+                    title: Text("${e.service}"),
+                    subtitle: PriceText(
+                      text:
+                      CurrencyFormat.convertToIdr(e.cost![0].value, 0),
+                      size: Dimensions.font16,
+                    ),
+                    trailing: Text(courier.code == "pos"
+                        ? "${e.cost![0].etd}"
+                        : "${e.cost![0].etd} HARI"),
                   ),
-                  trailing: Text(courier.code == "pos"
-                      ? "${e.cost![0].etd}"
-                      : "${e.cost![0].etd} HARI"),
-                ),
-                onTap: () {
-                  controller.setHargaPengiriman(e.cost![0].value);
-                  controller.setServicePengiriman(e.service);
-                  controller.setEstimasiPengiriman(e.cost![0].etd);
-                  Navigator.pop(context);
-                },
-              ))
-                  .toList(),
-            ),
-          );
-        } catch (err) {
-          Get.defaultDialog(
-            title: "Eror",
-          );
+                  onTap: () {
+                    controller.setHargaPengiriman(e.cost![0].value);
+                    controller.setServicePengiriman(e.service);
+                    controller.setEstimasiPengiriman(e.cost![0].etd);
+                    Navigator.pop(context);
+                  },
+                ))
+                    .toList(),
+              ),
+            );
+          } catch (err) {
+            Get.defaultDialog(
+              title: "Eror",
+            );
+          }
+        }else{
+          AwesomeSnackbarButton(
+              "Gagal", "Pastikan jasa pengiriman sudah dipilih", ContentType.failure);
         }
       }
-
     }
 
     return Scaffold(
@@ -195,7 +199,7 @@ class _PembelianPageState extends State<PembelianPageState> {
               Container(
                 margin: EdgeInsets.only(
                     top: Dimensions.height30,
-                    left: Dimensions.width20,
+                    left: Dimensions.width10,
                     right: Dimensions.width20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -212,11 +216,10 @@ class _PembelianPageState extends State<PembelianPageState> {
                       ),
                     ),
                     SizedBox(
-                      width: Dimensions.width20,
+                      width: Dimensions.width10,
                     ),
                     BigText(
                       text: "Pengiriman",
-                      size: Dimensions.font20,
                       fontWeight: FontWeight.bold,
                     ),
                   ],
@@ -250,14 +253,9 @@ class _PembelianPageState extends State<PembelianPageState> {
                                           borderRadius: BorderRadius.circular(
                                               Dimensions.radius20 / 4),
                                           color: Theme.of(context).cardColor,
-                                          boxShadow: [
-                                            BoxShadow(
-                                                color: Colors.grey[200]!,
-                                                blurRadius: 5,
-                                                spreadRadius: 1)
-                                          ]),
+                                          ),
                                       padding: EdgeInsets.only(
-                                          top: Dimensions.height30,
+                                          top: Dimensions.height10,
                                           left: Dimensions.width20,
                                           right: Dimensions.width20),
                                       child: Column(
@@ -280,7 +278,6 @@ class _PembelianPageState extends State<PembelianPageState> {
                                             ),
                                             BigText(
                                               text: "Pilih Alamat",
-                                              size: Dimensions.font26,
                                             ),
                                           ]),
                                           Divider(
@@ -1015,8 +1012,6 @@ class _PembelianPageState extends State<PembelianPageState> {
                                                                                   child: Center(
                                                                                     child: BigText(
                                                                                       text: "Selanjutnya",
-                                                                                      fontWeight: FontWeight.bold,
-                                                                                      size: Dimensions.font20,
                                                                                       color: Colors.white,
                                                                                     ),
                                                                                   ),

@@ -61,7 +61,7 @@ class _MasukState extends State<Masuk> {
             children: [
               Container(
                 margin: EdgeInsets.only(
-                    top: Dimensions.height45, left: Dimensions.height10),
+                    top: Dimensions.height30, left: Dimensions.height10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [

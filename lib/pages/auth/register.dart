@@ -197,9 +197,7 @@ class Register extends StatelessWidget {
                             child: Center(
                               child: BigText(
                                 text: "Daftar",
-                                size: Dimensions.font20,
                                 color: Colors.white,
-                                fontWeight: FontWeight.bold,
                               ),
                             )),
                       ),

@@ -102,7 +102,7 @@ class _PembayaranPageState extends State<PembayaranPage> {
 
         var controller = Get.find<PesananController>();
         controller.postBuktiPembayaran(detailPesanan[0].purchaseId).then((status) async {
-          Get.to(PesananPage());
+          Get.to(MenungguPembayaranPage());
         });
     }
 

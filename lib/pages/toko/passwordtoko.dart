@@ -61,12 +61,12 @@ class _PasswordTokoPageState extends State<PasswordTokoPage> {
               margin: EdgeInsets.only(
                   top: Dimensions.height30),
               padding: EdgeInsets.only(
-                  left: Dimensions.width20, right: Dimensions.width20),
+                  left: Dimensions.width10, right: Dimensions.width20),
               child: Row(
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Get.to(HomePage(initialIndex: 3));
+                      Get.to(HomePage(initialIndex: 4));
                     },
                     child: AppIcon(
                       icon: Icons.arrow_back,
@@ -150,8 +150,6 @@ class _PasswordTokoPageState extends State<PasswordTokoPage> {
                   child: Center(
                     child: BigText(
                       text: "Masuk",
-                      fontWeight: FontWeight.bold,
-                      size: Dimensions.font20,
                       color: Colors.white,
                     ),
                   ),
