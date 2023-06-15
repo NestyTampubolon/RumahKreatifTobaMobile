@@ -17,6 +17,7 @@ import 'package:intl/intl.dart';
 
 import '../../widgets/app_text_field_password.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+
 class Register extends StatelessWidget {
   const Register({Key? key}) : super(key: key);
 
@@ -44,7 +45,6 @@ class Register extends StatelessWidget {
       String birthday = tanggalLahirController.text.trim();
       String gender = jenisKelaminController.text.trim();
 
-
       if (jenisKelaminController.text.trim() == "Laki-laki") {
         gender = "L";
       } else if (jenisKelaminController.text.trim() == "Perempuan") {
@@ -52,25 +52,37 @@ class Register extends StatelessWidget {
       }
 
       if (name.isEmpty) {
-        AwesomeSnackbarButton("Warning","Nama masih kosong",ContentType.warning);
+        AwesomeSnackbarButton(
+            "Warning", "Nama masih kosong", ContentType.warning);
       } else if (username.isEmpty) {
-        AwesomeSnackbarButton("Warning","Username masih kosong",ContentType.warning);
+        AwesomeSnackbarButton(
+            "Warning", "Username masih kosong", ContentType.warning);
       } else if (email.isEmpty) {
-        AwesomeSnackbarButton("Warning","Email masih kosong",ContentType.warning);
+        AwesomeSnackbarButton(
+            "Warning", "Email masih kosong", ContentType.warning);
       } else if (!GetUtils.isEmail(email)) {
-        AwesomeSnackbarButton("Warning","Email tidak sesuai",ContentType.warning);
+        AwesomeSnackbarButton(
+            "Warning", "Email tidak sesuai", ContentType.warning);
       } else if (password.isEmpty) {
-        AwesomeSnackbarButton("Warning","Password masih kosong",ContentType.warning);
+        AwesomeSnackbarButton(
+            "Warning", "Password masih kosong", ContentType.warning);
       } else if (konfirmasiPassword.isEmpty) {
-        AwesomeSnackbarButton("Warning","Konfirmasi Password masih kosong",ContentType.warning);
+        AwesomeSnackbarButton(
+            "Warning", "Konfirmasi Password masih kosong", ContentType.warning);
       } else if (no_hp.isEmpty) {
-        AwesomeSnackbarButton("Warning","Nomor Telepon masih kosong",ContentType.warning);
+        AwesomeSnackbarButton(
+            "Warning", "Nomor Telepon masih kosong", ContentType.warning);
       } else if (gender == null) {
-        AwesomeSnackbarButton("Warning","Jenis Kelamin masih kosong",ContentType.warning);
+        AwesomeSnackbarButton(
+            "Warning", "Jenis Kelamin masih kosong", ContentType.warning);
       } else if (birthday.isEmpty) {
-        AwesomeSnackbarButton("Warning","Tanggal Lahir masih kosong",ContentType.warning);
+        AwesomeSnackbarButton(
+            "Warning", "Tanggal Lahir masih kosong", ContentType.warning);
       } else if (konfirmasiPassword != password) {
-        AwesomeSnackbarButton("Warning","Password tidak sama dengan Konfirmasi Password",ContentType.warning);
+        AwesomeSnackbarButton(
+            "Warning",
+            "Password tidak sama dengan Konfirmasi Password",
+            ContentType.warning);
       } else {
         DateTime parsedBirthday = DateFormat('dd-MM-yyyy').parse(birthday);
         String formattedDate = DateFormat('yyyy-MM-dd').format(parsedBirthday);
@@ -86,10 +98,11 @@ class Register extends StatelessWidget {
             gender: gender);
         authController.registrasi(users).then((status) {
           if (status.isSuccess) {
-            AwesomeSnackbarButton("Berhasil","Akun sudah berhasil di daftar!",ContentType.success);
+            AwesomeSnackbarButton("Berhasil", "Akun sudah berhasil di daftar!",
+                ContentType.success);
             Get.offNamed(RouteHelper.getInitial());
           } else {
-            AwesomeSnackbarButton("Gagal",status.message,ContentType.failure);
+            AwesomeSnackbarButton("Gagal", status.message, ContentType.failure);
           }
         });
       }
@@ -107,8 +120,8 @@ class Register extends StatelessWidget {
                         height: Dimensions.screenHeight * 0.05,
                       ),
                       Container(
-                        width: Dimensions.width45*3,
-                        height: Dimensions.height45*3,
+                        width: Dimensions.width45 * 3,
+                        height: Dimensions.height45 * 3,
                         margin: EdgeInsets.only(
                             left: Dimensions.width10,
                             right: Dimensions.width10),
@@ -188,11 +201,11 @@ class Register extends StatelessWidget {
                           _registration(_authController);
                         },
                         child: Container(
-                            width: Dimensions.width45*3,
+                            width: Dimensions.width45 * 3,
                             height: Dimensions.height45,
                             decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.circular(Dimensions.radius20/2),
+                                borderRadius: BorderRadius.circular(
+                                    Dimensions.radius20 / 2),
                                 color: AppColors.redColor),
                             child: Center(
                               child: BigText(
@@ -211,15 +224,15 @@ class Register extends StatelessWidget {
                                   color: Colors.grey[500],
                                   fontSize: Dimensions.font16),
                               children: [
-                                TextSpan(
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () => Get.back(),
-                                    text: "Masuk",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
-                                        fontSize: Dimensions.font16))
-                              ])),
+                            TextSpan(
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () => Get.back(),
+                                text: "Masuk",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    fontSize: Dimensions.font16))
+                          ])),
                       SizedBox(
                         height: Dimensions.height15,
                       ),

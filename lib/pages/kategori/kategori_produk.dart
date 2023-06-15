@@ -146,9 +146,9 @@ class KategoriProduk extends StatelessWidget {
                   mainAxisSpacing: 10,
                   crossAxisSpacing: 10,
                   children: <Widget>[
-                    CardUnggulan(kategori: "Makanan dan Minuman"),
-                    CardUnggulan(kategori: "Pakaian Diminati"),
-                    CardUnggulan(kategori: "Produk Terbaru"),
+                    CardUnggulan(kategori: "Makanan dan Minuman", kategoris: "Makanan_dan_Minuman",),
+                    CardUnggulan(kategori: "Pakaian Diminati", kategoris: "Pakaian_Diminati",),
+                    CardUnggulan(kategori: "Produk Terbaru", kategoris: "Produk_Terbaru",),
                   ]))
         ],
       );

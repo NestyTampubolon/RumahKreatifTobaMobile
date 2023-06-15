@@ -49,6 +49,7 @@ dependencies:
   dropdown_search: ^2.0.0
   dio: ^5.1.1
   google_fonts: ^4.0.4
+  change_app_package_name: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -106,6 +107,10 @@ flutter:
   - assets/images/kategori_detail/Perlengkapan Rumah.png
   - assets/images/kategori_detail/Souvenir.png
   - assets/images/kategori_detail/Ulos.png
+
+  - assets/images/unggulan/Makanan_dan_Minuman.png
+  - assets/images/unggulan/Pakaian_Diminati.png
+  - assets/images/unggulan/Produk_Terbaru.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

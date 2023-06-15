@@ -13,11 +13,12 @@ import 'big_text.dart';
 
 class CardUnggulan extends StatelessWidget {
   final String kategori;
-
+  final String kategoris;
 
   CardUnggulan({
     Key? key,
     required this.kategori,
+    required this.kategoris,
   }) : super(key: key);
 
   @override
@@ -40,11 +41,11 @@ class CardUnggulan extends StatelessWidget {
         ),
         child: GestureDetector(
           onTap: () {
-              if(kategori == 'Makanan dan Minuman'){
+              if(kategori == 'Makanan dan Minuman' && kategoris == 'Makanan_dan_Minuman' ){
                 Get.to(ProdukUnggulanPage());
-              }else if(kategori == 'Pakaian Diminati'){
+              }else if(kategori == 'Pakaian Diminati' && kategoris == 'Pakaian_Diminati'){
                 Get.to(PakaianDiminatiPage());
-              }else if(kategori == 'Produk Terbaru'){
+              }else if(kategori == 'Produk Terbaru' && kategoris == 'Produk_Terbaru'){
                 Get.to(ProdukTerbaruPage());
               }
           },
@@ -64,7 +65,7 @@ class CardUnggulan extends StatelessWidget {
                   image: DecorationImage(
                       fit: BoxFit.fill,
                       image:
-                          AssetImage("assets/images/unggulan/${kategori}.png")),
+                          AssetImage("assets/images/unggulan/${kategoris}.png")),
                 ),
               ),
               Container(

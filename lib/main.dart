@@ -19,6 +19,7 @@ import 'controllers/user_controller.dart';
 import 'helper/dependencies.dart' as dep;
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:change_app_package_name/change_app_package_name.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,13 +46,13 @@ class MyApp extends StatelessWidget {
       await Get.find<CartController>().getKeranjangList();
       await Get.find<WishlistController>().getWishlistList();
       await Get.find<BankController>().getBankList();
-      await  Get.find<AlamatController>().getAlamatToko();
+      await Get.find<AlamatController>().getAlamatToko();
     });
 
     return GetBuilder<PopularProdukController>(
       builder: (_) {
         return GetBuilder<CartController>(builder: (_) {
-          return GetBuilder<WishlistController>(builder: (_){
+          return GetBuilder<WishlistController>(builder: (_) {
             return GetMaterialApp(
               debugShowCheckedModeBanner: false,
               title: 'Rumah Kreatif Toba',
