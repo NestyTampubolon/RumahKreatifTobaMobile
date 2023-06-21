@@ -149,7 +149,7 @@ class _PasswordTokoPageState extends State<PasswordTokoPage> {
                       color: AppColors.redColor),
                   child: Center(
                     child: BigText(
-                      text: "Masuk",
+                      text: "Mazsuk",
                       color: Colors.white,
                     ),
                   ),
@@ -157,7 +157,6 @@ class _PasswordTokoPageState extends State<PasswordTokoPage> {
               ),
             ],
           ),
-
         ],
       )
     );

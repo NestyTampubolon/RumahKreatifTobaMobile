@@ -29,11 +29,12 @@ class ApiClient extends GetConnect implements GetxService{
 
 
   Future<Response> getData(String uri,{Map<String, String>? headers} ) async {
-    print(_mainHeaders);
+    // print(_mainHeaders);
     try{
       Response response = await get(uri,
       headers: headers?? _mainHeaders
       );
+      print(response.body);
       return response;
     }catch(e){
       return Response(statusCode: 1, statusText: e.toString());
