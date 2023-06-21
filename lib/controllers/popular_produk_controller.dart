@@ -48,13 +48,17 @@ class PopularProdukController extends GetxController{
 
   Future<void> getPopularProdukList() async{
     Response response = await popularProdukRepo.getPopularProdukList();
+
+    // print("STATUS CODE ${response.statusCode}");
     if(response.statusCode == 200){
+
       List<dynamic> responseBodyproduk = response.body["products"];
       _popularProdukList = [].obs;
       for (dynamic item in responseBodyproduk) {
         Produk produk = Produk.fromJson(item);
         _popularProdukList.add(produk);
       }
+
 
 
       late ResponseModel responseModel;
@@ -87,11 +91,11 @@ class PopularProdukController extends GetxController{
           _imageProdukList.add(produk);
         }
         _isLoaded = true;
-        isLoading = true.obs;
         responseModel = ResponseModel(true, "successfully");
       } else {
         responseModel = ResponseModel(false, response.statusText!);
       }
+      isLoading.value = true;
 
       update();
     }else{

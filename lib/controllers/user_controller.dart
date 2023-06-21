@@ -33,7 +33,7 @@ class UserController extends GetxController implements GetxService {
 
     if (Get.find<AuthController>().userLoggedIn()) {
       Response response = await userRepo.getUserInfo();
-
+      // print(response.body);
       if (response.statusCode == 200) {
         List<dynamic> responseBody = response.body;
         _usersList.value = [];

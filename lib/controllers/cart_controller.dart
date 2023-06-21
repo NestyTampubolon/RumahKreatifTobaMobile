@@ -114,6 +114,7 @@ class CartController extends GetxController {
   Future<void> getKeranjangList() async {
     if (Get.find<AuthController>().userLoggedIn()) {
       var controller = Get.find<UserController>().usersList[0];
+
       Response response = await cartRepo.getKeranjangList(controller.id!);
       if (response.statusCode == 200) {
         List<dynamic> responseBody = response.body["cart"];

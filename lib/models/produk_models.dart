@@ -19,7 +19,7 @@ class Produk {
   int? stock_id;
   int? stok;
   String? productImageName;
-  Null? onVacation;
+  int? onVacation;
   int? merchantAddressId;
   int? provinceId;
   String? provinceName;
