@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:rumah_kreatif_toba/controllers/alamat_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/auth_controller.dart';
@@ -23,10 +22,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../controllers/categories_controller.dart';
 import '../controllers/popular_produk_controller.dart';
 import '../controllers/user_controller.dart';
+import '../data/repository/alamat_repo.dart';
 import '../data/repository/bank_repo.dart';
 import '../data/repository/pembelian_repo.dart';
 import '../data/repository/pengiriman_repo.dart';
-import '../data/repository/alamat_repo.dart';
 import '../data/repository/pesanan_repo.dart';
 import '../utils/app_constants.dart';
 
@@ -51,24 +50,25 @@ Future<void> init() async {
   Get.lazyPut(
       () => PesananRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
   Get.lazyPut(
-          () => WishlistRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
+      () => WishlistRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
   Get.lazyPut(
-          () => TokoRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
+      () => TokoRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
   Get.lazyPut(
-          () => BankRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
+      () => BankRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
+  Get.lazyPut(() => CategoriesRepo(apiClient: Get.find()));
+  Get.lazyPut(() =>
+      PembelianRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
   Get.lazyPut(
-          () => CategoriesRepo(apiClient: Get.find()));
-  Get.lazyPut(
-          () => PembelianRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
-  Get.lazyPut(
-          () => AlamatRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
+      () => AlamatRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
 
   //controllers
   Get.lazyPut(() => AuthController(authRepo: Get.find()));
   Get.lazyPut(() => UserController(userRepo: Get.find()));
-  Get.lazyPut(() => PopularProdukController(popularProdukRepo: Get.find()),fenix: true);
+  Get.lazyPut(() => PopularProdukController(popularProdukRepo: Get.find()),
+      fenix: true);
   Get.lazyPut(() => CartController(cartRepo: Get.find()), fenix: true);
-  Get.lazyPut(() => PengirimanController(pengirimanRepo: Get.find()) , fenix: true);
+  Get.lazyPut(() => PengirimanController(pengirimanRepo: Get.find()),
+      fenix: true);
   Get.put(PengirimanController(pengirimanRepo: Get.find()));
   Get.lazyPut(() => PesananController(pesananRepo: Get.find()));
   Get.put(PesananController(pesananRepo: Get.find()));

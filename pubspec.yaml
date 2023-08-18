@@ -20,7 +20,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 ##========= Versi untuk di iOS dan Android silahkan ubah disini format versi seharusnya : ============
 ##========= (Major.Minor.Patch+build_number) e.g: 2.0.1+60 major=2, minor=0, patch=1, build_number=60 ============
 
-version: 1.0.1+5
+version: 1.0.1+6
 
 environment:
   sdk: '>=2.19.0 <3.0.0'
@@ -34,7 +34,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  get: ^4.1.4
+  get: ^4.6.5
   http: ^0.13.3
   expandable_text: ^2.3.0
   dots_indicator: ^2.1.0
