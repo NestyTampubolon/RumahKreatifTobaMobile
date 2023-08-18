@@ -1,6 +1,8 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../../controllers/popular_produk_controller.dart';
 import '../../utils/colors.dart';
 import '../../utils/dimensions.dart';
@@ -20,7 +22,7 @@ class ProdukUnggulanPage extends StatelessWidget {
             Container(
               child: Container(
                 margin: EdgeInsets.only(
-                    top: Dimensions.height30),
+                    top: Platform.isIOS ? kToolbarHeight : Dimensions.height30),
                 padding: EdgeInsets.only(
                     left: Dimensions.width20, right: Dimensions.width20),
                 child: Row(
@@ -40,7 +42,7 @@ class ProdukUnggulanPage extends StatelessWidget {
                       width: Dimensions.width20,
                     ),
                     Container(
-                      width: Dimensions.screenWidth/1.7,
+                      width: Dimensions.screenWidth / 1.7,
                       child: BigText(
                         text: "Makanan dan Minuman Terfavorit Untukmu",
                         fontWeight: FontWeight.bold,
@@ -53,23 +55,38 @@ class ProdukUnggulanPage extends StatelessWidget {
             GetBuilder<PopularProdukController>(builder: (controller) {
               return controller.isLoading.value
                   ? GridView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2, mainAxisExtent: Dimensions.height45*6.5),
-                  itemCount: controller.produkMakananMinumanList.length,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    var gambarproduk = controller
-                        .imageProdukList
-                        .where((produk) => produk.productId == controller
-                        .produkMakananMinumanList[index].productId);
-                    print(controller.produkMakananMinumanList.length);
-                    return CardProduk(product_id : controller.produkMakananMinumanList[index].productId,productImageName : gambarproduk.single.productImageName, productName : controller.produkMakananMinumanList[index].productName, merchantAddress : controller.produkMakananMinumanList[index].subdistrictName, price: controller.produkMakananMinumanList[index].price, countPurchases: controller.produkMakananMinumanList[index].countProductPurchases, );
-                  }
-              )
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisExtent: Dimensions.height45 * 6.5),
+                      itemCount: controller.produkMakananMinumanList.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        var gambarproduk = controller.imageProdukList.where(
+                            (produk) =>
+                                produk.productId ==
+                                controller
+                                    .produkMakananMinumanList[index].productId);
+                        print(controller.produkMakananMinumanList.length);
+                        return CardProduk(
+                          product_id: controller
+                              .produkMakananMinumanList[index].productId,
+                          productImageName:
+                              gambarproduk.single.productImageName,
+                          productName: controller
+                              .produkMakananMinumanList[index].productName,
+                          merchantAddress: controller
+                              .produkMakananMinumanList[index].subdistrictName,
+                          price:
+                              controller.produkMakananMinumanList[index].price,
+                          countPurchases: controller
+                              .produkMakananMinumanList[index]
+                              .countProductPurchases,
+                        );
+                      })
                   : CircularProgressIndicator(
-                color: AppColors.redColor,
-              );
+                      color: AppColors.redColor,
+                    );
             })
           ],
         ),
@@ -77,4 +94,3 @@ class ProdukUnggulanPage extends StatelessWidget {
     );
   }
 }
-

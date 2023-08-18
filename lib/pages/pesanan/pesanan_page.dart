@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:rumah_kreatif_toba/pages/pesanan/detail_pesanan_page.dart';
 
-import '../../base/show_custom_message.dart';
 import '../../base/snackbar_message.dart';
 import '../../controllers/auth_controller.dart';
 import '../../controllers/pesanan_controller.dart';
@@ -12,20 +12,13 @@ import '../../routes/route_helper.dart';
 import '../../utils/app_constants.dart';
 import '../../utils/colors.dart';
 import '../../utils/dimensions.dart';
-
-import 'package:get/get.dart';
-
 import '../../widgets/Filter.dart';
 import '../../widgets/app_icon.dart';
 import '../../widgets/big_text.dart';
-import '../../widgets/card_kategori.dart';
 import '../../widgets/currency_format.dart';
 import '../../widgets/price_text.dart';
 import '../../widgets/small_text.dart';
-import '../../widgets/tittle_text.dart';
 import '../account/main_account_page.dart';
-import '../home/home_page.dart';
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 class PesananPage extends StatefulWidget {
   const PesananPage({Key? key}) : super(key: key);
@@ -203,8 +196,7 @@ class _PesananPageState extends State<PesananPage> {
                                       },
                                       child: Container(
                                         margin: EdgeInsets.only(
-                                            bottom:
-                                            Dimensions.height10 / 2,
+                                            bottom: Dimensions.height10 / 2,
                                             top: Dimensions.height10,
                                             right: Dimensions.width10),
                                         padding: EdgeInsets.only(
@@ -214,33 +206,29 @@ class _PesananPageState extends State<PesananPage> {
                                         decoration: BoxDecoration(
                                           border: Border.all(
                                               color: filter?.name ==
-                                                  selectedValue?.name
+                                                      selectedValue?.name
                                                   ? Colors.green
                                                   : AppColors
-                                                  .buttonBackgroundColor),
-                                          borderRadius:
-                                          BorderRadius.circular(
-                                              Dimensions.radius20 /
-                                                  2),
+                                                      .buttonBackgroundColor),
+                                          borderRadius: BorderRadius.circular(
+                                              Dimensions.radius20 / 2),
                                           color: filter?.name ==
-                                              selectedValue?.name
-                                              ? AppColors
-                                              .notification_success
-                                              .withOpacity(0.3)
+                                                  selectedValue?.name
+                                              ? AppColors.notification_success
+                                                  .withOpacity(0.3)
                                               : Colors.white,
                                         ),
                                         child: Row(
                                           mainAxisAlignment:
-                                          MainAxisAlignment
-                                              .spaceBetween,
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             SmallText(
                                               text: '${filter?.name}',
                                               size: Dimensions.font16,
                                               color: filter?.name ==
-                                                  selectedValue?.name
+                                                      selectedValue?.name
                                                   ? AppColors
-                                                  .notification_success
+                                                      .notification_success
                                                   : Colors.grey,
                                             ),
                                           ],
@@ -252,96 +240,90 @@ class _PesananPageState extends State<PesananPage> {
                               ),
                               GetBuilder<PesananController>(
                                   builder: (pesananController) {
-                                    return selectedValue?.name == "Semua"
-                                        ? Obx(() => GridView.builder(
+                                return selectedValue?.name == "Semua"
+                                    ? Obx(() => GridView.builder(
                                         physics:
-                                        const NeverScrollableScrollPhysics(),
+                                            const NeverScrollableScrollPhysics(),
                                         gridDelegate:
-                                        SliverGridDelegateWithFixedCrossAxisCount(
-                                            crossAxisCount: 1,
-                                            mainAxisExtent:
-                                            Dimensions.height45 *
-                                                5.5),
+                                            SliverGridDelegateWithFixedCrossAxisCount(
+                                                crossAxisCount: 1,
+                                                mainAxisExtent:
+                                                    Dimensions.height45 * 5.5),
                                         itemCount: pesananController
                                             .pesananList.length,
                                         shrinkWrap: true,
                                         itemBuilder: (context, index) {
                                           var gambarproduk = Get.find<
-                                              PopularProdukController>()
+                                                  PopularProdukController>()
                                               .imageProdukList
                                               .where((produk) =>
-                                          produk.productId ==
-                                              pesananController
-                                                  .pesananList[index]
-                                                  .productId);
+                                                  produk.productId ==
+                                                  pesananController
+                                                      .pesananList[index]
+                                                      .productId);
                                           return Container(
                                             width: Dimensions.screenWidth,
-                                            height:
-                                            Dimensions.height45 * 3.5,
+                                            height: Dimensions.height45 * 3.5,
                                             margin: EdgeInsets.only(
-                                                bottom:
-                                                Dimensions.height10,
-                                                top: Dimensions.height10 /
-                                                    2,
+                                                bottom: Dimensions.height10,
+                                                top: Dimensions.height10 / 2,
                                                 left: Dimensions.width20,
-                                                right:
-                                                Dimensions.width20),
+                                                right: Dimensions.width20),
                                             padding: EdgeInsets.all(
                                                 Dimensions.height10),
                                             decoration: BoxDecoration(
                                                 border: Border.all(
                                                     color: AppColors
                                                         .buttonBackgroundColor),
-                                                borderRadius: BorderRadius
-                                                    .circular(Dimensions
-                                                    .radius20 /
-                                                    2),
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        Dimensions.radius20 /
+                                                            2),
                                                 color: Colors.white),
                                             child: Column(
                                               children: [
                                                 Container(
                                                   child: Row(
                                                     mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
                                                     children: [
                                                       Container(
                                                         child: Row(
                                                           children: [
                                                             Container(
-                                                              child:
-                                                              AppIcon(
+                                                              child: AppIcon(
                                                                 icon: Icons
                                                                     .shopping_bag_outlined,
-                                                                iconSize:
-                                                                Dimensions
+                                                                iconSize: Dimensions
                                                                     .iconSize24,
                                                                 iconColor:
-                                                                AppColors
-                                                                    .redColor,
-                                                                backgroundColor: Colors
-                                                                    .white
-                                                                    .withOpacity(
-                                                                    0.0),
+                                                                    AppColors
+                                                                        .redColor,
+                                                                backgroundColor:
+                                                                    Colors.white
+                                                                        .withOpacity(
+                                                                            0.0),
                                                               ),
                                                             ),
                                                             Column(
                                                               mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
+                                                                  MainAxisAlignment
+                                                                      .start,
                                                               crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
+                                                                  CrossAxisAlignment
+                                                                      .start,
                                                               children: [
                                                                 BigText(
                                                                   text:
-                                                                  "Belanja",
+                                                                      "Belanja",
                                                                   size: Dimensions
                                                                       .font16,
                                                                 ),
                                                                 SmallText(
                                                                     text: pesananController
-                                                                        .pesananList[index]
+                                                                        .pesananList[
+                                                                            index]
                                                                         .name
                                                                         .toString()),
                                                                 Container(
@@ -353,19 +335,29 @@ class _PesananPageState extends State<PesananPage> {
                                                                         left: Dimensions
                                                                             .width10),
                                                                     decoration:
-                                                                    BoxDecoration(
+                                                                        BoxDecoration(
                                                                       borderRadius:
-                                                                      BorderRadius.circular(Dimensions.radius30),
-                                                                      color:
-                                                                      AppColors.notification_success.withOpacity(0.3),
+                                                                          BorderRadius.circular(
+                                                                              Dimensions.radius30),
+                                                                      color: AppColors
+                                                                          .notification_success
+                                                                          .withOpacity(
+                                                                              0.3),
                                                                     ),
                                                                     child:
-                                                                    Center(
+                                                                        Center(
                                                                       child: BigText(
-                                                                          text: pesananController.pesananList[index].statusPembelian.toString(),
-                                                                          size: Dimensions.font16 / 1.5,
-                                                                          color: AppColors.notification_success,
-                                                                          fontWeight: FontWeight.bold),
+                                                                          text: pesananController
+                                                                              .pesananList[
+                                                                                  index]
+                                                                              .statusPembelian
+                                                                              .toString(),
+                                                                          size: Dimensions.font16 /
+                                                                              1.5,
+                                                                          color: AppColors
+                                                                              .notification_success,
+                                                                          fontWeight:
+                                                                              FontWeight.bold),
                                                                     )),
                                                               ],
                                                             )
@@ -375,13 +367,13 @@ class _PesananPageState extends State<PesananPage> {
                                                       Container(
                                                         child: SmallText(
                                                           text: pesananController
-                                                              .pesananList[
-                                                          index]
-                                                              .createdAt
-                                                              .toString() ??
+                                                                  .pesananList[
+                                                                      index]
+                                                                  .createdAt
+                                                                  .toString() ??
                                                               'N/A',
                                                           size: Dimensions
-                                                              .font20 /
+                                                                  .font20 /
                                                               1.5,
                                                         ),
                                                       )
@@ -394,31 +386,32 @@ class _PesananPageState extends State<PesananPage> {
                                                 Container(
                                                   child: Row(
                                                     mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
                                                     children: [
                                                       Container(
                                                         child: Row(
                                                           children: [
                                                             GestureDetector(
                                                               onTap: () {
-                                                                var produkIndex = pesananController
-                                                                    .pesananList[
-                                                                index]
-                                                                    .productId!;
+                                                                var produkIndex =
+                                                                    pesananController
+                                                                        .pesananList[
+                                                                            index]
+                                                                        .productId!;
                                                                 if (produkIndex >=
                                                                     0) {
-                                                                  Get.toNamed(
-                                                                      RouteHelper.getProdukDetail(produkIndex));
+                                                                  Get.toNamed(RouteHelper
+                                                                      .getProdukDetail(
+                                                                          produkIndex));
                                                                 }
                                                               },
-                                                              child:
-                                                              Container(
-                                                                width:
-                                                                Dimensions.height20 *
+                                                              child: Container(
+                                                                width: Dimensions
+                                                                        .height20 *
                                                                     3,
-                                                                height:
-                                                                Dimensions.height20 *
+                                                                height: Dimensions
+                                                                        .height20 *
                                                                     3,
                                                                 margin: EdgeInsets.only(
                                                                     top: Dimensions
@@ -439,33 +432,39 @@ class _PesananPageState extends State<PesananPage> {
                                                             ),
                                                             Column(
                                                               mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
+                                                                  MainAxisAlignment
+                                                                      .start,
                                                               crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
+                                                                  CrossAxisAlignment
+                                                                      .start,
                                                               children: [
                                                                 Container(
-                                                                  width: Dimensions.screenWidth /
+                                                                  width: Dimensions
+                                                                          .screenWidth /
                                                                       1.6,
                                                                   child:
-                                                                  BigText(
+                                                                      BigText(
                                                                     text: pesananController
-                                                                        .pesananList[index]
+                                                                        .pesananList[
+                                                                            index]
                                                                         .productName,
-                                                                    size:
-                                                                    Dimensions.font16,
+                                                                    size: Dimensions
+                                                                        .font16,
                                                                   ),
                                                                 ),
                                                                 Row(
                                                                   children: [
                                                                     SmallText(
-                                                                        text: "${pesananController.pesananList[index].jumlahPembelianProduk} x "),
+                                                                        text:
+                                                                            "${pesananController.pesananList[index].jumlahPembelianProduk} x "),
                                                                     PriceText(
-                                                                      text:
-                                                                      CurrencyFormat.convertToIdr(pesananController.pesananList[index].price, 0),
-                                                                      size:
-                                                                      Dimensions.font16,
+                                                                      text: CurrencyFormat.convertToIdr(
+                                                                          pesananController
+                                                                              .pesananList[index]
+                                                                              .price,
+                                                                          0),
+                                                                      size: Dimensions
+                                                                          .font16,
                                                                     ),
                                                                   ],
                                                                 ),
@@ -478,32 +477,34 @@ class _PesananPageState extends State<PesananPage> {
                                                   ),
                                                 ),
                                                 SizedBox(
-                                                  height:
-                                                  Dimensions.height10,
+                                                  height: Dimensions.height10,
                                                 ),
                                                 Container(
                                                   child: Row(
                                                     mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
                                                     children: [
                                                       Container(
                                                         child: Row(
                                                           children: [
                                                             Column(
                                                               mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
+                                                                  MainAxisAlignment
+                                                                      .start,
                                                               crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
+                                                                  CrossAxisAlignment
+                                                                      .start,
                                                               children: [
                                                                 SmallText(
                                                                     text:
-                                                                    "Total Belanja"),
+                                                                        "Total Belanja"),
                                                                 PriceText(
                                                                   text: CurrencyFormat.convertToIdr(
-                                                                      pesananController.pesananList[index].hargaPembelian,
+                                                                      pesananController
+                                                                          .pesananList[
+                                                                              index]
+                                                                          .hargaPembelian,
                                                                       0),
                                                                   size: Dimensions
                                                                       .font16,
@@ -518,16 +519,16 @@ class _PesananPageState extends State<PesananPage> {
                                                           _getDetailPesananList(
                                                               pesananController
                                                                   .pesananList[
-                                                              index]
+                                                                      index]
                                                                   .purchaseId);
                                                         },
                                                         child: Container(
                                                           padding: EdgeInsets.only(
                                                               top: Dimensions
-                                                                  .height10 /
+                                                                      .height10 /
                                                                   2,
                                                               bottom: Dimensions
-                                                                  .height10 /
+                                                                      .height10 /
                                                                   2,
                                                               left: Dimensions
                                                                   .height10,
@@ -538,14 +539,15 @@ class _PesananPageState extends State<PesananPage> {
                                                                   color: AppColors
                                                                       .redColor),
                                                               borderRadius:
-                                                              BorderRadius.circular(
-                                                                  Dimensions.radius20 /
-                                                                      2),
-                                                              color: Colors
-                                                                  .white),
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          Dimensions.radius20 /
+                                                                              2),
+                                                              color:
+                                                                  Colors.white),
                                                           child: BigText(
                                                             text:
-                                                            "Lihat Detail",
+                                                                "Lihat Detail",
                                                             size: Dimensions
                                                                 .iconSize16,
                                                             color: AppColors
@@ -560,91 +562,85 @@ class _PesananPageState extends State<PesananPage> {
                                             ),
                                           );
                                         }))
-                                        : GridView.builder(
+                                    : GridView.builder(
                                         physics:
-                                        const NeverScrollableScrollPhysics(),
+                                            const NeverScrollableScrollPhysics(),
                                         gridDelegate:
-                                        SliverGridDelegateWithFixedCrossAxisCount(
-                                            crossAxisCount: 1,
-                                            mainAxisExtent:
-                                            Dimensions.height45 *
-                                                5.5),
+                                            SliverGridDelegateWithFixedCrossAxisCount(
+                                                crossAxisCount: 1,
+                                                mainAxisExtent:
+                                                    Dimensions.height45 * 5.5),
                                         itemCount: _list.length,
                                         shrinkWrap: true,
                                         itemBuilder: (context, index) {
                                           var gambarproduk = Get.find<
-                                              PopularProdukController>()
+                                                  PopularProdukController>()
                                               .imageProdukList
                                               .where((produk) =>
-                                          produk.productId ==
-                                              _list[index].productId);
+                                                  produk.productId ==
+                                                  _list[index].productId);
                                           return Container(
                                             width: Dimensions.screenWidth,
-                                            height:
-                                            Dimensions.height45 * 3.5,
+                                            height: Dimensions.height45 * 3.5,
                                             margin: EdgeInsets.only(
-                                                bottom:
-                                                Dimensions.height10,
-                                                top: Dimensions.height10 /
-                                                    2,
+                                                bottom: Dimensions.height10,
+                                                top: Dimensions.height10 / 2,
                                                 left: Dimensions.width20,
-                                                right:
-                                                Dimensions.width20),
+                                                right: Dimensions.width20),
                                             padding: EdgeInsets.all(
                                                 Dimensions.height10),
                                             decoration: BoxDecoration(
                                                 border: Border.all(
                                                     color: AppColors
                                                         .buttonBackgroundColor),
-                                                borderRadius: BorderRadius
-                                                    .circular(Dimensions
-                                                    .radius20 /
-                                                    2),
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        Dimensions.radius20 /
+                                                            2),
                                                 color: Colors.white),
                                             child: Column(
                                               children: [
                                                 Container(
                                                   child: Row(
                                                     mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
                                                     children: [
                                                       Container(
                                                         child: Row(
                                                           children: [
                                                             Container(
-                                                              child:
-                                                              AppIcon(
+                                                              child: AppIcon(
                                                                 icon: Icons
                                                                     .shopping_bag_outlined,
-                                                                iconSize:
-                                                                Dimensions
+                                                                iconSize: Dimensions
                                                                     .iconSize24,
                                                                 iconColor:
-                                                                AppColors
-                                                                    .redColor,
-                                                                backgroundColor: Colors
-                                                                    .white
-                                                                    .withOpacity(
-                                                                    0.0),
+                                                                    AppColors
+                                                                        .redColor,
+                                                                backgroundColor:
+                                                                    Colors.white
+                                                                        .withOpacity(
+                                                                            0.0),
                                                               ),
                                                             ),
                                                             Column(
                                                               mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
+                                                                  MainAxisAlignment
+                                                                      .start,
                                                               crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
+                                                                  CrossAxisAlignment
+                                                                      .start,
                                                               children: [
                                                                 BigText(
                                                                   text:
-                                                                  "Belanja",
+                                                                      "Belanja",
                                                                   size: Dimensions
                                                                       .font16,
                                                                 ),
                                                                 SmallText(
-                                                                    text: _list[index]
+                                                                    text: _list[
+                                                                            index]
                                                                         .name
                                                                         .toString()),
                                                                 Container(
@@ -656,19 +652,27 @@ class _PesananPageState extends State<PesananPage> {
                                                                         left: Dimensions
                                                                             .width10),
                                                                     decoration:
-                                                                    BoxDecoration(
+                                                                        BoxDecoration(
                                                                       borderRadius:
-                                                                      BorderRadius.circular(Dimensions.radius30),
-                                                                      color:
-                                                                      AppColors.notification_success.withOpacity(0.3),
+                                                                          BorderRadius.circular(
+                                                                              Dimensions.radius30),
+                                                                      color: AppColors
+                                                                          .notification_success
+                                                                          .withOpacity(
+                                                                              0.3),
                                                                     ),
                                                                     child:
-                                                                    Center(
+                                                                        Center(
                                                                       child: BigText(
-                                                                          text: _list[index].statusPembelian.toString(),
-                                                                          size: Dimensions.font16 / 1.5,
-                                                                          color: AppColors.notification_success,
-                                                                          fontWeight: FontWeight.bold),
+                                                                          text: _list[index]
+                                                                              .statusPembelian
+                                                                              .toString(),
+                                                                          size: Dimensions.font16 /
+                                                                              1.5,
+                                                                          color: AppColors
+                                                                              .notification_success,
+                                                                          fontWeight:
+                                                                              FontWeight.bold),
                                                                     )),
                                                               ],
                                                             )
@@ -678,11 +682,11 @@ class _PesananPageState extends State<PesananPage> {
                                                       Container(
                                                         child: SmallText(
                                                           text: _list[index]
-                                                              .createdAt
-                                                              .toString() ??
+                                                                  .createdAt
+                                                                  .toString() ??
                                                               'N/A',
                                                           size: Dimensions
-                                                              .font20 /
+                                                                  .font20 /
                                                               1.5,
                                                         ),
                                                       )
@@ -695,8 +699,8 @@ class _PesananPageState extends State<PesananPage> {
                                                 Container(
                                                   child: Row(
                                                     mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
                                                     children: [
                                                       Container(
                                                         child: Row(
@@ -704,21 +708,21 @@ class _PesananPageState extends State<PesananPage> {
                                                             GestureDetector(
                                                               onTap: () {
                                                                 var produkIndex =
-                                                                _list[index]
-                                                                    .productId!;
+                                                                    _list[index]
+                                                                        .productId!;
                                                                 if (produkIndex >=
                                                                     0) {
-                                                                  Get.toNamed(
-                                                                      RouteHelper.getProdukDetail(produkIndex));
+                                                                  Get.toNamed(RouteHelper
+                                                                      .getProdukDetail(
+                                                                          produkIndex));
                                                                 }
                                                               },
-                                                              child:
-                                                              Container(
-                                                                width:
-                                                                Dimensions.height20 *
+                                                              child: Container(
+                                                                width: Dimensions
+                                                                        .height20 *
                                                                     3,
-                                                                height:
-                                                                Dimensions.height20 *
+                                                                height: Dimensions
+                                                                        .height20 *
                                                                     3,
                                                                 margin: EdgeInsets.only(
                                                                     top: Dimensions
@@ -739,32 +743,37 @@ class _PesananPageState extends State<PesananPage> {
                                                             ),
                                                             Column(
                                                               mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
+                                                                  MainAxisAlignment
+                                                                      .start,
                                                               crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
+                                                                  CrossAxisAlignment
+                                                                      .start,
                                                               children: [
                                                                 Container(
-                                                                  width: Dimensions.screenWidth /
+                                                                  width: Dimensions
+                                                                          .screenWidth /
                                                                       1.6,
                                                                   child:
-                                                                  BigText(
-                                                                    text:
-                                                                    _list[index].productName,
-                                                                    size:
-                                                                    Dimensions.font16,
+                                                                      BigText(
+                                                                    text: _list[
+                                                                            index]
+                                                                        .productName,
+                                                                    size: Dimensions
+                                                                        .font16,
                                                                   ),
                                                                 ),
                                                                 Row(
                                                                   children: [
                                                                     SmallText(
-                                                                        text: "${_list[index].jumlahPembelianProduk} x "),
+                                                                        text:
+                                                                            "${_list[index].jumlahPembelianProduk} x "),
                                                                     PriceText(
-                                                                      text:
-                                                                      CurrencyFormat.convertToIdr(_list[index].price, 0),
-                                                                      size:
-                                                                      Dimensions.font16,
+                                                                      text: CurrencyFormat.convertToIdr(
+                                                                          _list[index]
+                                                                              .price,
+                                                                          0),
+                                                                      size: Dimensions
+                                                                          .font16,
                                                                     ),
                                                                   ],
                                                                 ),
@@ -777,33 +786,34 @@ class _PesananPageState extends State<PesananPage> {
                                                   ),
                                                 ),
                                                 SizedBox(
-                                                  height:
-                                                  Dimensions.height10,
+                                                  height: Dimensions.height10,
                                                 ),
                                                 Container(
                                                   child: Row(
                                                     mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
                                                     children: [
                                                       Container(
                                                         child: Row(
                                                           children: [
                                                             Column(
                                                               mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
+                                                                  MainAxisAlignment
+                                                                      .start,
                                                               crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
+                                                                  CrossAxisAlignment
+                                                                      .start,
                                                               children: [
                                                                 SmallText(
                                                                     text:
-                                                                    "Total Belanja"),
+                                                                        "Total Belanja"),
                                                                 PriceText(
-                                                                  text: CurrencyFormat.convertToIdr(
-                                                                      _list[index].hargaPembelian,
-                                                                      0),
+                                                                  text: CurrencyFormat
+                                                                      .convertToIdr(
+                                                                          _list[index]
+                                                                              .hargaPembelian,
+                                                                          0),
                                                                   size: Dimensions
                                                                       .font16,
                                                                 ),
@@ -821,10 +831,10 @@ class _PesananPageState extends State<PesananPage> {
                                                         child: Container(
                                                           padding: EdgeInsets.only(
                                                               top: Dimensions
-                                                                  .height10 /
+                                                                      .height10 /
                                                                   2,
                                                               bottom: Dimensions
-                                                                  .height10 /
+                                                                      .height10 /
                                                                   2,
                                                               left: Dimensions
                                                                   .height10,
@@ -835,14 +845,15 @@ class _PesananPageState extends State<PesananPage> {
                                                                   color: AppColors
                                                                       .redColor),
                                                               borderRadius:
-                                                              BorderRadius.circular(
-                                                                  Dimensions.radius20 /
-                                                                      2),
-                                                              color: Colors
-                                                                  .white),
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          Dimensions.radius20 /
+                                                                              2),
+                                                              color:
+                                                                  Colors.white),
                                                           child: BigText(
                                                             text:
-                                                            "Lihat Detail",
+                                                                "Lihat Detail",
                                                             size: Dimensions
                                                                 .iconSize16,
                                                             color: AppColors
@@ -857,7 +868,7 @@ class _PesananPageState extends State<PesananPage> {
                                             ),
                                           );
                                         });
-                                  })
+                              })
                             ],
                           ),
                           SizedBox(height: Dimensions.height10)

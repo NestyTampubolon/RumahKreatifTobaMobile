@@ -1,27 +1,18 @@
-import 'package:clipboard/clipboard.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:rumah_kreatif_toba/data/api/api_client.dart';
-import 'package:rumah_kreatif_toba/pages/pesanan/menunggu_pembayaran_page.dart';
-import '../../base/show_custom_message.dart';
-import '../../controllers/auth_controller.dart';
-import '../../controllers/cart_controller.dart';
-import '../../controllers/pesanan_controller.dart';
-import '../../routes/route_helper.dart';
+import 'dart:io';
 
-import '../../utils/app_constants.dart';
+import 'package:clipboard/clipboard.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:rumah_kreatif_toba/pages/pesanan/menunggu_pembayaran_page.dart';
+
+import '../../controllers/pesanan_controller.dart';
 import '../../utils/colors.dart';
 import '../../utils/dimensions.dart';
-import 'package:get/get.dart';
-import 'dart:io';
 import '../../widgets/app_icon.dart';
 import '../../widgets/big_text.dart';
 import '../../widgets/currency_format.dart';
 import '../../widgets/price_text.dart';
 import '../../widgets/small_text.dart';
-import '../pesanan/pesanan_page.dart';
 
 class PembayaranPage extends StatefulWidget {
   const PembayaranPage({Key? key}) : super(key: key);
@@ -31,8 +22,6 @@ class PembayaranPage extends StatefulWidget {
 }
 
 class _PembayaranPageState extends State<PembayaranPage> {
-
-
   // final ImagePicker picker = ImagePicker();
   //
   // //we can upload image from camera or from gallery based on parameter
@@ -99,11 +88,12 @@ class _PembayaranPageState extends State<PembayaranPage> {
     List<int> _purchaseId = [];
 
     Future<void> uploadProofOfPayment() async {
-
-        var controller = Get.find<PesananController>();
-        controller.postBuktiPembayaran(detailPesanan[0].purchaseId).then((status) async {
-          Get.to(MenungguPembayaranPage());
-        });
+      var controller = Get.find<PesananController>();
+      controller
+          .postBuktiPembayaran(detailPesanan[0].purchaseId)
+          .then((status) async {
+        Get.to(MenungguPembayaranPage());
+      });
     }
 
     return Scaffold(
@@ -211,11 +201,13 @@ class _PembayaranPageState extends State<PembayaranPage> {
                           margin: EdgeInsets.only(bottom: Dimensions.height10),
                           child: Row(
                             children: [
-                              Obx(() => PriceText(
-                                text: CurrencyFormat.convertToIdr(
-                                    detailPesanan[0].hargaPembelian, 0),
-                                size: Dimensions.font16,
-                              ),)
+                              Obx(
+                                () => PriceText(
+                                  text: CurrencyFormat.convertToIdr(
+                                      detailPesanan[0].hargaPembelian, 0),
+                                  size: Dimensions.font16,
+                                ),
+                              )
                             ],
                           ),
                         ),
@@ -230,11 +222,13 @@ class _PembayaranPageState extends State<PembayaranPage> {
                             text: "Total Ongkos Kirim",
                             size: Dimensions.font16,
                           ),
-                          Obx(() => PriceText(
-                            text: CurrencyFormat.convertToIdr(
-                                detailPesanan[0].ongkir, 0),
-                            size: Dimensions.font16,
-                          ),)
+                          Obx(
+                            () => PriceText(
+                              text: CurrencyFormat.convertToIdr(
+                                  detailPesanan[0].ongkir, 0),
+                              size: Dimensions.font16,
+                            ),
+                          )
                         ],
                       ),
                     ),
@@ -247,11 +241,15 @@ class _PembayaranPageState extends State<PembayaranPage> {
                           size: Dimensions.font20,
                           fontWeight: FontWeight.bold,
                         ),
-                        Obx(() => PriceText(
-                          text: CurrencyFormat.convertToIdr(
-                              detailPesanan[0].hargaPembelian + detailPesanan[0].ongkir, 0),
-                          size: Dimensions.font16,
-                        ),)
+                        Obx(
+                          () => PriceText(
+                            text: CurrencyFormat.convertToIdr(
+                                detailPesanan[0].hargaPembelian +
+                                    detailPesanan[0].ongkir,
+                                0),
+                            size: Dimensions.font16,
+                          ),
+                        )
                       ],
                     )
                   ],
@@ -325,51 +323,50 @@ class _PembayaranPageState extends State<PembayaranPage> {
                       )
                     ],
                   )),
-        GetBuilder<PesananController>(builder: (pesananController) {
-          return Column(
-            children: [
-              Container(
-                margin: EdgeInsets.all(Dimensions.height20),
-                padding: EdgeInsets.all(Dimensions.height20),
-                width: Dimensions.screenWidth,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(Dimensions.radius20/2),
-                    color: AppColors.redColor),
-                child: GestureDetector(
-                    onTap: () {
-                      pesananController.pickImage();
-                    },
-                    child: Row(children: [
-                      BigText(
-                        text: "Pilih Gambar",
-                        color: Colors.white,
-                        size: Dimensions.height15,
-                      ),
-                    ])),
-              ),
-              pesananController.pickedFile != null
-                  ? Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: Image.file(
-                    //to show image, you type like this.
-                    File(pesananController.pickedFile!.path),
-                    fit: BoxFit.cover,
-                    width: MediaQuery.of(context).size.width,
-                    height: 300,
-                  ),
-                ),
-              )
-                  : Text(
-                "Tidak ada gambar",
-                style: TextStyle(fontSize: Dimensions.font16),
-              )
-            ],
-          );
-        }),
-
-
+              GetBuilder<PesananController>(builder: (pesananController) {
+                return Column(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.all(Dimensions.height20),
+                      padding: EdgeInsets.all(Dimensions.height20),
+                      width: Dimensions.screenWidth,
+                      decoration: BoxDecoration(
+                          borderRadius:
+                              BorderRadius.circular(Dimensions.radius20 / 2),
+                          color: AppColors.redColor),
+                      child: GestureDetector(
+                          onTap: () {
+                            pesananController.pickImage();
+                          },
+                          child: Row(children: [
+                            BigText(
+                              text: "Pilih Gambar",
+                              color: Colors.white,
+                              size: Dimensions.height15,
+                            ),
+                          ])),
+                    ),
+                    pesananController.pickedFile != null
+                        ? Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Image.file(
+                                //to show image, you type like this.
+                                File(pesananController.pickedFile!.path),
+                                fit: BoxFit.cover,
+                                width: MediaQuery.of(context).size.width,
+                                height: 300,
+                              ),
+                            ),
+                          )
+                        : Text(
+                            "Tidak ada gambar",
+                            style: TextStyle(fontSize: Dimensions.font16),
+                          )
+                  ],
+                );
+              }),
             ],
           ),
         ),
@@ -396,7 +393,7 @@ class _PembayaranPageState extends State<PembayaranPage> {
                             right: Dimensions.width20),
                         decoration: BoxDecoration(
                             borderRadius:
-                                BorderRadius.circular(Dimensions.radius20/4),
+                                BorderRadius.circular(Dimensions.radius20 / 4),
                             color: AppColors.redColor),
                         child: GestureDetector(
                             onTap: () {

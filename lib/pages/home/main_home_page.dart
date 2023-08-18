@@ -1,16 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:rumah_kreatif_toba/controllers/auth_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/cart_controller.dart';
 import 'package:rumah_kreatif_toba/pages/home/home_page_body.dart';
 import 'package:rumah_kreatif_toba/utils/colors.dart';
 import 'package:rumah_kreatif_toba/widgets/big_text.dart';
-import 'package:get/get.dart';
-import '../../controllers/alamat_controller.dart';
-import '../../controllers/bank_controller.dart';
-import '../../controllers/popular_produk_controller.dart';
+
 import '../../controllers/user_controller.dart';
-import '../../controllers/wishlist_controller.dart';
 import '../../routes/route_helper.dart';
 import '../../utils/dimensions.dart';
 import '../../widgets/app_icon.dart';
@@ -46,8 +42,7 @@ class _MainHomePageState extends State<MainHomePage> {
         children: [
           Container(
             child: Container(
-              margin: EdgeInsets.only(
-                  top: Dimensions.height30),
+              margin: EdgeInsets.only(top: Dimensions.height30),
               padding: EdgeInsets.only(
                   left: Dimensions.width20, right: Dimensions.width20),
               child: Row(
@@ -117,34 +112,38 @@ class _MainHomePageState extends State<MainHomePage> {
                                 iconColor: AppColors.redColor,
                                 backgroundColor: Colors.white.withOpacity(0.0),
                               ),
-                              Get.find<AuthController>().userLoggedIn() ?
-                              Obx(() =>  controller.keranjangList.length >= 1
-                                  ? Positioned(
-                                  right: 0,
-                                  top: 0,
-                                  child: AppIcon(
-                                    icon: Icons.circle,
-                                    size: 20,
-                                    iconColor:
-                                    AppColors.notification_success,
-                                  ))
-                                  : Container(),) :
-                                  SizedBox(),
-                              Get.find<AuthController>().userLoggedIn() ?
-                              Obx(
-                                () => controller.keranjangList.length >= 1
-                                    ? Positioned(
-                                        right: 6,
-                                        top: 3,
-                                        child: BigText(
-                                          text: controller.keranjangList.length
-                                              .toString(),
-                                          size: 10,
-                                          color: Colors.white,
-                                        ),
-                                      )
-                                    : Container(),
-                              ) : SizedBox()
+                              Get.find<AuthController>().userLoggedIn()
+                                  ? Obx(
+                                      () => controller.keranjangList.length >= 1
+                                          ? Positioned(
+                                              right: 0,
+                                              top: 0,
+                                              child: AppIcon(
+                                                icon: Icons.circle,
+                                                size: 20,
+                                                iconColor: AppColors
+                                                    .notification_success,
+                                              ))
+                                          : Container(),
+                                    )
+                                  : SizedBox(),
+                              Get.find<AuthController>().userLoggedIn()
+                                  ? Obx(
+                                      () => controller.keranjangList.length >= 1
+                                          ? Positioned(
+                                              right: 6,
+                                              top: 3,
+                                              child: BigText(
+                                                text: controller
+                                                    .keranjangList.length
+                                                    .toString(),
+                                                size: 10,
+                                                color: Colors.white,
+                                              ),
+                                            )
+                                          : Container(),
+                                    )
+                                  : SizedBox()
                             ],
                           ),
                         );
