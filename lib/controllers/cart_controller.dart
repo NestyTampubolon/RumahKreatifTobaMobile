@@ -1,17 +1,13 @@
-import 'dart:convert';
-
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:get/get.dart';
 import 'package:rumah_kreatif_toba/controllers/user_controller.dart';
 
-import '../base/show_custom_message.dart';
 import '../base/snackbar_message.dart';
 import '../data/repository/cart_repo.dart';
 import '../models/cart_models.dart';
 import '../models/produk_models.dart';
-
 import '../models/response_model.dart';
 import 'auth_controller.dart';
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 class CartController extends GetxController {
   final CartRepo cartRepo;
@@ -60,7 +56,7 @@ class CartController extends GetxController {
             productName: value.productName,
             price: value.price,
             heavy: value.heavy,
-            cityId : value.cityId,
+            cityId: value.cityId,
             produk: produk);
       });
 
@@ -102,7 +98,8 @@ class CartController extends GetxController {
     late ResponseModel responseModel;
     if (response.statusCode == 200) {
       _totalItems = response.body;
-      AwesomeSnackbarButton("Berhasil","Produk berhasil ditambahkan ke keranjang",ContentType.success);
+      AwesomeSnackbarButton("Berhasil",
+          "Produk berhasil ditambahkan ke keranjang", ContentType.success);
     } else {
       responseModel = ResponseModel(false, response.statusText!);
     }
@@ -113,29 +110,31 @@ class CartController extends GetxController {
 
   Future<void> getKeranjangList() async {
     if (Get.find<AuthController>().userLoggedIn()) {
-      var controller = Get.find<UserController>().usersList[0];
+      if (Get.find<UserController>().usersList.isNotEmpty) {
+        var controller = Get.find<UserController>().usersList[0];
 
-      Response response = await cartRepo.getKeranjangList(controller.id!);
-      if (response.statusCode == 200) {
-        List<dynamic> responseBody = response.body["cart"];
-        _keranjangList = [].obs;
-        for (dynamic item in responseBody) {
-          CartModel cartModel = CartModel.fromJson(item);
-          _keranjangList.add(cartModel);
-        }
+        Response response = await cartRepo.getKeranjangList(controller.id!);
+        if (response.statusCode == 200) {
+          List<dynamic> responseBody = response.body["cart"];
+          _keranjangList = [].obs;
+          for (dynamic item in responseBody) {
+            CartModel cartModel = CartModel.fromJson(item);
+            _keranjangList.add(cartModel);
+          }
 
-        List<dynamic> responseBodymerchant = response.body["cart_by_merchants"];
-        _merchantKeranjangList = [];
-        for (dynamic item in responseBodymerchant) {
-          CartModel cartModel = CartModel.fromJson(item);
-          _merchantKeranjangList.add(cartModel);
-        }
+          List<dynamic> responseBodymerchant =
+              response.body["cart_by_merchants"];
+          _merchantKeranjangList = [];
+          for (dynamic item in responseBodymerchant) {
+            CartModel cartModel = CartModel.fromJson(item);
+            _merchantKeranjangList.add(cartModel);
+          }
 
-        _isLoading = true;
-        update();
-      } else {}
+          _isLoading = true;
+          update();
+        } else {}
+      }
     }
-
   }
 
   Future<void> _tambahKeranjang(CartController cartController) async {
@@ -151,7 +150,8 @@ class CartController extends GetxController {
     Response response = await cartRepo.hapusKeranjang(cart_id);
     late ResponseModel responseModel;
     if (response.statusCode == 200) {
-      AwesomeSnackbarButton("Berhasil","Produk berhasil dihapus",ContentType.success);
+      AwesomeSnackbarButton(
+          "Berhasil", "Produk berhasil dihapus", ContentType.success);
       getKeranjangList();
     } else {
       responseModel = ResponseModel(false, response.statusText!);
@@ -183,7 +183,8 @@ class CartController extends GetxController {
     late ResponseModel responseModel;
     if (response.statusCode == 200) {
       if (response.body == 1) {
-        AwesomeSnackbarButton("Gagal","Stok produk telah habis",ContentType.failure);
+        AwesomeSnackbarButton(
+            "Gagal", "Stok produk telah habis", ContentType.failure);
       }
       getKeranjangList();
     } else {
