@@ -20,7 +20,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 ##========= Versi untuk di iOS dan Android silahkan ubah disini format versi seharusnya : ============
 ##========= (Major.Minor.Patch+build_number) e.g: 2.0.1+60 major=2, minor=0, patch=1, build_number=60 ============
 
-version: 1.0.1+6
+version: 1.0.1+7
 
 environment:
   sdk: '>=2.19.0 <3.0.0'
