@@ -32,57 +32,46 @@ import '../utils/app_constants.dart';
 Future<void> init() async {
   final sharedPreferences = await SharedPreferences.getInstance();
 
-  Get.lazyPut(() => sharedPreferences);
+  Get.put(sharedPreferences);
   //api client
-  Get.lazyPut(() => ApiClient(
+  Get.put(ApiClient(
       appBaseUrl: AppConstants.BASE_URL, sharedPreferences: Get.find()));
-  Get.lazyPut(
-      () => AuthRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
-  Get.lazyPut(() => UserRepo(apiClient: Get.find()));
+  Get.put(AuthRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
+  Get.put(UserRepo(apiClient: Get.find()));
 
-  //Get.lazyPut(() => ApiClient(appBaseUrl: "https://mvs.bslmeiyu.com"));
+  //Get.put( ApiClient(appBaseUrl: "https://mvs.bslmeiyu.com"));
   //repos
-  Get.lazyPut(() => PopularProdukRepo(apiClient: Get.find()));
-  Get.lazyPut(
-      () => CartRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
-  Get.lazyPut(() =>
-      PengirimanRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
-  Get.lazyPut(
-      () => PesananRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
-  Get.lazyPut(
-      () => WishlistRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
-  Get.lazyPut(
-      () => TokoRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
-  Get.lazyPut(
-      () => BankRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
-  Get.lazyPut(() => CategoriesRepo(apiClient: Get.find()));
-  Get.lazyPut(() =>
-      PembelianRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
-  Get.lazyPut(
-      () => AlamatRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
+  Get.put(PopularProdukRepo(apiClient: Get.find()));
+  Get.put(CartRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
+  Get.put(PengirimanRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
+  Get.put(PesananRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
+  Get.put(WishlistRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
+  Get.put(TokoRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
+  Get.put(BankRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
+  Get.put(CategoriesRepo(apiClient: Get.find()));
+  Get.put(PembelianRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
+  Get.put(AlamatRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
 
   //controllers
-  Get.lazyPut(() => AuthController(authRepo: Get.find()));
-  Get.lazyPut(() => UserController(userRepo: Get.find()));
-  Get.lazyPut(() => PopularProdukController(popularProdukRepo: Get.find()),
-      fenix: true);
-  Get.lazyPut(() => CartController(cartRepo: Get.find()), fenix: true);
-  Get.lazyPut(() => PengirimanController(pengirimanRepo: Get.find()),
-      fenix: true);
+  Get.put(AuthController(authRepo: Get.find()));
+  Get.put(UserController(userRepo: Get.find()));
+  Get.put(PopularProdukController(popularProdukRepo: Get.find()));
+  Get.put(CartController(cartRepo: Get.find()));
   Get.put(PengirimanController(pengirimanRepo: Get.find()));
-  Get.lazyPut(() => PesananController(pesananRepo: Get.find()));
+  Get.put(PengirimanController(pengirimanRepo: Get.find()));
+  Get.put(PesananController(pesananRepo: Get.find()));
   Get.put(PesananController(pesananRepo: Get.find()));
 
-  Get.lazyPut(() => AlamatController(alamatRepo: Get.find()), fenix: true);
+  Get.put(AlamatController(alamatRepo: Get.find()));
   Get.put(AlamatController(alamatRepo: Get.find()));
 
-  Get.lazyPut(() => WishlistController(wishlistRepo: Get.find()));
   Get.put(WishlistController(wishlistRepo: Get.find()));
-  Get.lazyPut(() => TokoController(tokoRepo: Get.find()));
-  Get.lazyPut(() => BankController(bankRepo: Get.find()));
-  Get.lazyPut(() => CategoriesController(categoriesRepo: Get.find()));
-  Get.put(() => CategoriesController(categoriesRepo: Get.find()));
-  Get.lazyPut(() => ProdukController(produkRepo: Get.find()));
-  Get.lazyPut(() => PembelianController(pembelianRepo: Get.find()));
-  Get.put(() => PembelianController(pembelianRepo: Get.find()));
+  Get.put(WishlistController(wishlistRepo: Get.find()));
+  Get.put(TokoController(tokoRepo: Get.find()));
+  Get.put(BankController(bankRepo: Get.find()));
+  Get.put(CategoriesController(categoriesRepo: Get.find()));
+  Get.put(CategoriesController(categoriesRepo: Get.find()));
+  Get.put(ProdukController(produkRepo: Get.find()));
+  Get.put(PembelianController(pembelianRepo: Get.find()));
+  Get.put(PembelianController(pembelianRepo: Get.find()));
 }
