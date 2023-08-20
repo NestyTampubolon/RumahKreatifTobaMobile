@@ -65,7 +65,7 @@ class _HomePageBodyState extends State<HomePageBody> {
           children: [
             GetBuilder<PopularProdukController>(builder: (_produkController) {
               return Container(
-                  height: Dimensions.height45 * 5,
+                  // height: Dimensions.height45 * 5,
                   margin: EdgeInsets.only(
                       left: Dimensions.width20,
                       right: Dimensions.width20,
@@ -74,6 +74,8 @@ class _HomePageBodyState extends State<HomePageBody> {
                       crossAxisCount: 4,
                       mainAxisSpacing: 10,
                       crossAxisSpacing: 10,
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
                       children: <Widget>[
                         CardKategori(kategori: "Makanan"),
                         CardKategori(kategori: "Minuman"),
