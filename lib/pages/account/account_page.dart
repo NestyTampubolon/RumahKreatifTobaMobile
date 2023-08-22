@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rumah_kreatif_toba/base/confirmation_dialog.dart';
@@ -240,32 +238,32 @@ class AccountPage extends StatelessWidget {
                                 ),
 
                                 //Deletion Account
-                                if (Platform.isIOS)
-                                  GestureDetector(
-                                    onTap: () async {
-                                      showConfirmPopUp(
-                                        title: "Yakin ingin menghapus akun?",
-                                        subTitle:
-                                            "setelah menghapus akun, seluruh data akan dihapus dari aplikasi dan tidak dapat dipulihkan termasuk riwayat transaksi,foto profile, dll",
-                                        onAccept: () {
-                                          Get.back();
-                                        },
-                                        onCancel: () => Get.back(),
-                                      );
-                                    },
-                                    child: AccountWidget(
-                                        appIcon: AppIcon(
-                                          icon: Icons.delete_forever,
-                                          backgroundColor:
-                                              Colors.white.withOpacity(0.0),
-                                          iconColor: AppColors.redColor,
-                                          iconSize: Dimensions.height10 * 5 / 2,
-                                          size: Dimensions.height10 * 5,
-                                        ),
-                                        bigText: BigText(
-                                          text: "Hapus Akun",
-                                        )),
-                                  ),
+                                // if (Platform.isIOS)
+                                GestureDetector(
+                                  onTap: () async {
+                                    showConfirmPopUp(
+                                      title: "Yakin ingin menghapus akun?",
+                                      subTitle:
+                                          "setelah menghapus akun, seluruh data akan dihapus dari aplikasi dan tidak dapat dipulihkan termasuk riwayat transaksi,foto profile, dll",
+                                      onAccept: () {
+                                        Get.back();
+                                      },
+                                      onCancel: () => Get.back(),
+                                    );
+                                  },
+                                  child: AccountWidget(
+                                      appIcon: AppIcon(
+                                        icon: Icons.delete_forever,
+                                        backgroundColor:
+                                            Colors.white.withOpacity(0.0),
+                                        iconColor: AppColors.redColor,
+                                        iconSize: Dimensions.height10 * 5 / 2,
+                                        size: Dimensions.height10 * 5,
+                                      ),
+                                      bigText: BigText(
+                                        text: "Hapus Akun",
+                                      )),
+                                ),
                                 SizedBox(
                                   height: Dimensions.height20,
                                 ),
