@@ -244,7 +244,7 @@ class AccountPage extends StatelessWidget {
                                     showConfirmPopUp(
                                       title: "Yakin ingin menghapus akun?",
                                       subTitle:
-                                          "setelah menghapus akun, seluruh data akan dihapus dari aplikasi dan tidak dapat dipulihkan termasuk riwayat transaksi,foto profile, dll",
+                                          "Setelah menghapus akun, seluruh data akan dihapus dari aplikasi dan tidak dapat dipulihkan termasuk riwayat transaksi,foto profile, dll",
                                       onAccept: () {
                                         Get.back();
                                       },
