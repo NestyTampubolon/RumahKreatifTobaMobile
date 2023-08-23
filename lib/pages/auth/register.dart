@@ -1,22 +1,23 @@
+import 'dart:io';
+
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:rumah_kreatif_toba/base/custom_loader.dart';
 import 'package:rumah_kreatif_toba/controllers/auth_controller.dart';
 import 'package:rumah_kreatif_toba/models/users_models.dart';
 import 'package:rumah_kreatif_toba/routes/route_helper.dart';
 import 'package:rumah_kreatif_toba/utils/colors.dart';
 import 'package:rumah_kreatif_toba/widgets/big_text.dart';
-import 'package:get/get.dart';
-import '../../base/show_custom_message.dart';
+
 import '../../base/snackbar_message.dart';
 import '../../utils/dimensions.dart';
 import '../../widgets/app_date_field.dart';
 import '../../widgets/app_dropdown_field.dart';
 import '../../widgets/app_text_field.dart';
-import 'package:intl/intl.dart';
-
 import '../../widgets/app_text_field_password.dart';
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 class Register extends StatelessWidget {
   const Register({Key? key}) : super(key: key);
@@ -49,6 +50,14 @@ class Register extends StatelessWidget {
         gender = "L";
       } else if (jenisKelaminController.text.trim() == "Perempuan") {
         gender = "P";
+      }
+      if (Platform.isIOS) {
+        if (birthday.isEmpty) {
+          birthday = "01-08-1995";
+        }
+        if (gender.isEmpty) {
+          gender = "L";
+        }
       }
 
       if (name.isEmpty) {

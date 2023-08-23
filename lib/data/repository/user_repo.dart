@@ -17,4 +17,8 @@ class UserRepo {
   Future<Response> ubahPassword(int user_id, String password, String password_baru) async {
     return await apiClient.postData(AppConstants.UBAH_PASSWORD_URL, {"user_id": user_id, "password":password, "password_baru":password_baru});
   }
+
+  Future<Response> hapusAkun(int id) async {
+    return await apiClient.postData(AppConstants.HAPUS_AKUN_URL, {"id": id});
+  }
 }

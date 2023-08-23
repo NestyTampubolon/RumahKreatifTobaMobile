@@ -1,12 +1,11 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:rumah_kreatif_toba/controllers/cart_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/popular_produk_controller.dart';
 import 'package:rumah_kreatif_toba/controllers/wishlist_controller.dart';
-import 'package:rumah_kreatif_toba/pages/keranjang/keranjang_page.dart';
 import 'package:rumah_kreatif_toba/pages/pembelian/beli_langsung_page.dart';
 import 'package:rumah_kreatif_toba/routes/route_helper.dart';
 import 'package:rumah_kreatif_toba/utils/colors.dart';
@@ -14,11 +13,8 @@ import 'package:rumah_kreatif_toba/utils/dimensions.dart';
 import 'package:rumah_kreatif_toba/widgets/app_icon.dart';
 import 'package:rumah_kreatif_toba/widgets/expandable_text_widget.dart';
 import 'package:rumah_kreatif_toba/widgets/price_text.dart';
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
-import '../../base/show_custom_message.dart';
 import '../../base/snackbar_message.dart';
-import '../../controllers/alamat_controller.dart';
 import '../../controllers/auth_controller.dart';
 import '../../controllers/user_controller.dart';
 import '../../models/produk_models.dart';
@@ -71,11 +67,11 @@ class _ProdukDetailState extends State<ProdukDetail> {
 
   @override
   Widget build(BuildContext context) {
-
     var produkList = Get.find<PopularProdukController>().detailProdukList;
     var daftarproduk = produkList.firstWhere(
         (produk) => produk.productId == produkList[0].productId.toInt());
-    Get.find<PopularProdukController>().getKategoriProdukList("${daftarproduk.namaKategori}");
+    Get.find<PopularProdukController>()
+        .getKategoriProdukList("${daftarproduk.namaKategori}");
     var wishlistList = Get.find<WishlistController>().wishlistList;
     isProdukExist = wishlistList.any(
         (wishlist) => wishlist.productId == produkList[0].productId.toInt());
@@ -88,9 +84,12 @@ class _ProdukDetailState extends State<ProdukDetail> {
             .tambahKeranjang(controller.id, produkList[0].productId.toInt(), 1)
             .then((status) {
           if (status.isSuccess) {
-            AwesomeSnackbarButton("Berhasil","Produk berhasil ditambahkan ke keranjang",ContentType.success);
+            AwesomeSnackbarButton(
+                "Berhasil",
+                "Produk berhasil ditambahkan ke keranjang",
+                ContentType.success);
           } else {
-            AwesomeSnackbarButton("Gagal",status.message,ContentType.failure);
+            AwesomeSnackbarButton("Gagal", status.message, ContentType.failure);
           }
         });
         cartController.getKeranjangList();
@@ -108,7 +107,7 @@ class _ProdukDetailState extends State<ProdukDetail> {
             .then((status) {
           if (status.isSuccess) {
           } else {
-            AwesomeSnackbarButton("Gagal",status.message,ContentType.failure);
+            AwesomeSnackbarButton("Gagal", status.message, ContentType.failure);
           }
         });
         wishlistController.getWishlistList();
@@ -123,10 +122,11 @@ class _ProdukDetailState extends State<ProdukDetail> {
         var cartController = Get.find<WishlistController>();
         cartController.hapusWishlist(wishlist_id).then((status) {
           if (status.isSuccess) {
-            AwesomeSnackbarButton("Berhasil","Produk berhasil dihapus",ContentType.success);
+            AwesomeSnackbarButton(
+                "Berhasil", "Produk berhasil dihapus", ContentType.success);
             isGetProdukExist.isProdukExist.value = false;
           } else {
-            AwesomeSnackbarButton("Gagal",status.message,ContentType.failure);
+            AwesomeSnackbarButton("Gagal", status.message, ContentType.failure);
           }
         });
         cartController.getWishlistList();
@@ -186,7 +186,8 @@ class _ProdukDetailState extends State<ProdukDetail> {
                                           child: AppIcon(
                                             icon: Icons.circle,
                                             size: 20,
-                                            iconColor: AppColors.notification_success,
+                                            iconColor:
+                                                AppColors.notification_success,
                                           ))
                                       : Container(),
                                   controller.keranjangList.length >= 1
@@ -259,11 +260,16 @@ class _ProdukDetailState extends State<ProdukDetail> {
                             onTap: () {
                               if (Get.find<AuthController>().userLoggedIn()) {
                                 if (isProdukExist) {
-                                  Get.find<WishlistController>().setTypeWishlist(daftarproduk.productId, false);
-                                  _hapusWishlist(produkList[0].productId.toInt());
+                                  Get.find<WishlistController>()
+                                      .setTypeWishlist(
+                                          daftarproduk.productId, false);
+                                  _hapusWishlist(
+                                      produkList[0].productId.toInt());
                                   isProdukExist = false;
                                 } else if (!isProdukExist) {
-                                  Get.find<WishlistController>().setTypeWishlist(daftarproduk.productId, true);
+                                  Get.find<WishlistController>()
+                                      .setTypeWishlist(
+                                          daftarproduk.productId, true);
                                   _tambahWishlist();
                                   isProdukExist = true;
                                 }
@@ -271,9 +277,15 @@ class _ProdukDetailState extends State<ProdukDetail> {
                                 Get.toNamed(RouteHelper.getMasukPage());
                               }
                             },
-                            child: Obx(() =>  Get.find<WishlistController>().getcheckedtypeWishlist[daftarproduk.productId] ?? false ? Icon(Icons.favorite, color: Colors.pink,) : Icon(
-                              CupertinoIcons.heart
-                            )),
+                            child: Obx(() => Get.find<WishlistController>()
+                                            .getcheckedtypeWishlist[
+                                        daftarproduk.productId] ??
+                                    false
+                                ? Icon(
+                                    Icons.favorite,
+                                    color: Colors.pink,
+                                  )
+                                : Icon(CupertinoIcons.heart)),
                           )
                         ],
                       )),
@@ -389,37 +401,62 @@ class _ProdukDetailState extends State<ProdukDetail> {
                       )),
                   Container(
                     margin: EdgeInsets.only(
-                        left: Dimensions.width20, right: Dimensions.width20, top: Dimensions.height10),
+                        left: Dimensions.width20,
+                        right: Dimensions.width20,
+                        top: Dimensions.height10),
                     child: BigText(
                       text: "Produk lain yang serupa",
                       size: Dimensions.font16,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  GetBuilder<PopularProdukController>(builder: (produkKategori) {
+                  GetBuilder<PopularProdukController>(
+                      builder: (produkKategori) {
                     return produkKategori.isLoaded
                         ? GridView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2, mainAxisExtent: Dimensions.height45*6.5),
-                        itemCount: produkKategori.kategoriProdukList.length < 6 ? produkKategori.kategoriProdukList.length : 6,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          var gambarproduk = produkKategori
-                              .imageProdukList
-                              .where((produk) => produk.productId == produkKategori
-                              .kategoriProdukList[index].productId);
-                          if (produkKategori.kategoriProdukList[index].namaKategori.toString() == "${daftarproduk.namaKategori}") {
-                            return CardProduk(product_id : produkKategori.kategoriProdukList[index].productId,productImageName : gambarproduk.single.productImageName, productName : produkKategori.kategoriProdukList[index].productName, merchantAddress : produkKategori.kategoriProdukList[index].subdistrictName, price: produkKategori.kategoriProdukList[index].price, countPurchases: produkKategori
-                                .kategoriProdukList[index].countProductPurchases, );
-                          } else {
-                            return SizedBox.shrink();
-                          }
-                        }
-                    )
+                            physics: const NeverScrollableScrollPhysics(),
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    mainAxisExtent: Dimensions.height45 * 6.5),
+                            itemCount:
+                                produkKategori.kategoriProdukList.length < 6
+                                    ? produkKategori.kategoriProdukList.length
+                                    : 6,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              var gambarproduk = produkKategori.imageProdukList
+                                  .where((produk) =>
+                                      produk.productId ==
+                                      produkKategori
+                                          .kategoriProdukList[index].productId);
+                              if (produkKategori
+                                      .kategoriProdukList[index].namaKategori
+                                      .toString() ==
+                                  "${daftarproduk.namaKategori}") {
+                                return CardProduk(
+                                  product_id: produkKategori
+                                      .kategoriProdukList[index].productId,
+                                  productImageName:
+                                      gambarproduk.single.productImageName,
+                                  productName: produkKategori
+                                      .kategoriProdukList[index].productName,
+                                  merchantAddress: produkKategori
+                                      .kategoriProdukList[index]
+                                      .subdistrictName,
+                                  price: produkKategori
+                                      .kategoriProdukList[index].price,
+                                  countPurchases: produkKategori
+                                      .kategoriProdukList[index]
+                                      .countProductPurchases,
+                                );
+                              } else {
+                                return SizedBox.shrink();
+                              }
+                            })
                         : CircularProgressIndicator(
-                      color: AppColors.redColor,
-                    );
+                            color: AppColors.redColor,
+                          );
                   })
                 ],
               )

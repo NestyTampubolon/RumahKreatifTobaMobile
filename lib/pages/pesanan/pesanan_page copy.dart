@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:rumah_kreatif_toba/pages/pesanan/detail_pesanan_page.dart';
 
-import '../../base/show_custom_message.dart';
 import '../../base/snackbar_message.dart';
 import '../../controllers/auth_controller.dart';
 import '../../controllers/pesanan_controller.dart';
@@ -12,18 +12,14 @@ import '../../routes/route_helper.dart';
 import '../../utils/app_constants.dart';
 import '../../utils/colors.dart';
 import '../../utils/dimensions.dart';
-
-import 'package:get/get.dart';
-
 import '../../widgets/Filter.dart';
 import '../../widgets/app_icon.dart';
 import '../../widgets/big_text.dart';
 import '../../widgets/currency_format.dart';
 import '../../widgets/price_text.dart';
 import '../../widgets/small_text.dart';
-import '../../widgets/tittle_text.dart';
 import '../home/home_page.dart';
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+
 class PesananPageCopy extends StatefulWidget {
   const PesananPageCopy({Key? key}) : super(key: key);
 
@@ -45,44 +41,27 @@ class _PesananPageState extends State<PesananPageCopy> {
   Filter? selectedValue;
 
   List<Filter?> filters = [
-    Filter(
-        id: 1,
-        name: "Semua"
-    ),
-    Filter(
-        id: 2,
-        name: "Sedang Dikemas"
-    ),
-    Filter(
-        id: 3,
-        name: "Dalam Perjalanan"
-    ),
-    Filter(
-        id: 4,
-        name: "Dalam Perjalanan"
-    ),
-    Filter(
-        id: 5,
-        name: "Belum Diambil"
-    ),
-    Filter(
-        id: 6,
-        name: "Belum Dikonfirmasi Pembeli"
-    ),
-    Filter(
-        id: 7,
-        name: "Berhasil"
-    )
+    Filter(id: 1, name: "Semua"),
+    Filter(id: 2, name: "Sedang Dikemas"),
+    Filter(id: 3, name: "Dalam Perjalanan"),
+    Filter(id: 4, name: "Dalam Perjalanan"),
+    Filter(id: 5, name: "Belum Diambil"),
+    Filter(id: 6, name: "Belum Dikonfirmasi Pembeli"),
+    Filter(id: 7, name: "Berhasil")
   ];
 
   List<dynamic> _list = Get.find<PesananController>().pesananList.toList();
 
-
   Future<void> _filter(String? keyword) async {
     try {
-      List<dynamic> results = Get.find<PesananController>().pesananList.toList();
-      if(keyword != "Semua"){
-        results = Get.find<PesananController>().pesananList.where((purchase) => purchase.statusPembelian.toString() == "${keyword}").toList();
+      List<dynamic> results =
+          Get.find<PesananController>().pesananList.toList();
+      if (keyword != "Semua") {
+        results = Get.find<PesananController>()
+            .pesananList
+            .where((purchase) =>
+                purchase.statusPembelian.toString() == "${keyword}")
+            .toList();
       }
 
       setState(() {
@@ -104,7 +83,7 @@ class _PesananPageState extends State<PesananPageCopy> {
           if (status.isSuccess) {
             Get.to(DetailPesananPage());
           } else {
-            AwesomeSnackbarButton("Gagal",status.message,ContentType.failure);
+            AwesomeSnackbarButton("Gagal", status.message, ContentType.failure);
           }
         });
       }
@@ -115,8 +94,7 @@ class _PesananPageState extends State<PesananPageCopy> {
         child: Column(
           children: [
             Container(
-              margin: EdgeInsets.only(
-                  top: Dimensions.height30),
+              margin: EdgeInsets.only(top: Dimensions.height30),
               padding: EdgeInsets.only(
                   left: Dimensions.width20, right: Dimensions.width20),
               child: Row(
@@ -190,16 +168,30 @@ class _PesananPageState extends State<PesananPageCopy> {
             Row(
               children: [
                 Container(
-                  margin: EdgeInsets.only(left: Dimensions.width20, top: Dimensions.height10),
-                  width: Dimensions.screenWidth/1.5,
+                  margin: EdgeInsets.only(
+                      left: Dimensions.width20, top: Dimensions.height10),
+                  width: Dimensions.screenWidth / 1.5,
                   height: Dimensions.height45,
-                  padding: EdgeInsets.symmetric(vertical: Dimensions.width10/2, horizontal: Dimensions.height10),
+                  padding: EdgeInsets.symmetric(
+                      vertical: Dimensions.width10 / 2,
+                      horizontal: Dimensions.height10),
                   decoration: BoxDecoration(
                       color: Colors.grey.shade200,
-                      borderRadius: BorderRadius.circular(Dimensions.radius15/3)
-                  ),
-                  child: DropdownButton<Filter?>(items: filters.map<DropdownMenuItem<Filter?>>((e) => DropdownMenuItem(child: Text((e?.name ?? '').toString()), value: e,)).toList(),isExpanded:true, underline: SizedBox(),value: selectedValue, hint: Text('Urutkan berdasarkan'),
-                      onChanged: (value){
+                      borderRadius:
+                          BorderRadius.circular(Dimensions.radius15 / 3)),
+                  child: DropdownButton<Filter?>(
+                      items: filters
+                          .map<DropdownMenuItem<Filter?>>(
+                              (e) => DropdownMenuItem(
+                                    child: Text((e?.name ?? '').toString()),
+                                    value: e,
+                                  ))
+                          .toList(),
+                      isExpanded: true,
+                      underline: SizedBox(),
+                      value: selectedValue,
+                      hint: Text('Urutkan berdasarkan'),
+                      onChanged: (value) {
                         setState(() {
                           selectedValue = value;
                         });
@@ -217,10 +209,10 @@ class _PesananPageState extends State<PesananPageCopy> {
                   itemCount: _list.length,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    var gambarproduk = Get.find<PopularProdukController>().imageProdukList.where(
-                            (produk) =>
-                        produk.productId ==
-                            _list[index].productId);
+                    var gambarproduk = Get.find<PopularProdukController>()
+                        .imageProdukList
+                        .where((produk) =>
+                            produk.productId == _list[index].productId);
                     return Container(
                       width: Dimensions.screenWidth,
                       height: Dimensions.height45 * 3.5,
@@ -234,7 +226,7 @@ class _PesananPageState extends State<PesananPageCopy> {
                           border: Border.all(
                               color: AppColors.buttonBackgroundColor),
                           borderRadius:
-                              BorderRadius.circular(Dimensions.radius20/2),
+                              BorderRadius.circular(Dimensions.radius20 / 2),
                           color: Colors.white),
                       child: Column(
                         children: [
@@ -265,22 +257,32 @@ class _PesananPageState extends State<PesananPageCopy> {
                                             size: Dimensions.font16,
                                           ),
                                           SmallText(
-                                              text: _list[index].name
-                                                  .toString()),
+                                              text:
+                                                  _list[index].name.toString()),
                                           Container(
                                               height: Dimensions.height20,
-                                              padding: EdgeInsets.only(right: Dimensions.width10, left: Dimensions.width10),
+                                              padding: EdgeInsets.only(
+                                                  right: Dimensions.width10,
+                                                  left: Dimensions.width10),
                                               decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(Dimensions.radius30),
-                                                color: AppColors.notification_success.withOpacity(0.3),
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        Dimensions.radius30),
+                                                color: AppColors
+                                                    .notification_success
+                                                    .withOpacity(0.3),
                                               ),
                                               child: Center(
                                                 child: BigText(
-                                                    text: _list[index].statusPembelian
+                                                    text: _list[index]
+                                                        .statusPembelian
                                                         .toString(),
-                                                    size: Dimensions.font16/1.5,
-                                                    color: AppColors.notification_success,
-                                                    fontWeight: FontWeight.bold),
+                                                    size:
+                                                        Dimensions.font16 / 1.5,
+                                                    color: AppColors
+                                                        .notification_success,
+                                                    fontWeight:
+                                                        FontWeight.bold),
                                               )),
                                         ],
                                       )
@@ -289,9 +291,9 @@ class _PesananPageState extends State<PesananPageCopy> {
                                 ),
                                 Container(
                                   child: SmallText(
-                                    text: _list[index].createdAt
-                                        .toString() ?? 'N/A',
-                                    size: Dimensions.font20/1.5,
+                                    text: _list[index].createdAt.toString() ??
+                                        'N/A',
+                                    size: Dimensions.font20 / 1.5,
                                   ),
                                 )
                               ],
@@ -300,74 +302,63 @@ class _PesananPageState extends State<PesananPageCopy> {
                           Divider(color: AppColors.buttonBackgroundColor),
                           Container(
                             child: Row(
-                              mainAxisAlignment:
-                              MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Container(
-
                                   child: Row(
                                     children: [
                                       GestureDetector(
                                         onTap: () {
                                           var produkIndex =
-                                          _list[index]
-                                              .productId!;
+                                              _list[index].productId!;
                                           if (produkIndex >= 0) {
-                                            Get.toNamed(RouteHelper
-                                                .getProdukDetail(
-                                                produkIndex));
+                                            Get.toNamed(
+                                                RouteHelper.getProdukDetail(
+                                                    produkIndex));
                                           }
                                         },
                                         child: Container(
-                                          width:
-                                          Dimensions.height20 *
-                                              3,
-                                          height:
-                                          Dimensions.height20 *
-                                              3,
+                                          width: Dimensions.height20 * 3,
+                                          height: Dimensions.height20 * 3,
                                           margin: EdgeInsets.only(
-                                              top: Dimensions
-                                                  .height10),
+                                              top: Dimensions.height10),
                                           decoration: BoxDecoration(
                                               image: DecorationImage(
                                                   fit: BoxFit.cover,
                                                   image: NetworkImage(
                                                     '${AppConstants.BASE_URL_IMAGE}u_file/product_image/${gambarproduk.single.productImageName}',
-                                                  )
-                                              ),
+                                                  )),
                                               borderRadius:
-                                              BorderRadius.circular(
-                                                  Dimensions
-                                                      .radius20),
+                                                  BorderRadius.circular(
+                                                      Dimensions.radius20),
                                               color: Colors.white),
                                         ),
                                       ),
-                                      SizedBox(width: Dimensions.width20,),
+                                      SizedBox(
+                                        width: Dimensions.width20,
+                                      ),
                                       Column(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.start,
+                                            MainAxisAlignment.start,
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Container(
-                                            width : Dimensions.screenWidth/1.6,
+                                            width: Dimensions.screenWidth / 1.6,
                                             child: BigText(
-                                              text: _list[index]
-                                                  .productName,
+                                              text: _list[index].productName,
                                               size: Dimensions.font16,
                                             ),
                                           ),
                                           Row(
                                             children: [
                                               SmallText(
-                                                  text: "${ _list[index]
-                                                      .jumlahPembelianProduk} x "),
+                                                  text:
+                                                      "${_list[index].jumlahPembelianProduk} x "),
                                               PriceText(
-                                                text: CurrencyFormat
-                                                    .convertToIdr(
-                                                    _list[index]
-                                                        .price,
-                                                    0),
+                                                text:
+                                                    CurrencyFormat.convertToIdr(
+                                                        _list[index].price, 0),
                                                 size: Dimensions.font16,
                                               ),
                                             ],
@@ -380,7 +371,9 @@ class _PesananPageState extends State<PesananPageCopy> {
                               ],
                             ),
                           ),
-                          SizedBox(height: Dimensions.height10,),
+                          SizedBox(
+                            height: Dimensions.height10,
+                          ),
                           Container(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -397,9 +390,7 @@ class _PesananPageState extends State<PesananPageCopy> {
                                           SmallText(text: "Total Belanja"),
                                           PriceText(
                                             text: CurrencyFormat.convertToIdr(
-                                                _list[index]
-                                                    .hargaPembelian,
-                                                0),
+                                                _list[index].hargaPembelian, 0),
                                             size: Dimensions.font16,
                                           ),
                                         ],
@@ -409,7 +400,8 @@ class _PesananPageState extends State<PesananPageCopy> {
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    _getDetailPesananList(_list[index].purchaseId);
+                                    _getDetailPesananList(
+                                        _list[index].purchaseId);
                                   },
                                   child: Container(
                                     padding: EdgeInsets.only(

@@ -1,16 +1,10 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:get/get.dart';
-import 'package:rumah_kreatif_toba/controllers/pesanan_controller.dart';
-import 'package:rumah_kreatif_toba/controllers/wishlist_controller.dart';
 import 'package:rumah_kreatif_toba/data/repository/auth_repo.dart';
 import 'package:rumah_kreatif_toba/models/response_model.dart';
-import '../base/show_custom_message.dart';
+
 import '../base/snackbar_message.dart';
 import '../models/users_models.dart';
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
-
-import 'alamat_controller.dart';
-import 'bank_controller.dart';
-import 'cart_controller.dart';
 
 class AuthController extends GetxController implements GetxService {
   final AuthRepo authRepo;
@@ -42,17 +36,18 @@ class AuthController extends GetxController implements GetxService {
     return responseModel;
   }
 
-  Future<ResponseModel> login(String username, String password) async {
+  Future<ResponseModel?> login(String username, String password) async {
     Response response = await authRepo.login(username, password);
-    late ResponseModel responseModel;
+    ResponseModel? responseModel;
     if (response.statusCode == 200) {
       if (response.body["token"] != null) {
         authRepo.saveUserToken(response.body["token"]);
         responseModel = ResponseModel(true, response.body["token"]);
-      }else{
-        AwesomeSnackbarButton("Gagal",response.body["message"],ContentType.failure);
-      }
       } else {
+        AwesomeSnackbarButton(
+            "Gagal", response.body["message"], ContentType.failure);
+      }
+    } else {
       responseModel = ResponseModel(false, response.statusText!);
     }
     _isLoading = false;

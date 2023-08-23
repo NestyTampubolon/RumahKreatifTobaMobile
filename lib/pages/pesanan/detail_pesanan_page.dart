@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:rumah_kreatif_toba/pages/pesanan/pesanan_page.dart';
 
 import '../../controllers/auth_controller.dart';
@@ -11,16 +11,11 @@ import '../../routes/route_helper.dart';
 import '../../utils/app_constants.dart';
 import '../../utils/colors.dart';
 import '../../utils/dimensions.dart';
-
-import 'package:get/get.dart';
-
 import '../../widgets/app_icon.dart';
 import '../../widgets/big_text.dart';
 import '../../widgets/currency_format.dart';
 import '../../widgets/price_text.dart';
 import '../../widgets/small_text.dart';
-import '../../widgets/tittle_text.dart';
-import '../home/home_page.dart';
 
 class DetailPesananPage extends StatefulWidget {
   const DetailPesananPage({Key? key}) : super(key: key);
@@ -39,7 +34,6 @@ class _DetailPesananPageState extends State<DetailPesananPage> {
     }
   }
 
-
   bool _cekStatusstatus5 =
       Get.find<PesananController>().detailPesanan[0].statusPembelian ==
           "Belum Diambil";
@@ -48,7 +42,6 @@ class _DetailPesananPageState extends State<DetailPesananPage> {
       Get.find<PesananController>().detailPesanan[0].statusPembelian ==
           "Belum Dikonfirmasi Pembeli";
 
-
   bool _cekStatusstatus3 =
       Get.find<PesananController>().detailPesanan[0].statusPembelian ==
           "Dalam Perjalanan";
@@ -56,7 +49,6 @@ class _DetailPesananPageState extends State<DetailPesananPage> {
   bool _cekStatusstatus2 =
       Get.find<PesananController>().detailPesanan[0].statusPembelian ==
           "Sedang Dikemas";
-
 
   @override
   Widget build(BuildContext context) {
@@ -106,20 +98,15 @@ class _DetailPesananPageState extends State<DetailPesananPage> {
               ),
             ),
             Container(
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.3),
-                      spreadRadius: 1,
-                      blurRadius: 5,
-                      offset: Offset(0, 2),
-                    )
-                  ]),
-              margin: EdgeInsets.only(
-                top: Dimensions.height20
-              ),
-
+              decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.3),
+                  spreadRadius: 1,
+                  blurRadius: 5,
+                  offset: Offset(0, 2),
+                )
+              ]),
+              margin: EdgeInsets.only(top: Dimensions.height20),
               padding: EdgeInsets.only(
                   top: Dimensions.height30,
                   left: Dimensions.width20,
@@ -158,7 +145,8 @@ class _DetailPesananPageState extends State<DetailPesananPage> {
                         child: Row(
                           children: [
                             BigText(
-                              text: detailPesanan[0].createdAt.toString() ?? 'N/A',
+                              text: detailPesanan[0].createdAt.toString() ??
+                                  'N/A',
                               size: Dimensions.font16,
                             )
                           ],
@@ -166,27 +154,21 @@ class _DetailPesananPageState extends State<DetailPesananPage> {
                       ),
                     ],
                   ),
-
                 ],
               ),
             ),
 
             //List View Detail Produk
             Container(
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.3),
-                      spreadRadius: 1,
-                      blurRadius: 5,
-                      offset: Offset(0, 2),
-                    )
-                  ]),
-              margin: EdgeInsets.only(
-                  top: Dimensions.height20
-              ),
-
+              decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.3),
+                  spreadRadius: 1,
+                  blurRadius: 5,
+                  offset: Offset(0, 2),
+                )
+              ]),
+              margin: EdgeInsets.only(top: Dimensions.height20),
               padding: EdgeInsets.only(
                   top: Dimensions.height30,
                   left: Dimensions.width20,
@@ -215,21 +197,24 @@ class _DetailPesananPageState extends State<DetailPesananPage> {
                         itemCount: pesananController.detailPesananList.length,
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
-                          var gambarproduk = Get.find<PopularProdukController>().imageProdukList.where(
-                                  (produk) =>
-                              produk.productId ==
-                                  pesananController.detailPesananList[index].productId);
+                          var gambarproduk = Get.find<PopularProdukController>()
+                              .imageProdukList
+                              .where((produk) =>
+                                  produk.productId ==
+                                  pesananController
+                                      .detailPesananList[index].productId);
                           return Container(
                             width: Dimensions.screenWidth,
                             height: Dimensions.height45 * 3.5,
                             margin: EdgeInsets.only(
-                                bottom: Dimensions.height10,),
+                              bottom: Dimensions.height10,
+                            ),
                             padding: EdgeInsets.all(Dimensions.height10),
                             decoration: BoxDecoration(
                                 border: Border.all(
                                     color: AppColors.buttonBackgroundColor),
-                                borderRadius:
-                                    BorderRadius.circular(Dimensions.radius20/2),
+                                borderRadius: BorderRadius.circular(
+                                    Dimensions.radius20 / 2),
                                 color: Colors.white),
                             child: Column(
                               children: [
@@ -244,40 +229,37 @@ class _DetailPesananPageState extends State<DetailPesananPage> {
                                             GestureDetector(
                                               onTap: () {
                                                 var produkIndex =
-                                                pesananController
-                                                    .detailPesananList[index]
-                                                    .productId!;
+                                                    pesananController
+                                                        .detailPesananList[
+                                                            index]
+                                                        .productId!;
                                                 if (produkIndex >= 0) {
                                                   Get.toNamed(RouteHelper
                                                       .getProdukDetail(
-                                                      produkIndex));
+                                                          produkIndex));
                                                 }
                                               },
                                               child: Container(
-                                                width:
-                                                Dimensions.height20 *
-                                                    3,
-                                                height:
-                                                Dimensions.height20 *
-                                                    3,
+                                                width: Dimensions.height20 * 3,
+                                                height: Dimensions.height20 * 3,
                                                 margin: EdgeInsets.only(
-                                                    top: Dimensions
-                                                        .height10),
+                                                    top: Dimensions.height10),
                                                 decoration: BoxDecoration(
                                                     image: DecorationImage(
                                                         fit: BoxFit.cover,
                                                         image: NetworkImage(
                                                           '${AppConstants.BASE_URL_IMAGE}u_file/product_image/${gambarproduk.single.productImageName}',
-                                                        )
-                                                    ),
+                                                        )),
                                                     borderRadius:
-                                                    BorderRadius.circular(
-                                                        Dimensions
-                                                            .radius20),
+                                                        BorderRadius.circular(
+                                                            Dimensions
+                                                                .radius20),
                                                     color: Colors.white),
                                               ),
                                             ),
-                                            SizedBox(width: Dimensions.width20,),
+                                            SizedBox(
+                                              width: Dimensions.width20,
+                                            ),
                                             Column(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.start,
@@ -285,10 +267,13 @@ class _DetailPesananPageState extends State<DetailPesananPage> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Container(
-                                                  width : Dimensions.screenWidth/1.6,
+                                                  width:
+                                                      Dimensions.screenWidth /
+                                                          1.6,
                                                   child: BigText(
                                                     text: pesananController
-                                                        .detailPesananList[index]
+                                                        .detailPesananList[
+                                                            index]
                                                         .productName,
                                                     size: Dimensions.font16,
                                                   ),
@@ -296,22 +281,20 @@ class _DetailPesananPageState extends State<DetailPesananPage> {
                                                 Row(
                                                   children: [
                                                     SmallText(
-                                                        text: "${pesananController
-                                                            .detailPesananList[index].jumlahPembelianProduk} x "),
+                                                        text:
+                                                            "${pesananController.detailPesananList[index].jumlahPembelianProduk} x "),
                                                     PriceText(
                                                       text: CurrencyFormat
                                                           .convertToIdr(
-                                                          pesananController
-                                                              .detailPesananList[
-                                                          index]
-                                                              .price,
-                                                          0),
+                                                              pesananController
+                                                                  .detailPesananList[
+                                                                      index]
+                                                                  .price,
+                                                              0),
                                                       size: Dimensions.font16,
                                                     ),
                                                   ],
                                                 ),
-
-
                                               ],
                                             )
                                           ],
@@ -335,16 +318,14 @@ class _DetailPesananPageState extends State<DetailPesananPage> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
-                                                SmallText(
-                                                    text: "Total Harga"),
+                                                SmallText(text: "Total Harga"),
                                                 PriceText(
-                                                  text: CurrencyFormat
-                                                      .convertToIdr(
-                                                          pesananController
-                                                              .detailPesananList[
-                                                                  index]
-                                                              .hargaPembelianProduk,
-                                                          0),
+                                                  text: CurrencyFormat.convertToIdr(
+                                                      pesananController
+                                                          .detailPesananList[
+                                                              index]
+                                                          .hargaPembelianProduk,
+                                                      0),
                                                   size: Dimensions.font16,
                                                 ),
                                               ],
@@ -396,20 +377,15 @@ class _DetailPesananPageState extends State<DetailPesananPage> {
             ),
 
             Container(
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.3),
-                      spreadRadius: 1,
-                      blurRadius: 5,
-                      offset: Offset(0, 2),
-                    )
-                  ]),
-              margin: EdgeInsets.only(
-                  top: Dimensions.height20
-              ),
-
+              decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.3),
+                  spreadRadius: 1,
+                  blurRadius: 5,
+                  offset: Offset(0, 2),
+                )
+              ]),
+              margin: EdgeInsets.only(top: Dimensions.height20),
               padding: EdgeInsets.only(
                   top: Dimensions.height30,
                   left: Dimensions.width20,
@@ -448,10 +424,8 @@ class _DetailPesananPageState extends State<DetailPesananPage> {
                         child: Row(
                           children: [
                             PriceText(
-                              text: CurrencyFormat
-                                  .convertToIdr(
-                                  detailPesanan[0].hargaPembelian,
-                                  0),
+                              text: CurrencyFormat.convertToIdr(
+                                  detailPesanan[0].hargaPembelian, 0),
                               size: Dimensions.font16,
                             ),
                           ],
@@ -469,10 +443,8 @@ class _DetailPesananPageState extends State<DetailPesananPage> {
                           size: Dimensions.font16,
                         ),
                         PriceText(
-                          text: CurrencyFormat
-                              .convertToIdr(
-                              detailPesanan[0].ongkir,
-                              0),
+                          text: CurrencyFormat.convertToIdr(
+                              detailPesanan[0].ongkir, 0),
                           size: Dimensions.font16,
                         ),
                       ],
@@ -488,9 +460,9 @@ class _DetailPesananPageState extends State<DetailPesananPage> {
                         fontWeight: FontWeight.bold,
                       ),
                       PriceText(
-                        text: CurrencyFormat
-                            .convertToIdr(
-                            detailPesanan[0].hargaPembelian + detailPesanan[0].ongkir,
+                        text: CurrencyFormat.convertToIdr(
+                            detailPesanan[0].hargaPembelian +
+                                detailPesanan[0].ongkir,
                             0),
                         size: Dimensions.font16,
                       ),
@@ -500,330 +472,360 @@ class _DetailPesananPageState extends State<DetailPesananPage> {
               ),
             ),
 
-            _cekStatusstatus5  ?
-            //KONFIRMASI
-            Container(
-                width: Dimensions.screenWidth,
-                decoration: BoxDecoration(color: Colors.white, boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.3),
-                    spreadRadius: 1,
-                    blurRadius: 5,
-                    offset: Offset(0, 2),
-                  )
-                ]),
-                margin: EdgeInsets.only(top: Dimensions.height20),
-                padding: EdgeInsets.only(
-                    top: Dimensions.height30,
-                    left: Dimensions.width20,
-                    right: Dimensions.width20,
-                    bottom: Dimensions.height30),
-                child: Column(
-                  children: [
-                    Container(
-                        alignment: Alignment.topLeft,
-                        child: BigText(
-                          text: "Konfirmasi",
-                          size: Dimensions.font20,
-                          fontWeight: FontWeight.bold,
-                        )
-                    ),
-                    Divider(color: AppColors.buttonBackgroundColor),
-                    Container(
-                      width: Dimensions.screenWidth,
-                      child: BigText(text: "Pesanan Telah Disiapkan. SILAHKAN AMBIL PESANAN ANDA DI TOKO.", size: Dimensions.font16),
-                    ),
-                  ],
-                )): SizedBox(),
-
-            _cekStatusstatus4  ?
-            //KONFIRMASI
-            Container(
-                width: Dimensions.screenWidth,
-                decoration: BoxDecoration(color: Colors.white, boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.3),
-                    spreadRadius: 1,
-                    blurRadius: 5,
-                    offset: Offset(0, 2),
-                  )
-                ]),
-                margin: EdgeInsets.only(top: Dimensions.height20),
-                padding: EdgeInsets.only(
-                    top: Dimensions.height30,
-                    left: Dimensions.width20,
-                    right: Dimensions.width20,
-                    bottom: Dimensions.height30),
-                child: Column(
-                  children: [
-                    Container(
-                        alignment: Alignment.topLeft,
-                        child: BigText(
-                          text: "Konfirmasi",
-                          size: Dimensions.font20,
-                          fontWeight: FontWeight.bold,
-                        )
-                    ),
-                    Divider(color: AppColors.buttonBackgroundColor),
-                    Container(
-                      width: Dimensions.screenWidth,
-                      child: BigText(text: "Jika pesanan telah diambil. SILAHKAN KONFIRMASI", size: Dimensions.font16),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            _cekStatusstatus5
+                ?
+                //KONFIRMASI
+                Container(
+                    width: Dimensions.screenWidth,
+                    decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.3),
+                        spreadRadius: 1,
+                        blurRadius: 5,
+                        offset: Offset(0, 2),
+                      )
+                    ]),
+                    margin: EdgeInsets.only(top: Dimensions.height20),
+                    padding: EdgeInsets.only(
+                        top: Dimensions.height30,
+                        left: Dimensions.width20,
+                        right: Dimensions.width20,
+                        bottom: Dimensions.height30),
+                    child: Column(
                       children: [
-                        SizedBox(),
-                        GestureDetector(
-                          onTap: () {
-                            _updateStatusPembelian(
-                                detailPesanan[0].purchaseId);
-                          },
-                          child: Container(
-                            width: Dimensions.width45 * 3,
-                            height: Dimensions.height30,
-                            // alignment: Alignment.topCenter,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: AppColors.redColor),
-                            child: Center(
-                              child: BigText(
-                                text: "Konfirmasi",
-                                size: Dimensions.font16,
-                                color: Colors.white,
+                        Container(
+                            alignment: Alignment.topLeft,
+                            child: BigText(
+                              text: "Konfirmasi",
+                              size: Dimensions.font20,
+                              fontWeight: FontWeight.bold,
+                            )),
+                        Divider(color: AppColors.buttonBackgroundColor),
+                        Container(
+                          width: Dimensions.screenWidth,
+                          child: BigText(
+                              text:
+                                  "Pesanan Telah Disiapkan. SILAHKAN AMBIL PESANAN ANDA DI TOKO.",
+                              size: Dimensions.font16),
+                        ),
+                      ],
+                    ))
+                : SizedBox(),
+
+            _cekStatusstatus4
+                ?
+                //KONFIRMASI
+                Container(
+                    width: Dimensions.screenWidth,
+                    decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.3),
+                        spreadRadius: 1,
+                        blurRadius: 5,
+                        offset: Offset(0, 2),
+                      )
+                    ]),
+                    margin: EdgeInsets.only(top: Dimensions.height20),
+                    padding: EdgeInsets.only(
+                        top: Dimensions.height30,
+                        left: Dimensions.width20,
+                        right: Dimensions.width20,
+                        bottom: Dimensions.height30),
+                    child: Column(
+                      children: [
+                        Container(
+                            alignment: Alignment.topLeft,
+                            child: BigText(
+                              text: "Konfirmasi",
+                              size: Dimensions.font20,
+                              fontWeight: FontWeight.bold,
+                            )),
+                        Divider(color: AppColors.buttonBackgroundColor),
+                        Container(
+                          width: Dimensions.screenWidth,
+                          child: BigText(
+                              text:
+                                  "Jika pesanan telah diambil. SILAHKAN KONFIRMASI",
+                              size: Dimensions.font16),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(),
+                            GestureDetector(
+                              onTap: () {
+                                _updateStatusPembelian(
+                                    detailPesanan[0].purchaseId);
+                              },
+                              child: Container(
+                                width: Dimensions.width45 * 3,
+                                height: Dimensions.height30,
+                                // alignment: Alignment.topCenter,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: AppColors.redColor),
+                                child: Center(
+                                  child: BigText(
+                                    text: "Konfirmasi",
+                                    size: Dimensions.font16,
+                                    color: Colors.white,
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                )): SizedBox(),
-
-            _cekStatusstatus3?
-            //LOKASI PENGIRIMAN
-            Container(
-                width: Dimensions.screenWidth,
-                decoration: BoxDecoration(color: Colors.white, boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.3),
-                    spreadRadius: 1,
-                    blurRadius: 5,
-                    offset: Offset(0, 2),
-                  )
-                ]),
-                margin: EdgeInsets.only(top: Dimensions.height20),
-                padding: EdgeInsets.only(
-                    top: Dimensions.height30,
-                    left: Dimensions.width20,
-                    right: Dimensions.width20,
-                    bottom: Dimensions.height30),
-                child: Column(
-                  children: [
-                    Container(
-                        alignment: Alignment.topLeft,
-                        child: BigText(
-                          text: "Lokasi Pengiriman",
-                          size: Dimensions.font20,
-                          fontWeight: FontWeight.bold,
+                          ],
                         )
-                    ),
-                    Divider(color: AppColors.buttonBackgroundColor),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: BigText(
-                            text: "Provinsi",
-                            size: Dimensions.font16,
-                          ),
-                        ),
-                        Expanded(
-                          child: BigText(
-                            text: detailPesanan[0].provinceName.toString() ?? "N/A",
-                            size: Dimensions.font16,
-                          ),
-                        ),
                       ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: BigText(
-                            text: "Kota",
-                            size: Dimensions.font16,
-                          ),
-                        ),
-                        Expanded(
-                          child: BigText(
-                            text: detailPesanan[0].cityName.toString() ?? "N/A",
-                            size: Dimensions.font16,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: BigText(
-                            text: "Kecamatan",
-                            size: Dimensions.font16,
-                          ),
-                        ),
-                        Expanded(
-                          child: BigText(
-                            text: detailPesanan[0].subdistrictName.toString() ?? "N/A",
-                            size: Dimensions.font16,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: BigText(
-                            text: "Alamat",
-                            size: Dimensions.font16,
-                          ),
-                        ),
-                        Expanded(
-                          child: BigText(
-                            text: detailPesanan[0].userStreetAddress.toString() ?? "N/A",
-                            size: Dimensions.font16,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: BigText(
-                            text: "Nomor Telepon",
-                            size: Dimensions.font16,
-                          ),
-                        ),
-                        Expanded(
-                          child: BigText(
-                            text: detailPesanan[0].noHp.toString() ?? "N/A",
-                            size: Dimensions.font16,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                )) : SizedBox(),
+                    ))
+                : SizedBox(),
 
-            _cekStatusstatus3 ?
-            //NOMOR RESI
-            Container(
-                width: Dimensions.screenWidth,
-                decoration: BoxDecoration(color: Colors.white, boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.3),
-                    spreadRadius: 1,
-                    blurRadius: 5,
-                    offset: Offset(0, 2),
-                  )
-                ]),
-                margin: EdgeInsets.only(top: Dimensions.height20),
-                padding: EdgeInsets.only(
-                    top: Dimensions.height30,
-                    left: Dimensions.width20,
-                    right: Dimensions.width20,
-                    bottom: Dimensions.height30),
-                child: Column(
-                  children: [
-                    Container(
-                        alignment: Alignment.topLeft,
-                        child: BigText(
-                          text: "Nomor Resi",
-                          size: Dimensions.font20,
-                          fontWeight: FontWeight.bold,
-                        )
-                    ),
-                    Divider(color: AppColors.buttonBackgroundColor),
-                    Container(
-                      width: Dimensions.screenWidth,
-                      child: BigText(text: "SILAHKAN CEK RESI MENGUNAKAN NOMOR RESI : ${detailPesanan[0].noResi.toString() ?? 'N/A'}  ${detailPesanan[0].courierCode.toString() ?? 'N/A'} - ${detailPesanan[0].service.toString() ?? 'N/A'}", size: Dimensions.font16),
-                    ),
-                    SizedBox(height: Dimensions.height10,),
-                  ],
-                )): SizedBox(),
-
-            _cekStatusstatus2 || _cekStatusstatus3 ?
-            //KONFIRMASI
-            Container(
-                width: Dimensions.screenWidth,
-                decoration: BoxDecoration(color: Colors.white, boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.3),
-                    spreadRadius: 1,
-                    blurRadius: 5,
-                    offset: Offset(0, 2),
-                  )
-                ]),
-                margin: EdgeInsets.only(top: Dimensions.height20),
-                padding: EdgeInsets.only(
-                    top: Dimensions.height30,
-                    left: Dimensions.width20,
-                    right: Dimensions.width20,
-                    bottom: Dimensions.height30),
-                child: Column(
-                  children: [
-                    Container(
-                        alignment: Alignment.topLeft,
-                        child: BigText(
-                          text: "Konfirmasi",
-                          size: Dimensions.font20,
-                          fontWeight: FontWeight.bold,
-                        )
-                    ),
-                    Divider(color: AppColors.buttonBackgroundColor),
-                    Container(
-                      width: Dimensions.screenWidth,
-                      child: BigText(text: "Jika pesanan telah sampai di lokasi dan telah diterima. SILAHKAN KONFIRMASI PESANAN.", size: Dimensions.font16),
-                    ),
-                    SizedBox(height: Dimensions.height10,),
-                    SizedBox(height: Dimensions.height10,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            _cekStatusstatus3
+                ?
+                //LOKASI PENGIRIMAN
+                Container(
+                    width: Dimensions.screenWidth,
+                    decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.3),
+                        spreadRadius: 1,
+                        blurRadius: 5,
+                        offset: Offset(0, 2),
+                      )
+                    ]),
+                    margin: EdgeInsets.only(top: Dimensions.height20),
+                    padding: EdgeInsets.only(
+                        top: Dimensions.height30,
+                        left: Dimensions.width20,
+                        right: Dimensions.width20,
+                        bottom: Dimensions.height30),
+                    child: Column(
                       children: [
-                        SizedBox(),
-                        GestureDetector(
-                          onTap: () {
-                            _updateStatusPembelian(
-                                detailPesanan[0].purchaseId);
-                          },
-                          child: Container(
-                            width: Dimensions.width45 * 3,
-                            height: Dimensions.height30,
-                            // alignment: Alignment.topCenter,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: AppColors.redColor),
-                            child: Center(
+                        Container(
+                            alignment: Alignment.topLeft,
+                            child: BigText(
+                              text: "Lokasi Pengiriman",
+                              size: Dimensions.font20,
+                              fontWeight: FontWeight.bold,
+                            )),
+                        Divider(color: AppColors.buttonBackgroundColor),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
                               child: BigText(
-                                text: "Konfirmasi",
+                                text: "Provinsi",
                                 size: Dimensions.font16,
-                                color: Colors.white,
                               ),
                             ),
-                          ),
+                            Expanded(
+                              child: BigText(
+                                text:
+                                    detailPesanan[0].provinceName.toString() ??
+                                        "N/A",
+                                size: Dimensions.font16,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: BigText(
+                                text: "Kota",
+                                size: Dimensions.font16,
+                              ),
+                            ),
+                            Expanded(
+                              child: BigText(
+                                text: detailPesanan[0].cityName.toString() ??
+                                    "N/A",
+                                size: Dimensions.font16,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: BigText(
+                                text: "Kecamatan",
+                                size: Dimensions.font16,
+                              ),
+                            ),
+                            Expanded(
+                              child: BigText(
+                                text: detailPesanan[0]
+                                        .subdistrictName
+                                        .toString() ??
+                                    "N/A",
+                                size: Dimensions.font16,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: BigText(
+                                text: "Alamat",
+                                size: Dimensions.font16,
+                              ),
+                            ),
+                            Expanded(
+                              child: BigText(
+                                text: detailPesanan[0]
+                                        .userStreetAddress
+                                        .toString() ??
+                                    "N/A",
+                                size: Dimensions.font16,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: BigText(
+                                text: "Nomor Telepon",
+                                size: Dimensions.font16,
+                              ),
+                            ),
+                            Expanded(
+                              child: BigText(
+                                text: detailPesanan[0].noHp.toString() ?? "N/A",
+                                size: Dimensions.font16,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
-                    )
-                  ],
-                )): SizedBox(),
+                    ))
+                : SizedBox(),
 
+            _cekStatusstatus3
+                ?
+                //NOMOR RESI
+                Container(
+                    width: Dimensions.screenWidth,
+                    decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.3),
+                        spreadRadius: 1,
+                        blurRadius: 5,
+                        offset: Offset(0, 2),
+                      )
+                    ]),
+                    margin: EdgeInsets.only(top: Dimensions.height20),
+                    padding: EdgeInsets.only(
+                        top: Dimensions.height30,
+                        left: Dimensions.width20,
+                        right: Dimensions.width20,
+                        bottom: Dimensions.height30),
+                    child: Column(
+                      children: [
+                        Container(
+                            alignment: Alignment.topLeft,
+                            child: BigText(
+                              text: "Nomor Resi",
+                              size: Dimensions.font20,
+                              fontWeight: FontWeight.bold,
+                            )),
+                        Divider(color: AppColors.buttonBackgroundColor),
+                        Container(
+                          width: Dimensions.screenWidth,
+                          child: BigText(
+                              text:
+                                  "SILAHKAN CEK RESI MENGUNAKAN NOMOR RESI : ${detailPesanan[0].noResi.toString() ?? 'N/A'}  ${detailPesanan[0].courierCode.toString() ?? 'N/A'} - ${detailPesanan[0].service.toString() ?? 'N/A'}",
+                              size: Dimensions.font16),
+                        ),
+                        SizedBox(
+                          height: Dimensions.height10,
+                        ),
+                      ],
+                    ))
+                : SizedBox(),
 
+            _cekStatusstatus2 || _cekStatusstatus3
+                ?
+                //KONFIRMASI
+                Container(
+                    width: Dimensions.screenWidth,
+                    decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.3),
+                        spreadRadius: 1,
+                        blurRadius: 5,
+                        offset: Offset(0, 2),
+                      )
+                    ]),
+                    margin: EdgeInsets.only(top: Dimensions.height20),
+                    padding: EdgeInsets.only(
+                        top: Dimensions.height30,
+                        left: Dimensions.width20,
+                        right: Dimensions.width20,
+                        bottom: Dimensions.height30),
+                    child: Column(
+                      children: [
+                        Container(
+                            alignment: Alignment.topLeft,
+                            child: BigText(
+                              text: "Konfirmasi",
+                              size: Dimensions.font20,
+                              fontWeight: FontWeight.bold,
+                            )),
+                        Divider(color: AppColors.buttonBackgroundColor),
+                        Container(
+                          width: Dimensions.screenWidth,
+                          child: BigText(
+                              text:
+                                  "Jika pesanan telah sampai di lokasi dan telah diterima. SILAHKAN KONFIRMASI PESANAN.",
+                              size: Dimensions.font16),
+                        ),
+                        SizedBox(
+                          height: Dimensions.height10,
+                        ),
+                        SizedBox(
+                          height: Dimensions.height10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(),
+                            GestureDetector(
+                              onTap: () {
+                                _updateStatusPembelian(
+                                    detailPesanan[0].purchaseId);
+                              },
+                              child: Container(
+                                width: Dimensions.width45 * 3,
+                                height: Dimensions.height30,
+                                // alignment: Alignment.topCenter,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: AppColors.redColor),
+                                child: Center(
+                                  child: BigText(
+                                    text: "Konfirmasi",
+                                    size: Dimensions.font16,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ))
+                : SizedBox(),
           ],
         ),
       ),

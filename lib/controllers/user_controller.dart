@@ -9,6 +9,9 @@ import '../models/users_models.dart';
 import '../pages/account/profil/profil_page.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
+import '../pages/home/home_page.dart';
+import '../routes/route_helper.dart';
+
 class UserController extends GetxController implements GetxService {
   final UserRepo userRepo;
   UserController({
@@ -89,4 +92,31 @@ class UserController extends GetxController implements GetxService {
     _isLoading = false;
     update();
   }
+
+  Future<void> hapusAkun() async {
+    _isLoading = false;
+    update();
+
+    var controller = Get.find<UserController>().usersList[0];
+    Response response = await userRepo.hapusAkun(controller.id!);
+
+    _isLoading = true;
+    update();
+
+    Get.back();
+    if (response.statusCode == 200) {
+      print("berhasil");
+      if (Get.find<AuthController>().userLoggedIn()) {
+        if(Get.find<AuthController>().clearSharedData()){
+          if(Get.to(() => HomePage(initialIndex: 0)) != null){
+          }
+        }
+      }
+    } else {
+      print("gagal");
+    }
+
+
+  }
+
 }
