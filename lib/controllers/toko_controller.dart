@@ -1,6 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'package:rumah_kreatif_toba/controllers/user_controller.dart';
 import 'package:rumah_kreatif_toba/models/response_model.dart';
 import 'package:rumah_kreatif_toba/models/toko_models.dart';
@@ -9,20 +13,13 @@ import 'package:rumah_kreatif_toba/pages/toko/hometoko/hometoko_page.dart';
 import 'package:rumah_kreatif_toba/pages/toko/namatoko.dart';
 import 'package:rumah_kreatif_toba/pages/toko/passwordtoko.dart';
 import 'package:rumah_kreatif_toba/pages/toko/profil/profiltoko_page.dart';
-import 'dart:io';
-import '../base/show_custom_message.dart';
+
 import '../base/snackbar_message.dart';
 import '../data/repository/toko_repo.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:http/http.dart' as http;
-
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import '../pages/toko/infotokoktp.dart';
 import '../pages/toko/menungguverifikasi.dart';
 import '../pages/toko/menungguverifikasitoko.dart';
 import '../routes/route_helper.dart';
-import 'package:get/get.dart';
-
 import '../utils/app_constants.dart';
 
 class TokoController extends GetxController {
@@ -43,7 +40,6 @@ class TokoController extends GetxController {
 
   Map<String, int> get getJumlahPesanan => jumlahPesanan;
 
-
   @override
   void initState() {
     pickImage();
@@ -61,14 +57,16 @@ class TokoController extends GetxController {
 
   final _picker = ImagePicker();
   Future<void> pickImage() async {
-    _pickedFileKTP = await _picker.getImage(source: ImageSource.gallery);
+    final result = await _picker.pickImage(source: ImageSource.gallery);
+    _pickedFileKTP = PickedFile("${result?.path}");
     update();
   }
 
   final _pickerSelfieKTP = ImagePicker();
   Future<void> pickImageSelfieKTP() async {
-    _pickedFileSelfieKTP =
-        await _pickerSelfieKTP.getImage(source: ImageSource.gallery);
+    final result =
+        await _pickerSelfieKTP.pickImage(source: ImageSource.gallery);
+    _pickedFileSelfieKTP = PickedFile("${result?.path}");
     update();
   }
 
@@ -118,8 +116,9 @@ class TokoController extends GetxController {
       request.files.add(http.MultipartFile('ktp_dan_selfie',
           _fileSelfieKTP.readAsBytes().asStream(), _fileSelfieKTP.lengthSync(),
           filename: _fileSelfieKTP.path.split('/').last));
-    }else{
-      AwesomeSnackbarButton("Warning","Harap memasukkan gambar!",ContentType.warning);
+    } else {
+      AwesomeSnackbarButton(
+          "Warning", "Harap memasukkan gambar!", ContentType.warning);
     }
     request.fields['user_id'] = user_id.toString();
     http.StreamedResponse response = await request.send();
@@ -225,7 +224,10 @@ class TokoController extends GetxController {
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
       Get.offNamed(RouteHelper.getMenungguVerifikasiTokoPage());
-      AwesomeSnackbarButton("Berhasil","Pendaftaran toko berhasil, tunggu toko Anda diverifikasi",ContentType.success);
+      AwesomeSnackbarButton(
+          "Berhasil",
+          "Pendaftaran toko berhasil, tunggu toko Anda diverifikasi",
+          ContentType.success);
       print("Uploaded!");
     }
     responses.add(response);
@@ -241,7 +243,7 @@ class TokoController extends GetxController {
   final _pickerUbahFotoMerchant = ImagePicker();
   Future<void> pickImageUbahFotoMerchant() async {
     _pickedFileUbahFotoMerchant =
-    await _pickerUbahFotoMerchant.getImage(source: ImageSource.gallery);
+        await _pickerUbahFotoMerchant.getImage(source: ImageSource.gallery);
     update();
   }
 
@@ -280,12 +282,12 @@ class TokoController extends GetxController {
   }
 
   Future<void> uploadUbahToko(
-      int? merchant_id,
-      String nama_merchant,
-      String deskripsi_toko,
-      String kontak_toko,
-      PickedFile? fotoMerchant,
-      ) async {
+    int? merchant_id,
+    String nama_merchant,
+    String deskripsi_toko,
+    String kontak_toko,
+    PickedFile? fotoMerchant,
+  ) async {
     http.MultipartRequest request = http.MultipartRequest(
       'POST',
       Uri.parse(AppConstants.BASE_URL + AppConstants.UBAH_TOKO_URL),
@@ -301,8 +303,9 @@ class TokoController extends GetxController {
           filename: _fileFotoMerchant.path.split('/').last,
         ),
       );
-    }else{
-      request.fields['foto_merchant'] = Get.find<TokoController>().profilTokoList[0].foto_merchant.toString();
+    } else {
+      request.fields['foto_merchant'] =
+          Get.find<TokoController>().profilTokoList[0].foto_merchant.toString();
     }
 
     request.fields['merchant_id'] = merchant_id.toString();
@@ -321,7 +324,6 @@ class TokoController extends GetxController {
     }
   }
 
-
   Future<ResponseModel> masukToko(int? user_id, String password) async {
     _isLoading = true;
     update();
@@ -329,10 +331,11 @@ class TokoController extends GetxController {
     late ResponseModel responseModel;
     if (response.statusCode == 200) {
       if (response.body == 200) {
-         profilToko();
+        profilToko();
         Get.to(HomeTokoPage(initialIndex: 0));
-      }else{
-        AwesomeSnackbarButton("Gagal",response.body["message"],ContentType.failure);
+      } else {
+        AwesomeSnackbarButton(
+            "Gagal", response.body["message"], ContentType.failure);
       }
     } else {
       responseModel = ResponseModel(false, response.statusText!);
@@ -352,13 +355,12 @@ class TokoController extends GetxController {
       // Toko toko = Toko.fromJson(responseBody);
       // _profilTokoList.add(toko);
 
-      List<dynamic> responseBody= response.body;
+      List<dynamic> responseBody = response.body;
       _profilTokoList = [].obs;
       for (dynamic item in responseBody) {
         Toko toko = Toko.fromJson(item);
         _profilTokoList.add(toko);
       }
-
     } else {
       // Handle the case when the response status code is not 200
     }
@@ -373,10 +375,13 @@ class TokoController extends GetxController {
     if (response.statusCode == 200) {
       try {
         jumlahPesanan.value = {
-          'jumlah_pesanan_sedang_berlangsung' : response.body["jumlah_pesanan_sedang_berlangsung"],
-          'jumlah_pesanan_berhasil_belum_dibayar' : response.body["jumlah_pesanan_berhasil_belum_dibayar"],
-          'jumlah_pesanan_berhasil_telah_dibayar' : response.body["jumlah_pesanan_berhasil_telah_dibayar"],
-          'jumlah_produk' : response.body["jumlah_produk"]
+          'jumlah_pesanan_sedang_berlangsung':
+              response.body["jumlah_pesanan_sedang_berlangsung"],
+          'jumlah_pesanan_berhasil_belum_dibayar':
+              response.body["jumlah_pesanan_berhasil_belum_dibayar"],
+          'jumlah_pesanan_berhasil_telah_dibayar':
+              response.body["jumlah_pesanan_berhasil_telah_dibayar"],
+          'jumlah_produk': response.body["jumlah_produk"]
         };
         _isLoading = true;
       } catch (e) {
@@ -387,5 +392,4 @@ class TokoController extends GetxController {
     }
     update();
   }
-
 }

@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>NSCameraUsageDescription</key>
-	<string>$(PRODUCT_NAME) need permission to access your camera to verify your ID Card and selfie</string>
+	<string>Rumah Kreatif Toba need permission to access your camera to verify your ID Card and selfie</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>$(PRODUCT_NAME) need permission to access your microphone in order to make calls.</string>
+	<string>Rumah Kreatif Toba need permission to access your microphone in order to make calls.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>$(PRODUCT_NAME) need permission to access your photo gallery to save photos.</string>
+	<string>Rumah Kreatif Toba need permission to access your photo gallery to save photos and verify your ID Card before opening store.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
