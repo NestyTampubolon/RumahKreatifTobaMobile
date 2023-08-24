@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:io';
 
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rumah_kreatif_toba/controllers/pesanan_controller.dart';
@@ -75,6 +77,9 @@ class _InitialSplashScreenState extends State<InitialSplashScreen> {
   late AnimationController controller;
 
   Future<void> _loadResource() async {
+    if (Platform.isIOS) {
+      await AppTrackingTransparency.requestTrackingAuthorization();
+    }
     await Get.find<PopularProdukController>().getPopularProdukList();
     bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
     if (_userLoggedIn) {

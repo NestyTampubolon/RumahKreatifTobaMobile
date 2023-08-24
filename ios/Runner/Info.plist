@@ -32,6 +32,8 @@
 	<string>Rumah Kreatif Toba need permission to access your microphone in order to make calls.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Rumah Kreatif Toba need permission to access your photo gallery to save photos or verify your ID Card before opening store.</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>This identifier will be used to deliver personalized product store to you.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
